@@ -15,8 +15,8 @@
     "url": "https://github.com/j7-dev/antd-utils/issues"
   },
   "homepage": "https://github.com/j7-dev/antd-utils#readme",
-  "private": true,
-  "version": "0.0.0",
+  "private": false,
+  "version": "0.0.1",
   "type": "module",
   "main": "index.tsx",
   "scripts": {
