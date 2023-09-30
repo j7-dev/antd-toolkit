@@ -1,5 +1,5 @@
 {
-  "name": "antd-utils",
+  "name": "antd-utility",
   "author": "j7-dev",
   "keywords": [
     "antd",
@@ -9,12 +9,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/j7-dev/antd-utils"
+    "url": "https://github.com/j7-dev/antd-utility"
   },
   "bugs": {
-    "url": "https://github.com/j7-dev/antd-utils/issues"
+    "url": "https://github.com/j7-dev/antd-utility/issues"
   },
-  "homepage": "https://github.com/j7-dev/antd-utils#readme",
+  "homepage": "https://github.com/j7-dev/antd-utility#readme",
   "private": false,
   "version": "0.0.1",
   "type": "module",
