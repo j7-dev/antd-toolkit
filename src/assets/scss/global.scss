@@ -1,0 +1,90 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* .container {
+  max-width: 1280px;
+  margin: 0 auto;
+} */
+
+body {
+	margin: 0 !important;
+	background-color: #fff;
+}
+input[class*="ant-select"] {
+	box-shadow: none !important;
+	border: none !important;
+	outline: none !important;
+}
+
+@media print {
+	html,
+	body {
+		height: 100%; /* Use 100% here to support printing more than a single page*/
+		width: 297mm;
+		margin: 0 !important;
+		padding: 10mm !important;
+		overflow: hidden;
+	}
+}
+
+.ant-input-number-affix-wrapper {
+	&.text-right {
+		input {
+			text-align: right;
+			padding-right: 0.5rem;
+		}
+	}
+}
+
+table.table {
+	width: 100%;
+	border-collapse: collapse;
+	table-layout: auto; /* 让列宽自动分配 */
+	tr {
+		background-color: transparent;
+		transition: 0.3s ease-in-out;
+		&:hover {
+			background-color: #fffbe6;
+		}
+	}
+	td,
+	th {
+		width: 0;
+		border: 1px solid #ddd;
+		padding: 0.75rem 0.5rem;
+	}
+	td {
+		text-align: right;
+	}
+	th {
+		text-align: center;
+		font-weight: 600;
+	}
+
+	&.table-vertical {
+		table-layout: fixed;
+		tr {
+			display: flex;
+			border-bottom: 1px solid #ddd;
+		}
+		th {
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+			background-color: #f8f8f8;
+			border: none;
+			width: 10rem;
+			* {
+				text-align: left;
+			}
+		}
+		td {
+			display: flex;
+			align-items: center;
+			justify-content: flex-end;
+			flex: 1;
+			border: none;
+		}
+	}
+}

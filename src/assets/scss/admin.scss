@@ -1,0 +1,61 @@
+.f22-admin {
+	.ant-dropdown-menu-submenu {
+		&.ant-dropdown-menu-submenu-vertical {
+			.ant-dropdown-menu-submenu-title {
+				display: flex;
+				align-items: center;
+			}
+		}
+	}
+
+	.f22-login {
+		&.layout {
+			background: radial-gradient(50% 50% at 50% 50%, #eee 0%, #ccc 100%);
+			background-size: "cover";
+		}
+
+		.container {
+			max-width: 408px;
+			margin: auto;
+		}
+
+		.title {
+			text-align: center;
+			color: #626262;
+			font-size: 1.5rem;
+		}
+
+		.imageContainer {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin-bottom: 16px;
+		}
+	}
+
+	hr {
+		border-top: 1px solid #eee;
+		border-bottom: 0px;
+		border-right: 0px;
+		border-left: 0px;
+	}
+
+	.ant-radio-group {
+		&.w-avg {
+			display: flex;
+			> label {
+				flex: 1;
+				overflow: hidden;
+				position: relative;
+				span {
+					white-space: nowrap;
+					text-overflow: ellipsis;
+					position: absolute;
+					top: 50%;
+					left: 50%;
+					transform: translate(-50%, -50%);
+				}
+			}
+		}
+	}
+}
