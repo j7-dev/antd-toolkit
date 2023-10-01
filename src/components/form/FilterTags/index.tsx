@@ -3,7 +3,7 @@ import { Tag, FormInstance } from "antd";
 import dayjs, { Dayjs } from "dayjs";
 import { CloseCircleOutlined } from "@ant-design/icons";
 
-const FilterTags: React.FC<{ form?: FormInstance }> = ({ form }) => {
+export const FilterTags: React.FC<{ form?: FormInstance }> = ({ form }) => {
   const searchValues = form ? form.getFieldsValue() : {};
   const handleClearSearchProps = (key: string) => () => {
     form?.setFieldValue([key], undefined);
@@ -71,5 +71,3 @@ const FilterTags: React.FC<{ form?: FormInstance }> = ({ form }) => {
     </>
   );
 };
-
-export default FilterTags;
