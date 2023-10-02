@@ -1,1 +1,5 @@
-export * from "./components/general/BooleanIndicator";
+import { BooleanIndicator } from "./components/general/BooleanIndicator";
+
+export default {
+  BooleanIndicator,
+};
