@@ -1,31 +1,17 @@
-import React, { useState, useEffect } from "react";
-import {
-  EditFilled,
-  SaveFilled,
-  CloseOutlined,
-  DeleteFilled,
-} from "@ant-design/icons";
-import { Form, Button, FormProps, Popconfirm } from "antd";
-import { useDelete, BaseRecord } from "@refinedev/core";
+import React, { useState } from 'react';
+import { EditFilled, SaveFilled, CloseOutlined } from '@ant-design/icons';
+import { Form, Button, FormProps } from 'antd';
+import { BaseRecord } from '@refinedev/core';
 
-export const useUpdateRecord = <FormatDataType extends BaseRecord>({
+const useUpdateRecord = <FormatDataType extends BaseRecord>({
   rowKey,
-  resource,
   onFinish,
 }: {
   rowKey: keyof FormatDataType;
-  resource: string;
   onFinish?: (_values: { [key: string]: any; key: React.Key }) => void;
 }) => {
   const [form] = Form.useForm();
-  const [editingKey, setEditingKey] = useState("");
-  const { mutate: deleteFn } = useDelete();
-
-  useEffect(() => {
-    if (editingKey !== "") {
-      form?.resetFields();
-    }
-  }, [editingKey]);
+  const [editingKey, setEditingKey] = useState('');
 
   interface EditableCellProps extends React.HTMLAttributes<HTMLElement> {
     record: FormatDataType;
@@ -33,25 +19,24 @@ export const useUpdateRecord = <FormatDataType extends BaseRecord>({
       el: React.ReactNode;
       required?: boolean;
       message?: string;
-      valuePropName?: string;
     };
     dataIndex: string;
     index: number;
     children: React.ReactNode;
   }
 
-  const isEditing = (record: FormatDataType) => {
-    if (record) {
-      return record?.[rowKey].toString() === editingKey;
-    }
-  };
+  const isEditing = (record: FormatDataType) => record?.[rowKey] === editingKey;
 
   const edit = (record: FormatDataType) => {
     setEditingKey((record?.[rowKey] as React.Key).toString());
+
+    Object.keys(record).forEach((key) => {
+      form.setFieldsValue({ [key]: record[key] });
+    });
   };
 
   const cancel = () => {
-    setEditingKey("");
+    setEditingKey('');
   };
 
   const save = async (key: React.Key) => {
@@ -64,20 +49,9 @@ export const useUpdateRecord = <FormatDataType extends BaseRecord>({
       if (onFinish) {
         onFinish(values);
       }
-      setEditingKey("");
+      setEditingKey('');
     } catch (error) {
-      setEditingKey("");
-    }
-  };
-
-  const handleDelete = (record: FormatDataType) => () => {
-    if (deleteFn && record?.id) {
-      deleteFn({
-        resource,
-        id: record.id || "",
-      });
-    } else {
-      console.log("deleteFn is not defined", record);
+      setEditingKey('');
     }
   };
 
@@ -100,13 +74,9 @@ export const useUpdateRecord = <FormatDataType extends BaseRecord>({
             rules={[
               {
                 required: cellInput?.required || false,
-                message: cellInput?.message || "",
+                message: cellInput?.message || '',
               },
             ]}
-            initialValue={record?.[dataIndex]}
-            valuePropName={
-              cellInput?.valuePropName ? cellInput?.valuePropName : "value"
-            }
           >
             {cellInput?.el || <></>}
           </Form.Item>
@@ -133,7 +103,7 @@ export const useUpdateRecord = <FormatDataType extends BaseRecord>({
     return editable ? (
       <div className="flex flex-nowrap">
         <Button
-          onClick={() => save((record?.[rowKey] as React.Key) || "")}
+          onClick={() => save((record?.[rowKey] as React.Key) || '')}
           type="primary"
           shape="circle"
           icon={
@@ -155,29 +125,15 @@ export const useUpdateRecord = <FormatDataType extends BaseRecord>({
         />
       </div>
     ) : (
-      <div className="flex flex-nowrap">
-        <Button
-          disabled={editingKey !== ""}
-          onClick={() => edit(record)}
-          type="primary"
-          shape="circle"
-          icon={
-            <EditFilled className="text-[0.625rem] relative -top-[0.1rem]" />
-          }
-          size="small"
-          className="shadow-none"
-        />
-        <Popconfirm title="Sure to delete?" onConfirm={handleDelete(record)}>
-          <Button
-            size="small"
-            shape="circle"
-            type="primary"
-            className="ml-2"
-            danger
-            icon={<DeleteFilled />}
-          />
-        </Popconfirm>
-      </div>
+      <Button
+        disabled={editingKey !== ''}
+        onClick={() => edit(record)}
+        type="primary"
+        shape="circle"
+        icon={<EditFilled className="text-[0.625rem] relative -top-[0.1rem]" />}
+        size="small"
+        className="shadow-none"
+      />
     );
   };
 
@@ -185,7 +141,7 @@ export const useUpdateRecord = <FormatDataType extends BaseRecord>({
     formProps,
     editableTableProps: {
       components,
-      rowClassName: "editable-row",
+      rowClassName: 'editable-row',
     },
     editingKey,
     EditButton: React.memo(EditButton),
@@ -196,3 +152,5 @@ export const useUpdateRecord = <FormatDataType extends BaseRecord>({
     cancel,
   };
 };
+
+export default useUpdateRecord;
