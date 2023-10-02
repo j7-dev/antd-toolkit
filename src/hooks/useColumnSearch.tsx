@@ -1,4 +1,4 @@
-import React, { useState, useRef, MouseEvent } from "react";
+import { useState, useRef, MouseEvent } from "react";
 import { Input, InputRef } from "antd";
 import Highlighter from "react-highlight-words";
 import { SearchOutlined, CloseCircleFilled } from "@ant-design/icons";

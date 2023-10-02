@@ -12,4 +12,15 @@ export default defineConfig({
       "@": path.resolve(__dirname, "src"),
     },
   },
+  build: {
+    target: "esnext", // 目標環境，可以根據需要調整
+    outDir: "dist", // 輸出目錄
+    assetsDir: ".", // 靜態資源目錄
+    rollupOptions: {
+      input: "src/index.tsx", // 入口文件，只打包這個文件
+      output: {
+        entryFileNames: "index.js", // 輸出的文件名稱
+      },
+    },
+  },
 });
