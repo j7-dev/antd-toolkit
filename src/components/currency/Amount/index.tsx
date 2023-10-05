@@ -2,8 +2,8 @@ import React from "react";
 import getSymbolFromCurrency from "currency-symbol-map";
 
 export const Amount: React.FC<{
-  amount: number | null;
-  currency: string | null;
+  amount: number;
+  currency: string;
   symbol?: boolean;
   className?: string;
 }> = ({

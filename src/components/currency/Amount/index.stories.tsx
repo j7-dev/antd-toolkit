@@ -6,17 +6,43 @@ import { Amount } from "./index";
 const meta: Meta<typeof Amount> & {
   argTypes: any;
 } = {
-  title: "Amount",
+  title: "多幣別/Amount",
   component: Amount,
   parameters: {
     // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/react/configure/story-layout
     layout: "centered",
+    docs: {
+      description: {
+        component: ``, // 可以寫 markdown
+      },
+    },
   },
-  // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/react/writing-docs/autodocs
   tags: ["autodocs"],
-  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
-    backgroundColor: { control: "color" },
+    amount: {
+      control: {
+        type: "number",
+        min: 0,
+        step: 1000,
+      },
+    },
+    currency: {
+      control: {
+        type: "text",
+      },
+    },
+    symbol: {
+      control: {
+        type: "boolean",
+        defaultValue: false,
+      },
+    },
+    className: {
+      control: {
+        type: "text",
+        placeholder: "請輸入額外的 class",
+      },
+    },
   },
 };
 
@@ -24,18 +50,19 @@ export default meta;
 type Story = StoryObj<typeof Amount>;
 
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
-export const WithSymbol: Story = {
-  args: {
-    amount: 100000,
-    currency: "JPY",
-    symbol: true,
-  },
-};
-
 export const WithoutSymbol: Story = {
+  name: "貨幣名稱",
   args: {
     amount: 100000,
     currency: "JPY",
     symbol: false,
+  },
+};
+
+export const WithSymbol: Story = {
+  name: "貨幣符號",
+  args: {
+    ...WithoutSymbol.args,
+    symbol: true,
   },
 };
