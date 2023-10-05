@@ -35,7 +35,9 @@
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "version:patch": "npm version patch && git add package.json"
+    "version:patch": "npm version patch && git add package.json",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "pre-commit": [
     "version:patch"
@@ -51,11 +53,21 @@
     "react-countdown": "^2.3.5",
     "react-dom": "^18.2.0",
     "react-highlight-words": "^0.20.0",
+    "storybook": "^7.4.6",
     "vite-plugin-dts": "^3.6.0"
   },
   "devDependencies": {
     "@rollup/plugin-alias": "^5.0.0",
     "@rollup/plugin-typescript": "^8.2.1",
+    "@storybook/addon-essentials": "7.4.6",
+    "@storybook/addon-interactions": "7.4.6",
+    "@storybook/addon-links": "7.4.6",
+    "@storybook/addon-onboarding": "1.0.8",
+    "@storybook/addon-themes": "^7.4.6",
+    "@storybook/blocks": "7.4.6",
+    "@storybook/react": "7.4.6",
+    "@storybook/react-vite": "7.4.6",
+    "@storybook/testing-library": "0.2.2",
     "@types/lodash-es": "^4.17.9",
     "@types/node": "^17.0.35",
     "@types/react": "^18.2.15",
@@ -68,6 +80,7 @@
     "eslint": "^8.45.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
+    "eslint-plugin-storybook": "^0.6.14",
     "postcss": "^8.4.31",
     "postcss-import": "^15.1.0",
     "postcss-nesting": "^12.0.1",
