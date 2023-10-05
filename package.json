@@ -36,13 +36,9 @@
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "version:patch": "npm version patch && git add package.json",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
-  "post-commit": [
-    "version:patch"
-  ],
   "dependencies": {
     "@refinedev/antd": "^5.36.6",
     "@refinedev/core": "^4.42.4",
