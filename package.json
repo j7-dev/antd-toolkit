@@ -1,6 +1,6 @@
 {
   "name": "antd-utility",
-  "version": "0.0.14",
+  "version": "0.0.16",
   "private": false,
   "type": "module",
   "main": "./dist/index.umd.cjs",
