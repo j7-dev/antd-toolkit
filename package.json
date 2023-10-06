@@ -1,6 +1,6 @@
 {
   "name": "antd-utility",
-  "version": "0.0.17",
+  "version": "0.0.19",
   "private": false,
   "type": "module",
   "main": "./dist/index.js",
