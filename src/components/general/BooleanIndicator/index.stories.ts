@@ -10,6 +10,19 @@ const meta: Meta<typeof BooleanIndicator> & {
   parameters: {
     // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/react/configure/story-layout
     layout: "centered",
+    docs: {
+      description: {
+        component: `
+
+簡單傳入一個 true / false 的值，就可以顯示對應的圖示
+
+tooltipProps 用法可以參考 <a href="https://ant.design/components/tooltip-cn#api" target="_blank">antd</a>
+
+
+				`, // 可以寫 markdown
+      },
+      toc: false,
+    },
   },
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/react/writing-docs/autodocs
   tags: ["autodocs"],
@@ -23,11 +36,13 @@ type Story = StoryObj<typeof BooleanIndicator>;
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
 
 export const WithoutTooltips: Story = {
+  name: "無提示",
   args: {
     enabled: false,
   },
 };
 export const WithTooltips: Story = {
+  name: "有提示",
   args: {
     enabled: true,
     tooltipProps: {
@@ -38,6 +53,7 @@ export const WithTooltips: Story = {
 };
 
 export const CustomClassname: Story = {
+  name: "自訂 className",
   args: {
     enabled: true,
     tooltipProps: {

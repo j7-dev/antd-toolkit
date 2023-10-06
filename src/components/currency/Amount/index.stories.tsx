@@ -13,8 +13,18 @@ const meta: Meta<typeof Amount> & {
     layout: "centered",
     docs: {
       description: {
-        component: ``, // 可以寫 markdown
+        component: `
+快速顯示多國幣別與千分位使用
+
+#### 未來優化:
+
+🔲 不同國家千分位的顯示好像不同
+
+🔲 可以新增一種是類似 justify-between 的排法，會比較整齊
+
+				`, // 可以寫 markdown
       },
+      toc: false,
     },
   },
   tags: ["autodocs"],
