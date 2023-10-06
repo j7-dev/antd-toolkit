@@ -5,5 +5,5 @@ declare const meta: Meta<typeof Amount> & {
 };
 export default meta;
 type Story = StoryObj<typeof Amount>;
-export declare const WithSymbol: Story;
 export declare const WithoutSymbol: Story;
+export declare const WithSymbol: Story;

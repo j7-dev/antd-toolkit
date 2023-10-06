@@ -6,5 +6,4 @@ export declare const BooleanIndicator: React.FC<{
     tooltipProps?: TooltipProps & {
         enabled: boolean;
     };
-    node?: JSX.Element;
 }>;

@@ -4,10 +4,22 @@ import tsconfigPaths from "vite-tsconfig-paths";
 import alias from "@rollup/plugin-alias";
 import path from "path";
 import dts from "vite-plugin-dts";
+import Components from "unplugin-vue-components/vite";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [alias(), react(), tsconfigPaths(), dts()],
+  plugins: [
+    alias(),
+    react(),
+    tsconfigPaths(),
+    dts(),
+    Components({
+      dts: true,
+      extensions: ["tsx"],
+      globs: ["src/components/*.{tsx}"],
+      deep: true,
+    }),
+  ],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),

@@ -41478,12 +41478,12 @@ const z9 = {
   darkAlgorithm: A9,
   compactAlgorithm: N9,
   getDesignToken: _9
-}, EW = ({ enabled: t, className: r, tooltipProps: a, node: o }) => a != null && a.enabled ? o || /* @__PURE__ */ Vt.jsx(Im, { ...a, children: /* @__PURE__ */ Vt.jsx(
+}, EW = ({ enabled: t, className: r, tooltipProps: a }) => a != null && a.enabled ? /* @__PURE__ */ Vt.jsx(Im, { ...a, children: /* @__PURE__ */ Vt.jsx(
   "div",
   {
     className: `${t ? "bg-teal-500" : "bg-rose-500"} ${r || "w-3 h-3 rounded-full inline-block"} `
   }
-) }) : o || /* @__PURE__ */ Vt.jsx(
+) }) : /* @__PURE__ */ Vt.jsx(
   "div",
   {
     className: `${t ? "bg-teal-500" : "bg-rose-500"} ${r || "w-3 h-3 rounded-full"} `
