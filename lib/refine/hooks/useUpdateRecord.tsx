@@ -59,7 +59,7 @@ const useUpdateRecord = <FormatDataType extends BaseRecord>({
     record,
     cellInput,
     dataIndex,
-    index: _index,
+    // index: _index,
     children,
     ...restProps
   }) => {
