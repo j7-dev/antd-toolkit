@@ -4,7 +4,7 @@ export default {
   corePlugins: {
     preflight: false,
   },
-  content: ["./src/**/*.{ts,tsx,js,jsx}"],
+  content: ["./lib/**/*.{ts,tsx,js,jsx}"],
   darkMode: ["class", '[data-mode="dark"]'],
   theme: {
     extend: {},

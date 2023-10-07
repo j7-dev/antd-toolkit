@@ -16,7 +16,7 @@
 		"isolatedModules": true,
 		"noEmit": true,
 		"jsx": "react-jsx",
-		"baseUrl": "./src/",
+		"baseUrl": "./lib/",
 		"paths": {
 			"@/*": [
 				"./*"
@@ -31,6 +31,10 @@
 	"include": [
 		"src",
 		"lib"
+	],
+	"exclude": [
+		"lib/**/*.stories.tsx",
+		"lib/**/*.stories.ts"
 	],
 	"references": [
 		{

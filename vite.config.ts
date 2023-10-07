@@ -19,7 +19,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      "@": resolve(__dirname, "src"),
+      "@": resolve(__dirname, "lib"),
     },
   },
   build: {
@@ -51,14 +51,16 @@ export default defineConfig({
         "@storybook/preview-api@7.4.6",
       ],
       input: Object.fromEntries(
-        glob.sync("lib/**/*.{ts,tsx}").map((file) => [
-          // The name of the entry point
-          // lib/nested/foo.ts becomes nested/foo
-          relative("lib", file.slice(0, file.length - extname(file).length)),
-          // The absolute path to the entry file
-          // lib/nested/foo.ts becomes /project/lib/nested/foo.ts
-          fileURLToPath(new URL(file, import.meta.url)),
-        ])
+        glob
+          .sync("lib/**/*.{ts,tsx}", { ignore: ["lib/**/*.stories.{ts,tsx}"] })
+          .map((file) => [
+            // The name of the entry point
+            // lib/nested/foo.ts becomes nested/foo
+            relative("lib", file.slice(0, file.length - extname(file).length)),
+            // The absolute path to the entry file
+            // lib/nested/foo.ts becomes /project/lib/nested/foo.ts
+            fileURLToPath(new URL(file, import.meta.url)),
+          ])
       ),
       output: {
         assetFileNames: "assets/[name][extname]",

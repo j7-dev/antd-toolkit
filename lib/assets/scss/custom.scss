@@ -39,11 +39,11 @@
 		}
 		a.hasSubmenu {
 			&:after {
-				content: url("src/assets/images/dropdown-icon.svg");
+				content: url("lib/assets/images/dropdown-icon.svg");
 				margin-left: 5px;
 			}
 			&:hover:after {
-				content: url("src/assets/images/dropdown-hover-icon.svg");
+				content: url("lib/assets/images/dropdown-hover-icon.svg");
 			}
 		}
 	}
@@ -59,10 +59,10 @@
 		z-index: 1;
 	}
 	.slick-prev:before {
-		content: url("src/assets/images/prev-white-icon.svg") !important;
+		content: url("lib/assets/images/prev-white-icon.svg") !important;
 	}
 	.slick-next:before {
-		content: url("src/assets/images/next-white-icon.svg") !important;
+		content: url("lib/assets/images/next-white-icon.svg") !important;
 	}
 	//Promotions自定義頁碼
 
