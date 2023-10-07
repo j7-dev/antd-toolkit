@@ -9,6 +9,7 @@ import {
   Controls,
 } from "@storybook/blocks";
 import "../lib/assets/scss/index.scss";
+import "./preview.scss";
 
 const preview: Preview = {
   parameters: {

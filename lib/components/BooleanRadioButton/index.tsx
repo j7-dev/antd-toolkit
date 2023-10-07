@@ -1,10 +1,12 @@
 import React from "react";
 import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
 import { Form, Radio, FormItemProps } from "antd";
+import "./styles.scss";
 
 export const BooleanRadioButton: React.FC<{
   formItemProps: FormItemProps;
-}> = ({ formItemProps }) => {
+  averageWidth?: boolean;
+}> = ({ formItemProps, averageWidth = true }) => {
   return (
     <Form.Item {...formItemProps}>
       <Radio.Group
@@ -15,7 +17,7 @@ export const BooleanRadioButton: React.FC<{
         ]}
         optionType="button"
         buttonStyle="solid"
-        className="w-avg"
+        className={averageWidth ? `w-avg` : ""}
       />
     </Form.Item>
   );

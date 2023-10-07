@@ -7,7 +7,15 @@ export default {
   content: ["./lib/**/*.{ts,tsx,js,jsx}"],
   darkMode: ["class", '[data-mode="dark"]'],
   theme: {
-    extend: {},
+    extend: {
+      screens: {
+        sm: "576px", // iphone SE
+        md: "810px", // ipad 直向
+        lg: "1080px", // ipad 橫向
+        xl: "1280px", // mac air
+        xxl: "1440px",
+      },
+    },
   },
   plugins: [],
   prefix: "",
