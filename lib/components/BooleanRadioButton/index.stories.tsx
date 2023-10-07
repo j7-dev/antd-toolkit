@@ -18,7 +18,6 @@ const meta: Meta<typeof BooleanRadioButton> & {
 
 如果選擇 ALL， \`form.getFieldValue()\` 時會回傳 undefined
 
-接受 \`formItemProps\` 用法可以參考 <a href="https://ant.design/components/form-cn#formitem" target="_blank">antd</a>
 
 
 				`, // 可以寫 markdown
@@ -30,7 +29,8 @@ const meta: Meta<typeof BooleanRadioButton> & {
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
     formItemProps: {
-      description: "antd Form.Item props",
+      description:
+        "<a href='https://ant.design/components/form-cn#formitem' target='_blank'>antd Form.Item props</a>",
     },
     averageWidth: {
       description: "是否平均寬度，否寬度為 auto",

@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { Switch, Tooltip, Popconfirm } from "antd";
+import React from "react";
+import { Switch, Tooltip, Popconfirm, Form, FormItemProps } from "antd";
 import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
 import { PopconfirmProps } from "antd/lib/popconfirm";
 import { TooltipPlacement, TooltipProps } from "antd/lib/tooltip";
 import { SwitchProps } from "antd/lib/switch";
 
 export const DoubleConfirmSwitch: React.FC<{
-  enabled: boolean;
+  fromItemProps?: FormItemProps;
   popconfirmProps?: PopconfirmProps;
   tooltipProps?: TooltipProps;
   switchProps?: SwitchProps;
@@ -20,7 +20,7 @@ export const DoubleConfirmSwitch: React.FC<{
     _e: React.MouseEvent<HTMLElement, MouseEvent> | undefined
   ) => void;
 }> = ({
-  enabled,
+  fromItemProps,
   popconfirmProps,
   tooltipProps,
   switchProps,
@@ -28,16 +28,10 @@ export const DoubleConfirmSwitch: React.FC<{
   onConfirm,
   onCancel,
 }) => {
-  const [switchState, setSwitchState] = useState({
-    checked: enabled,
-    popconfirmDisabled: enabled,
-  });
+  const form = Form.useFormInstance();
+  const watchChecked = Form.useWatch(fromItemProps?.name, form);
 
   const handleSwitchClick = (checked: boolean) => {
-    setSwitchState({
-      checked,
-      popconfirmDisabled: checked,
-    });
     if (onClick) {
       onClick(checked);
     }
@@ -46,25 +40,16 @@ export const DoubleConfirmSwitch: React.FC<{
   const confirmEnable = (
     e: React.MouseEvent<HTMLElement, MouseEvent> | undefined
   ) => {
-    setSwitchState({
-      checked: switchState.checked,
-      popconfirmDisabled: switchState.checked,
-    });
     if (onConfirm) {
-      onConfirm(switchState.checked, e);
+      onConfirm(watchChecked, e);
     }
   };
 
   const cancelEnable = (
     e: React.MouseEvent<HTMLElement, MouseEvent> | undefined
   ) => {
-    setSwitchState({
-      checked: !switchState.checked,
-      popconfirmDisabled: !switchState.checked,
-    });
-
     if (onCancel) {
-      onCancel(!switchState.checked, e);
+      onCancel(!watchChecked, e);
     }
   };
 
@@ -77,11 +62,11 @@ export const DoubleConfirmSwitch: React.FC<{
     ...popconfirmProps,
     onConfirm: confirmEnable,
     onCancel: cancelEnable,
-    disabled: switchState.popconfirmDisabled,
+    disabled: watchChecked,
   };
 
   const defaultTooltipProps = {
-    title: `Click to ${switchState.checked ? "Disable" : "Enable"}`,
+    title: `Click to ${watchChecked ? "Disable" : "Enable"}`,
     placement: "left" as TooltipPlacement,
     ...tooltipProps,
   };
@@ -90,14 +75,15 @@ export const DoubleConfirmSwitch: React.FC<{
     checkedChildren: <CheckOutlined />,
     unCheckedChildren: <CloseOutlined />,
     ...switchProps,
-    checked: switchState.checked,
     onClick: handleSwitchClick,
   };
 
   return (
     <Popconfirm {...defaultPopconfirmProps}>
       <Tooltip {...defaultTooltipProps}>
-        <Switch {...defaultSwitchProps} />
+        <Form.Item {...fromItemProps} valuePropName="checked">
+          <Switch {...defaultSwitchProps} />
+        </Form.Item>
       </Tooltip>
     </Popconfirm>
   );

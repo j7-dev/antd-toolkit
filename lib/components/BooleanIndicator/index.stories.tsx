@@ -14,8 +14,6 @@ const meta: Meta<typeof BooleanIndicator> & {
 
 簡單傳入一個 true / false 的值，就可以顯示對應的圖示
 
-\`tooltipProps\` 用法可以參考 <a href="https://ant.design/components/tooltip-cn#api" target="_blank">antd</a>
-
 
 				`,
       },
@@ -24,7 +22,8 @@ const meta: Meta<typeof BooleanIndicator> & {
   tags: ["autodocs"],
   argTypes: {
     tooltipProps: {
-      description: "antd Tooltip props",
+      description:
+        "<a href='https://ant.design/components/tooltip-cn#api' target='_blank'>antd Tooltip props</a>",
     },
   },
 };

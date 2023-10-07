@@ -10,15 +10,18 @@ export const BooleanRadioButton: React.FC<{
   return (
     <Form.Item {...formItemProps}>
       <Radio.Group
-        options={[
-          { label: "ALL", value: undefined as any },
-          { label: <CheckOutlined />, value: true },
-          { label: <CloseOutlined />, value: false },
-        ]}
         optionType="button"
         buttonStyle="solid"
         className={averageWidth ? `w-avg` : ""}
-      />
+      >
+        <Radio.Button value={undefined}>ALL</Radio.Button>
+        <Radio.Button value={true}>
+          <CheckOutlined />
+        </Radio.Button>
+        <Radio.Button value={false}>
+          <CloseOutlined />
+        </Radio.Button>
+      </Radio.Group>
     </Form.Item>
   );
 };

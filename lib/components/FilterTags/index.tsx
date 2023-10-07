@@ -5,6 +5,7 @@ import { CloseCircleOutlined } from "@ant-design/icons";
 
 export const FilterTags: React.FC<{ form?: FormInstance }> = ({ form }) => {
   const searchValues = form ? form.getFieldsValue() : {};
+  console.log("⭐  searchValues:", searchValues);
   const handleClearSearchProps = (key: string) => () => {
     form?.setFieldValue([key], undefined);
     form?.submit();
