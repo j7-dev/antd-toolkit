@@ -3,16 +3,9 @@
   "version": "0.0.19",
   "private": false,
   "type": "module",
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "style": "dist/styles.css",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "import": "./dist/index.js"
-    },
-    "./css": "./dist/style.css"
-  },
+  "main": "dist/main.js",
+  "module": "dist/main.js",
+  "types": "dist/main.d.ts",
   "files": [
     "dist"
   ],
@@ -33,25 +26,14 @@
   "homepage": "https://github.com/j7-dev/antd-utility#readme",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc --p ./tsconfig-build.json && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
   "dependencies": {
-    "@refinedev/antd": "^5.36.6",
-    "@refinedev/core": "^4.42.4",
-    "antd": "^5.9.4",
-    "currency-symbol-map": "^5.1.0",
-    "lodash-es": "^4.17.21",
-    "nanoid": "^5.0.1",
-    "react": "^18.2.0",
-    "react-countdown": "^2.3.5",
-    "react-dom": "^18.2.0",
-    "react-highlight-words": "^0.20.0",
-    "storybook": "^7.4.6",
-    "vite-plugin-dts": "^3.6.0"
+    "storybook": "^7.4.6"
   },
   "devDependencies": {
     "@rollup/plugin-alias": "^5.0.0",
@@ -78,6 +60,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
     "eslint-plugin-storybook": "^0.6.14",
+    "glob": "^10.3.10",
     "postcss": "^8.4.31",
     "postcss-import": "^15.1.0",
     "postcss-nesting": "^12.0.1",
@@ -90,7 +73,34 @@
     "typescript": "^5.0.2",
     "unplugin-vue-components": "^0.25.2",
     "vite": "^4.4.5",
-    "vite-tsconfig-paths": "^4.2.1"
+    "vite-plugin-dts": "^3.6.0",
+    "vite-plugin-lib-inject-css": "^1.3.0",
+    "vite-tsconfig-paths": "^4.2.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "@refinedev/antd": "^5.36.6",
+    "@refinedev/core": "^4.42.4",
+    "antd": "^5.9.4",
+    "currency-symbol-map": "^5.1.0",
+    "lodash-es": "^4.17.21",
+    "nanoid": "^5.0.1",
+    "react-countdown": "^2.3.5",
+    "react-highlight-words": "^0.20.0"
   },
-  "packageManager": "yarn@1.22.19"
+  "packageManager": "yarn@1.22.19",
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "@refinedev/antd": "^5.36.6",
+    "@refinedev/core": "^4.42.4",
+    "antd": "^5.9.4",
+    "currency-symbol-map": "^5.1.0",
+    "lodash-es": "^4.17.21",
+    "nanoid": "^5.0.1",
+    "react-countdown": "^2.3.5",
+    "react-highlight-words": "^0.20.0"
+  },
+  "sideEffects": [
+    "**/*.css"
+  ]
 }
