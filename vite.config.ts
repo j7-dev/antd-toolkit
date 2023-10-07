@@ -43,6 +43,12 @@ export default defineConfig({
         "nanoid",
         "react-countdown",
         "react-highlight-words",
+        "@storybook/builder-manager@7.4.6",
+        "@storybook/cli@7.4.6",
+        "@storybook/codemod@7.4.6",
+        "@storybook/core-server@7.4.6",
+        "@storybook/docs-mdx@0.1.0",
+        "@storybook/preview-api@7.4.6",
       ],
       input: Object.fromEntries(
         glob.sync("lib/**/*.{ts,tsx}").map((file) => [
