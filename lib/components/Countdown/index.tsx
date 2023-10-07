@@ -5,43 +5,34 @@ import "./styles.scss";
 const CountdownDigit: FC<{ countdownProps: CountdownRenderProps }> = ({
   countdownProps,
 }) => {
-  const { days, hours, minutes, seconds } = countdownProps;
-  const dayLength = days < 10 ? 2 : days.toString().length;
-  const dayArr = days.toString().padStart(2, "0").split("");
-  const timeArr = `${hours.toString().padStart(2, "0")}${minutes
-    .toString()
-    .padStart(2, "0")}${seconds.toString().padStart(2, "0")}`.split("");
+  const { formatted } = countdownProps;
+  const timeUnits = Object.keys(formatted).map((timeUnit) =>
+    formatted[timeUnit as keyof typeof formatted].split("")
+  );
 
   return (
     <div
-      className="au_countdown grid gap-x-2 gap-y-4"
+      className="au_countdown grid gap-x-3 md:gap-x-8 gap-y-4"
       style={{
-        gridTemplateColumns: `repeat(${dayLength + 6}, minmax(0, 1fr))`,
+        gridTemplateColumns: `repeat(4, minmax(0, 1fr))`,
       }}
     >
-      {dayArr.map((number, index) => (
-        <div key={`day-${index}`} className="au_countdown_digit">
-          {number}
-        </div>
-      ))}
-      {timeArr.map((number, index) => (
-        <>
-          <div key={`time-${index}`} className="au_countdown_digit">
-            {number}
+      {timeUnits.map((timeUnitArr, i) => {
+        return (
+          <div key={`_${i}`} className="grid gap-x-1 md:gap-x-2 grid-cols-2">
+            {timeUnitArr.map((number, j) => (
+              <div key={`_${i}_${j}`} className="au_countdown_digit">
+                {number}
+              </div>
+            ))}
           </div>
-        </>
-      ))}
-      <div
-        className="text-center text-xs"
-        style={{
-          gridColumn: `span ${dayLength} / span ${dayLength}`,
-        }}
-      >
-        Days
-      </div>
-      <div className="col-span-2 text-center text-xs">Hours</div>
-      <div className="col-span-2 text-center text-xs">Minutes</div>
-      <div className="col-span-2 text-center text-xs">Seconds</div>
+        );
+      })}
+
+      <div className="text-center text-xs">Days</div>
+      <div className="text-center text-xs">Hours</div>
+      <div className="text-center text-xs">Minutes</div>
+      <div className="text-center text-xs">Seconds</div>
     </div>
   );
 };

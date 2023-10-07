@@ -22,6 +22,7 @@ const meta: Meta<typeof Countdown> & {
 
 🔲 不同 style 選擇
 
+🔲 可以用 emotion 暴露一些 style 變數出來
 
 				`, // 可以寫 markdown
       },
