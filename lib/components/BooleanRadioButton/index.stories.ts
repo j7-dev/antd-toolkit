@@ -16,20 +16,29 @@ const meta: Meta<typeof BooleanRadioButton> & {
 
 通常用於 Filter 組件表單，可以搜尋 ALL / TRUE / FALSE
 
-如果選擇 ALL， form.getFieldValue() 時會回傳 undefined
+如果選擇 ALL， \`form.getFieldValue()\` 時會回傳 undefined
 
 接受 \`formItemProps\` 用法可以參考 <a href="https://ant.design/components/form-cn#formitem" target="_blank">antd</a>
 
 
 				`, // 可以寫 markdown
       },
-      toc: false,
     },
   },
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/react/writing-docs/autodocs
   tags: ["autodocs"],
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-  argTypes: {},
+  argTypes: {
+    formItemProps: {
+      description: "antd Form.Item props",
+    },
+    averageWidth: {
+      description: "是否平均寬度，否寬度為 auto",
+      control: {
+        type: "boolean",
+      },
+    },
+  },
 };
 
 export default meta;

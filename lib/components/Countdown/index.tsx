@@ -1,6 +1,5 @@
 import React, { FC } from "react";
 import RcCountdown, { CountdownRenderProps } from "react-countdown";
-import dayjs, { Dayjs } from "dayjs";
 import "./styles.scss";
 
 const CountdownDigit: FC<{ countdownProps: CountdownRenderProps }> = ({
@@ -48,26 +47,26 @@ const CountdownDigit: FC<{ countdownProps: CountdownRenderProps }> = ({
 };
 
 export const Countdown: FC<{
-  toTime: Dayjs;
+  date: number;
   title?: React.ReactNode;
   className?: string;
   width?: string | number;
-}> = ({ toTime, title, className = "text-center", width }) => {
-  if (!(toTime instanceof dayjs)) {
+}> = ({ date, title, className = "text-center", width }) => {
+  if (date.toString().length !== 13) {
     return (
       <div className="text-center">
         <p>OOPS! 出錯拉</p>
-        <p>toTime 請輸入 dayjs 物件格式</p>
+        <p>date 請輸入 毫秒(13位) 數字</p>
       </div>
     );
   }
 
   return (
-    <div className={className ? className : ""} style={width ? { width } : {}}>
+    <div className={className} style={width ? { width } : {}}>
       {title && title}
       <div>
         <RcCountdown
-          date={Date.now() + toTime.valueOf() - Date.now()}
+          date={Date.now() + date - Date.now()}
           renderer={(props) => <CountdownDigit countdownProps={props} />}
         />
       </div>

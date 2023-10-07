@@ -25,7 +25,6 @@ const meta: Meta<typeof Countdown> & {
 
 				`, // 可以寫 markdown
       },
-      toc: false,
     },
   },
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/react/writing-docs/autodocs
@@ -33,6 +32,14 @@ const meta: Meta<typeof Countdown> & {
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
     width: { control: { type: "range", min: 400, max: 1200, step: 10 } },
+    title: {
+      control: {
+        type: "text",
+      },
+    },
+    date: {
+      description: "毫秒數字，共 13 位",
+    },
   },
 };
 
@@ -41,19 +48,29 @@ type Story = StoryObj<typeof Countdown>;
 
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
 
-export const AverageWidth: Story = {
-  name: "一般用法",
+export const NotExpired: Story = {
+  name: "未到期",
   args: {
-    toTime: dayjs().endOf("day"),
+    date: dayjs().endOf("day").valueOf(),
     title: <p className="text-xl text-center font-bold">距離晚上 12 點還有</p>,
     width: 800,
     className: "",
   },
 };
-export const AutoWidth: Story = {
+export const Expired: Story = {
+  name: "已到期",
+  args: {
+    date: dayjs().startOf("day").valueOf(),
+    title: <p className="text-xl text-center font-bold">距離晚上 12 點還有</p>,
+    width: 800,
+    className: "",
+  },
+};
+
+export const Error: Story = {
   name: "錯誤處理，型別錯誤",
   args: {
-    toTime: "2025-12-12",
+    date: 123,
     title: "距離晚上 12 點還有",
     width: 600,
     className: "",

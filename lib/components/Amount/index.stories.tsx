@@ -24,18 +24,10 @@ const meta: Meta<typeof Amount> & {
 
 				`, // 可以寫 markdown
       },
-      toc: false,
     },
   },
   tags: ["autodocs"],
   argTypes: {
-    amount: {
-      control: {
-        type: "number",
-        min: 0,
-        step: 1000,
-      },
-    },
     currency: {
       control: {
         type: "text",
@@ -45,12 +37,6 @@ const meta: Meta<typeof Amount> & {
       control: {
         type: "boolean",
         defaultValue: false,
-      },
-    },
-    className: {
-      control: {
-        type: "text",
-        placeholder: "請輸入額外的 class",
       },
     },
   },
