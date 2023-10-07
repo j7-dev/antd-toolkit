@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  important: true,
+  important: false,
   corePlugins: {
     preflight: false,
   },
