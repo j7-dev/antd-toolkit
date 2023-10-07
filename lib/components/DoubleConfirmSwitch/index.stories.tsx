@@ -16,6 +16,8 @@ const meta: Meta<typeof DoubleConfirmSwitch> & {
 
 加強版 Switch 組件，整合 Tooltip 顯示以及確認提問
 
+可以依照需求自己修改 Props 來改外觀
+
 可以依照需求自己加入回調函數
 
 				`, // 可以寫 markdown

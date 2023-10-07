@@ -17,10 +17,10 @@ const meta: Meta<typeof DateTime> & {
 
 可以透過傳入 \`dateProps\` 與 \`timeProps\` 來自訂 icon 與 format，型別如下
 
-\`\`\`
+\`\`\`typescript
 type TDateProps = {
   icon?: React.ReactNode;
-  format?: string;
+  format?: string; // ex: "YYYY-MM-DD"
 };
 \`\`\`
 

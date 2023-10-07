@@ -16,7 +16,11 @@ const meta: Meta<typeof BooleanRadioButton> & {
 
 通常用於 Filter 組件表單，可以搜尋 ALL / TRUE / FALSE
 
-如果選擇 ALL， \`form.getFieldValue()\` 時會回傳 undefined
+如果選擇 ALL， \`form.getFieldValue()\` 時會回傳 \`undefined\`
+
+#### 未來優化:
+
+🔲 加入 Radio.Group Props
 
 
 

@@ -17,7 +17,7 @@ export const DateTime: React.FC<{
     return (
       <div className="text-center">
         <p>OOPS! 出錯拉</p>
-        <p>toTime 請輸入 毫秒(13位) 數字</p>
+        <p>date 請輸入 毫秒(13位) 數字</p>
       </div>
     );
   }
