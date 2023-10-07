@@ -48,8 +48,9 @@ export const DoubleConfirmSwitch: React.FC<{
   const cancelEnable = (
     e: React.MouseEvent<HTMLElement, MouseEvent> | undefined
   ) => {
+    form.setFieldValue(fromItemProps?.name, false);
     if (onCancel) {
-      onCancel(!watchChecked, e);
+      onCancel(watchChecked, e);
     }
   };
 
