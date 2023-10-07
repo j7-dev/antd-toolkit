@@ -16,16 +16,7 @@ const meta: Meta<typeof DoubleConfirmSwitch> & {
 
 加強版 Switch 組件，整合 Tooltip 顯示以及確認提問
 
-如果選擇 ALL， \`form.getFieldValue()\` 時會回傳 undefined
-
-\`formItemProps\` 用法可以參考 <a >antd</a>
-
-\`popconfirmProps\` 用法可以參考 <a href="https://ant.design/components/form-cn#formitem" target="_blank">antd</a>
-
-\`tooltipProps\` 用法可以參考 <a href='https://ant.design/components/form-cn#formitem' target='_blank'>antd</a>
-
-\`switchProps\` 用法可以參考 <a href='https://ant.design/components/form-cn#formitem' target='_blank'>antd</a>
-
+可以依照需求自己加入回調函數
 
 				`, // 可以寫 markdown
       },
