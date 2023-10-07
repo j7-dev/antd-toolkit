@@ -1,4 +1,4 @@
-import { defineConfig } from "vite";
+import { defineConfig, UserConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tsconfigPaths from "vite-tsconfig-paths";
 import alias from "@rollup/plugin-alias";
@@ -8,23 +8,24 @@ import { extname, relative, resolve } from "path";
 import { fileURLToPath } from "node:url";
 import { glob } from "glob";
 
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [
-    alias(),
-    react(),
-    tsconfigPaths(),
-    libInjectCss(),
-    dts({ include: ["lib"] }),
-  ],
+// if(process.env.NODE_ENV === "development") {
+console.log("⭐  process.env.BUILD_ENV:", process.env.BUILD_ENV);
+
+const isBuildForStoryBook = process.env.BUILD_ENV === "storybook";
+
+const defaultPlugins = [alias(), react(), tsconfigPaths()];
+const plugins = isBuildForStoryBook
+  ? defaultPlugins
+  : [...defaultPlugins, libInjectCss(), dts({ include: ["lib"] })];
+
+const config: UserConfig = {
+  plugins,
   resolve: {
     alias: {
       "@": resolve(__dirname, "lib"),
     },
   },
   build: {
-    // target: "esnext", // 目標環境，可以根據需要調整
-    // outDir: "dist", // 輸出目錄
     copyPublicDir: false,
     lib: {
       entry: resolve(__dirname, "lib/main.ts"),
@@ -68,4 +69,11 @@ export default defineConfig({
       },
     },
   },
-});
+};
+
+if (isBuildForStoryBook) {
+  delete config.build;
+}
+
+// https://vitejs.dev/config/
+export default defineConfig(config);
