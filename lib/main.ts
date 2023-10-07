@@ -4,6 +4,6 @@ export function helloAnything(thing: string): string {
   return `Hello ${thing}!`;
 }
 
-export * from "../src/components/Amount";
-export * from "../src/components/BooleanIndicator";
-export * from "../src/components/LoadingCard";
+export * from "./components/Amount";
+export { BooleanIndicator } from "./components/BooleanIndicator";
+export * from "./components/LoadingCard";
