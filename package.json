@@ -1,5 +1,5 @@
 {
-  "name": "antd-utility",
+  "name": "antd-toolkit",
   "version": "0.1.8",
   "private": false,
   "type": "module",
@@ -18,12 +18,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/j7-dev/antd-utility"
+    "url": "https://github.com/j7-dev/antd-toolkit"
   },
   "bugs": {
-    "url": "https://github.com/j7-dev/antd-utility/issues"
+    "url": "https://github.com/j7-dev/antd-toolkit/issues"
   },
-  "homepage": "https://github.com/j7-dev/antd-utility#readme",
+  "homepage": "https://github.com/j7-dev/antd-toolkit#readme",
   "scripts": {
     "dev": "vite",
     "build": "tsc --p ./tsconfig-build.json && vite build",
