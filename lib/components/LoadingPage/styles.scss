@@ -132,7 +132,7 @@ $duration: 10s;
 
 	@for $i from 0 through 7 {
 		&:nth-of-type(#{$i}) {
-			animation-delay: -calc($duration / 7) * $i;
+			animation-delay: calc($duration / 7) * $i * -1;
 		}
 	}
 }
