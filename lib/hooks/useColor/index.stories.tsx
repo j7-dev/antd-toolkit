@@ -1,6 +1,6 @@
 import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Title, Subtitle, Description, Stories } from "@storybook/blocks";
+import { Title, Subtitle, Description } from "@storybook/blocks";
 
 import { Components } from "./Components";
 
