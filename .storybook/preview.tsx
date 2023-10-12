@@ -18,7 +18,8 @@ const preview: Preview = {
     docs: {
       toc: {
         title: "目錄",
-        disable: true,
+        disable: false,
+        headingSelector: "h1, h2, h3, h4, h5, h6",
       },
       page: () => (
         <>
@@ -39,6 +40,15 @@ const preview: Preview = {
         text: /className$/,
         number: /amount$/,
         object: /^[a-zA-Z]*[Pp]rops$/,
+      },
+    },
+    status: {
+      statuses: {
+        dev: {
+          color: "#c41d7f",
+          background: "#fff0f6",
+          description: "組件 / 文件還在開發中",
+        },
       },
     },
   },

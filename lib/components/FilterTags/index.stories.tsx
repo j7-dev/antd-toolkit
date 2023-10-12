@@ -9,6 +9,9 @@ const meta: Meta<typeof FilterTags> & {
   title: "表單控件/REFINEDEV✨/FilterTags",
   component: FilterTags,
   parameters: {
+    status: {
+      type: "dev",
+    },
     layout: "centered",
     docs: {
       description: {

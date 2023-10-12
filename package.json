@@ -44,6 +44,7 @@
     "storybook": "^7.4.6"
   },
   "devDependencies": {
+    "@etchteam/storybook-addon-status": "^4.2.4",
     "@rollup/plugin-alias": "^5.0.0",
     "@rollup/plugin-typescript": "^8.2.1",
     "@storybook/addon-essentials": "7.4.6",

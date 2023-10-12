@@ -1376,6 +1376,21 @@
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.51.0.tgz#6d419c240cfb2b66da37df230f7e7eef801c32fa"
   integrity sha512-HxjQ8Qn+4SI3/AFv6sOrDB+g6PpUTDwSJiQqOrnneEk8L71161srI9gjzzZvYVbzHiVg/BvcH95+cK/zfIt4pg==
 
+"@etchteam/storybook-addon-status@^4.2.4":
+  version "4.2.4"
+  resolved "https://registry.yarnpkg.com/@etchteam/storybook-addon-status/-/storybook-addon-status-4.2.4.tgz#607e0fe230f5befae8b6e6b9c566eb07c296def8"
+  integrity sha512-WkSz82WPqcqOBjB6MkLED4kIZU6jX61skBDh+/D8cedvSEQnPhQVMfxO0fnnzwhDsbqR7IXpPQPGx3hHPpi54A==
+  dependencies:
+    "@storybook/api" "^7.0.9"
+    "@storybook/client-logger" "^7.0.9"
+    "@storybook/components" "^7.0.9"
+    "@storybook/core-events" "^7.0.9"
+    "@storybook/manager-api" "^7.0.9"
+    "@storybook/theming" "^7.0.9"
+    lodash "^4.17.21"
+    react "18.2.0"
+    react-dom "^18.2.0"
+
 "@fal-works/esbuild-plugin-global-externals@^2.1.2":
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/@fal-works/esbuild-plugin-global-externals/-/esbuild-plugin-global-externals-2.1.2.tgz#c05ed35ad82df8e6ac616c68b92c2282bd083ba4"
@@ -2343,6 +2358,14 @@
     memoizerific "^1.11.3"
     prop-types "^15.7.2"
 
+"@storybook/api@^7.0.9":
+  version "7.4.6"
+  resolved "https://registry.yarnpkg.com/@storybook/api/-/api-7.4.6.tgz#5965b5ebf6c1c67b433a22c2acfc47be3aa72019"
+  integrity sha512-mnkHs2WI3/7vEUk+Bo1ZlQDp5vJDtoFSCFP5iae3YyVBbnjiI6oYlMZ14KgeizFULk3VaDv6/BdiynG1RkdO4Q==
+  dependencies:
+    "@storybook/client-logger" "7.4.6"
+    "@storybook/manager-api" "7.4.6"
+
 "@storybook/blocks@7.4.6":
   version "7.4.6"
   resolved "https://registry.yarnpkg.com/@storybook/blocks/-/blocks-7.4.6.tgz#03134130fa20d6c36c6985008bc2c38892c5b8f5"
@@ -2478,7 +2501,7 @@
     ts-dedent "^2.0.0"
     util-deprecate "^1.0.2"
 
-"@storybook/client-logger@7.4.6":
+"@storybook/client-logger@7.4.6", "@storybook/client-logger@^7.0.9":
   version "7.4.6"
   resolved "https://registry.yarnpkg.com/@storybook/client-logger/-/client-logger-7.4.6.tgz#3346f3ae51abb3ce61bf1a7d083d32f27b8f718f"
   integrity sha512-XDw31ZziU//86PKuMRnmc+L/G0VopaGKENQOGEpvAXCU9IZASwGKlKAtcyosjrpi+ZiUXlMgUXCpXM7x3b1Ehw==
@@ -2505,7 +2528,7 @@
     prettier "^2.8.0"
     recast "^0.23.1"
 
-"@storybook/components@7.4.6":
+"@storybook/components@7.4.6", "@storybook/components@^7.0.9":
   version "7.4.6"
   resolved "https://registry.yarnpkg.com/@storybook/components/-/components-7.4.6.tgz#e804407bd3a047e9f6026edfbbe188244661b55a"
   integrity sha512-nIRBhewAgrJJVafyCzuaLx1l+YOfvvD5dOZ0JxZsxJsefOdw1jFpUqUZ5fIpQ2moyvrR0mAUFw378rBfMdHz5Q==
@@ -2558,7 +2581,7 @@
     resolve-from "^5.0.0"
     ts-dedent "^2.0.0"
 
-"@storybook/core-events@7.4.6":
+"@storybook/core-events@7.4.6", "@storybook/core-events@^7.0.9":
   version "7.4.6"
   resolved "https://registry.yarnpkg.com/@storybook/core-events/-/core-events-7.4.6.tgz#f0b652c623c1afebda42d1702d631cecc1c137bf"
   integrity sha512-r5vrE+32lwrJh1NGFr1a0mWjvxo7q8FXYShylcwRWpacmL5NTtLkrXOoJSeGvJ4yKNYkvxQFtOPId4lzDxa32w==
@@ -2682,7 +2705,7 @@
     "@storybook/global" "^5.0.0"
     "@storybook/preview-api" "7.4.6"
 
-"@storybook/manager-api@7.4.6":
+"@storybook/manager-api@7.4.6", "@storybook/manager-api@^7.0.9":
   version "7.4.6"
   resolved "https://registry.yarnpkg.com/@storybook/manager-api/-/manager-api-7.4.6.tgz#e74bd0a0a983d6b9b7f66dfe0d94d8465f5e7a34"
   integrity sha512-inrm3DIbCp8wjXSN/wK6e6i2ysQ/IEmtC7IN0OJ7vdrp+USCooPT448SQTUmVctUGCFmOU3fxXByq8g77oIi7w==
@@ -2826,7 +2849,7 @@
     "@testing-library/user-event" "^14.4.0"
     ts-dedent "^2.2.0"
 
-"@storybook/theming@7.4.6":
+"@storybook/theming@7.4.6", "@storybook/theming@^7.0.9":
   version "7.4.6"
   resolved "https://registry.yarnpkg.com/@storybook/theming/-/theming-7.4.6.tgz#72f7e42a57347d84128cef9abfba5ac1a810118e"
   integrity sha512-HW77iJ9ptCMqhoBOYFjRQw7VBap+38fkJGHP5KylEJCyYCgIAm2dEcQmtWpMVYFssSGcb6djfbtAMhYU4TL4Iw==
@@ -7749,7 +7772,7 @@ react-style-singleton@^2.2.1:
     invariant "^2.2.4"
     tslib "^2.0.0"
 
-react@^18.2.0:
+react@18.2.0, react@^18.2.0:
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/react/-/react-18.2.0.tgz#555bd98592883255fa00de14f1151a917b5d77d5"
   integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==

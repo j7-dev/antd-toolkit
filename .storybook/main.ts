@@ -8,6 +8,7 @@ const config: StorybookConfig = {
     "@storybook/addon-onboarding",
     "@storybook/addon-interactions",
     "@storybook/addon-themes",
+    "@etchteam/storybook-addon-status",
   ],
   framework: {
     name: "@storybook/react-vite",
@@ -22,7 +23,8 @@ const config: StorybookConfig = {
     ${head}
 
 		<style>
-		.sidebar-container a[id^="hooks-"]:not([id$="使用手冊"]){
+		.sidebar-container a[id^="hooks-"]:not([id$="使用手冊"]),
+		.sidebar-container a[id^="stories-example-"]{
 			display: none !important;
 		}
 		</style>
