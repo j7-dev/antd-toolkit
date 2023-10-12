@@ -17,5 +17,15 @@ const config: StorybookConfig = {
     autodocs: "tag",
     defaultName: "使用手冊",
   },
+  // 隱藏 HOOKS 底下的 story
+  managerHead: (head) => `
+    ${head}
+
+		<style>
+		.sidebar-container a[id^="hooks-"]:not([id$="使用手冊"]){
+			display: none !important;
+		}
+		</style>
+  `,
 };
 export default config;
