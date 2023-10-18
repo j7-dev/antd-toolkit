@@ -24,7 +24,9 @@ const config: StorybookConfig = {
 
 		<style>
 		.sidebar-container a[id^="hooks-"]:not([id$="使用手冊"]),
-		.sidebar-container a[id^="stories-example-"]{
+		.sidebar-container a[id^="functions-"]:not([id$="使用手冊"]),
+		.sidebar-container a[id^="stories-example-"],
+		.sidebar-container #stories{
 			display: none !important;
 		}
 		</style>

@@ -69,10 +69,11 @@ export const General: Story = {
       name: "isActivated",
     },
   },
-
-  render: (args) => (
-    <Form>
-      <DoubleConfirmSwitch {...args} />
-    </Form>
-  ),
+  decorators: [
+    (Story) => (
+      <Form>
+        <Story />
+      </Form>
+    ),
+  ],
 };

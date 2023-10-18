@@ -1,128 +1,62 @@
 import { Meta } from "@storybook/blocks";
 
-export const RightArrow = () => <svg
+export const RightArrow = () => (
+  <svg
     viewBox="0 0 14 14"
     width="8px"
     height="14px"
     style={{
-      marginLeft: '4px',
-      display: 'inline-block',
-      shapeRendering: 'inherit',
-      verticalAlign: 'middle',
-      fill: 'currentColor',
-      'path fill': 'currentColor'
+      marginLeft: "4px",
+      display: "inline-block",
+      shapeRendering: "inherit",
+      verticalAlign: "middle",
+      fill: "currentColor",
+      "path fill": "currentColor",
     }}
->
-  <path d="m11.1 7.35-5.5 5.5a.5.5 0 0 1-.7-.7L10.04 7 4.9 1.85a.5.5 0 1 1 .7-.7l5.5 5.5c.2.2.2.5 0 .7Z" />
-</svg>
+  >
+    <path d="m11.1 7.35-5.5 5.5a.5.5 0 0 1-.7-.7L10.04 7 4.9 1.85a.5.5 0 1 1 .7-.7l5.5 5.5c.2.2.2.5 0 .7Z" />
+  </svg>
+);
 
-<Meta title="開始 🤟" />
-
+<Meta title="一些常用設定項 ⚙️" />
 
 <div className="sb-container">
   <div className='sb-section-title'>
-    ## 開始 🚀
+    ## tailwind.config.js
 
-    此組件庫主要包含
-		1. 封裝後的 ant design 組件 & hooks
-		2. 封裝後的 refine 的組件 & hooks
-		3. 一些 codepen 上看到的組件
+    		```js
 
-	  ## 安裝 ⬇️
+    		export default {
+    			important: false,
+    			corePlugins: {
+    				preflight: false,
+    			},
+    				content: ["./lib/**/*.{ts,tsx,js,jsx}"],
+    			darkMode: ["class", '[data-mode="dark"]'],
+    			theme: {
+    				extend: {
+    					screens: {
+    						sm: "414px", // iphone SE
+    						md: "810px", // ipad 直向
+    						lg: "1080px", // ipad 橫向
+    						xl: "1280px", // mac air
+    						xxl: "1440px",
+    					},
+    				},
+    			},
+    			plugins: [],
+    			prefix: "",
+    		};
 
-		```shell
-		npm install antd-toolkit
-		```
+    			```
 
-		然後請自行 import 要使用的組件
-		```tsx
-		import {Amount} from 'antd-toolkit'
-		```
+    	## antd theme
 
-	  ## 如何新增組件
-
-		comming soon
-
-		## 關於組件的 CSS 樣式 🤔
-
-		<br /><br />
-
-		#### # CSS 衝突問題
-
-		組件庫本身是也有 TailwindCSS 的，目前也是預設的寫法
-
-		也就是  `text-xl` 這種
-
-		如果未來開新專案時，新專案也用  `text-xl`  就會產生 **衝突**
-
-		當然預設 Tailwind 跟預設 Tailwind 衝突不管誰贏都沒影響
-
-		但如果是專案有改寫設定呢?
-
-		假設
-
-		組件庫是  `text-xl` 是 `1.25rem`
-
-		我的新專案  `text-xl` 被我用 Tailwind config改掉了  變為  `1.5rem`
-
-		此時產生樣式衝突**聽誰的?** 就要看引入順序
-
-		目前實驗結果是，聽 **組件庫的**
-
-		<br /><br />
-
-		#### # 解決方案
-
-
-		> 方案1: 新專案 Tailwind config 設定 important 就好 ( 現行方案 )
-
-		<span className="at-tag at-tag-info">優點</span>
-
-		\- 這方案簡單粗暴，工最少
-
-		<span className="at-tag at-tag-danger">缺點</span>
-
-		\- 還是會樣式衝突 ( 希望能避免就避免 )
-
-		<br /><br />
-
-		> 方案2: Tailwind 的部分，只寫 `className` 不導出 CSS，非 Tailwind 部分寫 `CSS-in-JS`，也不寫 `SCSS` 因為不導出 CSS
-
-		<span className="at-tag at-tag-info">優點</span>
-
-		\- 可以避免樣式衝突
-
-		<span className="at-tag at-tag-danger">缺點</span>
-
-		\- 新專案必須包含 TailwindCSS 就可以吃新專案的 Tailwind config
-
-		<br /><br />
-
-		> 方案3: 使用 `ant design` 的 `antd-style` 重寫樣式
-
-		這是一個 CSS-in-JS 方案，我認為是最優解，但最花時間， 詳情可以看 <a href="https://ant-design.github.io/antd-style/guide" target="_blank">antd-style 介紹</a><br />
-
-
-		<span className="at-tag at-tag-info">優點</span>
-
-		\- 組件級別的 CSS 完美避免樣式衝突
-
-		\- 可以寫動態調整的 CSS
-
-		\- 可整合 `antd` 主題顏色，透過主題配置修改樣式，讓組件與主題有更高的一致性
-
-		<span className="at-tag at-tag-danger">缺點</span>
-
-		\- 要花比較大的功夫重寫樣式
-
-		\- 前端會有一丟丟的性能開銷，不過問題不大
+    	comming soon
 
   </div>
 
 </div>
-
-
-
 
 <style>
   {`
@@ -281,3 +215,7 @@ export const RightArrow = () => <svg
   }
   `}
 </style>
+
+```
+
+```
