@@ -1,9 +1,10 @@
-import React from "react";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React, { useState } from "react";
 import { isNumber, isString, isNull, isUndefined, isBoolean } from "lodash-es";
 import { keyToWord } from "@/utils";
-import { Empty, Form, Input, Button } from "antd";
+import { Empty, Form, Input } from "antd";
 import { ButtonProps } from "antd/lib";
-import { EditOutlined } from "@ant-design/icons";
+import { ActionButton } from "@/components/ActionButton";
 
 export type TColumn = {
   key: string;
@@ -17,11 +18,6 @@ export type TColumn = {
   ) => React.ReactNode;
 };
 
-const defaultButtonProps = {
-  type: "primary" as ButtonProps["type"],
-  icon: <EditOutlined />,
-};
-
 export const ObjectTable: React.FC<{
   record: {
     [key: string]: any;
@@ -29,12 +25,9 @@ export const ObjectTable: React.FC<{
   editable?: boolean;
   columns?: TColumn[];
   buttonProps?: ButtonProps;
-}> = ({
-  record,
-  columns,
-  editable = false,
-  buttonProps = defaultButtonProps,
-}) => {
+}> = ({ record, columns, editable = false }) => {
+  const [isEditing, setIsEditing] = useState(false);
+
   if (!record) return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />;
 
   const defaultColumns = Object.keys(record)
@@ -67,13 +60,8 @@ export const ObjectTable: React.FC<{
           key,
           title: keyToWord(key),
           dataIndex: key,
-          render: (
-            arr: (string | number)[],
-            rowRecord: any,
-            _k: number,
-            roweditable: boolean
-          ) =>
-            roweditable ? (
+          render: (arr: (string | number)[], rowRecord: any, _k: number) =>
+            editable && isEditing ? (
               <Form.Item
                 className="m-0"
                 name={[key]}
@@ -96,7 +84,7 @@ export const ObjectTable: React.FC<{
     if (render) {
       return render(record?.[dataIndex as string], record, j, editable);
     }
-    return editable ? (
+    return editable && isEditing ? (
       <Form.Item
         className="m-0"
         name={[dataIndex]}
@@ -113,7 +101,10 @@ export const ObjectTable: React.FC<{
     <>
       {editable && (
         <div className="flex justify-end mb-4">
-          <Button {...buttonProps}>編輯</Button>
+          <ActionButton
+            onEdit={() => setIsEditing(true)}
+            onCancel={() => setIsEditing(false)}
+          />
         </div>
       )}
 
