@@ -8,7 +8,7 @@ import { Components } from "./Components";
 const meta: Meta<typeof Components> & {
   argTypes: any;
 } = {
-  title: "FUNCTIONS/common",
+  title: "FUNCTIONS",
   component: Components,
   parameters: {
     // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/react/configure/story-layout
@@ -25,7 +25,7 @@ const meta: Meta<typeof Components> & {
 
 ##### renderHTML
 
-> 將字符轉成 HTML
+> 將 包含 HTML TAG 的 string 轉成 HTML
 
 \`\`\`tsx
 renderHTML('<p>test</p>')
@@ -33,7 +33,9 @@ renderHTML('<p>test</p>')
 
 ##### filterObjKeys
 
-> 過濾 object 的 key
+> 過濾 object 的 key，預設過濾 value 為 \`undefined\` 的 key
+
+> 使用 **遞歸方式** 過濾，因此也適用深層物件
 
 \`\`\`tsx
 // 如果 value === undefined 則刪除這個 key
