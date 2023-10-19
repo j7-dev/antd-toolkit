@@ -1,3 +1,4 @@
+import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { ObjectTable } from "./index";
 import { Form } from "antd";
@@ -77,8 +78,8 @@ export const General: Story = {
   },
 };
 
-export const Editing: Story = {
-  name: "編輯模式",
+export const Editable: Story = {
+  name: "可編輯",
   args: {
     record,
     editable: true,

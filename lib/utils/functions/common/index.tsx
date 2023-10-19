@@ -1,16 +1,7 @@
 import React from "react";
 
-export const windowOuterWidth = window?.outerWidth;
-
 export const renderHTML = (rawHTML: string) =>
   React.createElement("div", { dangerouslySetInnerHTML: { __html: rawHTML } });
-
-export const handleClearZero = (e: React.MouseEvent<HTMLInputElement>) => {
-  const target = e.target as HTMLInputElement;
-  if (target.value === "0") {
-    target.value = "";
-  }
-};
 
 export const getCopyableJson = (variable: any) => {
   const jsonStringStrippedEscapeC = JSON.stringify(
