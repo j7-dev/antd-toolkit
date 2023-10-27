@@ -25,19 +25,7 @@ const meta: Meta<typeof BreathLight> & {
     },
   },
   tags: ["autodocs"],
-  argTypes: {
-    currency: {
-      control: {
-        type: "text",
-      },
-    },
-    symbol: {
-      control: {
-        type: "boolean",
-        defaultValue: false,
-      },
-    },
-  },
+  argTypes: {},
 };
 
 export default meta;
