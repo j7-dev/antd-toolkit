@@ -26,7 +26,7 @@ export function FilterTags<T = BaseRecord>({ form, keyFormatter }:{
 
           if (
             Array.isArray(searchValues?.[key]) &&
-            searchValues[key].every((item: any) => item instanceof dayjs)
+            (searchValues?.[key] as unknown[])?.every((item: unknown) => item instanceof dayjs)
           ) {
             return (
               <Tag
@@ -55,7 +55,7 @@ export function FilterTags<T = BaseRecord>({ form, keyFormatter }:{
                 closeIcon={<CloseCircleOutlined />}
                 onClose={handleClearSearchProps(key as string)}
               >
-                {keyFormatter ? keyFormatter(key) : key as string}: {searchValues?.[key].toString()}
+                {keyFormatter ? keyFormatter(key) : key as string}: {searchValues?.[key]?.toString()}
               </Tag>
             );
           }
@@ -69,7 +69,7 @@ export function FilterTags<T = BaseRecord>({ form, keyFormatter }:{
               closeIcon={<CloseCircleOutlined />}
               onClose={handleClearSearchProps(key as string)}
             >
-             {keyFormatter ? keyFormatter(key) : key as string}: {searchValues?.[key].toString()}
+             {keyFormatter ? keyFormatter(key) : key as string}: {searchValues?.[key]?.toString()}
             </Tag>
           );
         })}

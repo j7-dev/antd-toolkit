@@ -33,12 +33,12 @@
     "build-storybook": "cross-env BUILD_ENV=storybook storybook build"
   },
   "dependencies": {
-    "@refinedev/antd": "^5.36.6",
-    "@refinedev/core": "^4.42.4",
-    "antd": "^5.9.4",
+    "@refinedev/antd": "^5.37.6",
+    "@refinedev/core": "^4.49.0",
+    "antd": "^5.16.0",
     "currency-symbol-map": "^5.1.0",
     "lodash-es": "^4.17.21",
-    "nanoid": "^5.0.1",
+    "nanoid": "^5.0.6",
     "react-countdown": "^2.3.5",
     "react-highlight-words": "^0.20.0",
     "storybook": "7.4.6"
