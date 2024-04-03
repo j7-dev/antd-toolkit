@@ -31,10 +31,14 @@ Filter 組件的 FilterTag 顯示
   },
   tags: ["autodocs"],
   argTypes: {
-    formItemProps: {
+    form: {
       description:
-        "<a href='https://ant.design/components/form-cn#formitem' target='_blank'>antd Form.Item props</a>",
+        "antd form instance"
     },
+		keyFormatter: {
+			description:
+				"key 轉換函數，將 key 轉換成顯示的文字，預設為 key 本身，也可用於多語系"
+		}
   },
 };
 

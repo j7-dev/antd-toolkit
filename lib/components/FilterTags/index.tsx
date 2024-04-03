@@ -2,15 +2,20 @@ import React from "react";
 import { Tag, FormInstance } from "antd";
 import dayjs, { Dayjs } from "dayjs";
 import { CloseCircleOutlined } from "@ant-design/icons";
+import { BaseRecord } from "@refinedev/core";
 
-export const FilterTags: React.FC<{ form?: FormInstance }> = ({ form }) => {
-  const searchValues = form ? form.getFieldsValue() : {};
+
+export function FilterTags<T = BaseRecord>({ form, keyFormatter }:{
+	form: FormInstance<T>;
+	keyFormatter?: (key: (keyof T)) => string;
+}) : React.ReactNode{
+  const searchValues = form.getFieldsValue();
   const handleClearSearchProps = (key: string) => () => {
     form?.setFieldValue([key], undefined);
     form?.submit();
   };
 
-  const searchKeys = Object.keys(searchValues || {});
+  const searchKeys = Object.keys(searchValues || {}) as (keyof T)[];
 
   return (
     <>
@@ -25,14 +30,14 @@ export const FilterTags: React.FC<{ form?: FormInstance }> = ({ form }) => {
           ) {
             return (
               <Tag
-                key={key}
+                key={key as string}
                 bordered={false}
                 color="cyan"
                 className="px-2.5 py-0.5"
                 closeIcon={<CloseCircleOutlined />}
-                onClose={handleClearSearchProps(key)}
+                onClose={handleClearSearchProps(key as string)}
               >
-                {key}:{" "}
+                {keyFormatter ? keyFormatter(key) : key as string}:{" "}
                 {(searchValues[key] as Dayjs[])
                   .map((date) => (date ? date.format("YYYY/MM/DD") : ""))
                   .join(" ~ ")}
@@ -43,31 +48,31 @@ export const FilterTags: React.FC<{ form?: FormInstance }> = ({ form }) => {
           if (typeof searchValues?.[key] === "boolean") {
             return (
               <Tag
-                key={key}
+                key={key as string}
                 bordered={false}
                 color="cyan"
                 className="px-2.5 py-0.5"
                 closeIcon={<CloseCircleOutlined />}
-                onClose={handleClearSearchProps(key)}
+                onClose={handleClearSearchProps(key as string)}
               >
-                {key}: {searchValues?.[key].toString()}
+                {keyFormatter ? keyFormatter(key) : key as string}: {searchValues?.[key].toString()}
               </Tag>
             );
           }
 
           return (
             <Tag
-              key={key}
+              key={key as string}
               bordered={false}
               color="cyan"
               className="px-2.5 py-0.5"
               closeIcon={<CloseCircleOutlined />}
-              onClose={handleClearSearchProps(key)}
+              onClose={handleClearSearchProps(key as string)}
             >
-              {key}: {searchValues?.[key]}
+             {keyFormatter ? keyFormatter(key) : key as string}: {searchValues?.[key].toString()}
             </Tag>
           );
         })}
     </>
   );
-};
+}
