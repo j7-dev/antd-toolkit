@@ -18,12 +18,6 @@ const meta: Meta<typeof BooleanRadioButton> & {
 
 如果選擇 ALL， \`form.getFieldValue()\` 時會回傳 \`undefined\`
 
-#### 未來優化:
-
-🔲 加入 Radio.Group Props
-
-
-
 				`, // 可以寫 markdown
       },
     },
@@ -36,12 +30,19 @@ const meta: Meta<typeof BooleanRadioButton> & {
       description:
         "<a href='https://ant.design/components/form-cn#formitem' target='_blank'>antd Form.Item props</a>",
     },
+		radioGroupProps:{
+			description:
+			"<a href='https://ant.design/components/radio-cn#radiogroup' target='_blank'>antd Radio.Group props</a>",
+		},
     averageWidth: {
       description: "是否平均寬度，否寬度為 auto",
       control: {
         type: "boolean",
       },
     },
+		label:{
+			description: "覆寫按鈕顯示，可寫入 string 或 ReactNode",
+		}
   },
 };
 
