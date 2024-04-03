@@ -5,9 +5,9 @@ import { CloseCircleOutlined } from "@ant-design/icons";
 import { BaseRecord } from "@refinedev/core";
 
 
-export function FilterTags<T = BaseRecord>({ form, keyFormatter }:{
+export function FilterTags<T = BaseRecord>({ form, keyLabelMapper }:{
 	form: FormInstance<T>;
-	keyFormatter?: (key: (keyof T)) => string;
+	keyLabelMapper?: (key: (keyof T)) => string;
 }) : React.ReactNode{
   const searchValues = form.getFieldsValue();
   const handleClearSearchProps = (key: string) => () => {
@@ -37,7 +37,7 @@ export function FilterTags<T = BaseRecord>({ form, keyFormatter }:{
                 closeIcon={<CloseCircleOutlined />}
                 onClose={handleClearSearchProps(key as string)}
               >
-                {keyFormatter ? keyFormatter(key) : key as string}:{" "}
+                {keyLabelMapper ? keyLabelMapper(key) : key as string}:{" "}
                 {(searchValues[key] as Dayjs[])
                   .map((date) => (date ? date.format("YYYY/MM/DD") : ""))
                   .join(" ~ ")}
@@ -55,7 +55,7 @@ export function FilterTags<T = BaseRecord>({ form, keyFormatter }:{
                 closeIcon={<CloseCircleOutlined />}
                 onClose={handleClearSearchProps(key as string)}
               >
-                {keyFormatter ? keyFormatter(key) : key as string}: {searchValues?.[key]?.toString()}
+                {keyLabelMapper ? keyLabelMapper(key) : key as string}: {searchValues?.[key]?.toString()}
               </Tag>
             );
           }
@@ -69,7 +69,7 @@ export function FilterTags<T = BaseRecord>({ form, keyFormatter }:{
               closeIcon={<CloseCircleOutlined />}
               onClose={handleClearSearchProps(key as string)}
             >
-             {keyFormatter ? keyFormatter(key) : key as string}: {searchValues?.[key]?.toString()}
+             {keyLabelMapper ? keyLabelMapper(key) : key as string}: {searchValues?.[key]?.toString()}
             </Tag>
           );
         })}

@@ -35,7 +35,7 @@ Filter 組件的 FilterTag 顯示
       description:
         "antd form instance"
     },
-		keyFormatter: {
+		keyLabelMapper: {
 			description:
 				"key 轉換函數，將 key 轉換成顯示的文字，預設為 key 本身，也可用於多語系"
 		}
