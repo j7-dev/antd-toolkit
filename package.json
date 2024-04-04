@@ -30,7 +30,8 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "cross-env BUILD_ENV=storybook storybook build"
+    "build-storybook": "cross-env BUILD_ENV=storybook storybook build",
+    "publish:npm": "yarn build && yarn publish && git push"
   },
   "dependencies": {
     "@refinedev/antd": "^5.37.6",
