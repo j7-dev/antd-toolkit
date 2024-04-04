@@ -96,6 +96,38 @@ return (
 
 ```
 
+##### useRowSelection
+
+> 產生 antd Table 的 可選表格 Props
+
+<span className="at-tag at-tag-note">TYPE</span>
+
+```ts
+useRowSelection: <DataType>() => {
+	selectedRowKeys: React.Key[]
+	setSelectedRowKeys: React.SetStateAction<React.Key[]>
+	rowSelection: TableProps<DataType>['rowSelection']
+}
+```
+
+<span className="at-tag at-tag-info">EXAMPLE</span>
+
+```jsx
+
+const { selectedRowKeys, setSelectedRowKeys, rowSelection } = useRowSelection<DataType>();
+
+return (
+	<Table>
+		<Table.Column
+			dataIndex="foo"
+			title="Foo"
+			rowSelection={rowSelection}
+		/>
+	</Table>
+)
+
+```
+
   </div>
 
 </div>

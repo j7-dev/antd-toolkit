@@ -17,19 +17,9 @@ export const BooleanRadioButton: React.FC<{
   averageWidth?: boolean;
 }> = ({ formItemProps, radioGroupProps, averageWidth = true }) => {
 const options = radioGroupProps?.options || defaultOptions;
-const optionType = options.some((option) => typeof option === "object") ? "object" : "primitive";
-
-const getInitialValue = () => {
-	if (optionType === "object") {
-		return (options as TOption[]).find((option) => true !== option?.disabled)?.value;
-	}
-	return options[0];
-}
-
   return (
-    <Form.Item initialValue={getInitialValue()} {...formItemProps}>
+    <Form.Item {...formItemProps}>
       <Radio.Group
-				defaultValue={getInitialValue()}
         optionType="button"
         buttonStyle="solid"
         className={averageWidth ? `w-avg` : ""}
