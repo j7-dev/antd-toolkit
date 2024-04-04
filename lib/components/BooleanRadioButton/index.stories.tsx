@@ -16,7 +16,9 @@ const meta: Meta<typeof BooleanRadioButton> & {
 
 通常用於 Filter 組件表單，可以搜尋 ALL / TRUE / FALSE
 
-如果選擇 ALL， \`form.getFieldValue()\` 時會回傳 \`undefined\`
+帶的 value 分別是 '' / '1' / '0'
+
+可以使用 radioGroupProps 的 options 來自定義 value
 
 				`, // 可以寫 markdown
       },
@@ -40,9 +42,6 @@ const meta: Meta<typeof BooleanRadioButton> & {
         type: "boolean",
       },
     },
-		label:{
-			description: "覆寫按鈕顯示，可寫入 string 或 ReactNode",
-		}
   },
 };
 

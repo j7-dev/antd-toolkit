@@ -3,32 +3,31 @@ import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
 import { Form, Radio, FormItemProps, RadioGroupProps  } from "antd";
 import "./styles.scss";
 
+
+const defaultOptions: Array<{ label: ReactNode; value: string; disabled?: boolean; }> = [
+	{ label: 'ALL', value: '' },
+	{ label: <CheckOutlined />, value: '1' },
+	{ label: <CloseOutlined />, value: '0' }
+]
+
+
 export const BooleanRadioButton: React.FC<{
   formItemProps: FormItemProps;
 	radioGroupProps?:RadioGroupProps;
   averageWidth?: boolean;
-	label?: {
-		all?: ReactNode
-		true?: ReactNode
-		false?: ReactNode
-	}
-}> = ({ formItemProps, radioGroupProps, averageWidth = true, label }) => {
+}> = ({ formItemProps, radioGroupProps, averageWidth = true }) => {
+const options = radioGroupProps?.options || defaultOptions;
+
+
   return (
     <Form.Item {...formItemProps}>
       <Radio.Group
         optionType="button"
         buttonStyle="solid"
         className={averageWidth ? `w-avg` : ""}
+				options={options}
 				{...radioGroupProps}
-      >
-        <Radio.Button value={undefined}>{label?.all || 'ALL'}</Radio.Button>
-        <Radio.Button value={true}>
-				{label?.true || <CheckOutlined />}
-        </Radio.Button>
-        <Radio.Button value={false}>
-				{label?.false || <CloseOutlined />}
-        </Radio.Button>
-      </Radio.Group>
+       />
     </Form.Item>
   );
 };
