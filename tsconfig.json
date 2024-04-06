@@ -40,5 +40,9 @@
 		{
 			"path": "./tsconfig.node.json"
 		}
+	],
+	"files": [
+		"lib/types/env.d.ts",
+		"lib/types/global.d.ts",
 	]
 }
