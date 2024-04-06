@@ -5,28 +5,40 @@ export const renderHTML = (HTMLstring: string) =>
     dangerouslySetInnerHTML: { __html: HTMLstring },
   });
 
-// export const getCopyableJson = (variable: any) => {
-//   const jsonStringStrippedEscapeC = JSON.stringify(
-//     JSON.stringify(variable || "{}")
-//   ).replace(/\\/g, "");
-//   const jsonString = jsonStringStrippedEscapeC.slice(
-//     1,
-//     jsonStringStrippedEscapeC.length - 1
-//   );
+	export const getCopyableJson = (variable: object) => {
+		const jsonStringStrippedEscapeC = JSON.stringify(
+			JSON.stringify(variable || '{}'),
+		).replace(/\\/g, '')
+		const jsonString = jsonStringStrippedEscapeC.slice(
+			1,
+			jsonStringStrippedEscapeC.length - 1,
+		)
 
-//   if (typeof variable === "object") {
-//     const countKeys = Object.keys(variable).length;
+		if (typeof variable === 'object') {
+			const countKeys = Object.keys(variable).length
 
-//     return countKeys === 0 ? "" : jsonString;
-//   }
-//   return variable ? jsonString : "";
-// };
+			return countKeys === 0 ? '' : jsonString
+		}
+		return variable ? jsonString : ''
+	}
 
 export const getQueryString = (name: string) => {
   const urlParams = new URLSearchParams(window.location.search);
   const paramValue = urlParams.get(name);
   return paramValue;
 };
+
+export const getCurrencyString = ({
+  price,
+  symbol = 'NT$',
+}: {
+  price: number | string | undefined
+  symbol?: string
+}) => {
+  if (typeof price === 'undefined') return ''
+  if (typeof price === 'string') return `${symbol} ${price}`
+  return `${symbol} ${price.toString()}`
+}
 
 export const filterObjKeys = (
   obj: object,
@@ -63,3 +75,21 @@ export const keyToWord = (str: string) => {
     );
   }
 };
+
+
+
+export const isUsingBlockEditor =
+  typeof window?.wp !== 'undefined' && typeof window?.wp?.blocks !== 'undefined'
+
+export function removeTrailingSlash(str: string) {
+  if (str.endsWith('/')) {
+    // 如果字符串以斜杠结尾，使用 slice 方法去除最后一个字符
+
+    return str.slice(0, -1)
+  }
+
+  // 否则，返回原字符串
+
+  return str
+}
+

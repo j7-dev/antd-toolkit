@@ -103,11 +103,11 @@ return (
 <span className="at-tag at-tag-note">TYPE</span>
 
 ```ts
-useRowSelection: <DataType>() => {
-	selectedRowKeys: React.Key[]
-	setSelectedRowKeys: React.SetStateAction<React.Key[]>
-	rowSelection: TableProps<DataType>['rowSelection']
-}
+function useRowSelection<T>(): {
+  selectedRowKeys: React.Key[];
+  setSelectedRowKeys: React.Dispatch<React.SetStateAction<React.Key[]>>;
+  rowSelection: TableRowSelection<T>;
+};
 ```
 
 <span className="at-tag at-tag-info">EXAMPLE</span>
@@ -117,11 +117,13 @@ useRowSelection: <DataType>() => {
 const { selectedRowKeys, setSelectedRowKeys, rowSelection } = useRowSelection<DataType>();
 
 return (
-	<Table>
+	<Table
+		rowKey="id"
+		rowSelection={rowSelection}
+	>
 		<Table.Column
 			dataIndex="foo"
 			title="Foo"
-			rowSelection={rowSelection}
 		/>
 	</Table>
 )
