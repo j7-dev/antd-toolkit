@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, Select } from "antd";
 import { FilterTags } from "./index";
 import { BooleanRadioButton } from "@/components/BooleanRadioButton";
 
@@ -25,6 +25,36 @@ const StoryForm = () => {
               label: "Active",
             }}
           />
+					<Form.Item name="skills" label="skills" initialValue={['javascript', 'php', 'react']}>
+					<Select
+      mode="multiple"
+      allowClear
+      style={{ width: '100%' }}
+      placeholder="Please select"
+      options={[
+				{ label: 'JavaScript', value: 'javascript' },
+				{ label: 'PHP', value: 'php' },
+				{ label: 'React', value: 'react' },
+				{ label: 'Vue', value: 'vue'},
+				{ label: 'Angular', value: 'angular'},
+				{ label: 'NodeJS', value: 'nodejs'},
+				{ label: 'Python', value: 'python'},
+				{ label: 'Rust', value: 'rust'},
+				{ label: 'Go', value: 'go'},
+				{ label: 'C', value: 'c'},
+				{ label: 'C++', value: 'c++'},
+				{ label: 'C#', value: 'c#'},
+				{ label: 'Java', value: 'java'},
+				{ label: 'CSS', value: 'css'},
+				{ label: 'HTML', value: 'html'},
+				{ label: 'SQL', value: 'sql'},
+				{ label: 'MongoDB', value: 'mongodb'},
+				{ label: 'SCSS', value: 'scss'},
+				{ label: 'Jest', value: 'jest'},
+			]}
+    />
+          </Form.Item>
+
           <Button htmlType="submit" type="primary">
             篩選
           </Button>
