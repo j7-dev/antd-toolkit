@@ -3,7 +3,7 @@ import { Table, TableProps } from 'antd'
 
 type TableRowSelection<T> = TableProps<T>['rowSelection']
 
-export function useRowSelection<T>(){
+export function useRowSelection<T>(rowSelectionProps?: TableRowSelection<T>){
 
 	const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([])
 
@@ -19,6 +19,7 @@ export function useRowSelection<T>(){
       Table.SELECTION_INVERT,
       Table.SELECTION_NONE,
     ],
+		...rowSelectionProps,
   }
 
 	return {selectedRowKeys, setSelectedRowKeys, rowSelection}
