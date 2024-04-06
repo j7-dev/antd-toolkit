@@ -61,7 +61,7 @@ const StoryForm = () => {
         </Form>
       </div>
 
-      <FilterTags form={form} key={key} />
+      <FilterTags form={form} key={key} booleanKeys={['isActive']} />
     </>
   );
 };
