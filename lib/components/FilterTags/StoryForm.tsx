@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Button, Form, Input, Select } from "antd";
 import { FilterTags } from "./index";
 import { BooleanRadioButton } from "@/components/BooleanRadioButton";
+import { BooleanSegmented } from "@/components/BooleanSegmented";
+
 
 const StoryForm = () => {
   const [form] = Form.useForm();
@@ -23,6 +25,12 @@ const StoryForm = () => {
             formItemProps={{
               name: "isActive",
               label: "Active",
+            }}
+          />
+					<BooleanSegmented
+            formItemProps={{
+              name: "enabled",
+              label: "Enabled",
             }}
           />
 					<Form.Item name="skills" label="skills" initialValue={['javascript', 'php', 'react']}>
