@@ -15,7 +15,7 @@ export function FilterTags<T = BaseRecord>({
   valueLabelMapper?: (key: string) => string;
   booleanKeys?: (keyof T)[];
 }): React.ReactNode {
-  const searchValues = form.getFieldsValue();
+  const searchValues = form?.getFieldsValue();
   const handleClearSearchProps = (key: string) => () => {
     form?.setFieldValue([key], undefined);
     form?.submit();
