@@ -23,6 +23,8 @@ Filter 組件的 FilterTag 顯示
 
 把 \`useTable\` return 的 \`searchFormProps\` 傳入即可使用
 
+但也可以不依賴 refine 單獨使用
+
 
 
 				`, // 可以寫 markdown
@@ -37,7 +39,11 @@ Filter 組件的 FilterTag 顯示
     },
 		keyLabelMapper: {
 			description:
-				"key 轉換函數，將 key 轉換成顯示的文字，預設為 key 本身，也可用於多語系"
+				"key 字串轉換函數，將 key 轉換成顯示的文字，預設為 key 本身，也可用於多語系"
+		},
+		valueLabelMapper: {
+			description:
+				"value 字串轉換函數，將 value 轉換成顯示的文字，預設為 value 本身，也可用於多語系"
 		}
   },
 };

@@ -1,7 +1,6 @@
 import React, { ReactNode } from "react";
 import { CheckOutlined, CloseOutlined, BarsOutlined } from "@ant-design/icons";
 import { Form, Segmented, FormItemProps, SegmentedProps } from "antd";
-import "./styles.scss";
 
 type TOption =
   | string
