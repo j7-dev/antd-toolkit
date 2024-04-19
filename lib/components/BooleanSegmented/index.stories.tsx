@@ -18,7 +18,7 @@ const meta: Meta<typeof BooleanSegmented> & {
 
 帶的 value 分別是 '' / '1' / '0'
 
-可以使用 radioGroupProps 的 options 來自定義 value
+可以使用 segmentedProps 的 options 來自定義 value 與外觀樣式
 
 				`, // 可以寫 markdown
       },
@@ -32,15 +32,13 @@ const meta: Meta<typeof BooleanSegmented> & {
       description:
         "<a href='https://ant.design/components/form-cn#formitem' target='_blank'>antd Form.Item props</a>",
     },
-		radioGroupProps:{
+		segmentedProps:{
 			description:
-			"<a href='https://ant.design/components/radio-cn#radiogroup' target='_blank'>antd Radio.Group props</a>",
+			"<a href='https://ant.design/components/segmented-cn#api' target='_blank'>antd Segmented props</a>",
 		},
-    averageWidth: {
-      description: "是否平均寬度，否寬度為 auto",
-      control: {
-        type: "boolean",
-      },
+    type: {
+      description: "選擇不同的預設樣式種類，如果是從 segmentedProps 自訂 options 進去，此參數將被覆寫",
+      control: 'select', options: ['default', 'text', 'icon', 'vertical']
     },
   },
 };
@@ -50,20 +48,41 @@ type Story = StoryObj<typeof BooleanSegmented>;
 
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
 
-export const AverageWidth: Story = {
-  name: "平均寬度",
+export const Default: Story = {
+  name: "預設樣式",
   args: {
     formItemProps: {
-      className: "w-40",
+      className: "w-80",
     },
+		type: 'default',
   },
 };
-export const AutoWidth: Story = {
-  name: "自動寬度",
+
+export const Icon: Story = {
+  name: "只有 icon",
   args: {
     formItemProps: {
-      className: "w-40",
+      className: "w-80",
     },
-    averageWidth: false,
+		type: 'icon',
+  },
+};
+export const Text: Story = {
+  name: "只有文字",
+  args: {
+    formItemProps: {
+      className: "w-80",
+    },
+    type: 'text',
+  },
+};
+
+export const Vertical: Story = {
+  name: "垂直顯示",
+  args: {
+    formItemProps: {
+      className: "w-80",
+    },
+    type: 'vertical',
   },
 };
