@@ -1443,6 +1443,16 @@
   resolved "https://registry.yarnpkg.com/@base2/pretty-print-object/-/pretty-print-object-1.0.1.tgz#371ba8be66d556812dc7fb169ebc3c08378f69d4"
   integrity sha512-4iri8i1AqYHJE2DstZYkyEprg6Pq6sKx3xn5FpySk9sNhH7qN2LLlHJCfDTZRILNwQNPD7mATWM0TBui7uC1pA==
 
+"@codexteam/icons@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@codexteam/icons/-/icons-0.0.4.tgz#8b72dcd3f3a1b0d880bdceb2abebd74b46d3ae13"
+  integrity sha512-V8N/TY2TGyas4wLrPIFq7bcow68b3gu8DfDt1+rrHPtXxcexadKauRJL6eQgfG7Z0LCrN4boLRawR4S9gjIh/Q==
+
+"@codexteam/icons@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@codexteam/icons/-/icons-0.0.6.tgz#5553ada48dddf5940851ccc142cfe17835c36ad3"
+  integrity sha512-L7Q5PET8PjKcBT5wp7VR+FCjwCi5PUp7rd/XjsgQ0CI5FJz0DphyHGRILMuDUdCW2MQT9NHbVr4QP31vwAkS/A==
+
 "@colors/colors@1.5.0":
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/@colors/colors/-/colors-1.5.0.tgz#bb504579c1cae923e6576a4f5da43d25f97bdbd9"
@@ -1467,6 +1477,25 @@
   version "0.5.7"
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.7.tgz#1d572bfbbe14b7704e0ba0f39b74815b84870d70"
   integrity sha512-dBVuXR082gk3jsFp7Rd/JI4kytwGHecnCoTtXFb7DB6CNHp4rg5k1bhg0nWdLGLnOV71lmDzGQaLMy8iPLY0pw==
+
+"@editorjs/editorjs@^2.29.1":
+  version "2.29.1"
+  resolved "https://registry.yarnpkg.com/@editorjs/editorjs/-/editorjs-2.29.1.tgz#d7c644c5c3fc1ea1022373cbf2c8c3ac9f990b7b"
+  integrity sha512-WRT2pCfikMsvySQJqpCU21LfTZaPuxUWsDO8aFGrPx4MKzOR9D+Ur4mNb3jq0FXx2EMqvIWfTyFixJxtjGHTyQ==
+
+"@editorjs/paragraph@^2.11.4":
+  version "2.11.4"
+  resolved "https://registry.yarnpkg.com/@editorjs/paragraph/-/paragraph-2.11.4.tgz#ee91fc2d97f0aa9790860854fd804ef5d83d988e"
+  integrity sha512-OuTINHoHrJwKxlpTm6FtiXazwagALJbP49hfbQWBOLTNiBICncqPe1hdGfgDpeEgH9ZEGZsJelhEDxw2iwcmPA==
+  dependencies:
+    "@codexteam/icons" "^0.0.4"
+
+"@editorjs/table@^2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@editorjs/table/-/table-2.3.0.tgz#cc8bc762d9a13caa15e005c060bcaac885ffdb4b"
+  integrity sha512-/dKE6A5FkukX/FpvIyQGsewwXglZk8YbXpEp9vkB6Ec4ETLeGJMxObCcYqbXqVod+IU/a1tFH+j3lsD8ASD41g==
+  dependencies:
+    "@codexteam/icons" "^0.0.6"
 
 "@emotion/hash@^0.8.0":
   version "0.8.0"

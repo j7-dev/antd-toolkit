@@ -34,6 +34,9 @@
     "publish:npm": "yarn build && yarn publish && git push"
   },
   "dependencies": {
+    "@editorjs/editorjs": "^2.29.1",
+    "@editorjs/paragraph": "^2.11.4",
+    "@editorjs/table": "^2.3.0",
     "@refinedev/antd": "^5.37.6",
     "@refinedev/core": "^4.49.0",
     "antd": "^5.16.5",
