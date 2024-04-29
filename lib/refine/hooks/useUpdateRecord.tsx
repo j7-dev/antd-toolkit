@@ -1,37 +1,61 @@
 import React, { useState } from 'react';
 import { EditFilled, SaveFilled, CloseOutlined } from '@ant-design/icons';
-import { Form, Button, FormProps } from 'antd';
+import { Form, Button, FormProps, FormInstance} from 'antd';
 import { BaseRecord } from '@refinedev/core';
+
+
+type EditableCellProps<FormatDataType extends BaseRecord> = {
+	record: FormatDataType;
+	cellInput: {
+		el: React.ReactNode;
+		required?: boolean;
+		message?: string;
+	};
+	dataIndex: string;
+	index: number;
+	children: React.ReactNode;
+} & React.HTMLAttributes<HTMLElement>;
+
+type TUpdateRecordProps<FormatDataType extends BaseRecord> ={
+  rowKey: keyof FormatDataType;
+  onFinish?: (_values: { [key: string]: any; key: React.Key }) => void;
+}
+
+type TUpdateRecordResponse<FormatDataType extends BaseRecord> ={
+	formProps:FormProps<FormatDataType>;
+	editableTableProps: {
+    components: {
+        body: {
+            cell: React.FC<EditableCellProps<FormatDataType>>;
+        };
+    };
+    rowClassName: string;
+};
+	editingKey:string;
+	EditButton: React.NamedExoticComponent<{
+    record: FormatDataType;
+}>;
+	form:FormInstance<FormatDataType>;
+	isEditing:(record: FormatDataType) => boolean;
+	edit: (record: FormatDataType) => void;
+	save: (recordKey: React.Key) => Promise<void>;
+	cancel:() => void;
+}
+
 
 const useUpdateRecord = <FormatDataType extends BaseRecord>({
   rowKey,
   onFinish,
-}: {
-  rowKey: keyof FormatDataType;
-  onFinish?: (_values: { [key: string]: any; key: React.Key }) => void;
-}) => {
-  const [form] = Form.useForm();
+}: TUpdateRecordProps<FormatDataType>):TUpdateRecordResponse<FormatDataType> => {
+  const [form] = Form.useForm<FormatDataType>();
   const [editingKey, setEditingKey] = useState('');
-
-  interface EditableCellProps extends React.HTMLAttributes<HTMLElement> {
-    record: FormatDataType;
-    cellInput: {
-      el: React.ReactNode;
-      required?: boolean;
-      message?: string;
-    };
-    dataIndex: string;
-    index: number;
-    children: React.ReactNode;
-  }
-
   const isEditing = (record: FormatDataType) => record?.[rowKey] === editingKey;
 
   const edit = (record: FormatDataType) => {
     setEditingKey((record?.[rowKey] as React.Key).toString());
 
     Object.keys(record).forEach((key) => {
-      form.setFieldsValue({ [key]: record[key] });
+      form.setFieldsValue({ [key as any]: record[key] });
     });
   };
 
@@ -55,7 +79,7 @@ const useUpdateRecord = <FormatDataType extends BaseRecord>({
     }
   };
 
-  const EditableCell: React.FC<EditableCellProps> = ({
+  const EditableCell: React.FC<EditableCellProps<FormatDataType>> = ({
     record,
     cellInput,
     dataIndex,

@@ -1,9 +1,22 @@
 import React, { useState } from "react";
 import { Select as AntdSelect, Tooltip } from "antd";
-
 import { TConstant } from "../types";
-import { SelectProps } from "antd/lib/select";
-import { TooltipProps } from "antd/lib/tooltip";
+import { SelectProps } from "antd";
+import { TooltipProps } from "antd";
+
+type TConstantSelectProps = {
+  constants: TConstant<string>[];
+  hasTooltip?: boolean;
+  tooltipProps?: TooltipProps;
+  selectProps?: SelectProps;
+}
+
+type TConstantSelectResponse = {
+  value: string;
+    setValue:React.Dispatch<React.SetStateAction<string>>;
+    Select:React.NamedExoticComponent;
+    selectProps: SelectProps,
+}
 
 export const useConstantSelect = ({
   constants,
@@ -15,12 +28,7 @@ export const useConstantSelect = ({
     style: { width: 120 },
     defaultValue: "",
   },
-}: {
-  constants: TConstant<string>[];
-  hasTooltip?: boolean;
-  tooltipProps?: TooltipProps;
-  selectProps?: SelectProps;
-}) => {
+}: TConstantSelectProps):TConstantSelectResponse => {
   const [value, setValue] = useState<string>(selectProps?.defaultValue || "");
   const handleChange = (theValue: string) => {
     setValue(theValue);
@@ -36,7 +44,7 @@ export const useConstantSelect = ({
     onChange: handleChange,
   };
 
-  const Select: React.FC = () => (
+  const Select = () => (
     <>
       {hasTooltip ? (
         <Tooltip {...tooltipProps}>
