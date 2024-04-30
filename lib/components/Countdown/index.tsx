@@ -56,10 +56,11 @@ export const Countdown: FC<{
     <div className={className} style={width ? { width } : {}}>
       {title && title}
       <div>
-        <RcCountdown
-          date={Date.now() + date - Date.now()}
-          renderer={(props) => <CountdownDigit countdownProps={props} />}
-        />
+				<RcCountdown
+date={Date.now() + date - Date.now()}
+renderer={(props) => <CountdownDigit countdownProps={props} />}
+				/>
+
       </div>
     </div>
   );

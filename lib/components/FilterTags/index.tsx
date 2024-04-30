@@ -1,4 +1,3 @@
-import React from "react";
 import { Tag, FormInstance } from "antd";
 import dayjs, { Dayjs } from "dayjs";
 import { CloseCircleOutlined } from "@ant-design/icons";
@@ -14,8 +13,8 @@ export function FilterTags<T = BaseRecord>({
   keyLabelMapper?: (key: keyof T) => string;
   valueLabelMapper?: (key: string) => string;
   booleanKeys?: (keyof T)[];
-}): React.ReactNode {
-  const searchValues = form.getFieldsValue();
+}): JSX.Element{
+  const searchValues = form?.getFieldsValue();
   const handleClearSearchProps = (key: string) => () => {
     form?.setFieldValue([key], undefined);
     form?.submit();

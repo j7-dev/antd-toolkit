@@ -44,7 +44,11 @@ Filter 組件的 FilterTag 顯示
 		valueLabelMapper: {
 			description:
 				"value 字串轉換函數，將 value 轉換成顯示的文字，預設為 value 本身，也可用於多語系"
-		}
+		},
+		booleanKeys: {
+			description:
+				"用來判斷哪些 search key 是 boolean，會將 value 轉換成 boolean 值"
+		},
   },
 };
 
