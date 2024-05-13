@@ -1,7 +1,8 @@
 import React, {useRef, useEffect} from "react";
 import EditorJS from '@editorjs/editorjs';
-import Paragraph from '@editorjs/paragraph';
 import Table from '@editorjs/table'
+import Header from '@editorjs/header';
+import Quote from '@editorjs/quote';
 
 const DEFAULT_INITIAL_DATA =  {
 	"time": new Date().getTime(),
@@ -28,17 +29,21 @@ export const Editor: React.FC<{}> = () => {
 			autofocus: true,
 			data: DEFAULT_INITIAL_DATA,
 			onChange: async () => {
-				let content = await editor.saver.save();
+				const content = await editor.saver.save();
 
 				console.log(content);
 			},
 			tools: {
-				// 	header: Header,
-				paragraph: {
-					class: Paragraph,
-					inlineToolbar: true,
+				header: {
+					class: Header,
+					config: {
+						placeholder: 'Enter a header',
+						levels: [2, 3, 4],
+						defaultLevel: 3
+					}
 				},
 				table: Table,
+				quote: Quote,
 			}
 		 });
 	 };

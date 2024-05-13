@@ -35,7 +35,9 @@
   },
   "dependencies": {
     "@editorjs/editorjs": "^2.29.1",
+    "@editorjs/header": "^2.8.1",
     "@editorjs/paragraph": "^2.11.4",
+    "@editorjs/quote": "^2.6.0",
     "@editorjs/table": "^2.3.0",
     "@refinedev/antd": "^5.37.6",
     "@refinedev/core": "^4.49.0",
