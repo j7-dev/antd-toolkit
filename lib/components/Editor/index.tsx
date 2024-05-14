@@ -17,7 +17,7 @@ const DEFAULT_INITIAL_DATA =  {
 	]
 }
 
-export const Editor: React.FC<{}> = () => {
+export const Editor = () => {
 	const ejInstance = useRef(null);
 	const initEditor = () => {
 		const editor = new EditorJS({
