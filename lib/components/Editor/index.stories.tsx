@@ -1,6 +1,6 @@
+import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-
-import { Editor } from "./index";
+import { Editor, useEditor } from "./index";
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 const meta: Meta<typeof Editor> & {
@@ -24,6 +24,17 @@ const meta: Meta<typeof Editor> & {
   },
 };
 
+const EditorWithHooks = () => {
+	const props = useEditor()
+
+	return (
+		<Editor
+			{...props}
+		/>
+	)
+
+}
+
 export default meta;
 type Story = StoryObj<typeof Editor>;
 
@@ -32,5 +43,6 @@ export const General: Story = {
   name: "一般用法",
   args: {
   },
+	render: () => <EditorWithHooks />,
 };
 

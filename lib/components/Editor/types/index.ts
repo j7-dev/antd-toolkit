@@ -1,4 +1,4 @@
-
+import {YooEditor, YooptaPlugin, YooptaMark, YooptaContentValue, Tools} from '@yoopta/editor';
 
 export type TBlock =  {
 	"id": string;
@@ -22,3 +22,18 @@ export type TBlock =  {
 		"depth": number
 	}
 }
+
+export type YooptaEditorProps = {
+	editor: YooEditor;
+	plugins: YooptaPlugin[];
+	marks?: YooptaMark<any>[];
+	value?: YooptaContentValue;
+	autoFocus?: boolean;
+	className?: string;
+	selectionBoxRoot?: HTMLElement | React.MutableRefObject<HTMLElement | null> | false;
+	children?: React.ReactNode;
+	tools?: Partial<Tools>;
+	placeholder?: string;
+	readOnly?: boolean;
+	width?: number | string;
+};
