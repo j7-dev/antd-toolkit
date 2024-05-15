@@ -1,94 +1,30 @@
-import YooptaEditor, { createYooptaEditor, YooptaPlugin } from '@yoopta/editor';
-
-import Paragraph from '@yoopta/paragraph';
-import Blockquote from '@yoopta/blockquote';
-import Embed from '@yoopta/embed';
-import Image from '@yoopta/image';
-import Link from '@yoopta/link';
-import Callout from '@yoopta/callout';
-import Video from '@yoopta/video';
-import File from '@yoopta/file';
-import { NumberedList, BulletedList, TodoList } from '@yoopta/lists';
+import YooptaEditor, { createYooptaEditor } from '@yoopta/editor';
 import { Bold, Italic, CodeMark, Underline, Strike, Highlight } from '@yoopta/marks';
-import { HeadingOne, HeadingThree, HeadingTwo } from '@yoopta/headings';
-import Code from '@yoopta/code';
 import ActionMenuList, { DefaultActionMenuRender } from '@yoopta/action-menu-list';
 import Toolbar, { DefaultToolbarRender } from '@yoopta/toolbar';
 import LinkTool, { DefaultLinkToolRender } from '@yoopta/link-tool';
 // import { DividerPlugin } from './customPlugins/Divider';
 
-import { uploadToCloudinary } from './utils/cloudinary';
 import { useMemo, useRef } from 'react';
+import { Button } from 'antd';
+import {useState} from 'react';
+import { plugins } from './utils';
+import { TBlock } from './types';
 
-const plugins = [
-  File.extend({
-    options: {
-      onUpload: async (file) => {
-        const data = await uploadToCloudinary(file, 'auto');
-
-        return {
-          src: data.secure_url,
-          format: data.format,
-          name: data.name,
-          size: data.bytes,
-        };
-      },
-    },
-  }),
-  Code,
-  Paragraph,
-  HeadingOne,
-  HeadingTwo,
-  HeadingThree,
-  Blockquote,
-  Callout,
-  Link,
-  NumberedList,
-  BulletedList,
-  TodoList,
-  Embed,
-  Image.extend({
-    options: {
-      async onUpload(file) {
-        const data = await uploadToCloudinary(file, 'image');
-
-        return {
-          src: data.secure_url,
-          alt: 'cloudinary',
-          sizes: {
-            width: data.width,
-            height: data.height,
-          },
-        };
-      },
-    },
-  }),
-  Video.extend({
-    options: {
-      onUpload: async (file) => {
-        const data = await uploadToCloudinary(file, 'video');
-        return {
-          src: data.secure_url,
-          alt: 'cloudinary',
-          sizes: {
-            width: data.width,
-            height: data.height,
-          },
-        };
-      },
-    },
-  }),
-] as YooptaPlugin[];
+export * from './useEditor';
 
 const TOOLS = {
+	// [ActionMenu] - + 跟 / 的主選單
   ActionMenu: {
     render: DefaultActionMenuRender,
     tool: ActionMenuList,
   },
+	// [Toolbar] - 選取文字後的工具列
   Toolbar: {
     render: DefaultToolbarRender,
     tool: Toolbar,
   },
+	// [LinkTool] - 選取文字後的工具列，上面的 Link 點了會有 popup 填寫 url 跟 title
   LinkTool: {
     render: DefaultLinkToolRender,
     tool: LinkTool,
@@ -100,8 +36,22 @@ const MARKS = [Bold, Italic, CodeMark, Underline, Strike, Highlight];
 export const Editor = () => {
   const editor = useMemo(() => createYooptaEditor(), []);
   const selectionRef = useRef(null);
+	const [values, setValues] = useState("")
+
+	const handleClick = () => {
+		const raw:{
+			[key: string]: TBlock
+		} = editor.getEditorValue();
+		const blocks:TBlock[] = Object.values(raw)
+
+		// 按照畫面上的順序排序
+		blocks.sort((a, b) => a?.meta?.order - b?.meta?.order)
+		setValues(JSON.stringify(blocks, null, 2))
+		console.log("⭐  blocks:", blocks)
+	}
 
   return (
+		<>
     <div className="editor-container" ref={selectionRef}>
       <YooptaEditor
         editor={editor}
@@ -112,5 +62,8 @@ export const Editor = () => {
         autoFocus
       />
     </div>
+		<Button type="primary" onClick={handleClick}>Get Values</Button>
+		{values && (<pre className='mt-8 prismjs bg-gray-100 p-4 rounded-md'>{values}</pre>)}
+		</>
   );
 }

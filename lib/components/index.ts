@@ -11,3 +11,5 @@ export * from "@/components/LoadingCard";
 export * from "@/components/LoadingPage";
 export * from "@/components/ObjectTable";
 export * from "@/components/ToggleContent";
+export * from "@/components/Editor";
+
