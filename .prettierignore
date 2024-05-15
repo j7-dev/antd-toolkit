@@ -1,10 +1,13 @@
 storybook-static
 .pnpm-store
+*.lock
 **/dist/**
 **/node_modules/**
 **/vendor/**
-**/**/coverage
-php/**
+/.changeset
+/LICENSE
+package-lock.json
+pnpm-lock.yaml
 
 # Built files
 /index.d.ts
