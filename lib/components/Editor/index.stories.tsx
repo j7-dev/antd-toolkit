@@ -25,11 +25,11 @@ const meta: Meta<typeof Editor> & {
 };
 
 const EditorWithHooks = () => {
-	const props = useEditor()
+	const {yooptaEditorProps} = useEditor()
 
 	return (
 		<Editor
-			{...props}
+			{...yooptaEditorProps}
 		/>
 	)
 

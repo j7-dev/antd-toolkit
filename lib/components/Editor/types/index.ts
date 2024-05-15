@@ -37,3 +37,8 @@ export type YooptaEditorProps = {
 	readOnly?: boolean;
 	width?: number | string;
 };
+
+export type EditorProps = {
+	yooptaEditorProps: YooptaEditorProps
+	formattedBlocks: TBlock[]
+}

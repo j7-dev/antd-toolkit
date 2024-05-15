@@ -1,12 +1,13 @@
-import {useMemo, useState, useRef} from 'react'
+import {useMemo, useState, useRef, useEffect} from 'react'
 import { createYooptaEditor } from '@yoopta/editor';
 import { Bold, Italic, CodeMark, Underline, Strike, Highlight } from '@yoopta/marks';
 // import { DividerPlugin } from './customPlugins/Divider';
-import { TBlock, YooptaEditorProps } from './types';
+import { TBlock, EditorProps, YooptaEditorProps } from './types';
 import { plugins } from './utils';
 import ActionMenuList, { DefaultActionMenuRender } from '@yoopta/action-menu-list';
 import Toolbar, { DefaultToolbarRender } from '@yoopta/toolbar';
 import LinkTool, { DefaultLinkToolRender } from '@yoopta/link-tool';
+import {debounce} from 'lodash-es'
 
 const tools = {
 	// [ActionMenu] - + 跟 / 的主選單
@@ -32,9 +33,13 @@ const marks = [Bold, Italic, CodeMark, Underline, Strike, Highlight];
 export const useEditor = () => {
 	const selectionRef = useRef(null);
 	const editor = useMemo(() => createYooptaEditor(), []);
-	const [values, setValues] = useState("")
 
-	const handleClick = () => {
+	const [formattedBlocks, setFormattedBlocks] = useState<TBlock[]>([])
+
+	// add debounce
+	useEffect(() => {
+if(editor){
+	editor.on('change', debounce(() => {
 		const raw:{
 			[key: string]: TBlock
 		} = editor.getEditorValue();
@@ -42,9 +47,11 @@ export const useEditor = () => {
 
 		// 按照畫面上的順序排序
 		blocks.sort((a, b) => a?.meta?.order - b?.meta?.order)
-		setValues(JSON.stringify(blocks, null, 2))
-		console.log("⭐  blocks:", blocks)
-	}
+		setFormattedBlocks(blocks)
+	}, 1500))
+}
+	}, [editor]);
+
 
 	const yooptaEditorProps:YooptaEditorProps = {
 		editor,
@@ -55,5 +62,10 @@ export const useEditor = () => {
 		autoFocus: true,
 	}
 
-	return yooptaEditorProps
+	const editorProps:EditorProps = {
+		yooptaEditorProps,
+		formattedBlocks
+	}
+
+	return editorProps
 }
