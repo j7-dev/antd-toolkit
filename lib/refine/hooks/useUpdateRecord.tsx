@@ -1,93 +1,93 @@
-import React, { useState } from 'react';
-import { EditFilled, SaveFilled, CloseOutlined } from '@ant-design/icons';
-import { Form, Button, FormProps, FormInstance} from 'antd';
-import { BaseRecord } from '@refinedev/core';
-
+import React, { useState } from 'react'
+import { EditFilled, SaveFilled, CloseOutlined } from '@ant-design/icons'
+import { Form, Button, FormProps, FormInstance } from 'antd'
+import { BaseRecord } from '@refinedev/core'
 
 type EditableCellProps<FormatDataType extends BaseRecord> = {
-	record: FormatDataType;
-	cellInput: {
-		el: React.ReactNode;
-		required?: boolean;
-		message?: string;
-	};
-	dataIndex: string;
-	index: number;
-	children: React.ReactNode;
-} & React.HTMLAttributes<HTMLElement>;
+  record: FormatDataType
+  cellInput: {
+    el: React.ReactNode
+    required?: boolean
+    message?: string
+  }
+  dataIndex: string
+  index: number
+  children: React.ReactNode
+} & React.HTMLAttributes<HTMLElement>
 
-type TUpdateRecordProps<FormatDataType extends BaseRecord> ={
-  rowKey: keyof FormatDataType;
-  onFinish?: (_values: { [key: string]: any; key: React.Key }) => void;
+type TUpdateRecordProps<FormatDataType extends BaseRecord> = {
+  rowKey: keyof FormatDataType
+  onFinish?: (_values: { [key: string]: any; key: React.Key }) => void
 }
 
-type TUpdateRecordResponse<FormatDataType extends BaseRecord> ={
-	formProps:FormProps<FormatDataType>;
-	editableTableProps: {
+type TUpdateRecordResponse<FormatDataType extends BaseRecord> = {
+  formProps: FormProps<FormatDataType>
+  editableTableProps: {
     components: {
-        body: {
-            cell: React.FC<EditableCellProps<FormatDataType>>;
-        };
-    };
-    rowClassName: string;
-};
-	editingKey:string;
-	EditButton: React.NamedExoticComponent<{
-    record: FormatDataType;
-}>;
-	form:FormInstance<FormatDataType>;
-	isEditing:(record: FormatDataType) => boolean;
-	edit: (record: FormatDataType) => void;
-	save: (recordKey: React.Key) => Promise<void>;
-	cancel:() => void;
+      body: {
+        cell: React.FC<EditableCellProps<FormatDataType>>
+      }
+    }
+    rowClassName: string
+  }
+  editingKey: string
+  EditButton: React.NamedExoticComponent<{
+    record: FormatDataType
+  }>
+  form: FormInstance<FormatDataType>
+  isEditing: (record: FormatDataType) => boolean
+  edit: (record: FormatDataType) => void
+  save: (recordKey: React.Key) => Promise<void>
+  cancel: () => void
 }
-
 
 const useUpdateRecord = <FormatDataType extends BaseRecord>({
   rowKey,
   onFinish,
-}: TUpdateRecordProps<FormatDataType>):TUpdateRecordResponse<FormatDataType> => {
-  const [form] = Form.useForm<FormatDataType>();
-  const [editingKey, setEditingKey] = useState('');
-  const isEditing = (record: FormatDataType) => record?.[rowKey] === editingKey;
+}: TUpdateRecordProps<FormatDataType>): TUpdateRecordResponse<FormatDataType> => {
+  const [form] = Form.useForm<FormatDataType>()
+  const [editingKey, setEditingKey] = useState('')
+  const isEditing = (record: FormatDataType) => record?.[rowKey] === editingKey
 
   const edit = (record: FormatDataType) => {
-    setEditingKey((record?.[rowKey] as React.Key).toString());
+    setEditingKey((record?.[rowKey] as React.Key).toString())
 
     Object.keys(record).forEach((key) => {
-      form.setFieldsValue({ [key as any]: record[key] });
-    });
-  };
+      form.setFieldsValue({ [key as any]: record[key] })
+    })
+  }
 
   const cancel = () => {
-    setEditingKey('');
-  };
+    setEditingKey('')
+  }
 
   const save = async (key: React.Key) => {
     const values = {
       ...form.getFieldsValue(),
       key,
-    };
+    }
 
     try {
       if (onFinish) {
-        onFinish(values);
+        onFinish(values)
       }
-      setEditingKey('');
+      setEditingKey('')
     } catch (error) {
-      setEditingKey('');
+      setEditingKey('')
     }
-  };
+  }
 
   const EditableCell: React.FC<EditableCellProps<FormatDataType>> = ({
     record,
     cellInput,
     dataIndex,
+
     // index: _index,
+
     children,
     ...restProps
   }) => {
-    const editing = isEditing(record);
+    const editing = isEditing(record)
 
     return (
       <td {...restProps}>
@@ -108,22 +108,22 @@ const useUpdateRecord = <FormatDataType extends BaseRecord>({
           children
         )}
       </td>
-    );
-  };
+    )
+  }
 
   const formProps: FormProps = {
     form,
     component: false,
-  };
+  }
 
   const components = {
     body: {
       cell: EditableCell,
     },
-  };
+  }
 
   const EditButton: React.FC<{ record: FormatDataType }> = ({ record }) => {
-    const editable = isEditing(record);
+    const editable = isEditing(record)
     return editable ? (
       <div className="flex flex-nowrap">
         <Button
@@ -158,8 +158,8 @@ const useUpdateRecord = <FormatDataType extends BaseRecord>({
         size="small"
         className="shadow-none"
       />
-    );
-  };
+    )
+  }
 
   return {
     formProps,
@@ -174,7 +174,7 @@ const useUpdateRecord = <FormatDataType extends BaseRecord>({
     edit: (record: FormatDataType) => edit(record),
     save: (recordKey: React.Key) => save(recordKey),
     cancel,
-  };
-};
+  }
+}
 
-export default useUpdateRecord;
+export default useUpdateRecord

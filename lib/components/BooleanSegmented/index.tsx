@@ -1,34 +1,34 @@
-import React, { ReactNode } from "react";
-import { CheckOutlined, CloseOutlined, BarsOutlined } from "@ant-design/icons";
-import { Form, Segmented, FormItemProps, SegmentedProps } from "antd";
+import React, { ReactNode } from 'react'
+import { CheckOutlined, CloseOutlined, BarsOutlined } from '@ant-design/icons'
+import { Form, Segmented, FormItemProps, SegmentedProps } from 'antd'
 
 type TOption =
   | string
   | number
   | {
-      label: ReactNode;
-      value: string;
-      icon?: ReactNode;
-      disabled?: boolean;
-      className?: string;
-    };
+      label: ReactNode
+      value: string
+      icon?: ReactNode
+      disabled?: boolean
+      className?: string
+    }
 const defaultOptions: TOption[] = [
-  { label: "ALL", value: "", icon: <BarsOutlined /> },
-  { label: "TRUE", value: "1", icon: <CheckOutlined /> },
-  { label: "FALSE", value: "0", icon: <CloseOutlined /> },
-];
+  { label: 'ALL', value: '', icon: <BarsOutlined /> },
+  { label: 'TRUE', value: '1', icon: <CheckOutlined /> },
+  { label: 'FALSE', value: '0', icon: <CloseOutlined /> },
+]
 
 const textOptions: TOption[] = [
-  { label: "ALL", value: "" },
-  { label: "TRUE", value: "1" },
-  { label: "FALSE", value: "0" },
-];
+  { label: 'ALL', value: '' },
+  { label: 'TRUE', value: '1' },
+  { label: 'FALSE', value: '0' },
+]
 
 const iconOptions: TOption[] = [
-  { label: "ALL", value: "" },
-  { label: <CheckOutlined />, value: "1" },
-  { label: <CloseOutlined />, value: "0" },
-];
+  { label: 'ALL', value: '' },
+  { label: <CheckOutlined />, value: '1' },
+  { label: <CloseOutlined />, value: '0' },
+]
 
 const verticalOptions: TOption[] = [
   {
@@ -38,7 +38,7 @@ const verticalOptions: TOption[] = [
         <div>ALL</div>
       </div>
     ),
-    value: "",
+    value: '',
   },
   {
     label: (
@@ -47,7 +47,7 @@ const verticalOptions: TOption[] = [
         <div>TRUE</div>
       </div>
     ),
-    value: "1",
+    value: '1',
   },
   {
     label: (
@@ -56,27 +56,27 @@ const verticalOptions: TOption[] = [
         <div>FALSE</div>
       </div>
     ),
-    value: "0",
+    value: '0',
   },
-];
+]
 
 const optionsMap = {
-	default: defaultOptions,
-	text: textOptions,
-	icon: iconOptions,
-	vertical: verticalOptions,
+  default: defaultOptions,
+  text: textOptions,
+  icon: iconOptions,
+  vertical: verticalOptions,
 }
 
 export const BooleanSegmented: React.FC<{
-  formItemProps: FormItemProps;
-  segmentedProps?: Omit<SegmentedProps, "ref"> &
-    React.RefAttributes<HTMLDivElement>;
-  type?: "default" | "text" | "icon" | "vertical";
-}> = ({ formItemProps, segmentedProps, type = "default" }) => {
-  const options = segmentedProps?.options || optionsMap?.[type];
+  formItemProps: FormItemProps
+  segmentedProps?: Omit<SegmentedProps, 'ref'> &
+    React.RefAttributes<HTMLDivElement>
+  type?: 'default' | 'text' | 'icon' | 'vertical'
+}> = ({ formItemProps, segmentedProps, type = 'default' }) => {
+  const options = segmentedProps?.options || optionsMap?.[type]
   return (
     <Form.Item {...formItemProps}>
       <Segmented block options={options} {...segmentedProps} />
     </Form.Item>
-  );
-};
+  )
+}

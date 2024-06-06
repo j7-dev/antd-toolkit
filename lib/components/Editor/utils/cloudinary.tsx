@@ -2,32 +2,38 @@ export const CLOUDINARY = {
   PRESET: import.meta.env.VITE_CLOUDINARY_CLOUD_PRESET!,
   API: import.meta.env.VITE_CLOUDINARY_API!,
   CLOUD_NAME: import.meta.env.VITE_CLOUDINARY_CLOUD_NAME!,
-};
+}
 
 export type MediaObject = {
-  secure_url: string;
-  url: string;
-  height: number;
-  width: number;
-  asset_id: string;
-  format: string;
-  public_id: string;
-  version_id: string;
-  name: string;
-  bytes: number;
-};
+  secure_url: string
+  url: string
+  height: number
+  width: number
+  asset_id: string
+  format: string
+  public_id: string
+  version_id: string
+  name: string
+  bytes: number
+}
 
-export type ImageObject = MediaObject;
-export type VideoObject = MediaObject;
+export type ImageObject = MediaObject
+export type VideoObject = MediaObject
 
-export const uploadToCloudinary = async (file: File, type = 'image'): Promise<MediaObject> => {
-  const formData = new FormData();
-  formData.append('file', file);
-  formData.append('upload_preset', CLOUDINARY.PRESET);
+export const uploadToCloudinary = async (
+  file: File,
+  type = 'image',
+): Promise<MediaObject> => {
+  const formData = new FormData()
+  formData.append('file', file)
+  formData.append('upload_preset', CLOUDINARY.PRESET)
 
   try {
-    const call = await fetch(`${CLOUDINARY.API}/${type}/upload`, { method: 'POST', body: formData });
-    const response = await call.json();
+    const call = await fetch(`${CLOUDINARY.API}/${type}/upload`, {
+      method: 'POST',
+      body: formData,
+    })
+    const response = await call.json()
 
     return {
       secure_url: response.secure_url,
@@ -40,8 +46,8 @@ export const uploadToCloudinary = async (file: File, type = 'image'): Promise<Me
       version_id: response.version_id,
       name: response.original_filename,
       bytes: response.bytes,
-    };
+    }
   } catch (error) {
-    return Promise.reject(error);
+    return Promise.reject(error)
   }
-};
+}

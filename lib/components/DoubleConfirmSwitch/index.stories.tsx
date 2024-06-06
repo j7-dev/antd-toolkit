@@ -1,15 +1,15 @@
-import React from "react";
-import type { Meta, StoryObj } from "@storybook/react";
-import { DoubleConfirmSwitch } from "./index";
-import { Form } from "antd";
+import React from 'react'
+import type { Meta, StoryObj } from '@storybook/react'
+import { DoubleConfirmSwitch } from './index'
+import { Form } from 'antd'
 
 const meta: Meta<typeof DoubleConfirmSwitch> & {
-  argTypes: any;
+  argTypes: any
 } = {
-  title: "表單控件/DoubleConfirmSwitch",
+  title: '表單控件/DoubleConfirmSwitch',
   component: DoubleConfirmSwitch,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
     docs: {
       description: {
         component: `
@@ -24,7 +24,7 @@ const meta: Meta<typeof DoubleConfirmSwitch> & {
       },
     },
   },
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   argTypes: {
     formItemProps: {
       description:
@@ -43,37 +43,37 @@ const meta: Meta<typeof DoubleConfirmSwitch> & {
         "<a href='https://ant.design/components/switch-cn' target='_blank'>antd Switch props</a>",
     },
     onClick: {
-      description: "點擊後的回調函數",
+      description: '點擊後的回調函數',
       control: false,
     },
     onConfirm: {
-      description: "確認後的回調函數",
+      description: '確認後的回調函數',
       control: false,
     },
     onCancel: {
-      description: "取消後的回調函數",
+      description: '取消後的回調函數',
       control: false,
     },
   },
-};
+}
 
-export default meta;
-type Story = StoryObj<typeof DoubleConfirmSwitch>;
+export default meta
+type Story = StoryObj<typeof DoubleConfirmSwitch>
 
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
 
 export const General: Story = {
-  name: "一般用法",
+  name: '一般用法',
   args: {
     fromItemProps: {
-      name: "isActivated",
+      name: 'isActivated',
     },
   },
   decorators: [
-    (Story) => (
+    (TheStory) => (
       <Form>
-        <Story />
+        <TheStory />
       </Form>
     ),
   ],
-};
+}

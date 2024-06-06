@@ -1,15 +1,17 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { BooleanSegmented } from "./index";
+import type { Meta, StoryObj } from '@storybook/react'
+import { BooleanSegmented } from './index'
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
+
 const meta: Meta<typeof BooleanSegmented> & {
-  argTypes: any;
+  argTypes: any
 } = {
-  title: "表單控件/BooleanSegmented",
+  title: '表單控件/BooleanSegmented',
   component: BooleanSegmented,
   parameters: {
     // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/react/configure/story-layout
-    layout: "centered",
+
+    layout: 'centered',
     docs: {
       description: {
         component: `
@@ -24,65 +26,71 @@ const meta: Meta<typeof BooleanSegmented> & {
       },
     },
   },
+
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/react/writing-docs/autodocs
-  tags: ["autodocs"],
+
+  tags: ['autodocs'],
+
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
+
   argTypes: {
     formItemProps: {
       description:
         "<a href='https://ant.design/components/form-cn#formitem' target='_blank'>antd Form.Item props</a>",
     },
-		segmentedProps:{
-			description:
-			"<a href='https://ant.design/components/segmented-cn#api' target='_blank'>antd Segmented props</a>",
-		},
+    segmentedProps: {
+      description:
+        '<a href=\'https://ant.design/components/segmented-cn#api\' target=\'_blank\'>antd Segmented props</a>',
+    },
     type: {
-      description: "選擇不同的預設樣式種類，如果是從 segmentedProps 自訂 options 進去，此參數將被覆寫",
-      control: 'select', options: ['default', 'text', 'icon', 'vertical']
+      description:
+        '選擇不同的預設樣式種類，如果是從 segmentedProps 自訂 options 進去，此參數將被覆寫',
+      control: 'select',
+      options: ['default', 'text', 'icon', 'vertical'],
     },
   },
-};
+}
 
-export default meta;
-type Story = StoryObj<typeof BooleanSegmented>;
+export default meta
+type Story = StoryObj<typeof BooleanSegmented>
 
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
 
 export const Default: Story = {
-  name: "預設樣式",
+  name: '預設樣式',
   args: {
     formItemProps: {
-      className: "w-80",
+      className: 'w-80',
     },
-		type: 'default',
+    type: 'default',
   },
-};
+}
 
 export const Icon: Story = {
-  name: "只有 icon",
+  name: '只有 icon',
   args: {
     formItemProps: {
-      className: "w-80",
+      className: 'w-80',
     },
-		type: 'icon',
+    type: 'icon',
   },
-};
+}
 export const Text: Story = {
-  name: "只有文字",
+  name: '只有文字',
   args: {
     formItemProps: {
-      className: "w-80",
+      className: 'w-80',
     },
     type: 'text',
   },
-};
+}
 
 export const Vertical: Story = {
-  name: "垂直顯示",
+  name: '垂直顯示',
   args: {
     formItemProps: {
-      className: "w-80",
+      className: 'w-80',
     },
     type: 'vertical',
   },
-};
+}

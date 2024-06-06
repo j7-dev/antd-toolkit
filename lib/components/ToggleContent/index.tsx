@@ -1,20 +1,20 @@
-import React, { useState } from "react";
-import { renderHTML } from "@/utils";
+import React, { useState } from 'react'
+import { renderHTML } from '@/utils'
 
 export const ToggleContent: React.FC<{ content: string }> = ({ content }) => {
-  const [isExpand, setIsExpand] = useState(false);
-  const html = renderHTML(content);
+  const [isExpand, setIsExpand] = useState(false)
+  const html = renderHTML(content)
 
   const handleExpand = () => {
-    setIsExpand(true);
-  };
+    setIsExpand(true)
+  }
 
   const handleCollapsed = () => {
-    setIsExpand(false);
-  };
+    setIsExpand(false)
+  }
 
   return (
-    <div className={`${isExpand ? "" : "h-full overflow-hidden"} relative`}>
+    <div className={`${isExpand ? '' : 'h-full overflow-hidden'} relative`}>
       {html}
       {isExpand && (
         <div className="text-center w-full py-4">
@@ -31,5 +31,5 @@ export const ToggleContent: React.FC<{ content: string }> = ({ content }) => {
         </div>
       )}
     </div>
-  );
-};
+  )
+}

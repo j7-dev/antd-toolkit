@@ -1,17 +1,16 @@
-import {useState} from 'react'
+import { useState } from 'react'
 import { Table, TableProps } from 'antd'
 
 type TableRowSelection<T> = TableProps<T>['rowSelection']
 
-export function useRowSelection<T>(rowSelectionProps?: TableRowSelection<T>){
+export function useRowSelection<T>(rowSelectionProps?: TableRowSelection<T>) {
+  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([])
 
-	const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([])
-
-	const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
+  const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
     setSelectedRowKeys(newSelectedRowKeys)
   }
 
-	const rowSelection: TableRowSelection<T> = {
+  const rowSelection: TableRowSelection<T> = {
     selectedRowKeys,
     onChange: onSelectChange,
     selections: [
@@ -19,8 +18,8 @@ export function useRowSelection<T>(rowSelectionProps?: TableRowSelection<T>){
       Table.SELECTION_INVERT,
       Table.SELECTION_NONE,
     ],
-		...rowSelectionProps,
+    ...rowSelectionProps,
   }
 
-	return {selectedRowKeys, setSelectedRowKeys, rowSelection}
+  return { selectedRowKeys, setSelectedRowKeys, rowSelection }
 }

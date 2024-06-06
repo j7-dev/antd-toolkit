@@ -1,4 +1,4 @@
-import "./styles.scss";
+import './styles.scss'
 
 export const LoadingPage = () => {
   return (
@@ -14,5 +14,5 @@ export const LoadingPage = () => {
       </div>
       <p className="text-center text-gray-500">Loading...</p>
     </div>
-  );
-};
+  )
+}

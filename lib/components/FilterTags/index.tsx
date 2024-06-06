@@ -1,7 +1,7 @@
-import { Tag, FormInstance } from "antd";
-import dayjs, { Dayjs } from "dayjs";
-import { CloseCircleOutlined } from "@ant-design/icons";
-import { BaseRecord } from "@refinedev/core";
+import { Tag, FormInstance } from 'antd'
+import dayjs, { Dayjs } from 'dayjs'
+import { CloseCircleOutlined } from '@ant-design/icons'
+import { BaseRecord } from '@refinedev/core'
 
 export function FilterTags<T = BaseRecord>({
   form,
@@ -9,44 +9,45 @@ export function FilterTags<T = BaseRecord>({
   valueLabelMapper = (s) => s?.toString(),
   booleanKeys = [],
 }: {
-  form: FormInstance<T>;
-  keyLabelMapper?: (key: keyof T) => string;
-  valueLabelMapper?: (key: string) => string;
-  booleanKeys?: (keyof T)[];
-}): JSX.Element{
-  const searchValues = form?.getFieldsValue();
+  form: FormInstance<T>
+  keyLabelMapper?: (key: keyof T) => string
+  valueLabelMapper?: (key: string) => string
+  booleanKeys?: (keyof T)[]
+}): JSX.Element {
+  const searchValues = form?.getFieldsValue()
   const handleClearSearchProps = (key: string) => () => {
-    form?.setFieldValue([key], undefined);
-    form?.submit();
-  };
+    form?.setFieldValue([key], undefined)
+    form?.submit()
+  }
 
   const handleArrayProps =
     (key: string, value: string | number, searchValue: (string | number)[]) =>
     () => {
-      const newValue = searchValue.filter((item) => item !== value);
-      form?.setFieldValue([key], newValue);
-      form?.submit();
-    };
+      const newValue = searchValue.filter((item) => item !== value)
+      form?.setFieldValue([key], newValue)
+      form?.submit()
+    }
 
-  const searchKeys = Object.keys(searchValues || {}) as (keyof T)[];
+  const searchKeys = Object.keys(searchValues || {}) as (keyof T)[]
 
   return (
     <>
       {searchValues &&
         searchKeys.map((key) => {
-          const searchValue = searchValues?.[key];
+          const searchValue = searchValues?.[key]
 
           /**
            * If the value is undefined, null or empty string, we will not display the tag
            *
            * @returns null
            */
+
           if (
             searchValue === undefined ||
             searchValue === null ||
-            searchValue === ""
+            searchValue === ''
           )
-            return null;
+            return null
 
           /**
            * If the value is an array of dayjs objects, we will format the date range
@@ -54,10 +55,11 @@ export function FilterTags<T = BaseRecord>({
            *
            * @returns Tag with 'YYYY/MM/DD ~ YYYY/MM/DD'
            */
+
           if (
             Array.isArray(searchValue) &&
             (searchValue as unknown[])?.every(
-              (item: unknown) => item instanceof dayjs
+              (item: unknown) => item instanceof dayjs,
             )
           ) {
             return (
@@ -69,12 +71,12 @@ export function FilterTags<T = BaseRecord>({
                 closeIcon={<CloseCircleOutlined />}
                 onClose={handleClearSearchProps(key as string)}
               >
-                {keyLabelMapper(key)}:{" "}
+                {keyLabelMapper(key)}:{' '}
                 {(searchValues[key] as Dayjs[])
-                  .map((date) => (date ? date.format("YYYY/MM/DD") : ""))
-                  .join(" ~ ")}
+                  .map((date) => (date ? date.format('YYYY/MM/DD') : ''))
+                  .join(' ~ ')}
               </Tag>
-            );
+            )
           }
 
           /**
@@ -82,11 +84,13 @@ export function FilterTags<T = BaseRecord>({
            *
            * @returns Multiple Tags
            */
+
           if (Array.isArray(searchValue)) {
             // ensue every item in the array is a string or number
+
             const isStringOrNumber = (searchValue as unknown[]).every(
-              (item) => typeof item === "string" || typeof item === "number"
-            );
+              (item) => typeof item === 'string' || typeof item === 'number',
+            )
             if (isStringOrNumber) {
               return (searchValue as (string | number)[]).map((value) => (
                 <Tag
@@ -98,15 +102,14 @@ export function FilterTags<T = BaseRecord>({
                   onClose={handleArrayProps(
                     key as string,
                     value,
-                    searchValue as (string | number)[]
+                    searchValue as (string | number)[],
                   )}
                 >
-                  {keyLabelMapper(key)}:{" "}
-                  {valueLabelMapper(value?.toString())}
+                  {keyLabelMapper(key)}: {valueLabelMapper(value?.toString())}
                 </Tag>
-              ));
+              ))
             } else {
-              return null;
+              return null
             }
           }
 
@@ -115,7 +118,8 @@ export function FilterTags<T = BaseRecord>({
            *
            * @returns Tag with 'true' or 'false'
            */
-          if (typeof searchValue === "boolean") {
+
+          if (typeof searchValue === 'boolean') {
             return (
               <Tag
                 key={key as string}
@@ -125,11 +129,10 @@ export function FilterTags<T = BaseRecord>({
                 closeIcon={<CloseCircleOutlined />}
                 onClose={handleClearSearchProps(key as string)}
               >
-                {keyLabelMapper(key)}:{" "}
-                {keyLabelMapper(key)}:{" "}
+                {keyLabelMapper(key)}: {keyLabelMapper(key)}:{' '}
                 {valueLabelMapper(searchValue?.toString())}
               </Tag>
-            );
+            )
           }
 
           /**
@@ -140,7 +143,7 @@ export function FilterTags<T = BaseRecord>({
            * @returns Tag
            */
 
-          const isBoolean = !!booleanKeys?.includes(key);
+          const isBoolean = !!booleanKeys?.includes(key)
           return (
             <Tag
               key={key as string}
@@ -150,12 +153,15 @@ export function FilterTags<T = BaseRecord>({
               closeIcon={<CloseCircleOutlined />}
               onClose={handleClearSearchProps(key as string)}
             >
-              {keyLabelMapper(key)}:{" "}
-							{isBoolean && valueLabelMapper(searchValue?.toString() === "1" ? "true" : "false")}
-							{!isBoolean && valueLabelMapper(searchValue?.toString())}
+              {keyLabelMapper(key)}:{' '}
+              {isBoolean &&
+                valueLabelMapper(
+                  searchValue?.toString() === '1' ? 'true' : 'false',
+                )}
+              {!isBoolean && valueLabelMapper(searchValue?.toString())}
             </Tag>
-          );
+          )
         })}
     </>
-  );
+  )
 }

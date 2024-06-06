@@ -1,108 +1,108 @@
-import { useState } from "react";
-import { Button, ButtonProps, Popconfirm } from "antd";
+import { useState } from 'react'
+import { Button, ButtonProps, Popconfirm } from 'antd'
 import {
   DeleteOutlined,
   CloseOutlined,
   SaveOutlined,
   EditOutlined,
-} from "@ant-design/icons";
+} from '@ant-design/icons'
 
 type TActionButton = {
-  canDelete?: boolean;
-  buttonProps?: ButtonProps;
-  className?: string;
-  type?: "icon" | "text" | "both";
-  onDelete?: () => void;
-  onSave?: () => void;
-  onEdit?: () => void;
-  onCancel?: () => void;
-};
+  canDelete?: boolean
+  buttonProps?: ButtonProps
+  className?: string
+  type?: 'icon' | 'text' | 'both'
+  onDelete?: () => void
+  onSave?: () => void
+  onEdit?: () => void
+  onCancel?: () => void
+}
 
 const defaultButtonProps = {
-  type: "primary",
-  className: "mx-1",
-};
+  type: 'primary',
+  className: 'mx-1',
+}
 
 export const ActionButton = ({
   canDelete = true,
   buttonProps = {},
   className,
-  type = "both",
+  type = 'both',
   onDelete,
   onSave,
   onEdit,
   onCancel,
 }: TActionButton) => {
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(false)
 
   const handleEdit = () => {
-    setIsEditing(true);
+    setIsEditing(true)
     if (onEdit) {
-      onEdit();
+      onEdit()
     }
-  };
+  }
   const handleCancel = () => {
-    setIsEditing(false);
+    setIsEditing(false)
     if (onCancel) {
-      onCancel();
+      onCancel()
     }
-  };
+  }
 
   const buttonPropsMapping = {
     edit: {
-      children: "Edit",
+      children: 'Edit',
       onClick: handleEdit,
       icon: <EditOutlined />,
     },
     save: {
-      children: "Save",
+      children: 'Save',
       icon: <SaveOutlined />,
       onClick: onSave,
     },
     cancel: {
-      children: "Cancel",
+      children: 'Cancel',
       onClick: handleCancel,
       icon: <CloseOutlined />,
-      type: "default",
+      type: 'default',
     },
     delete: {
-      children: "Delete",
+      children: 'Delete',
       danger: true,
       icon: <DeleteOutlined />,
     },
-  };
+  }
 
   const getButtonProps = (
-    buttonType: "edit" | "save" | "cancel" | "delete"
+    buttonType: 'edit' | 'save' | 'cancel' | 'delete',
   ): ButtonProps => {
     const combineButtonProps = {
       ...defaultButtonProps,
       ...buttonProps,
       ...(buttonPropsMapping?.[buttonType] || {}),
-    } as ButtonProps;
+    } as ButtonProps
 
-    if ("both" === type) return combineButtonProps;
+    if ('both' === type) return combineButtonProps
 
-    if ("icon" === type) {
-      delete combineButtonProps.children;
-      return combineButtonProps;
+    if ('icon' === type) {
+      delete combineButtonProps.children
+      return combineButtonProps
     }
 
-    if ("text" === type) {
-      delete combineButtonProps.icon;
-      return combineButtonProps;
+    if ('text' === type) {
+      delete combineButtonProps.icon
+      return combineButtonProps
     }
 
-    return combineButtonProps;
-  };
+    return combineButtonProps
+  }
 
   return (
     <div className={className}>
-      {!isEditing && <Button {...getButtonProps("edit")} />}
+      {!isEditing && <Button {...getButtonProps('edit')} />}
       {isEditing && (
         <>
-          <Button {...getButtonProps("save")} />
-          <Button {...getButtonProps("cancel")} />
+          <Button {...getButtonProps('save')} />
+          <Button {...getButtonProps('cancel')} />
         </>
       )}
 
@@ -113,9 +113,9 @@ export const ActionButton = ({
           okText="confirm"
           cancelText="cancel"
         >
-          <Button {...getButtonProps("delete")} />
+          <Button {...getButtonProps('delete')} />
         </Popconfirm>
       )}
     </div>
-  );
-};
+  )
+}

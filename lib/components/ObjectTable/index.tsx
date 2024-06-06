@@ -1,34 +1,33 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState } from "react";
-import { isNumber, isString, isNull, isUndefined, isBoolean } from "lodash-es";
-import { keyToWord } from "@/utils";
-import { Empty, Form, Input } from "antd";
-import { ButtonProps } from "antd/lib";
-import { ActionButton } from "@/components/ActionButton";
+import React, { useState } from 'react'
+import { isNumber, isString, isNull, isUndefined, isBoolean } from 'lodash-es'
+import { keyToWord } from '@/utils'
+import { Empty, Form, Input } from 'antd'
+import { ButtonProps } from 'antd/lib'
+import { ActionButton } from '@/components/ActionButton'
 
 export type TColumn = {
-  key: string;
-  title: string;
-  dataIndex: string;
+  key: string
+  title: string
+  dataIndex: string
   render?: (
     value: any,
     record: any,
     index: number,
-    editable: boolean
-  ) => React.ReactNode;
-};
+    editable: boolean,
+  ) => React.ReactNode
+}
 
 export const ObjectTable: React.FC<{
   record: {
-    [key: string]: any;
-  };
-  editable?: boolean;
-  columns?: TColumn[];
-  buttonProps?: ButtonProps;
+    [key: string]: any
+  }
+  editable?: boolean
+  columns?: TColumn[]
+  buttonProps?: ButtonProps
 }> = ({ record, columns, editable = false }) => {
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(false)
 
-  if (!record) return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />;
+  if (!record) return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
 
   const defaultColumns = Object.keys(record)
     .map((key) => {
@@ -43,7 +42,7 @@ export const ObjectTable: React.FC<{
           key,
           title: keyToWord(key),
           dataIndex: key,
-        };
+        }
       }
 
       if (
@@ -53,7 +52,7 @@ export const ObjectTable: React.FC<{
             isNumber(item) ||
             isString(item) ||
             isNull(item) ||
-            isUndefined(item)
+            isUndefined(item),
         )
       ) {
         return {
@@ -70,19 +69,19 @@ export const ObjectTable: React.FC<{
                 <Input />
               </Form.Item>
             ) : (
-              arr.join(", ")
+              arr.join(', ')
             ),
-        };
+        }
       }
     })
-    .filter((c) => !!c) as TColumn[];
+    .filter((c) => !!c) as TColumn[]
 
   const getView = (theColumn: TColumn, j: number) => {
-    const render = theColumn?.render;
-    const dataIndex = theColumn?.dataIndex;
+    const render = theColumn?.render
+    const dataIndex = theColumn?.dataIndex
 
     if (render) {
-      return render(record?.[dataIndex as string], record, j, editable);
+      return render(record?.[dataIndex as string], record, j, editable)
     }
     return editable && isEditing ? (
       <Form.Item
@@ -94,8 +93,8 @@ export const ObjectTable: React.FC<{
       </Form.Item>
     ) : (
       record?.[dataIndex as string].toString()
-    );
-  };
+    )
+  }
 
   return (
     <>
@@ -118,10 +117,10 @@ export const ObjectTable: React.FC<{
                 </th>
                 <td>{getView(column, i)}</td>
               </tr>
-            );
+            )
           })}
         </tbody>
       </table>
     </>
-  );
-};
+  )
+}

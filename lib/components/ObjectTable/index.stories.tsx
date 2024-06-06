@@ -1,18 +1,18 @@
-import React from "react";
-import type { Meta, StoryObj } from "@storybook/react";
-import { ObjectTable } from "./index";
-import { Form } from "antd";
+import React from 'react'
+import type { Meta, StoryObj } from '@storybook/react'
+import { ObjectTable } from './index'
+import { Form } from 'antd'
 
 const meta: Meta<typeof ObjectTable> & {
-  argTypes: any;
+  argTypes: any
 } = {
-  title: "表格/ObjectTable ⛏️⛏️⛏️ WIP",
+  title: '表格/ObjectTable ⛏️⛏️⛏️ WIP',
   component: ObjectTable,
   parameters: {
     status: {
-      type: "dev",
+      type: 'dev',
     },
-    layout: "centered",
+    layout: 'centered',
     docs: {
       description: {
         component: `
@@ -34,61 +34,68 @@ const meta: Meta<typeof ObjectTable> & {
       },
     },
   },
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   argTypes: {
     record: {
-      description: "任意 key value 的物件",
+      description: '任意 key value 的物件',
     },
     isEditing: {
-      description: "是否為編輯模式",
+      description: '是否為編輯模式',
     },
     columns: {
-      description: "自定義 column 顯示，API 跟 antd 的 Table 相比略為簡化",
+      description: '自定義 column 顯示，API 跟 antd 的 Table 相比略為簡化',
     },
   },
-};
+}
 
-export default meta;
-type Story = StoryObj<typeof ObjectTable>;
+export default meta
+type Story = StoryObj<typeof ObjectTable>
 
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
+
 const record = {
-  name: "John",
+  name: 'John',
   age: 18,
-  address: "test address",
-  interests: ["basketball", "football", "movie", "dance", "sing"],
+  address: 'test address',
+  interests: [
+    'basketball',
+    'football',
+    'movie',
+    'dance',
+    'sing',
+  ],
   isMale: true,
   isFemale: false,
   orders: [
     {
-      orderId: "#1",
-      items: "item1",
+      orderId: '#1',
+      items: 'item1',
     },
     {
-      orderId: "#2",
-      items: "item2",
+      orderId: '#2',
+      items: 'item2',
     },
   ],
-};
+}
 
 export const General: Story = {
-  name: "一般用法",
+  name: '一般用法',
   args: {
     record,
   },
-};
+}
 
 export const Editable: Story = {
-  name: "可編輯",
+  name: '可編輯',
   args: {
     record,
     editable: true,
   },
   decorators: [
-    (Story) => (
+    (TheStory) => (
       <Form>
-        <Story />
+        <TheStory />
       </Form>
     ),
   ],
-};
+}

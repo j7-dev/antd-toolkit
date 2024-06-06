@@ -1,9 +1,9 @@
 declare global {
-	interface Window {
-		wp: {
-			blocks:any
-		};
-	}
+  interface Window {
+    wp: {
+      blocks: any
+    }
+  }
 }
 
 export {}

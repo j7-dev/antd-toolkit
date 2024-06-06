@@ -1,17 +1,19 @@
-import React from "react";
-import type { Meta, StoryObj } from "@storybook/react";
-import { Countdown } from "./index";
-import dayjs from "dayjs";
+import React from 'react'
+import type { Meta, StoryObj } from '@storybook/react'
+import { Countdown } from './index'
+import dayjs from 'dayjs'
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
+
 const meta: Meta<typeof Countdown> & {
-  argTypes: any;
+  argTypes: any
 } = {
-  title: "常用/Countdown",
+  title: '常用/Countdown',
   component: Countdown,
   parameters: {
     // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/react/configure/story-layout
-    layout: "centered",
+
+    layout: 'centered',
     docs: {
       description: {
         component: `
@@ -28,52 +30,56 @@ const meta: Meta<typeof Countdown> & {
       },
     },
   },
+
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/react/writing-docs/autodocs
-  tags: ["autodocs"],
+
+  tags: ['autodocs'],
+
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
+
   argTypes: {
-    width: { control: { type: "range", min: 400, max: 1200, step: 10 } },
+    width: { control: { type: 'range', min: 400, max: 1200, step: 10 } },
     title: {
       control: {
-        type: "text",
+        type: 'text',
       },
     },
     date: {
-      description: "毫秒數字，共 13 位",
+      description: '毫秒數字，共 13 位',
     },
   },
-};
+}
 
-export default meta;
-type Story = StoryObj<typeof Countdown>;
+export default meta
+type Story = StoryObj<typeof Countdown>
 
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
 
 export const NotExpired: Story = {
-  name: "未到期",
+  name: '未到期',
   args: {
-    date: dayjs().endOf("day").valueOf(),
+    date: dayjs().endOf('day').valueOf(),
     title: <p className="text-xl text-center font-bold">距離晚上 12 點還有</p>,
     width: 800,
-    className: "",
+    className: '',
   },
-};
+}
 export const Expired: Story = {
-  name: "已到期",
+  name: '已到期',
   args: {
-    date: dayjs().startOf("day").valueOf(),
+    date: dayjs().startOf('day').valueOf(),
     title: <p className="text-xl text-center font-bold">距離晚上 12 點還有</p>,
     width: 800,
-    className: "",
+    className: '',
   },
-};
+}
 
 export const Error: Story = {
-  name: "錯誤處理，型別錯誤",
+  name: '錯誤處理，型別錯誤',
   args: {
     date: 123,
-    title: "距離晚上 12 點還有",
+    title: '距離晚上 12 點還有',
     width: 600,
-    className: "",
+    className: '',
   },
-};
+}

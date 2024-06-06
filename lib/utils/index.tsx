@@ -1,2 +1,2 @@
-export * from "./functions";
-export * from "./antd";
+export * from './functions'
+export * from './antd'

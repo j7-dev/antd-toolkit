@@ -1,14 +1,14 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { DateTime } from "./index";
-import dayjs from "dayjs";
+import type { Meta, StoryObj } from '@storybook/react'
+import { DateTime } from './index'
+import dayjs from 'dayjs'
 
 const meta: Meta<typeof DateTime> & {
-  argTypes: any;
+  argTypes: any
 } = {
-  title: "常用/DateTime",
+  title: '常用/DateTime',
   component: DateTime,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
     docs: {
       description: {
         component: `
@@ -33,27 +33,27 @@ type TDateProps = {
       },
     },
   },
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   argTypes: {
     date: {
-      description: "毫秒數字，共 13 位",
+      description: '毫秒數字，共 13 位',
     },
   },
-};
+}
 
-export default meta;
-type Story = StoryObj<typeof DateTime>;
+export default meta
+type Story = StoryObj<typeof DateTime>
 
 export const General: Story = {
-  name: "一般用法",
+  name: '一般用法',
   args: {
-    date: dayjs().endOf("day").valueOf(),
-    className: "",
+    date: dayjs().endOf('day').valueOf(),
+    className: '',
   },
-};
+}
 export const Error: Story = {
-  name: "錯誤處理，型別錯誤",
+  name: '錯誤處理，型別錯誤',
   args: {
     date: 123,
   },
-};
+}

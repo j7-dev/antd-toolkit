@@ -1,5 +1,2 @@
-export * from "./common";
-export * from "./dayjs";
-
-
-
+export * from './common'
+export * from './dayjs'

@@ -1,1 +1,1 @@
-export * from "./useUpdateRecord";
+export * from './useUpdateRecord'

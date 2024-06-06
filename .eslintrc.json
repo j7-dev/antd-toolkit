@@ -8,9 +8,6 @@
 	"parser": "@typescript-eslint/parser",
 	"extends": [
 		"plugin:@typescript-eslint/recommended",
-		"plugin:@wordpress/eslint-plugin/custom",
-		"plugin:@wordpress/eslint-plugin/esnext",
-		"plugin:@wordpress/eslint-plugin/jsdoc",
 		"plugin:react/recommended",
 		"eslint-config-prettier",
 		"prettier",

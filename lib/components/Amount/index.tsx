@@ -1,27 +1,27 @@
-import React from "react";
-import getSymbolFromCurrency from "currency-symbol-map";
+import React from 'react'
+import getSymbolFromCurrency from 'currency-symbol-map'
 
 export const Amount: React.FC<{
-  amount: number;
-  currency: string;
-  symbol?: boolean;
-  className?: string;
+  amount: number
+  currency: string
+  symbol?: boolean
+  className?: string
 }> = ({
   amount: rawAmount,
   currency: rawCurrency,
   symbol = false,
-  className = "",
+  className = '',
 }) => {
-  const amount = rawAmount || 0;
-  const currency = rawCurrency || "";
+  const amount = rawAmount || 0
+  const currency = rawCurrency || ''
   return (
     <span className={`whitespace-nowrap ${className}`}>
       <span>
         {symbol
           ? getSymbolFromCurrency(currency.toUpperCase())
           : currency.toUpperCase()}
-      </span>{" "}
+      </span>{' '}
       {amount.toLocaleString()}
     </span>
-  );
-};
+  )
+}

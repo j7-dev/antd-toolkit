@@ -1,16 +1,18 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from '@storybook/react'
 
-import { LoadingPage } from "./index";
+import { LoadingPage } from './index'
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
+
 const meta: Meta<typeof LoadingPage> & {
-  argTypes: any;
+  argTypes: any
 } = {
-  title: "Loading/LoadingPage",
+  title: 'Loading/LoadingPage',
   component: LoadingPage,
   parameters: {
     // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/react/configure/story-layout
-    layout: "centered",
+
+    layout: 'centered',
     docs: {
       description: {
         component: `
@@ -23,15 +25,16 @@ const meta: Meta<typeof LoadingPage> & {
       },
     },
   },
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   argTypes: {},
-};
+}
 
-export default meta;
-type Story = StoryObj<typeof LoadingPage>;
+export default meta
+type Story = StoryObj<typeof LoadingPage>
 
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
+
 export const General: Story = {
-  name: "一般",
+  name: '一般',
   args: {},
-};
+}

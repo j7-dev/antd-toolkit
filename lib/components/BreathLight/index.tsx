@@ -1,8 +1,8 @@
 type TProps = {
-  color?: string;
-  size?: string;
-};
-export const BreathLight = ({ color = "orange", size = "0.75rem" }: TProps) => {
+  color?: string
+  size?: string
+}
+export const BreathLight = ({ color = 'orange', size = '0.75rem' }: TProps) => {
   return (
     <span
       className="flex relative"
@@ -26,5 +26,5 @@ export const BreathLight = ({ color = "orange", size = "0.75rem" }: TProps) => {
         }}
       ></span>
     </span>
-  );
-};
+  )
+}

@@ -1,9 +1,9 @@
-import { theme } from "antd";
+import { theme } from 'antd'
 
-const { useToken } = theme;
+const { useToken } = theme
 
 export const useColor = () => {
-  const { token } = useToken();
+  const { token } = useToken()
 
-  return { ...token };
-};
+  return { ...token }
+}

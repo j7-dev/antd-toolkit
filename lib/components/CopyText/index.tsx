@@ -14,12 +14,14 @@ export const CopyText: React.FC<{
 }) => {
   const [messageApi, contextHolder] = message.useMessage(messageConfig)
 
-  const copyToClipboard = (text: string) => () => {
+  const copyToClipboard = (textToCopy: string) => () => {
     // 檢查剪貼簿API是否可用
+
     if (navigator.clipboard) {
       // 請求剪貼簿權限
+
       navigator.clipboard
-        .writeText(text)
+        .writeText(textToCopy)
         .then(() => {
           messageApi.success('複製成功')
         })

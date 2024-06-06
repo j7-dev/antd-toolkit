@@ -15,6 +15,7 @@ export const Upload: React.FC<{}> = () => {
       aspectSlider
       showReset
       showGrid
+
       // cropShape="round"
     >
       <Dragger {...uploadProps}>

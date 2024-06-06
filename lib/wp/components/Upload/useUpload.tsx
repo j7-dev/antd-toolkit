@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
-import type { GetProp, UploadFile, UploadProps } from 'antd'
-import { message } from 'antd'
+import { useState } from 'react'
+import { message, GetProp, UploadFile, UploadProps } from 'antd'
 
 // const API_URL = 'https://partnerdemo.wpsite.pro/wp-json/wp/v2/media'
 // const USERNAME = 'j7.dev.gg'
@@ -35,9 +34,9 @@ export const useUpload = () => {
       Authorization: 'Basic ' + btoa(`${USERNAME}:${PASSWORD}`),
     },
     method: 'post',
-    onChange({ file, fileList }) {
+    onChange({ file, fileList: theFileList }) {
       const { status, name } = file
-      console.log('uploading', { file, fileList, status })
+      console.log('uploading', { file, theFileList, status })
 
       if (status !== 'uploading') {
       }
@@ -46,7 +45,7 @@ export const useUpload = () => {
       } else if (status === 'error') {
         message.error(`${name} file upload failed.`)
       }
-      setFileList(fileList)
+      setFileList(theFileList)
     },
     onPreview: async (file: UploadFile) => {
       let src = file.url as string
