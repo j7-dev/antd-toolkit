@@ -1,8 +1,27 @@
-import React from 'react'
-import type { UploadProps } from 'antd'
+import React, { useState } from 'react'
+import type { GetProp, UploadFile, UploadProps } from 'antd'
 import { message } from 'antd'
 
+// const API_URL = 'https://partnerdemo.wpsite.pro/wp-json/wp/v2/media'
+// const USERNAME = 'j7.dev.gg'
+// const PASSWORD = 'VDdl Ek8F w76p fg9f iPyf AMsc'
+
+const API_URL = 'http://ltest.test:8080/wp-json/wp/v2/media'
+const USERNAME = 'j7'
+const PASSWORD = 'gRJ0 14kC n9ye kQft k2Iz 5BAP'
+
+type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0]
+
 export const useUpload = () => {
+  const [fileList, setFileList] = useState<UploadFile[]>([
+    {
+      uid: '-1',
+      name: 'image.png',
+      status: 'done',
+      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+    },
+  ])
+
   const uploadProps: UploadProps = {
     name: 'file',
     accept: '.jpg,.png',
@@ -10,23 +29,44 @@ export const useUpload = () => {
     data: {
       test: 'testargs',
     },
-    action: 'https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload',
-    headers: {},
+    action: API_URL,
+    headers: {
+      'Content-Disposition': 'attachment; filename="example.jpg"',
+      Authorization: 'Basic ' + btoa(`${USERNAME}:${PASSWORD}`),
+    },
     method: 'post',
-    onChange(info) {
-      const { status } = info.file
+    onChange({ file, fileList }) {
+      const { status, name } = file
+      console.log('uploading', { file, fileList, status })
+
       if (status !== 'uploading') {
-        console.log(info.file, info.fileList)
       }
       if (status === 'done') {
-        message.success(`${info.file.name} file uploaded successfully.`)
+        message.success(`${name} file uploaded successfully.`)
       } else if (status === 'error') {
-        message.error(`${info.file.name} file upload failed.`)
+        message.error(`${name} file upload failed.`)
       }
+      setFileList(fileList)
+    },
+    onPreview: async (file: UploadFile) => {
+      let src = file.url as string
+      if (!src) {
+        src = await new Promise((resolve) => {
+          const reader = new FileReader()
+          reader.readAsDataURL(file.originFileObj as FileType)
+          reader.onload = () => resolve(reader.result as string)
+        })
+      }
+      const image = new Image()
+      image.src = src
+      const imgWindow = window.open(src)
+      imgWindow?.document.write(image.outerHTML)
     },
     onDrop(e) {
       console.log('Dropped files', e.dataTransfer.files)
     },
+    listType: 'picture',
+    fileList,
   }
 
   return { uploadProps }
