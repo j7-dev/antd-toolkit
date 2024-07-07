@@ -69,7 +69,7 @@ const EditorWithHooks = () => {
       <Editor {...yooptaEditorProps} />
 
       <hr className="bg-gray-200 w-full h-1 mb-6" />
-      <p>onChange 時顯示數據 Get Blocks，debounce 1.5秒</p>
+      <p>onChange 時顯示數據 Get Blocks，debounce 0.5秒</p>
       {!!formattedBlocks.length && (
         <pre className="mt-8 prismjs bg-gray-100 p-4 rounded-md">
           {JSON.stringify(formattedBlocks, null, 2)}

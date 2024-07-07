@@ -8,9 +8,6 @@ import {
   Strike,
   Highlight,
 } from '@yoopta/marks'
-
-// import { DividerPlugin } from './customPlugins/Divider';
-
 import { TBlock, EditorProps, YooptaEditorProps } from './types'
 import { plugins } from './utils'
 import ActionMenuList, {
@@ -19,6 +16,7 @@ import ActionMenuList, {
 import Toolbar, { DefaultToolbarRender } from '@yoopta/toolbar'
 import LinkTool, { DefaultLinkToolRender } from '@yoopta/link-tool'
 import { debounce } from 'lodash-es'
+import { html } from '@yoopta/exports'
 
 const tools = {
   // [ActionMenu] - + 跟 / 的主選單
@@ -69,15 +67,30 @@ export const useEditor = () => {
             [key: string]: TBlock
           } = editor.getEditorValue()
           const blocks: TBlock[] = Object.values(raw)
+          const htmlString = blocksToHtml()
+          console.log('⭐  htmlString:', htmlString)
 
           // 按照畫面上的順序排序
 
           blocks.sort((a, b) => a?.meta?.order - b?.meta?.order)
           setFormattedBlocks(blocks)
-        }, 1500),
+        }, 500),
       )
     }
   }, [editor])
+
+  const blocksToHtml = () => {
+    const raw: {
+      [key: string]: TBlock
+    } = editor.getEditorValue()
+    const htmlString = html.serialize(editor, raw)
+    return htmlString
+  }
+
+  const htmlToBlocks = (htmlString: string) => {
+    const content = html.deserialize(editor, htmlString)
+    editor.setEditorValue(content)
+  }
 
   const yooptaEditorProps: YooptaEditorProps = {
     editor,
@@ -91,6 +104,8 @@ export const useEditor = () => {
   const editorProps: EditorProps = {
     yooptaEditorProps,
     formattedBlocks,
+    blocksToHtml,
+    htmlToBlocks,
   }
 
   return editorProps
