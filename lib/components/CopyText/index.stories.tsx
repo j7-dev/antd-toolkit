@@ -19,7 +19,7 @@ const meta: Meta<typeof CopyText> & {
       description: {
         component: `
 
-				預設外觀是一個複製的 icon，可以透過 children 傳入其他元件，例如 Button
+預設外觀是一個複製的 icon，可以透過 children 傳入其他元件，例如 Button
 
 				`, // 可以寫 markdown
       },

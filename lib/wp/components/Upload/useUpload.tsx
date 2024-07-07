@@ -11,28 +11,43 @@ const PASSWORD = 'gRJ0 14kC n9ye kQft k2Iz 5BAP'
 
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0]
 
-export const useUpload = () => {
-  const [fileList, setFileList] = useState<UploadFile[]>([
-    {
-      uid: '-1',
-      name: 'image.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    },
-  ])
+/**
+ * accept: string
+ * @example '.jpg,.png' , 'image/*', 'video/*', 'audio/*', 'image/png,image/jpeg', '.pdf, .docx, .doc, .xml'
+ * @ref accept https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#unique_file_type_specifiers
+ */
 
-  const uploadProps: UploadProps = {
+type TUseUploadParams = {
+  apiUrl: string
+  accept?: string
+  uploadProps?: UploadProps
+}
+
+export const useUpload = ({
+  apiUrl,
+  accept = 'image/*',
+  uploadProps,
+}: TUseUploadParams) => {
+  /**
+   * fileList: UploadFile[]
+   * @example
+   * [
+   *    {
+   *     uid: '-1',
+   *     name: 'image.png',
+   *     status: 'done',
+   *     url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+   *   },
+   *  ]
+   */
+
+  const [fileList, setFileList] = useState<UploadFile[]>([])
+
+  const mergedUploadProps: UploadProps = {
     name: 'file',
-    accept: '.jpg,.png',
+    accept,
     multiple: false,
-    data: {
-      test: 'testargs',
-    },
-    action: API_URL,
-    headers: {
-      'Content-Disposition': 'attachment; filename="example.jpg"',
-      Authorization: 'Basic ' + btoa(`${USERNAME}:${PASSWORD}`),
-    },
+    action: apiUrl,
     method: 'post',
     onChange({ file, fileList: theFileList }) {
       const { status, name } = file
@@ -66,7 +81,8 @@ export const useUpload = () => {
     },
     listType: 'picture',
     fileList,
+    ...uploadProps,
   }
 
-  return { uploadProps }
+  return { uploadProps: mergedUploadProps }
 }
