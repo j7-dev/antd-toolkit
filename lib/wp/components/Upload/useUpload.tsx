@@ -1,14 +1,6 @@
 import { useState } from 'react'
 import { message, GetProp, UploadFile, UploadProps } from 'antd'
 
-// const API_URL = 'https://partnerdemo.wpsite.pro/wp-json/wp/v2/media'
-// const USERNAME = 'j7.dev.gg'
-// const PASSWORD = 'VDdl Ek8F w76p fg9f iPyf AMsc'
-
-const API_URL = 'http://ltest.test:8080/wp-json/wp/v2/media'
-const USERNAME = 'j7'
-const PASSWORD = 'gRJ0 14kC n9ye kQft k2Iz 5BAP'
-
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0]
 
 /**
