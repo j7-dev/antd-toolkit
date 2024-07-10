@@ -50,6 +50,11 @@ export type YooptaEditorProps = {
 export type EditorProps = {
   yooptaEditorProps: YooptaEditorProps
   formattedBlocks: TBlock[]
-  blocksToHtml: () => string
-  htmlToBlocks: (_htmlString: string) => void
+  getHtmlFromBlocks: () => string
+  setBlocksFromHtml: (_htmlString: string) => void
+}
+
+export type TApiConfig = {
+  apiEndpoint: string
+  headers?: Headers
 }

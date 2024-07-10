@@ -1,10 +1,4 @@
-// TODO API 串接
-
-export const WP = {
-  API: 'http://ltest.test:8080/wp-json/power-course/upload',
-  USERNAME: 'j7',
-  PASSWORD: 'gRJ0 14kC n9ye kQft k2Iz 5BAP',
-}
+import { TApiConfig } from '../types'
 
 export type TUploadResponse = {
   code: string
@@ -25,19 +19,15 @@ export type TUploadData = {
 export const uploadWP = async (
   file: File,
   type = 'image',
+  apiConfig: TApiConfig,
 ): Promise<TUploadData> => {
+  const { apiEndpoint, headers } = apiConfig
   const formData = new FormData()
   formData.append('files', file)
   formData.append('upload_only', '1')
 
-  const headers = new Headers()
-  headers.append(
-    'Authorization',
-    'Basic ' + btoa(WP.USERNAME + ':' + WP.PASSWORD),
-  )
-
   try {
-    const call = await fetch(WP.API, {
+    const call = await fetch(apiEndpoint, {
       method: 'POST',
       headers,
       body: formData,

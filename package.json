@@ -44,7 +44,7 @@
     "@yoopta/code": "^4.6.2",
     "@yoopta/editor": "^4.6.2",
     "@yoopta/embed": "^4.6.2",
-    "@yoopta/exports": "^4.6.3-rc.0",
+    "@yoopta/exports": "^4.6.3",
     "@yoopta/file": "^4.6.2",
     "@yoopta/headings": "^4.6.2",
     "@yoopta/image": "^4.6.2",

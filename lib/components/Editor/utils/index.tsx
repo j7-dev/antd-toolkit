@@ -18,69 +18,80 @@ import { HeadingOne, HeadingThree, HeadingTwo } from '@yoopta/headings'
 // import Code from '@yoopta/code'
 
 import { uploadWP } from './uploadWP'
+import { TApiConfig } from '../types'
 
-export const plugins = [
-  // File.extend({
-  //   options: {
-  //     onUpload: async (file) => {
-  //       const data = await uploadToCloudinary(file, 'auto')
+export const DEFAULT = {
+  API: 'http://ltest.test:8080/wp-json/power-course/upload',
+  USERNAME: 'j7',
+  PASSWORD: 'gRJ0 14kC n9ye kQft k2Iz 5BAP',
+}
 
-  //       return {
-  //         src: data.secure_url,
-  //         format: data.format,
-  //         name: data.name,
-  //         size: data.bytes,
-  //       }
-  //     },
-  //   },
-  // }),
+export const getPlugins = (apiConfig: TApiConfig) => {
+  const plugins = [
+    // File.extend({
+    //   options: {
+    //     onUpload: async (file) => {
+    //       const data = await uploadToCloudinary(file, 'auto')
 
-  // Code,
+    //       return {
+    //         src: data.secure_url,
+    //         format: data.format,
+    //         name: data.name,
+    //         size: data.bytes,
+    //       }
+    //     },
+    //   },
+    // }),
 
-  Paragraph,
-  HeadingOne,
-  HeadingTwo,
-  HeadingThree,
-  Blockquote,
-  Callout,
-  Link,
-  NumberedList,
-  BulletedList,
-  TodoList,
-  Embed,
+    // Code,
 
-  // Accordion,
+    Paragraph,
+    HeadingOne,
+    HeadingTwo,
+    HeadingThree,
+    Blockquote,
+    Callout,
+    Link,
+    NumberedList,
+    BulletedList,
+    TodoList,
+    Embed,
 
-  Image.extend({
-    options: {
-      async onUpload(file) {
-        const data = await uploadWP(file, 'image')
+    // Accordion,
 
-        return {
-          src: data?.url,
-          alt: data?.name,
-          sizes: {
-            width: data.width,
-            height: data.height,
-          },
-        }
+    Image.extend({
+      options: {
+        async onUpload(file) {
+          const data = await uploadWP(file, 'image', apiConfig)
+
+          return {
+            src: data?.url,
+            alt: data?.name,
+            sizes: {
+              width: data.width,
+              height: data.height,
+            },
+          }
+        },
       },
-    },
-  }),
+    }),
 
-  // Video.extend({
-  //   options: {
-  //     onUpload: async (file) => {
-  //       const data = await uploadToCloudinary(file, 'video')
-  //       return {
-  //         src: data.secure_url,
-  //         alt: 'cloudinary',
-  //         sizes: {
-  //           width: data.width,
-  //           height: data.height,
-  //         },
-  //       }
-  //     },
-  //   },
-  // }),
-] as YooptaPlugin[]
+    // Video.extend({
+    //   options: {
+    //     onUpload: async (file) => {
+    //       const data = await uploadToCloudinary(file, 'video')
+    //       return {
+    //         src: data.secure_url,
+    //         alt: 'cloudinary',
+    //         sizes: {
+    //           width: data.width,
+    //           height: data.height,
+    //         },
+    //       }
+    //     },
+    //   },
+    // }),
+  ] as YooptaPlugin[]
+
+  return plugins
+}

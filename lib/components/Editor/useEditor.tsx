@@ -8,8 +8,8 @@ import {
   Strike,
   Highlight,
 } from '@yoopta/marks'
-import { TBlock, EditorProps, YooptaEditorProps } from './types'
-import { plugins } from './utils'
+import { TBlock, EditorProps, YooptaEditorProps, TApiConfig } from './types'
+import { getPlugins, DEFAULT } from './utils'
 import ActionMenuList, {
   DefaultActionMenuRender,
 } from '@yoopta/action-menu-list'
@@ -17,6 +17,16 @@ import Toolbar, { DefaultToolbarRender } from '@yoopta/toolbar'
 import LinkTool, { DefaultLinkToolRender } from '@yoopta/link-tool'
 import { debounce } from 'lodash-es'
 import { html } from '@yoopta/exports'
+
+const defaultHeaders = new Headers()
+defaultHeaders.append(
+  'Authorization',
+  'Basic ' + btoa(DEFAULT.USERNAME + ':' + DEFAULT.PASSWORD),
+)
+const defaultApiConfig = {
+  apiEndpoint: DEFAULT.API,
+  headers: defaultHeaders,
+}
 
 const tools = {
   // [ActionMenu] - + 跟 / 的主選單
@@ -50,7 +60,7 @@ const marks = [
   Highlight,
 ]
 
-export const useEditor = () => {
+export const useEditor = (apiConfig?: TApiConfig) => {
   const selectionRef = useRef(null)
   const editor = useMemo(() => createYooptaEditor(), [])
 
@@ -67,7 +77,7 @@ export const useEditor = () => {
             [key: string]: TBlock
           } = editor.getEditorValue()
           const blocks: TBlock[] = Object.values(raw)
-          const htmlString = blocksToHtml()
+          const htmlString = getHtmlFromBlocks()
           console.log('⭐  htmlString:', htmlString)
 
           // 按照畫面上的順序排序
@@ -79,7 +89,7 @@ export const useEditor = () => {
     }
   }, [editor])
 
-  const blocksToHtml = () => {
+  const getHtmlFromBlocks = () => {
     const raw: {
       [key: string]: TBlock
     } = editor.getEditorValue()
@@ -87,10 +97,12 @@ export const useEditor = () => {
     return htmlString
   }
 
-  const htmlToBlocks = (htmlString: string) => {
+  const setBlocksFromHtml = (htmlString: string) => {
     const content = html.deserialize(editor, htmlString)
     editor.setEditorValue(content)
   }
+
+  const plugins = getPlugins(apiConfig || defaultApiConfig)
 
   const yooptaEditorProps: YooptaEditorProps = {
     editor,
@@ -104,8 +116,8 @@ export const useEditor = () => {
   const editorProps: EditorProps = {
     yooptaEditorProps,
     formattedBlocks,
-    blocksToHtml,
-    htmlToBlocks,
+    getHtmlFromBlocks,
+    setBlocksFromHtml,
   }
 
   return editorProps
