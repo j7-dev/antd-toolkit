@@ -8,12 +8,13 @@ import {
   DefaultInlineContentSchema,
 } from '@blocknote/core'
 import '@blocknote/mantine/style.css'
+import { schema } from './useBlockNote'
 
 export * from './useBlockNote'
 
 export const BlockNote: FC<
   BlockNoteViewProps<
-    DefaultBlockSchema,
+    typeof schema.blockSchema,
     DefaultInlineContentSchema,
     DefaultStyleSchema
   >

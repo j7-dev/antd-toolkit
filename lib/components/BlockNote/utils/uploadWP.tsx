@@ -18,7 +18,7 @@ export type TUploadData = {
 
 export const uploadWP =
   (apiConfig: TApiConfig) =>
-  async (file: File): Promise<TUploadData> => {
+  async (file: File): Promise<string> => {
     const { apiEndpoint, headers } = apiConfig
     const formData = new FormData()
     formData.append('files', file)
@@ -31,7 +31,8 @@ export const uploadWP =
         body: formData,
       })
       const response: TUploadResponse = await call.json()
-      return response?.data
+
+      return response?.data?.url
     } catch (error) {
       return Promise.reject(error)
     }
