@@ -1,13 +1,14 @@
 import React from 'react'
 import { InboxOutlined } from '@ant-design/icons'
-import { Upload as AntdUpload } from 'antd'
+import { Upload as AntdUpload, UploadProps } from 'antd'
 import { useUpload } from './useUpload'
 import ImgCrop from 'antd-img-crop'
 
 const { Dragger } = AntdUpload
 
-export const Upload: React.FC<{}> = () => {
-  const { uploadProps } = useUpload()
+export const Upload: React.FC<{ uploadProps: UploadProps }> = ({
+  uploadProps,
+}) => {
   return (
     <ImgCrop
       rotationSlider
