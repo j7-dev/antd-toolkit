@@ -26,6 +26,10 @@ export const schema = BlockNoteSchema.create({
   blockSpecs: {
     ...defaultBlockSpecs, // Adds all default blocks.
     alert: Alert, // Adds the Alert block.
+    video: undefined as any, // TODO 未來再整合
+    file: undefined as any,
+    audio: undefined as any,
+    checkListItem: undefined as any,
   },
 })
 
@@ -84,7 +88,7 @@ export const useBlockNote = (params: TUseBlockNoteParams) => {
     onChange: async () => {
       // Saves the document JSON to state.
       setBlocks(editor.document as Block[])
-      const newHtml = await editor.blocksToHTMLLossy(editor.document)
+      const newHtml = await editor.blocksToFullHTML(editor.document)
       setHTML(newHtml)
     },
     theme: 'light',

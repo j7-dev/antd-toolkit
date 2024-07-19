@@ -63,10 +63,11 @@ const INIT: any = [
     type: 'numberedListItem',
     content: 'Numbered List Item',
   },
-  {
-    type: 'checkListItem',
-    content: 'Check List Item',
-  },
+
+  // {
+  //   type: 'checkListItem',
+  //   content: 'Check List Item',
+  // },
   {
     type: 'table',
     content: {
@@ -84,9 +85,10 @@ const INIT: any = [
       ],
     },
   },
-  {
-    type: 'file',
-  },
+
+  // {
+  //   type: 'file',
+  // },
   {
     type: 'image',
     props: {
@@ -95,22 +97,23 @@ const INIT: any = [
         'From https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg',
     },
   },
-  {
-    type: 'video',
-    props: {
-      url: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm',
-      caption:
-        'From https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm',
-    },
-  },
-  {
-    type: 'audio',
-    props: {
-      url: 'https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3',
-      caption:
-        'From https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3',
-    },
-  },
+
+  // {
+  //   type: 'video',
+  //   props: {
+  //     url: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm',
+  //     caption:
+  //       'From https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm',
+  //   },
+  // },
+  // {
+  //   type: 'audio',
+  //   props: {
+  //     url: 'https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3',
+  //     caption:
+  //       'From https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3',
+  //   },
+  // },
   {
     type: 'paragraph',
   },
