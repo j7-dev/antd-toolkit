@@ -35,6 +35,9 @@
     "publish:npm": "yarn build && yarn publish && git push"
   },
   "dependencies": {
+    "@blocknote/core": "^0.15.3",
+    "@blocknote/mantine": "^0.15.3",
+    "@blocknote/react": "^0.15.3",
     "@refinedev/antd": "^5.42.0",
     "@refinedev/core": "^4.53.0",
     "@yoopta/accordion": "^4.6.3-rc.0",
