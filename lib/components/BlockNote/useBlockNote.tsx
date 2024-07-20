@@ -30,7 +30,7 @@ import { Fragment } from 'prosemirror-model'
 export const schema = BlockNoteSchema.create({
   blockSpecs: {
     ...defaultBlockSpecs, // Adds all default blocks.
-    alert: Alert, // Adds the Alert block.
+    // alert: Alert, // TODO Adds the Alert block. 因為不能自動轉 HTML 先隱藏
     video: undefined as any, // TODO 未來再整合
     file: undefined as any,
     audio: undefined as any,
@@ -38,25 +38,25 @@ export const schema = BlockNoteSchema.create({
   },
 })
 
-export const insertAlert = (editor: typeof schema.BlockNoteEditor) => ({
-  title: 'Alert',
-  onItemClick: () => {
-    insertOrUpdateBlock(editor, {
-      type: 'alert',
-    })
-  },
-  aliases: [
-    'alert',
-    'notification',
-    'emphasize',
-    'warning',
-    'error',
-    'info',
-    'success',
-  ],
-  group: 'Other',
-  icon: <RiAlertFill />,
-})
+// export const insertAlert = (editor: typeof schema.BlockNoteEditor) => ({
+//   title: 'Alert',
+//   onItemClick: () => {
+//     insertOrUpdateBlock(editor, {
+//       type: 'alert',
+//     })
+//   },
+//   aliases: [
+//     'alert',
+//     'notification',
+//     'emphasize',
+//     'warning',
+//     'error',
+//     'info',
+//     'success',
+//   ],
+//   group: 'Other',
+//   icon: <RiAlertFill />,
+// })
 
 type TUseBlockNoteParams = {
   options?: BlockNoteEditorOptions<
@@ -142,14 +142,17 @@ export const useBlockNote = (params: TUseBlockNoteParams) => {
       <>
         <SuggestionMenuController
           triggerCharacter={'/'}
-          getItems={async (query) =>
-            filterSuggestionItems(
+          getItems={async (query) => {
+            const menuItems = getDefaultReactSlashMenuItems(editor).filter(
+              (menuItem) => menuItem?.key !== 'emoji', // 隱藏 Emoji
+            )
+            return filterSuggestionItems(
               // eslint-disable-next-line lines-around-comment
               // Gets all default slash menu items and `insertAlert` item.
-              [...getDefaultReactSlashMenuItems(editor), insertAlert(editor)],
+              [...menuItems],
               query,
             )
-          }
+          }}
         />
         {/* <GridSuggestionMenuController
           triggerCharacter={':'}
