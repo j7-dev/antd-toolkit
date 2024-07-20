@@ -48,7 +48,10 @@ export const alertTypes = [
   },
 ] as const
 
-// The Alert block.
+/**
+ * @see https://www.blocknotejs.org/docs/custom-schemas/custom-blocks
+ * 可自訂 toExternalHTML & parse
+ */
 export const Alert = createReactBlockSpec(
   {
     type: 'alert',
