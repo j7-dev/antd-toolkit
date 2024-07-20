@@ -15,10 +15,15 @@ import {
   filterSuggestionItems,
   insertOrUpdateBlock,
   BlockNoteEditorOptions,
+  createExternalHTMLExporter,
+  PartialBlock,
+  blockToNode,
+  BlockSchemaFromSpecs,
 } from '@blocknote/core'
 import { Alert } from './CustomBlocks'
 import { RiAlertFill } from 'react-icons/ri'
 import { uploadWP } from './utils'
+import { Fragment } from 'prosemirror-model'
 
 // Our schema with block specs, which contain the configs and implementations for blocks
 // that we want our editor to use.
@@ -88,7 +93,41 @@ export const useBlockNote = (params: TUseBlockNoteParams) => {
     onChange: async () => {
       // Saves the document JSON to state.
       setBlocks(editor.document as Block[])
-      const newHtml = await editor.blocksToFullHTML(editor.document)
+
+      /* TODO 未來有機會再來處理 parser
+			 const pmSchema = editor.pmSchema
+      const exporter = createExternalHTMLExporter(pmSchema, editor)
+      const exportBlocks = (
+        blocksValue: PartialBlock<
+          typeof schema.blockSchema,
+          DefaultInlineContentSchema,
+          DefaultStyleSchema
+        >[],
+        optionsValue: object = {},
+      ) => {
+        const nodes = blocksValue.map((block) =>
+          blockToNode(block, pmSchema, editor.schema.styleSchema),
+        )
+        console.log('⭐  nodes:', nodes)
+        const blockGroup = pmSchema.nodes['blockGroup'].create(null, nodes)
+        console.log('⭐  blockGroup:', blockGroup)
+        console.log('⭐  Fragment.from(blockGroup):', Fragment.from(blockGroup))
+
+        const fragment = exporter.exportProseMirrorFragment(
+          Fragment.from(blockGroup),
+          optionsValue,
+        )
+        console.log('⭐  fragment:', fragment)
+
+        return fragment
+      }
+      const newHtml = await exportBlocks(editor.document, {})
+      console.log('⭐  newHtml:', newHtml)
+
+			*/
+
+      const newHtml = await editor.blocksToHTMLLossy(editor.document)
+
       setHTML(newHtml)
     },
     theme: 'light',
