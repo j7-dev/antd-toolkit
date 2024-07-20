@@ -5,6 +5,17 @@ import {
   BlockNoteViewProps,
   SuggestionMenuController,
   getDefaultReactSlashMenuItems,
+  BasicTextStyleButton,
+  BlockTypeSelect,
+  ColorStyleButton,
+  CreateLinkButton,
+  FileCaptionButton,
+  FileReplaceButton,
+  FormattingToolbar,
+  FormattingToolbarController,
+  NestBlockButton,
+  TextAlignButton,
+  UnnestBlockButton,
 } from '@blocknote/react'
 import {
   DefaultStyleSchema,
@@ -131,11 +142,11 @@ export const useBlockNote = (params: TUseBlockNoteParams) => {
       setHTML(newHtml)
     },
     theme: 'light',
-    formattingToolbar: true,
+    formattingToolbar: false, // 自訂 toolbar
     linkToolbar: true,
     sideMenu: true,
-    slashMenu: false,
-    emojiPicker: true,
+    slashMenu: false, // 自訂選單
+    emojiPicker: false, // 關閉 Emoji
     filePanel: true,
     tableHandles: true,
     children: (
@@ -154,13 +165,57 @@ export const useBlockNote = (params: TUseBlockNoteParams) => {
             )
           }}
         />
-        {/* <GridSuggestionMenuController
-          triggerCharacter={':'}
+        <FormattingToolbarController
+          formattingToolbar={() => (
+            <FormattingToolbar>
+              <BlockTypeSelect key={'blockTypeSelect'} />
 
-          // Changes the Emoji Picker to only have 5 columns.
-          columns={5}
-          minQueryLength={2}
-        /> */}
+              <FileCaptionButton key={'fileCaptionButton'} />
+              <FileReplaceButton key={'replaceFileButton'} />
+
+              <BasicTextStyleButton
+                basicTextStyle={'bold'}
+                key={'boldStyleButton'}
+              />
+              <BasicTextStyleButton
+                basicTextStyle={'italic'}
+                key={'italicStyleButton'}
+              />
+              <BasicTextStyleButton
+                basicTextStyle={'underline'}
+                key={'underlineStyleButton'}
+              />
+              <BasicTextStyleButton
+                basicTextStyle={'strike'}
+                key={'strikeStyleButton'}
+              />
+              {/* Extra button to toggle code styles */}
+              {/* <BasicTextStyleButton
+                key={'codeStyleButton'}
+                basicTextStyle={'code'}
+              />
+              <TextAlignButton
+                textAlignment={'left'}
+                key={'textAlignLeftButton'}
+              />
+              <TextAlignButton
+                textAlignment={'center'}
+                key={'textAlignCenterButton'}
+              />
+              <TextAlignButton
+                textAlignment={'right'}
+                key={'textAlignRightButton'}
+              /> */}
+
+              {/* <ColorStyleButton key={'colorStyleButton'} /> */}
+
+              <NestBlockButton key={'nestBlockButton'} />
+              <UnnestBlockButton key={'unnestBlockButton'} />
+
+              <CreateLinkButton key={'createLinkButton'} />
+            </FormattingToolbar>
+          )}
+        />
       </>
     ),
   }
