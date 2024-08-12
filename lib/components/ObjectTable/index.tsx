@@ -92,7 +92,7 @@ export const ObjectTable: React.FC<{
         <Input />
       </Form.Item>
     ) : (
-      record?.[dataIndex as string].toString()
+      record?.[dataIndex as string]?.toString()
     )
   }
 
