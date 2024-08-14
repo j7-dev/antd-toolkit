@@ -194,7 +194,9 @@ export const useBlockNote = (params: TUseBlockNoteParams) => {
                 key={'codeStyleButton'}
                 basicTextStyle={'code'}
               />
-              <TextAlignButton
+               */}
+
+              {/* <TextAlignButton
                 textAlignment={'left'}
                 key={'textAlignLeftButton'}
               />
@@ -207,7 +209,7 @@ export const useBlockNote = (params: TUseBlockNoteParams) => {
                 key={'textAlignRightButton'}
               /> */}
 
-              {/* <ColorStyleButton key={'colorStyleButton'} /> */}
+              <ColorStyleButton key={'colorStyleButton'} />
 
               <NestBlockButton key={'nestBlockButton'} />
               <UnnestBlockButton key={'unnestBlockButton'} />

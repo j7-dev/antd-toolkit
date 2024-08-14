@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
 import { BlockNote, useBlockNote } from './index'
 
@@ -171,18 +171,43 @@ const BlockNoteWithHooks = () => {
     },
   })
 
+  const { blockNoteViewProps: blockNoteViewProps2 } = useBlockNote({
+    options: {} as any,
+    apiConfig: {
+      apiEndpoint: DEFAULT.API,
+      headers: new Headers({
+        Authorization:
+          'Basic ' + btoa(DEFAULT.USERNAME + ':' + DEFAULT.PASSWORD),
+      }),
+    },
+  })
+
+  useEffect(() => {
+    const editor2 = blockNoteViewProps2.editor
+    async function loadInitialHTML() {
+      const blocksFromHTML = await editor2.tryParseHTMLToBlocks(html)
+
+      // console.log('⭐  blocksFromHTML:', blocksFromHTML) // TODO 讓空行也能解析
+      editor2.replaceBlocks(editor2.document, blocksFromHTML)
+    }
+    loadInitialHTML()
+  }, [html])
+
   return (
     <>
       <BlockNote {...blockNoteViewProps} />
 
       <hr className="bg-gray-200 w-full h-[1px] mb-6" />
-      <p>onChange 時顯示數據 Get Blocks，debounce 0.5秒</p>
-      <pre className="mt-8 prismjs bg-gray-100 p-4 rounded-md whitespace-normal">
-        {html}
-      </pre>
-      <pre className="mt-8 prismjs bg-gray-100 p-4 rounded-md">
+      <p>數據結構</p>
+      <pre className="my-4 prismjs bg-gray-100 p-4 rounded-md">
         {JSON.stringify(blocks, null, 2)}
       </pre>
+      <p>serialize HTML</p>
+      <pre className="my-4 prismjs bg-gray-100 p-4 rounded-md whitespace-normal">
+        {html}
+      </pre>
+      <p>unserialize 上方的HTML</p>
+      <BlockNote {...blockNoteViewProps2} />
     </>
   )
 }
