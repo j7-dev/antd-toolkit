@@ -5,6 +5,7 @@ import { BlockNoteViewProps } from '@blocknote/react'
 import { DefaultStyleSchema, DefaultInlineContentSchema } from '@blocknote/core'
 import '@blocknote/mantine/style.css'
 import { schema } from './useBlockNote'
+import './index.scss'
 
 export * from './useBlockNote'
 
