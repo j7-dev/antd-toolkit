@@ -16,6 +16,7 @@ import {
   NestBlockButton,
   TextAlignButton,
   UnnestBlockButton,
+  DefaultReactSuggestionItem,
 } from '@blocknote/react'
 import {
   DefaultStyleSchema,
@@ -31,41 +32,42 @@ import {
   blockToNode,
   BlockSchemaFromSpecs,
 } from '@blocknote/core'
-import { Alert } from './CustomBlocks'
-import { RiAlertFill } from 'react-icons/ri'
+import {
+  Alert,
+  alertMenuItem,
+  CustomHTML,
+  customHTMLMenuItem,
+} from './CustomBlocks'
 import { uploadWP } from './utils'
 import { Fragment } from 'prosemirror-model'
+import { FaPhotoVideo } from 'react-icons/fa'
 
 // Our schema with block specs, which contain the configs and implementations for blocks
 // that we want our editor to use.
 export const schema = BlockNoteSchema.create({
   blockSpecs: {
     ...defaultBlockSpecs, // Adds all default blocks.
-    alert: Alert, // TODO Adds the Alert block. 因為不能自動轉 HTML 先隱藏
-    // video: undefined as any, // TODO 未來再整合
+    alert: Alert,
+    customHTML: CustomHTML,
+
+    // bunnyVideo: BunnyVideo,
     checkListItem: undefined as any,
   },
 })
 
-export const insertAlert = (editor: typeof schema.BlockNoteEditor) => ({
-  title: 'Alert',
-  onItemClick: () => {
-    insertOrUpdateBlock(editor, {
-      type: 'alert',
-    })
-  },
-  aliases: [
-    'alert',
-    'notification',
-    'emphasize',
-    'warning',
-    'error',
-    'info',
-    'success',
-  ],
-  group: 'Other',
-  icon: <RiAlertFill />,
-})
+// export const insertBunnyVideo = (editor: typeof schema.BlockNoteEditor) => ({
+//   title: 'BunnyVideo',
+//   onItemClick: () => {
+//     insertOrUpdateBlock(editor, {
+//       type: 'bunnyVideo',
+//     })
+//   },
+//   aliases: [
+//     'bunny',
+//   ],
+//   group: 'Bunny',
+//   icon: <FaPhotoVideo />,
+// })
 
 type TUseBlockNoteParams = {
   options?: BlockNoteEditorOptions<
@@ -77,6 +79,12 @@ type TUseBlockNoteParams = {
   apiConfig: TApiConfig
 }
 
+/**
+ * 將 DIV 元素轉換為 A 元素
+ *
+ * @param {HTMLDivElement} divElement
+ * @returns {*}
+ */
 function convertDivToATag(divElement: HTMLDivElement) {
   // 創建新的 <a> 元素
   const aTag = document.createElement('a')
@@ -223,10 +231,37 @@ export const useBlockNote = (params: TUseBlockNoteParams) => {
             const menuItems = getDefaultReactSlashMenuItems(editor).filter(
               (menuItem) => menuItem?.key !== 'emoji', // 隱藏 Emoji
             )
+
+            const menuItemsAfterAlertInserted = insertAfter(
+              menuItems,
+              alertMenuItem(editor),
+              'Others',
+            )
+            const menuItemsAfterCustomHTMLInserted = insertAfter(
+              menuItemsAfterAlertInserted,
+              customHTMLMenuItem(editor),
+              'Advanced',
+            )
+
+            console.log(
+              '⭐  menuItemsAfterCustomHTMLInserted:',
+              menuItemsAfterCustomHTMLInserted,
+            )
+
+            console.log(
+              '⭐  filterSuggestionItems:',
+              filterSuggestionItems(
+                // eslint-disable-next-line lines-around-comment
+                // Gets all default slash menu items and `insertAlert` item.
+                menuItemsAfterCustomHTMLInserted,
+                query,
+              ),
+            )
+
             return filterSuggestionItems(
               // eslint-disable-next-line lines-around-comment
               // Gets all default slash menu items and `insertAlert` item.
-              [...menuItems, insertAlert(editor)],
+              menuItemsAfterCustomHTMLInserted,
               query,
             )
           }}
@@ -294,4 +329,37 @@ export const useBlockNote = (params: TUseBlockNoteParams) => {
     html,
     setHTML,
   }
+}
+
+/**
+ * 將新物件插入到陣列中指定 group 的物件之後
+ *
+ * @param {DefaultReactSuggestionItem[]} arr
+ * @param {DefaultReactSuggestionItem} newObj
+ * @param {string} group
+ * @returns {{}}
+ */
+function insertAfter(
+  arr: DefaultReactSuggestionItem[],
+  newObj: DefaultReactSuggestionItem,
+  group: string,
+) {
+  // 從後往前找到最後一個 group 為 'advanced' 的物件
+  const lastAdvancedIndex = arr
+    .slice()
+    .reverse()
+    .findIndex((obj) => obj.group === group)
+
+  // 如果找不到，則將新物件插入到陣列的最後面
+  const insertIndex =
+    lastAdvancedIndex === -1 ? arr.length : arr.length - lastAdvancedIndex
+
+  // 創建新陣列並插入新物件
+  const newArr = [
+    ...arr.slice(0, insertIndex),
+    newObj,
+    ...arr.slice(insertIndex),
+  ]
+
+  return newArr
 }

@@ -1,8 +1,31 @@
-import { defaultProps } from '@blocknote/core'
+import { defaultProps, insertOrUpdateBlock } from '@blocknote/core'
 import { createReactBlockSpec } from '@blocknote/react'
 import { Menu } from '@mantine/core'
 import { MdCancel, MdCheckCircle, MdError, MdInfo } from 'react-icons/md'
 import './styles.scss'
+import { schema } from '../../useBlockNote'
+import { RiAlertFill } from 'react-icons/ri'
+
+export const alertMenuItem = (editor: typeof schema.BlockNoteEditor) => ({
+  key: 'alert',
+  title: 'Alert',
+  onItemClick: () => {
+    insertOrUpdateBlock(editor, {
+      type: 'alert',
+    })
+  },
+  aliases: [
+    'alert',
+    'notification',
+    'emphasize',
+    'warning',
+    'error',
+    'info',
+    'success',
+  ],
+  group: 'Other',
+  icon: <RiAlertFill />,
+})
 
 // The types of alerts that users can choose from.
 export const alertTypes = [

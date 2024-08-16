@@ -34,6 +34,10 @@ const INIT: any = [
     type: 'paragraph',
     content: 'Welcome to this demo!',
   },
+  {
+    type: 'alert',
+    content: 'Welcome to this demo!',
+  },
 
   // {
   //   type: 'paragraph',
