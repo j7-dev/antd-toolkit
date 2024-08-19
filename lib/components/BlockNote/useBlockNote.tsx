@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { TApiConfig } from './types'
+import { TUseBlockNoteParams } from './types'
 import {
   useCreateBlockNote,
   BlockNoteViewProps,
@@ -25,12 +25,6 @@ import {
   BlockNoteSchema,
   defaultBlockSpecs,
   filterSuggestionItems,
-  insertOrUpdateBlock,
-  BlockNoteEditorOptions,
-  createExternalHTMLExporter,
-  PartialBlock,
-  blockToNode,
-  BlockSchemaFromSpecs,
 } from '@blocknote/core'
 import {
   Alert,
@@ -38,7 +32,12 @@ import {
   CustomHTML,
   customHTMLMenuItem,
 } from './CustomBlocks'
-import { uploadWP, getFileExtension, getIconHTML } from './utils'
+import {
+  uploadWP,
+  getFileExtension,
+  getIconHTML,
+  convertDivToATag,
+} from './utils'
 
 // Our schema with block specs, which contain the configs and implementations for blocks
 // that we want our editor to use.
@@ -47,69 +46,18 @@ export const schema = BlockNoteSchema.create({
     ...defaultBlockSpecs, // Adds all default blocks.
     alert: Alert,
     customHTML: CustomHTML,
-
-    // bunnyVideo: BunnyVideo,
     checkListItem: undefined as any,
   },
 })
 
-// export const insertBunnyVideo = (editor: typeof schema.BlockNoteEditor) => ({
-//   title: 'BunnyVideo',
-//   onItemClick: () => {
-//     insertOrUpdateBlock(editor, {
-//       type: 'bunnyVideo',
-//     })
-//   },
-//   aliases: [
-//     'bunny',
-//   ],
-//   group: 'Bunny',
-//   icon: <FaPhotoVideo />,
-// })
-
-type TUseBlockNoteParams = {
-  options?: BlockNoteEditorOptions<
-    typeof schema.blockSchema,
-    DefaultInlineContentSchema,
-    DefaultStyleSchema
-  >
-  deps?: React.DependencyList
-  apiConfig: TApiConfig
-}
-
-/**
- * 將 DIV 元素轉換為 A 元素
- *
- * @param {HTMLDivElement} divElement
- * @returns {*}
- */
-function convertDivToATag(divElement: HTMLDivElement) {
-  // 創建新的 <a> 元素
-  const aTag = document.createElement('a')
-
-  // 複製 DIV 的子元素到 <a> 標籤
-  while (divElement.firstChild) {
-    aTag.appendChild(divElement.firstChild)
-  }
-
-  // 複製 DIV 的屬性到 <a> 標籤
-  for (let i = 0; i < divElement.attributes.length; i++) {
-    const attr = divElement.attributes[i]
-    aTag.setAttribute(attr.name, attr.value)
-  }
-
-  // 設置 href 屬性（如果需要）
-  aTag.setAttribute('href', '#') // 或者設置為其他適當的 URL
-
-  // 用新創建的 <a> 標籤替換原始的 DIV
-  // @ts-ignore
-  divElement.parentNode.replaceChild(aTag, divElement)
-
-  return aTag // 返回新創建的 <a> 元素
-}
-
 export const useBlockNote = (params: TUseBlockNoteParams) => {
-  const { options, deps = [], apiConfig } = params || {}
+  const {
+    options,
+    deps = [],
+    apiConfig,
+    itemsFilter = (items: DefaultReactSuggestionItem[], _query: string) =>
+      items,
+  } = params || {}
 
   /** @see https://www.blocknotejs.org/docs/editor-basics/setup */
   const editor = useCreateBlockNote(
@@ -134,40 +82,7 @@ export const useBlockNote = (params: TUseBlockNoteParams) => {
       // Saves the document JSON to state.
       setBlocks(editor.document as Block[])
 
-      /* TODO 未來有機會再來處理 parser
-			 const pmSchema = editor.pmSchema
-      const exporter = createExternalHTMLExporter(pmSchema, editor)
-      const exportBlocks = (
-        blocksValue: PartialBlock<
-          typeof schema.blockSchema,
-          DefaultInlineContentSchema,
-          DefaultStyleSchema
-        >[],
-        optionsValue: object = {},
-      ) => {
-        const nodes = blocksValue.map((block) =>
-          blockToNode(block, pmSchema, editor.schema.styleSchema),
-        )
-        console.log('⭐  nodes:', nodes)
-        const blockGroup = pmSchema.nodes['blockGroup'].create(null, nodes)
-        console.log('⭐  blockGroup:', blockGroup)
-        console.log('⭐  Fragment.from(blockGroup):', Fragment.from(blockGroup))
-
-        const fragment = exporter.exportProseMirrorFragment(
-          Fragment.from(blockGroup),
-          optionsValue,
-        )
-        console.log('⭐  fragment:', fragment)
-
-        return fragment
-      }
-      const newHtml = await exportBlocks(editor.document, {})
-      console.log('⭐  newHtml:', newHtml)
-
-			*/
-
-      // const newHtml = await editor.blocksToHTMLLossy(editor.document)
-
+      // 另一種輸出方式 const newHtml = await editor.blocksToHTMLLossy(editor.document)
       const newHtml = await editor.blocksToFullHTML(editor.document)
       const parser = new DOMParser()
       const doc = parser.parseFromString(newHtml, 'text/html')
@@ -250,25 +165,13 @@ export const useBlockNote = (params: TUseBlockNoteParams) => {
               'Advanced',
             )
 
-            console.log(
-              '⭐  menuItemsAfterCustomHTMLInserted:',
-              menuItemsAfterCustomHTMLInserted,
-            )
-
-            console.log(
-              '⭐  filterSuggestionItems:',
+            return itemsFilter(
               filterSuggestionItems(
                 // eslint-disable-next-line lines-around-comment
                 // Gets all default slash menu items and `insertAlert` item.
                 menuItemsAfterCustomHTMLInserted,
                 query,
               ),
-            )
-
-            return filterSuggestionItems(
-              // eslint-disable-next-line lines-around-comment
-              // Gets all default slash menu items and `insertAlert` item.
-              menuItemsAfterCustomHTMLInserted,
               query,
             )
           }}

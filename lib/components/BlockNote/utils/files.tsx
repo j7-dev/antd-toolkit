@@ -63,3 +63,34 @@ export function getIconHTML(ext: string) {
       return '<svg height="24px" width="24px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" fill="#000000"><g stroke-width="0"></g><g stroke-linecap="round" stroke-linejoin="round"></g><g> <path style="fill:#E2E5E7;" d="M128,0c-17.6,0-32,14.4-32,32v448c0,17.6,14.4,32,32,32h320c17.6,0,32-14.4,32-32V128L352,0H128z"></path> <path style="fill:#B0B7BD;" d="M384,128h96L352,0v96C352,113.6,366.4,128,384,128z"></path> <polygon style="fill:#CAD1D8;" points="480,224 384,128 480,128 "></polygon> <path style="fill:#576D7E;" d="M416,416c0,8.8-7.2,16-16,16H48c-8.8,0-16-7.2-16-16V256c0-8.8,7.2-16,16-16h352c8.8,0,16,7.2,16,16 V416z"></path> <g></g> <path style="fill:#CAD1D8;" d="M400,432H96v16h304c8.8,0,16-7.2,16-16v-16C416,424.8,408.8,432,400,432z"></path> </g></svg>'
   }
 }
+
+/**
+ * 將 DIV 元素轉換為 A 元素
+ *
+ * @param {HTMLDivElement} divElement
+ * @returns {*}
+ */
+export function convertDivToATag(divElement: HTMLDivElement) {
+  // 創建新的 <a> 元素
+  const aTag = document.createElement('a')
+
+  // 複製 DIV 的子元素到 <a> 標籤
+  while (divElement.firstChild) {
+    aTag.appendChild(divElement.firstChild)
+  }
+
+  // 複製 DIV 的屬性到 <a> 標籤
+  for (let i = 0; i < divElement.attributes.length; i++) {
+    const attr = divElement.attributes[i]
+    aTag.setAttribute(attr.name, attr.value)
+  }
+
+  // 設置 href 屬性（如果需要）
+  aTag.setAttribute('href', '#') // 或者設置為其他適當的 URL
+
+  // 用新創建的 <a> 標籤替換原始的 DIV
+  // @ts-ignore
+  divElement.parentNode.replaceChild(aTag, divElement)
+
+  return aTag // 返回新創建的 <a> 元素
+}

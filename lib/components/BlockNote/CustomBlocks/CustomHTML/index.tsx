@@ -1,7 +1,6 @@
 import {
   defaultProps,
   insertOrUpdateBlock,
-  videoParse,
   CustomBlockConfig,
 } from '@blocknote/core'
 import { createReactBlockSpec } from '@blocknote/react'
@@ -69,7 +68,8 @@ export const CustomHTML = createReactBlockSpec(customHTMLBlockConfig, {
     )
   },
 
-  parse: videoParse,
+  // ❗parse 是例如，將剪貼簿複製到編輯器時，要怎麼解析 HTML 轉換為 BLOCK
+  parse: undefined,
 
   // ❗toExternalHTML 是例如，將區塊複製到剪貼簿到外部時，會複製的 內容，如果沒有定義就使用 render
   toExternalHTML: (props) => {
