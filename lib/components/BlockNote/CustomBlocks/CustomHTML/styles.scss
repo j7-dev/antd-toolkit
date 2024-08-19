@@ -1,0 +1,10 @@
+.bn-container {
+	.bn-block-content {
+		&[data-content-type="customHTML"] {
+			> div {
+				width: 100%;
+				position: relative;
+			}
+		}
+	}
+}

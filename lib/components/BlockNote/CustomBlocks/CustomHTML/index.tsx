@@ -1,28 +1,14 @@
 import {
-  FileBlockConfig,
-  videoBlockConfig,
   defaultProps,
   insertOrUpdateBlock,
   videoParse,
+  CustomBlockConfig,
 } from '@blocknote/core'
-import { useState } from 'react'
-import { RiVideoFill } from 'react-icons/ri'
-
-import {
-  createReactBlockSpec,
-  ReactCustomBlockRenderProps,
-  AddFileButton,
-  DefaultFilePreview,
-  FigureWithCaption,
-  FileAndCaptionWrapper,
-  LinkWithCaption,
-  ResizeHandlesWrapper,
-  useResolveUrl,
-} from '@blocknote/react'
+import { createReactBlockSpec } from '@blocknote/react'
 import { schema } from '../../useBlockNote'
 import { ImEmbed2 } from 'react-icons/im'
-import { Input } from 'antd'
 import { renderHTML } from '@/utils'
+import './styles.scss'
 
 export const customHTMLMenuItem = (editor: typeof schema.BlockNoteEditor) => ({
   key: 'customHTML',
@@ -40,101 +26,54 @@ export const customHTMLMenuItem = (editor: typeof schema.BlockNoteEditor) => ({
   icon: <ImEmbed2 className="w-[1.125rem] h-[1.125rem]" />,
 })
 
-export const VideoPreview = (
-  props: Omit<
-    ReactCustomBlockRenderProps<FileBlockConfig, any, any>,
-    'contentRef'
-  >,
-) => {
-  const [width, setWidth] = useState<number>(
-    Math.min(
-      props.block.props.previewWidth!,
-      props.editor.domElement.firstElementChild!.clientWidth,
-    ),
-  )
-
-  const resolved = useResolveUrl(props.block.props.url!)
-
-  if (resolved.loadingState === 'loading') {
-    return null
-  }
-
-  return (
-    <ResizeHandlesWrapper {...props} width={width} setWidth={setWidth}>
-      <video
-        className={'bn-visual-media'}
-        src={resolved.downloadUrl}
-        controls={true}
-        contentEditable={false}
-        draggable={false}
-        width={width}
-      />
-    </ResizeHandlesWrapper>
-  )
-}
-
-export const ToExternalHTML = (
-  props: Omit<
-    ReactCustomBlockRenderProps<typeof videoBlockConfig, any, any>,
-    'contentRef'
-  >,
-) => {
-  if (!props.block.props.url) {
-    return <p>沒有 內容</p>
-  }
-
-  return <>{renderHTML(props.block.props.url)}</>
-}
-console.log('⭐  videoBlockConfig:', videoBlockConfig)
-
-export const CustomHTML = createReactBlockSpec(
-  {
-    type: 'customHTML',
-    propSchema: {
-      textAlignment: defaultProps.textAlignment,
-      url: {
-        default: '',
-      },
-    },
-    content: 'none',
-  },
-  {
-    render: (props) => {
-      const value = props.block.props.url
-      console.log('⭐  props:', props)
-
-      // contentRef 有個屬性 name ，如果不能編輯是 ""，可以編輯是 "nodeViewContentRef"
-      const editable = !(props.contentRef.name === '')
-
-      if (!editable) {
-        return <>{renderHTML(value)}</>
-      }
-
-      return (
-        <div
-          className={'bn-file-block-content-wrapper w-full'}
-          data-editable="1"
-          ref={props.contentRef}
-        >
-          <textarea
-            className="w-full rounded-md border-2 border-solid border-gray-200 p-2"
-            rows={10}
-            onChange={(e) => {
-              props.editor.updateBlock(props.block, {
-                type: 'customHTML',
-                props: { url: e.target.value },
-              })
-            }}
-            value={value}
-          />
-        </div>
-      )
-    },
-
-    parse: videoParse,
-    toExternalHTML: (props) => {
-      // 不知道為什麼沒有用
-      return <p {...props}>AAA</p>
+const customHTMLBlockConfig: CustomBlockConfig = {
+  type: 'customHTML',
+  propSchema: {
+    textAlignment: defaultProps.textAlignment,
+    html: {
+      default: '',
     },
   },
-)
+  content: 'none',
+}
+
+export const CustomHTML = createReactBlockSpec(customHTMLBlockConfig, {
+  render: (props) => {
+    const value = props.block.props.html
+
+    // ❗contentRef 有個屬性 name ，如果不能編輯是 ""，可以編輯是 "nodeViewContentRef"
+    const editable = !(props.contentRef.name === '')
+
+    if (!editable) {
+      return <>{renderHTML(value)}</>
+    }
+
+    return (
+      <div
+        className={'bn-file-block-content-wrapper w-full'}
+        data-editable="1"
+        ref={props.contentRef}
+      >
+        <textarea
+          className="w-full rounded-md border-2 border-solid border-gray-200 p-2 whitespace-pre-wrap"
+          rows={10}
+          onChange={(e) => {
+            props.editor.updateBlock(props.block, {
+              type: 'customHTML',
+              props: { html: e.target.value as any },
+            })
+          }}
+          value={value}
+        />
+      </div>
+    )
+  },
+
+  parse: videoParse,
+
+  // ❗toExternalHTML 是例如，將區塊複製到剪貼簿到外部時，會複製的 內容，如果沒有定義就使用 render
+  toExternalHTML: (props) => {
+    const value = props.block.props.html
+    return value
+  },
+})

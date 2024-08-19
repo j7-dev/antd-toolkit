@@ -38,9 +38,7 @@ import {
   CustomHTML,
   customHTMLMenuItem,
 } from './CustomBlocks'
-import { uploadWP } from './utils'
-import { Fragment } from 'prosemirror-model'
-import { FaPhotoVideo } from 'react-icons/fa'
+import { uploadWP, getFileExtension, getIconHTML } from './utils'
 
 // Our schema with block specs, which contain the configs and implementations for blocks
 // that we want our editor to use.
@@ -198,6 +196,15 @@ export const useBlockNote = (params: TUseBlockNoteParams) => {
             const previewANode = convertDivToATag(previewNode)
             previewANode.setAttribute('href', link || '')
             previewANode.setAttribute('target', '_blank')
+
+            const iconNode = previewANode.querySelector(
+              '.bn-file-default-preview-icon',
+            )
+
+            if (iconNode) {
+              const ext = getFileExtension(link || '')
+              iconNode.innerHTML = getIconHTML(ext)
+            }
           }
         })
 

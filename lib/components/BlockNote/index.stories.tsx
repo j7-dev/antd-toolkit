@@ -197,7 +197,7 @@ const BlockNoteWithHooks = () => {
   }, [html])
 
   return (
-    <>
+    <div className="w-full max-w-[50rem]">
       <BlockNote {...blockNoteViewProps} />
 
       <hr className="bg-gray-200 w-full h-[1px] mb-6" />
@@ -218,7 +218,7 @@ const BlockNoteWithHooks = () => {
       />
       <p>unserialize 上方的HTML</p>
       <BlockNote {...blockNoteViewProps2} />
-    </>
+    </div>
   )
 }
 
