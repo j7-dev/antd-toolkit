@@ -55,8 +55,9 @@ export const useBlockNote = (params: TUseBlockNoteParams) => {
     options,
     deps = [],
     apiConfig,
-    itemsFilter = (items: DefaultReactSuggestionItem[], _query: string) =>
-      items,
+
+    // itemsFilter = (items: DefaultReactSuggestionItem[], _query: string) =>
+    //   items,
   } = params || {}
 
   /** @see https://www.blocknotejs.org/docs/editor-basics/setup */
@@ -151,7 +152,9 @@ export const useBlockNote = (params: TUseBlockNoteParams) => {
           triggerCharacter={'/'}
           getItems={async (query) => {
             const menuItems = getDefaultReactSlashMenuItems(editor).filter(
-              (menuItem) => menuItem?.key !== 'emoji', // 隱藏 Emoji
+              (menuItem) =>
+                (menuItem as DefaultReactSuggestionItem & { key: string })
+                  ?.key !== 'emoji', // 隱藏 Emoji
             )
 
             const menuItemsAfterAlertInserted = insertAfter(
@@ -165,13 +168,10 @@ export const useBlockNote = (params: TUseBlockNoteParams) => {
               'Advanced',
             )
 
-            return itemsFilter(
-              filterSuggestionItems(
-                // eslint-disable-next-line lines-around-comment
-                // Gets all default slash menu items and `insertAlert` item.
-                menuItemsAfterCustomHTMLInserted,
-                query,
-              ),
+            return filterSuggestionItems(
+              // eslint-disable-next-line lines-around-comment
+              // Gets all default slash menu items and `insertAlert` item.
+              menuItemsAfterCustomHTMLInserted,
               query,
             )
           }}
