@@ -1,12 +1,15 @@
-import { defaultProps, insertOrUpdateBlock } from '@blocknote/core'
+import {
+  defaultProps,
+  insertOrUpdateBlock,
+  BlockNoteEditor,
+} from '@blocknote/core'
 import { createReactBlockSpec } from '@blocknote/react'
 import { Menu } from '@mantine/core'
 import { MdCancel, MdCheckCircle, MdError, MdInfo } from 'react-icons/md'
 import './styles.scss'
-import { schema } from '../../useBlockNote'
 import { RiAlertFill } from 'react-icons/ri'
 
-export const alertMenuItem = (editor: typeof schema.BlockNoteEditor) => ({
+export const alertMenuItem = (editor: BlockNoteEditor) => ({
   key: 'alert',
   title: 'Alert',
   onItemClick: () => {

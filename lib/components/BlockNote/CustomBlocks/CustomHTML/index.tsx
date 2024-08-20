@@ -2,14 +2,14 @@ import {
   defaultProps,
   insertOrUpdateBlock,
   CustomBlockConfig,
+  BlockNoteEditor,
 } from '@blocknote/core'
 import { createReactBlockSpec } from '@blocknote/react'
-import { schema } from '../../useBlockNote'
 import { ImEmbed2 } from 'react-icons/im'
 import { renderHTML } from '@/utils'
 import './styles.scss'
 
-export const customHTMLMenuItem = (editor: typeof schema.BlockNoteEditor) => ({
+export const customHTMLMenuItem = (editor: BlockNoteEditor) => ({
   key: 'customHTML',
   title: '自訂 HTML', // 選單中文
   subtext: '支援 HTML、CSS、JavaScript、iframe 等...', // 說明文字

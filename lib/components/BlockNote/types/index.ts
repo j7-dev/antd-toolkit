@@ -2,9 +2,9 @@ import {
   DefaultStyleSchema,
   DefaultInlineContentSchema,
   BlockNoteEditorOptions,
+  DefaultBlockSchema,
 } from '@blocknote/core'
 import { DefaultReactSuggestionItem } from '@blocknote/react'
-import { schema } from '../useBlockNote'
 
 export type TApiConfig = {
   apiEndpoint: string
@@ -13,7 +13,7 @@ export type TApiConfig = {
 
 export type TUseBlockNoteParams = {
   options?: BlockNoteEditorOptions<
-    typeof schema.blockSchema,
+    DefaultBlockSchema,
     DefaultInlineContentSchema,
     DefaultStyleSchema
   >

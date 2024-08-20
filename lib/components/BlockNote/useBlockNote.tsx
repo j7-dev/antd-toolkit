@@ -41,24 +41,24 @@ import {
 
 // Our schema with block specs, which contain the configs and implementations for blocks
 // that we want our editor to use.
-export const schema = BlockNoteSchema.create({
-  blockSpecs: {
-    ...defaultBlockSpecs, // Adds all default blocks.
-    alert: Alert,
-    customHTML: CustomHTML,
-    checkListItem: undefined as any,
-  },
-})
 
 export const useBlockNote = (params: TUseBlockNoteParams) => {
   const {
     options,
     deps = [],
     apiConfig,
-
-    // itemsFilter = (items: DefaultReactSuggestionItem[], _query: string) =>
-    //   items,
+    itemsFilter = (items: DefaultReactSuggestionItem[], _query: string) =>
+      items,
   } = params || {}
+
+  const schema: any = BlockNoteSchema.create({
+    blockSpecs: {
+      ...defaultBlockSpecs, // Adds all default blocks.
+      alert: Alert,
+      customHTML: CustomHTML,
+      checkListItem: undefined as any,
+    },
+  })
 
   /** @see https://www.blocknotejs.org/docs/editor-basics/setup */
   const editor = useCreateBlockNote(
@@ -168,10 +168,13 @@ export const useBlockNote = (params: TUseBlockNoteParams) => {
               'Advanced',
             )
 
-            return filterSuggestionItems(
-              // eslint-disable-next-line lines-around-comment
-              // Gets all default slash menu items and `insertAlert` item.
-              menuItemsAfterCustomHTMLInserted,
+            return itemsFilter(
+              filterSuggestionItems(
+                // eslint-disable-next-line lines-around-comment
+                // Gets all default slash menu items and `insertAlert` item.
+                menuItemsAfterCustomHTMLInserted,
+                query,
+              ),
               query,
             )
           }}
