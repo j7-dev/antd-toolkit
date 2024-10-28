@@ -1,4 +1,20 @@
-import { TGetColumnFilterProps } from '../../types'
+import { SelectProps } from 'antd'
+import { TGetColumnFilterProps } from '@/types'
+
+export const defaultSelectProps: SelectProps = {
+  className: 'w-full',
+  mode: 'multiple',
+  optionRender: ({ value, label }) => {
+    return (
+      <span>
+        {label} <sub className="text-gray-500">#{value}</sub>
+      </span>
+    )
+  },
+  allowClear: true,
+  showSearch: true,
+  optionFilterProp: 'label',
+}
 
 export const getColumnFilterProps = <
   DataType extends {
