@@ -1,7 +1,7 @@
 import { BaseRecord, CrudFilters } from '@refinedev/core'
 
 /**
- * Get initial filters
+ * Get initial filters Refine 用
  * @param initialValues
  * @return RefineCrudFilters
  */

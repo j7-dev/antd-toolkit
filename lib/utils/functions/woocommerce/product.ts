@@ -44,6 +44,7 @@ export const PRODUCT_DATE_FIELDS = [
   },
 ]
 
+// 商品類型
 export const PRODUCT_TYPES = [
   {
     value: 'simple' as const,

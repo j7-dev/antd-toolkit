@@ -1,0 +1,27 @@
+div[class^="ant-"] {
+	.at-product-price {
+		del,
+		ins {
+			@apply ml-0 tw-block;
+		}
+
+		.woocommerce-Price-currencySymbol {
+			@apply mr-2;
+		}
+
+		&,
+		bdi,
+		.woocommerce-Price-amount {
+			@apply text-gray-500 font-light opacity-100;
+		}
+
+		ins {
+			bdi {
+				@apply text-red-500 no-underline font-bold;
+			}
+		}
+	}
+	.screen-reader-text {
+		@apply tw-hidden;
+	}
+}

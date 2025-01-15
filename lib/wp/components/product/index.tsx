@@ -1,0 +1,6 @@
+export * from './ProductName'
+export * from './ProductType'
+export * from './ProductPrice'
+export * from './ProductTotalSales'
+export * from './ProductCat'
+export * from './ProductStock'

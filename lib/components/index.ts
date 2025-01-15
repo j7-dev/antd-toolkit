@@ -6,10 +6,12 @@ export * from '@/components/BreathLight'
 export * from '@/components/Countdown'
 export * from '@/components/DateTime'
 export * from '@/components/DoubleConfirmSwitch'
-export * from '@/components/FilterTags'
 export * from '@/components/LoadingCard'
 export * from '@/components/LoadingPage'
 export * from '@/components/ObjectTable'
 export * from '@/components/ToggleContent'
 export * from '@/components/CopyText'
 export * from '@/components/BlockNote'
+
+// @deprecated
+export * from '@/refine/components/FilterTags'

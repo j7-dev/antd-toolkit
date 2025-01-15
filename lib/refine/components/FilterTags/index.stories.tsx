@@ -6,7 +6,7 @@ import StoryForm from './StoryForm'
 const meta: Meta<typeof FilterTags> & {
   argTypes: any
 } = {
-  title: '表單控件/REFINEDEV✨/FilterTags',
+  title: '✨ REFINEDEV ✨/FilterTags',
   component: FilterTags,
   parameters: {
     status: {

@@ -8,6 +8,9 @@
 	"parser": "@typescript-eslint/parser",
 	"extends": [
 		"plugin:@typescript-eslint/recommended",
+		"plugin:@wordpress/eslint-plugin/custom",
+		"plugin:@wordpress/eslint-plugin/esnext",
+		"plugin:@wordpress/eslint-plugin/jsdoc",
 		"plugin:react/recommended",
 		"eslint-config-prettier",
 		"prettier",
@@ -24,6 +27,7 @@
 		"prettier"
 	],
 	"rules": {
+		"quote-props": "off",
 		"@typescript-eslint/no-explicit-any": "warn",
 		"@wordpress/no-unused-vars-before-return": "off",
 		"semi": [
@@ -49,7 +53,7 @@
 			"error",
 			{
 				"endOfLine": "auto",
-				"useTabs": false,
+				"useTabs": true,
 				"tabWidth": 2,
 				"prettier-multiline-arrays-set-threshold": 1
 			}
@@ -62,14 +66,9 @@
 			}
 		],
 		"no-shadow": "error",
-		"@typescript-eslint/no-shadow": [
-			"error"
-		],
+		"@typescript-eslint/no-shadow": "error",
+		"@typescript-eslint/ban-ts-comment": "off",
 		"camelcase": "off",
-		"quote-props": [
-			"error",
-			"consistent"
-		],
 		"jsdoc/valid-types": "off",
 		"@typescript-eslint/no-unused-vars": [
 			"warn",
@@ -92,7 +91,8 @@
 				"allowArrayStart": true,
 				"allowArrayEnd": true
 			}
-		]
+		],
+		"jsdoc/require-returns-description": "off"
 	},
 	"overrides": [
 		{
