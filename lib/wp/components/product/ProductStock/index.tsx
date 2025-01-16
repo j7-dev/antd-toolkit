@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import { TProductStockStatus } from '@/main/types'
+import { TProductStockStatus } from '@/wp/types'
 import { Tag } from 'antd'
 import {
 	FieldTimeOutlined,

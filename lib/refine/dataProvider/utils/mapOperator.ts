@@ -1,9 +1,11 @@
 import { CrudFilter } from '@refinedev/core'
 import {
-	PRODUCT_DATE_FIELDS,
 	formatRangePickerValue,
 	formatDatePickerValue,
 } from '@/main/utils'
+import {
+	PRODUCT_DATE_FIELDS,
+} from '@/wp/utils'
 
 type TMapOperatorReturn = {
 	formattedField: string

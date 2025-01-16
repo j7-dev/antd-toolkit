@@ -1,20 +1,8 @@
-import { SelectProps } from 'antd'
 import { TGetColumnFilterProps } from '@/main/types'
+import { PaginationProps } from 'antd'
+import { TTerm } from '@/wp/types'
 
-export const defaultSelectProps: SelectProps = {
-	className: 'w-full',
-	mode: 'multiple',
-	optionRender: ({ value, label }) => {
-		return (
-			<span>
-				{label} <sub className="text-gray-500">#{value}</sub>
-			</span>
-		)
-	},
-	allowClear: true,
-	showSearch: true,
-	optionFilterProp: 'label',
-}
+export * from './constants'
 
 export const getColumnFilterProps = <
 	DataType extends {
@@ -60,4 +48,34 @@ export const getColumnFilterProps = <
 		filters,
 		onFilter,
 	}
+}
+
+export const getDefaultPaginationProps = ({
+	label = '商品',
+}: {
+	label?: string
+}): PaginationProps & {
+	position: [
+		| 'topLeft'
+		| 'topCenter'
+		| 'topRight'
+		| 'bottomLeft'
+		| 'bottomCenter'
+		| 'bottomRight',
+	]
+} => ({
+	position: ['bottomCenter'],
+	size: 'default',
+	showSizeChanger: true,
+	showQuickJumper: true,
+	showTitle: true,
+	showTotal: (total: number, range: [number, number]) =>
+		`目前顯示第 ${range?.[0]} ~ ${range?.[1]} 個 ${label}，總共有 ${total} 個 ${label}`,
+})
+
+export const termToOptions = (terms: TTerm[]) => {
+	return terms?.map((term) => ({
+		value: term.id,
+		label: term.name,
+	}))
 }
