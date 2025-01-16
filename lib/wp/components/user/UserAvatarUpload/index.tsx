@@ -1,11 +1,21 @@
-import { useState, useEffect } from 'react'
+import { memo, useState, useEffect } from 'react'
 import ImgCrop from 'antd-img-crop'
-import { Upload, UploadProps, Form, Input, UploadFile } from 'antd'
+import { Upload, UploadProps, Form, UploadFile } from 'antd'
 import { useApiUrl } from '@refinedev/core'
 
 const { Item } = Form
 
-export const UserAvatarUpload = () => {
+type TUserAvatarUploadProps = {
+	endPoint?: string
+	nonce: string
+	name: string | number | (string | number)[]
+}
+
+const UserAvatarUploadComponent = ({
+	endPoint,
+	nonce,
+	name,
+}: TUserAvatarUploadProps) => {
 	const [fileList, setFileList] = useState<UploadFile[]>([])
 	const form = Form.useFormInstance()
 	const watchId = Form.useWatch(['id'], form)
@@ -22,7 +32,7 @@ export const UserAvatarUpload = () => {
 
 		const url = file?.response?.data?.url
 
-		form.setFieldValue('user_avatar_url', url)
+		form.setFieldValue(name, url)
 	}
 
 	// const beforeUpload = (file: FileType) => {
@@ -35,7 +45,7 @@ export const UserAvatarUpload = () => {
 
 	useEffect(() => {
 		if (watchId) {
-			const url = form.getFieldValue(['user_avatar_url'])
+			const url = form.getFieldValue(name)
 			setFileList([
 				{
 					uid: '-1',
@@ -67,9 +77,9 @@ export const UserAvatarUpload = () => {
 					name="files"
 					listType="picture-circle"
 					accept="image/*"
-					action={`${apiUrl}/upload`}
+					action={`${endPoint ? endPoint : `${apiUrl}/upload`}`}
 					headers={{
-						'X-WP-Nonce': window?.wpApiSettings?.nonce || '',
+						'X-WP-Nonce': nonce,
 					}}
 					maxCount={1}
 					withCredentials
@@ -87,9 +97,9 @@ export const UserAvatarUpload = () => {
 					)}
 				</Upload>
 			</ImgCrop>
-			<Item name={['user_avatar_url']} hidden>
-				<Input />
-			</Item>
+			<Item name={name} hidden />
 		</div>
 	)
 }
+
+export const UserAvatarUpload = memo(UserAvatarUploadComponent)

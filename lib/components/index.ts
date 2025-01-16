@@ -12,6 +12,8 @@ export * from '@/components/ObjectTable'
 export * from '@/components/ToggleContent'
 export * from '@/components/CopyText'
 export * from '@/components/BlockNote'
+export * from '@/components/SelectedRecord'
+export * from '@/components/SimpleImage'
 
 // @deprecated
 export * from '@/refine/components/FilterTags'

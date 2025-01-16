@@ -42,14 +42,6 @@ images: {
 				},
 			},
 		},
-		label: {
-			description: '覆寫商品名稱',
-			table: {
-				type: {
-					summary: 'string',
-				},
-			},
-		},
 		onClick: {
 			description: '點擊事件',
 			table: {

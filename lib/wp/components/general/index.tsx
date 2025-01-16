@@ -1,1 +1,3 @@
-export * from '@/wp/components/general/Upload'
+export * from './Upload'
+export * from './FileUpload'
+export * from './OnChangeUpload'

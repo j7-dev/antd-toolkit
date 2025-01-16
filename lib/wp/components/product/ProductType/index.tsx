@@ -20,11 +20,15 @@ type TBaseRecord = {
 type TProductTypeProps<T extends TBaseRecord> = {
 	record: T
 	hideDownloadable?: boolean
+	renderBefore?: React.ReactNode
+	renderAfter?: React.ReactNode
 }
 
 const ProductTypeComponent = <T extends TBaseRecord>({
 	record,
 	hideDownloadable = true,
+	renderBefore,
+	renderAfter,
 }: TProductTypeProps<T>) => {
 	const {
 		type = 'simple',
@@ -36,6 +40,7 @@ const ProductTypeComponent = <T extends TBaseRecord>({
 	if (!type) return null
 	return (
 		<div className="flex items-center gap-2">
+			{renderBefore}
 			<Tag bordered={false} color={tag?.color} className="m-0">
 				{tag?.label}
 			</Tag>
@@ -61,12 +66,13 @@ const ProductTypeComponent = <T extends TBaseRecord>({
 					title={`${downloadable ? '' : '不'}可下載`}
 				>
 					{downloadable ? (
-						<IoMdDownload className="text-gray-900" />
+						<IoMdDownload className="text-gray-700" />
 					) : (
-						<IoMdDownload className="text-gray-400" />
+						<IoMdDownload className="text-gray-300" />
 					)}
 				</Tooltip>
 			)}
+			{renderAfter}
 		</div>
 	)
 }

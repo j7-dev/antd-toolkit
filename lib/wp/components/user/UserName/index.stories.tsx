@@ -17,7 +17,7 @@ const meta: Meta<typeof UserName> & {
 		docs: {
 			description: {
 				component: `
-顯示分類與標籤
+顯示用戶名稱
 
 
 				`, // 可以寫 markdown
@@ -95,7 +95,7 @@ export const Custom: Story = {
 					Life Hacker
 				</span>
 				test
-				<span className="ml-1 text-gray-400 text-xs"> - 講師</span>
+				<span className="ml-1 text-gray-400 text-xs">#23 - 講師</span>
 			</p>
 		),
 		renderBelowTitle: (
@@ -107,7 +107,7 @@ export const Custom: Story = {
 }
 
 export const LongTitle: Story = {
-	name: '超長商品名稱，容器寬度 200px',
+	name: '超長用戶名稱，容器寬度 200px',
 	args: {
 		record: {
 			display_name: '勃起天尊30cm小牙籤手槍上帝亞洲統神',

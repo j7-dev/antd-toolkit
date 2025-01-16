@@ -1,6 +1,6 @@
 import { memo } from 'react'
 import { renderHTML, defaultImage } from '@/utils'
-import { Image, ImageProps, Typography } from 'antd'
+import { Image, ImageProps } from 'antd'
 import { EyeOutlined } from '@ant-design/icons'
 
 type TBaseRecord = {
@@ -20,8 +20,6 @@ type TProductNameProps<T extends TBaseRecord> = {
 	hideImage?: boolean
 	imageProps?: ImageProps
 }
-
-const { Title } = Typography
 
 const ProductNameComponent = <T extends TBaseRecord>({
 	record,

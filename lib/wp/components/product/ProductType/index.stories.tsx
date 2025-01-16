@@ -32,10 +32,10 @@ const meta: Meta<typeof ProductType> & {
 				type: {
 					summary: 'object',
 					detail: `
-type: "simple" | "grouped" | "external" | "variable" | "variation" | "subscription" | "variable-subscription" | "subscription_variation",
-featured: boolean,
-virtual: boolean,
-downloadable: boolean
+type: "simple" | "grouped" | "external" | "variable" | "variation" | "subscription" | "variable-subscription" | "subscription_variation", // 商品類型，simple=單一商品、grouped=組合商品、external=外部商品、variable=可變商品、variation=商品變體、subscription=訂閱商品、variable-subscription=可變訂閱商品、subscription_variation=訂閱商品變體
+featured: boolean, // 是否為精選商品
+virtual: boolean, // 是否為虛擬商品
+downloadable: boolean // 是否可下載
 `,
 				},
 			},
@@ -47,6 +47,22 @@ downloadable: boolean
 					summary: 'boolean',
 				},
 				defaultValue: { summary: true },
+			},
+		},
+		renderBefore: {
+			description: '在商品類型前方插入內容',
+			table: {
+				type: {
+					summary: 'React.ReactNode',
+				},
+			},
+		},
+		renderAfter: {
+			description: '在商品類型後方插入內容',
+			table: {
+				type: {
+					summary: 'React.ReactNode',
+				},
 			},
 		},
 	},
