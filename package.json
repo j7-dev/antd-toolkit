@@ -49,6 +49,7 @@
     "jotai": "^2.11.0",
     "lodash-es": "^4.17.21",
     "nanoid": "^5.0.8",
+    "query-string": "^9.1.1",
     "react-countdown": "^2.3.6",
     "react-highlight-words": "^0.20.0",
     "storybook": "^8.1.11",
