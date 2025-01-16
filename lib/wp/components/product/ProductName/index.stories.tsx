@@ -1,5 +1,6 @@
+import React from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
-
+import { fakeImage } from '@/utils'
 import { ProductName } from './index'
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
@@ -96,7 +97,7 @@ export const General: Story = {
 			sku: '19880810',
 			images: [
 				{
-					url: 'https://via.placeholder.com/150',
+					url: fakeImage,
 				},
 			],
 		},
@@ -112,7 +113,7 @@ export const WideImage: Story = {
 			sku: '19880810',
 			images: [
 				{
-					url: 'https://via.placeholder.com/150',
+					url: fakeImage,
 				},
 			],
 		},
@@ -123,7 +124,7 @@ export const WideImage: Story = {
 	},
 }
 
-export const HideImage: Story = {
+export const NoImage: Story = {
 	name: '不顯示圖片',
 	args: {
 		record: {
@@ -132,10 +133,33 @@ export const HideImage: Story = {
 			sku: '19880810',
 			images: [
 				{
-					url: 'https://via.placeholder.com/150',
+					url: fakeImage,
 				},
 			],
 		},
 		hideImage: true,
 	},
+}
+
+export const LongTitle: Story = {
+	name: '超長商品名稱，容器寬度 300px',
+	args: {
+		record: {
+			id: '28',
+			name: '峰值體驗：洞察隱而未知的需求，掌握關鍵時刻影響顧客決策',
+			sku: '19880810',
+			images: [
+				{
+					url: fakeImage,
+				},
+			],
+		},
+	},
+	decorators: [
+		(Story) => (
+			<div className="w-[300px]">
+				<Story />
+			</div>
+		),
+	],
 }
