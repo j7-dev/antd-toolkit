@@ -127,7 +127,7 @@
 	"exports": {
 		".": {
 			"import": "./dist/main.js",
-			"types": "./dist/main.d.ts"
+			"types": "./dist/types/index.d.ts"
 		},
 		"./wp": {
 			"import": "./dist/wp/index.js",
