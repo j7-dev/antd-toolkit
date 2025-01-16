@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import { renderHTML } from '@/utils'
+import { renderHTML } from '@/main/utils'
 import './style.scss'
 
 type TBaseRecord = {

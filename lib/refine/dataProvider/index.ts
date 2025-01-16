@@ -2,7 +2,7 @@ import { DataProvider } from '@refinedev/core'
 import { axiosInstance, generateSort, generateFilter } from './utils'
 import { AxiosInstance } from 'axios'
 import queryString from 'query-string'
-import { TOrderBy, TOrder, THttpMethods, THttpMethodsWithBody } from '@/types'
+import { TOrderBy, TOrder, THttpMethods, THttpMethodsWithBody } from '@/main/types'
 
 export * from './utils'
 

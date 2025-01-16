@@ -3,7 +3,7 @@ import {
 	PRODUCT_DATE_FIELDS,
 	formatRangePickerValue,
 	formatDatePickerValue,
-} from '@/utils'
+} from '@/main/utils'
 
 type TMapOperatorReturn = {
 	formattedField: string

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { defaultImage } from '@/utils'
+import { defaultImage } from '@/main/utils'
 import { nanoid } from 'nanoid'
 
 export const Gallery: React.FC<{

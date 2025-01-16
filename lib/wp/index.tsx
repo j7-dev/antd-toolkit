@@ -1,3 +1,3 @@
-import '@/assets/scss/index.scss'
+import '@/main/assets/scss/index.scss'
 
 export * from '@/wp/components'

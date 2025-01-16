@@ -1,5 +1,5 @@
 import React, { memo } from 'react'
-import { cn } from '@/utils'
+import { cn } from '@/main/utils'
 
 type TBackToWpAdminProps = {
 	iconClassName?: string

@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import { renderHTML, defaultImage } from '@/utils'
+import { renderHTML, defaultImage } from '@/main/utils'
 import { Image, ImageProps } from 'antd'
 import { EyeOutlined } from '@ant-design/icons'
 

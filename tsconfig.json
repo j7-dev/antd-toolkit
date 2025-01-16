@@ -42,8 +42,8 @@
 		}
 	],
 	"files": [
-		"lib/types/env.d.ts",
-		"lib/types/global.d.ts",
+		"lib/main/types/env.d.ts",
+		"lib/main/types/global.d.ts",
 	],
 	"declaration": false
 }

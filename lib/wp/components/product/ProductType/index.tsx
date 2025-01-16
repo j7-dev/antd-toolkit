@@ -7,8 +7,8 @@ import {
 	CloudFilled,
 } from '@ant-design/icons'
 import { IoMdDownload } from 'react-icons/io'
-import { PRODUCT_TYPES } from '@/utils'
-import { TProductTypes } from '@/types'
+import { PRODUCT_TYPES } from '@/main/utils'
+import { TProductTypes } from '@/main/types'
 
 type TBaseRecord = {
 	type?: TProductTypes

@@ -1,4 +1,4 @@
-import { TProductTypes } from '@/types'
+import { TProductTypes } from '@/main/types'
 
 // 無庫存下單
 export const BACKORDERS = [

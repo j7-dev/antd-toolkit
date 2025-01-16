@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import { TTerm } from '@/types'
+import { TTerm } from '@/main/types'
 import { Tag } from 'antd'
 
 type TBaseRecord = {

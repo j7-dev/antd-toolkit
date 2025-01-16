@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { renderHTML, cn } from '@/utils'
+import { renderHTML, cn } from '@/main/utils'
 
 export const ToggleContent: React.FC<{
 	content: string

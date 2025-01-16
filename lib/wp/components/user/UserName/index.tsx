@@ -1,7 +1,7 @@
 import { memo } from 'react'
 import { Image, ImageProps } from 'antd'
 import { EyeOutlined } from '@ant-design/icons'
-import { defaultImage, renderHTML } from '@/utils'
+import { defaultImage, renderHTML } from '@/main/utils'
 
 type TBaseRecord = {
 	display_name: string

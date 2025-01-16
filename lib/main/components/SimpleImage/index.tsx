@@ -1,5 +1,5 @@
 import { memo, FC, HTMLAttributes, ReactNode } from 'react'
-import { cn, defaultImage } from '@/utils'
+import { cn, defaultImage } from '@/main/utils'
 
 type SimpleImageProps = {
 	render?: ReactNode

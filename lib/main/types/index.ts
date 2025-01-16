@@ -4,7 +4,7 @@ import {
   PRODUCT_TYPES,
   PRODUCT_STOCK_STATUS,
   BACKORDERS,
-} from '@/utils'
+} from '@/main/utils'
 
 export type TConstant<T> = {
   label: string
