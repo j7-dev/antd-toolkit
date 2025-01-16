@@ -1,14 +1,11 @@
 import { HttpError } from '@refinedev/core'
 import axios, { AxiosInstance } from 'axios'
-import { apiUrl, apiTimeout } from '@/utils'
-
-const wpApiSettings = window?.wpApiSettings || {}
 
 const axiosInstance: AxiosInstance = axios.create({
-	baseURL: apiUrl,
-	timeout: parseInt(apiTimeout, 10),
+	timeout: 30000,
 	headers: {
-		'X-WP-Nonce': wpApiSettings?.nonce || '',
+		// @ts-ignore
+		'X-WP-Nonce': window?.wpApiSettings?.nonce || '',
 		'Content-Type': 'application/json',
 	},
 })

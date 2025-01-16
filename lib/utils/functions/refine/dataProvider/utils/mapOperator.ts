@@ -1,7 +1,6 @@
 import { CrudFilter } from '@refinedev/core'
-import dayjs, { Dayjs } from 'dayjs'
 import {
-	dateRelatedFields,
+	PRODUCT_DATE_FIELDS,
 	formatRangePickerValue,
 	formatDatePickerValue,
 } from '@/utils'
@@ -15,7 +14,7 @@ type TFilter = CrudFilter & {
 	field: string
 }
 
-const dateRelatedFieldValues = dateRelatedFields.map((field) => field.value)
+const dateRelatedFieldValues = PRODUCT_DATE_FIELDS.map((field) => field.value)
 
 /**
  * Map operator
