@@ -17,11 +17,6 @@ export type TTerm = {
 export type TImage = {
 	id: number
 	src: string
-	thumbnail: string
-	srcset: string
-	sizes: string
-	name: string
-	alt: string
 }
 
 // 文章狀態
