@@ -8,7 +8,7 @@ import {
 	Primary,
 	Controls,
 } from '@storybook/blocks'
-import '../lib/assets/scss/index.scss'
+import '../lib/main/assets/scss/index.scss'
 import './preview.scss'
 
 const preview: Preview = {
