@@ -39,3 +39,5 @@ export type TOrderBy =
   | 'post_parent__in'
 
 export type TOrder = 'ASC' | 'DESC'
+
+export * from './limit'
