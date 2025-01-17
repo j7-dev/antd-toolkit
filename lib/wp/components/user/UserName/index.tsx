@@ -72,4 +72,4 @@ const UserNameComponent = <T extends TBaseRecord>({
 	)
 }
 
-export const UserName = memo(UserNameComponent)
+export const UserName = memo(UserNameComponent) as typeof UserNameComponent

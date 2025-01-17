@@ -33,7 +33,9 @@ const ProductTotalSalesComponent = <T extends TBaseRecord>({
 	)
 }
 
-export const ProductTotalSales = memo(ProductTotalSalesComponent)
+export const ProductTotalSales = memo(
+	ProductTotalSalesComponent,
+) as typeof ProductTotalSalesComponent
 
 function get_tier(total_sales: number, max_sales: number) {
 	if (total_sales > max_sales * 0.8 || max_sales === 0) {

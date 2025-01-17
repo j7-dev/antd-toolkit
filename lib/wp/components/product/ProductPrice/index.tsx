@@ -18,4 +18,6 @@ const ProductPriceComponent = <T extends TBaseRecord>({
 	return <div className="at-product-price">{renderHTML(price_html)}</div>
 }
 
-export const ProductPrice = memo(ProductPriceComponent)
+export const ProductPrice = memo(
+	ProductPriceComponent,
+) as typeof ProductPriceComponent

@@ -50,7 +50,9 @@ const ProductStockComponent = <T extends TBaseRecord>({
 	)
 }
 
-export const ProductStock = memo(ProductStockComponent)
+export const ProductStock = memo(
+	ProductStockComponent,
+) as typeof ProductStockComponent
 
 function getTagProps(
 	stock_status: TProductStockStatus,

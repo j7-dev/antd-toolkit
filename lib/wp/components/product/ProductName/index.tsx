@@ -78,4 +78,6 @@ const ProductNameComponent = <T extends TBaseRecord>({
 	)
 }
 
-export const ProductName = memo(ProductNameComponent)
+export const ProductName = memo(
+	ProductNameComponent,
+) as typeof ProductNameComponent

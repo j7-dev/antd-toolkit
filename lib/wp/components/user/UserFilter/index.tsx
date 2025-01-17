@@ -79,4 +79,6 @@ const UserFilterComponent = <T extends TBaseRecord>({
 	)
 }
 
-export const UserFilter = memo(UserFilterComponent)
+export const UserFilter = memo(
+	UserFilterComponent,
+) as typeof UserFilterComponent
