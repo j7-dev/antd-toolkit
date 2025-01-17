@@ -16,7 +16,7 @@ export type TTerm = {
 // 圖片
 export type TImage = {
 	id: number
-	src: string
+	url: string
 }
 
 // 文章狀態
