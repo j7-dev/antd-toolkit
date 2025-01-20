@@ -5,6 +5,7 @@ import queryString from 'query-string'
 import { TOrderBy, TOrder, THttpMethods, THttpMethodsWithBody } from '@/main/types'
 
 export * from './utils'
+export * from './bunny-stream'
 
 const { stringify } = queryString
 

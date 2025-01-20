@@ -14,6 +14,8 @@ export * from '@/main/components/CopyText'
 export * from '@/main/components/BlockNote'
 export * from '@/main/components/SelectedRecord'
 export * from '@/main/components/SimpleImage'
+export * from '@/main/components/Heading'
+export * from '@/main/components/formItem'
 
 // @deprecated
 export * from '@/refine/components/FilterTags'
