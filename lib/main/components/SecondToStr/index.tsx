@@ -1,5 +1,6 @@
 import { FC } from 'react'
 
+// TODO 提供 format 參數，自動轉換並自動格式化
 export const SecondToStr: FC<{
 	className?: string
 	second: number

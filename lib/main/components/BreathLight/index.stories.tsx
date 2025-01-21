@@ -5,17 +5,17 @@ import { BreathLight } from './index'
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 
 const meta: Meta<typeof BreathLight> & {
-  argTypes: any
+	argTypes: any
 } = {
-  title: '常用/BreathLight',
-  component: BreathLight,
-  parameters: {
-    // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/react/configure/story-layout
+	title: 'MAIN/常用/BreathLight',
+	component: BreathLight,
+	parameters: {
+		// Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/react/configure/story-layout
 
-    layout: 'centered',
-    docs: {
-      description: {
-        component: `
+		layout: 'centered',
+		docs: {
+			description: {
+				component: `
 呼吸燈
 
 #### 未來優化:
@@ -23,11 +23,11 @@ const meta: Meta<typeof BreathLight> & {
 
 
 				`, // 可以寫 markdown
-      },
-    },
-  },
-  tags: ['autodocs'],
-  argTypes: {},
+			},
+		},
+	},
+	tags: ['autodocs'],
+	argTypes: {},
 }
 
 export default meta
@@ -36,14 +36,13 @@ type Story = StoryObj<typeof BreathLight>
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
 
 export const General: Story = {
-  name: '一般用法',
-  args: {},
+	name: '一般用法',
+	args: {},
 }
 
 export const Custom: Story = {
-  name: '自訂顏色 & 大小',
-  args: {
-    color: 'LightSkyBlue ',
-    size: '1.5rem',
-  },
+	name: '自訂顏色 & 大小',
+	args: {
+		className: 'w-6 h-6 bg-purple-400',
+	},
 }

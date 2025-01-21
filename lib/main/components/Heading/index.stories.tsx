@@ -8,7 +8,7 @@ import { Heading } from './index'
 const meta: Meta<typeof Heading> & {
 	argTypes: any
 } = {
-	title: '常用/Heading',
+	title: 'MAIN/常用/Heading',
 	component: Heading,
 	parameters: {
 		// Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/react/configure/story-layout
@@ -72,7 +72,7 @@ export const Small: Story = {
 	},
 	decorators: [
 		(Story) => (
-			<div className="w-[1000px]">
+			<div className="w-[20rem]">
 				<Story />
 			</div>
 		),

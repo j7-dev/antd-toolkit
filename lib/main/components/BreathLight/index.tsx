@@ -1,30 +1,23 @@
-type TProps = {
-  color?: string
-  size?: string
+import { cn } from '@/main/utils'
+
+type TBreathLightProps = {
+	className?: string
 }
-export const BreathLight = ({ color = 'orange', size = '0.75rem' }: TProps) => {
-  return (
-    <span
-      className="flex relative"
-      style={{
-        height: size,
-        width: size,
-      }}
-    >
-      <span
-        className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-50"
-        style={{
-          backgroundColor: color,
-        }}
-      ></span>
-      <span
-        className="relative inline-flex rounded-full"
-        style={{
-          backgroundColor: color,
-          height: size,
-          width: size,
-        }}
-      ></span>
-    </span>
-  )
+
+export const BreathLight = ({
+	className = 'w-3 h-3 bg-orange-400',
+}: TBreathLightProps) => {
+	return (
+		<span className={cn('flex relative w-3 h-3', className, 'bg-transparent')}>
+			<span
+				className={cn(
+					'animate-ping absolute inline-flex h-full w-full rounded-full opacity-50',
+					className,
+				)}
+			></span>
+			<span
+				className={cn('relative inline-flex rounded-full w-3 h-3', className)}
+			></span>
+		</span>
+	)
 }

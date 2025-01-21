@@ -1,9 +1,9 @@
 import { FC, memo } from 'react'
-import { Form, Switch, FormItemProps, SwitchProps } from 'antd'
+import { Form, Switch as AntdSwitch, FormItemProps, SwitchProps } from 'antd'
 
 const { Item } = Form
 
-const FiSwitchComponent: FC<{
+const SwitchComponent: FC<{
 	formItemProps?: FormItemProps
 	switchProps?: SwitchProps
 }> = ({ formItemProps, switchProps }) => {
@@ -14,7 +14,7 @@ const FiSwitchComponent: FC<{
 			normalize={(value) => (value ? 'yes' : 'no')}
 			{...formItemProps}
 		>
-			<Switch {...switchProps} />
+			<AntdSwitch {...switchProps} />
 		</Item>
 	)
 }
@@ -22,4 +22,4 @@ const FiSwitchComponent: FC<{
 /**
  * 存入 'yes' 或 'no' 的 switch
  */
-export const FiSwitch = memo(FiSwitchComponent)
+export const Switch = memo(SwitchComponent)

@@ -8,7 +8,7 @@ import { SimpleImage } from './index'
 const meta: Meta<typeof SimpleImage> & {
 	argTypes: any
 } = {
-	title: '常用/SimpleImage',
+	title: 'MAIN/常用/SimpleImage',
 	component: SimpleImage,
 	parameters: {
 		// Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/react/configure/story-layout

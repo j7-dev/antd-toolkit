@@ -8,7 +8,7 @@ import { ToggleContent } from './index'
 const meta: Meta<typeof ToggleContent> & {
 	argTypes: any
 } = {
-	title: '常用/ToggleContent',
+	title: 'MAIN/常用/ToggleContent',
 	component: ToggleContent,
 	parameters: {
 		// Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/react/configure/story-layout

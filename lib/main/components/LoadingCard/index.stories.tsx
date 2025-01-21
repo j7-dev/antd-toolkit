@@ -1,14 +1,15 @@
 import React from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
-import { SecondToStr } from './index'
+
+import { LoadingCard } from './index'
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 
-const meta: Meta<typeof SecondToStr> & {
+const meta: Meta<typeof LoadingCard> & {
 	argTypes: any
 } = {
-	title: 'MAIN/常用/SecondToStr',
-	component: SecondToStr,
+	title: 'MAIN/Loading/LoadingCard',
+	component: LoadingCard,
 	parameters: {
 		// Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/react/configure/story-layout
 
@@ -16,28 +17,49 @@ const meta: Meta<typeof SecondToStr> & {
 		docs: {
 			description: {
 				component: `
-輸入秒數，轉換成時、分、秒
 
-TODO
-
-提供 format 參數，自動轉換並自動格式化
 
 				`, // 可以寫 markdown
 			},
 		},
 	},
 	tags: ['autodocs'],
-	argTypes: {},
+	argTypes: {
+		children: {
+			control: {
+				type: 'text',
+			},
+		},
+		size: {
+			control: {
+				type: 'radio',
+				options: ['sm', 'md'],
+			},
+			defaultValue: 'md',
+		},
+		titleProps: {
+			control: {
+				type: 'object',
+			},
+		},
+	},
 }
 
 export default meta
-type Story = StoryObj<typeof SecondToStr>
+type Story = StoryObj<typeof LoadingCard>
 
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
 
 export const General: Story = {
-	name: '一般',
+	name: '一般標題',
 	args: {
-		second: 10000,
+		children: 'LOADING...',
 	},
+	decorators: [
+		(Story) => (
+			<div className="w-[10rem]">
+				<Story />
+			</div>
+		),
+	],
 }

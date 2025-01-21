@@ -7,7 +7,7 @@ import { SelectedRecord } from './index'
 const meta: Meta<typeof SelectedRecord> & {
 	argTypes: any
 } = {
-	title: '常用/SelectedRecord',
+	title: 'MAIN/常用/SelectedRecord',
 	component: SelectedRecord,
 	parameters: {
 		// Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/react/configure/story-layout
