@@ -55,16 +55,11 @@ export const schema = BlockNoteSchema.create({
 	},
 })
 
-export const useBlockNote = (params: TUseBlockNoteParams) => {
-	const {
-		options,
-		deps = [],
-		apiConfig,
-
-		// itemsFilter = (items: DefaultReactSuggestionItem[], _query: string) =>
-		//   items,
-	} = params || {}
-
+export const useBlockNote = ({
+	options = {},
+	deps = [],
+	apiConfig,
+}: TUseBlockNoteParams) => {
 	/** @see https://www.blocknotejs.org/docs/editor-basics/setup */
 	const editor = useCreateBlockNote(
 		{
@@ -91,7 +86,7 @@ export const useBlockNote = (params: TUseBlockNoteParams) => {
 			// 如果沒有內容就 setHTML 為空字串
 			if (editor.document.length === 1) {
 				if (
-					'paragraph' === editor.document[0].type &&
+					'paragraph' === editor.document[0]?.type &&
 					!(editor.document[0]?.content as Array<any>)?.length
 				) {
 					setHTML('')

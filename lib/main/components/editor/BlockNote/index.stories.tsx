@@ -8,6 +8,8 @@ import {
 } from '../../../../refine/dataProvider'
 import { BunnyProvider } from '../../../../refine/bunny'
 import axios from 'axios'
+import { BUNNY_CONFIG, ENV } from '../../../../stories'
+import { Form } from 'antd'
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 
@@ -31,11 +33,6 @@ const meta: Meta<typeof BlockNote> & {
 	argTypes: {},
 }
 
-const DEFAULT = {
-	API: 'http://test.local/wp-json/power-course/upload',
-	USERNAME: 'j7',
-	PASSWORD: 'gRJ0 14kC n9ye kQft k2Iz 5BAP',
-}
 const INIT: any = [
 	{
 		type: 'paragraph',
@@ -175,10 +172,9 @@ const BlockNoteWithHooks = () => {
 			initialContent: INIT,
 		} as any,
 		apiConfig: {
-			apiEndpoint: DEFAULT.API,
+			apiEndpoint: ENV.UPLOAD_API,
 			headers: new Headers({
-				Authorization:
-					'Basic ' + btoa(DEFAULT.USERNAME + ':' + DEFAULT.PASSWORD),
+				Authorization: 'Basic ' + btoa(ENV.USERNAME + ':' + ENV.PASSWORD),
 			}),
 		},
 	})
@@ -186,10 +182,9 @@ const BlockNoteWithHooks = () => {
 	const { blockNoteViewProps: blockNoteViewProps2 } = useBlockNote({
 		options: {} as any,
 		apiConfig: {
-			apiEndpoint: DEFAULT.API,
+			apiEndpoint: ENV.UPLOAD_API,
 			headers: new Headers({
-				Authorization:
-					'Basic ' + btoa(DEFAULT.USERNAME + ':' + DEFAULT.PASSWORD),
+				Authorization: 'Basic ' + btoa(ENV.USERNAME + ':' + ENV.PASSWORD),
 			}),
 		},
 	})
@@ -240,20 +235,15 @@ export const General: Story = {
 	render: () => <BlockNoteWithHooks />,
 	decorators: [
 		(Story) => {
-			const bunnyConfig = {
-				bunny_library_id: '1234567890',
-				bunny_stream_api_key: '1234567890',
-				bunny_cdn_hostname: '1234567890',
-			}
 			const bunnyStreamAxios = axios.create({
-				baseURL: 'https://video.bunnycdn.com/library',
+				baseURL: ENV.BUNNY_API,
 				headers: {
-					AccessKey: bunnyConfig.bunny_stream_api_key,
+					AccessKey: BUNNY_CONFIG.bunny_stream_api_key,
 				},
 			})
 
 			return (
-				<BunnyProvider {...bunnyConfig}>
+				<BunnyProvider {...BUNNY_CONFIG}>
 					<Refine
 						dataProvider={{
 							default: dataProvider(
@@ -266,7 +256,9 @@ export const General: Story = {
 						}}
 					>
 						<div className="w-[40rem]">
-							<Story />
+							<Form>
+								<Story />
+							</Form>
 						</div>
 					</Refine>
 				</BunnyProvider>
