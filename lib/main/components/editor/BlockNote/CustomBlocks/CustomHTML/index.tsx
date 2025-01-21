@@ -2,14 +2,13 @@ import {
 	defaultProps,
 	insertOrUpdateBlock,
 	CustomBlockConfig,
-	BlockNoteEditor,
 } from '@blocknote/core'
 import { createReactBlockSpec } from '@blocknote/react'
+import { schema } from '../../useBlockNote'
 import { ImEmbed2 } from 'react-icons/im'
-import { renderHTML } from '@/main/utils'
-import './styles.scss'
+import { renderHTML } from 'antd-toolkit'
 
-export const customHTMLMenuItem = (editor: BlockNoteEditor) => ({
+export const customHTMLMenuItem = (editor: typeof schema.BlockNoteEditor) => ({
 	key: 'customHTML',
 	title: '自訂 HTML', // 選單中文
 	subtext: '支援 HTML、CSS、JavaScript、iframe 等...', // 說明文字
@@ -18,9 +17,7 @@ export const customHTMLMenuItem = (editor: BlockNoteEditor) => ({
 			type: 'customHTML',
 		})
 	},
-	aliases: [
-		'html',
-	],
+	aliases: ['html'],
 	group: 'Advanced',
 	icon: <ImEmbed2 className="w-[1.125rem] h-[1.125rem]" />,
 })
@@ -28,7 +25,6 @@ export const customHTMLMenuItem = (editor: BlockNoteEditor) => ({
 const customHTMLBlockConfig: CustomBlockConfig = {
 	type: 'customHTML',
 	propSchema: {
-		textAlignment: defaultProps.textAlignment,
 		html: {
 			default: '',
 		},
@@ -74,6 +70,6 @@ export const CustomHTML = createReactBlockSpec(customHTMLBlockConfig, {
 	// ❗toExternalHTML 是例如，將區塊複製到剪貼簿到外部時，會複製的 內容，如果沒有定義就使用 render
 	toExternalHTML: (props) => {
 		const value = props.block.props.html
-		return value
+		return <div>{value}</div>
 	},
 })

@@ -160,3 +160,10 @@ export function getGCDItems<T>(items: T[][], key = 'id'): T[] {
 
 	return gcdItems
 }
+
+/**
+ * 取得檔案副檔名
+ */
+export function getFileExtension(url: string) {
+	return url?.split('.')?.pop()?.toLowerCase() ?? ''
+}

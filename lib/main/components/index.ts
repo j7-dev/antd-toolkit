@@ -10,11 +10,11 @@ export * from '@/main/components/LoadingPage'
 export * from '@/main/components/ObjectTable'
 export * from '@/main/components/ToggleContent'
 export * from '@/main/components/CopyText'
-export * from '@/main/components/BlockNote'
 export * from '@/main/components/SelectedRecord'
 export * from '@/main/components/SimpleImage'
 export * from '@/main/components/Heading'
 export * from '@/main/components/formItem'
+export * from '@/main/components/editor'
 
 // @deprecated
 export * from '@/refine/components/FilterTags'
