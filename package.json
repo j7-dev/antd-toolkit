@@ -112,8 +112,18 @@
 	},
 	"packageManager": "yarn@1.22.19",
 	"peerDependencies": {
-		"react": "^18.2.0",
-		"react-dom": "^18.2.0"
+		"@refinedev/antd": "^5.43.1",
+		"@refinedev/core": "^4.55.0",
+		"antd": "^5.23.1",
+		"antd-img-crop": "^4.23.0",
+		"axios": "^1.7.7",
+		"canvas-confetti": "^1.9.3",
+		"currency-symbol-map": "^5.1.0",
+		"jotai": "^2.11.0",
+		"lodash-es": "^4.17.21",
+		"nanoid": "^5.0.8",
+		"query-string": "^9.1.1",
+		"storybook": "^8.1.11"
 	},
 	"sideEffects": [
 		"**/*.css"
