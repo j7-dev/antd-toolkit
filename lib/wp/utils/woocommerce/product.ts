@@ -201,3 +201,30 @@ export const onSearch = (
 		},
 	]
 }
+
+/** Label 對應 */
+export const getProductFilterLabels = (
+	label = '商品',
+): {
+	[key in keyof TFilterProps]: string
+} => ({
+	s: '關鍵字',
+	sku: '貨號(sku)',
+	product_category_id: `${label}分類`,
+	product_tag_id: `${label}標籤`,
+	product_brand_id: '品牌',
+	status: `${label}狀態`,
+	featured: '精選商品',
+	downloadable: '可下載',
+	virtual: '虛擬商品',
+	sold_individually: '單獨販售',
+	backorders: '允許延期交貨',
+	stock_status: '庫存狀態',
+	date_created: `${label}發佈日期`,
+	is_course: '是否為課程商品',
+	price_range: '價格範圍',
+})
+
+export const productKeyLabelMapper = (key: keyof TFilterProps, label = '商品') => {
+	return getProductFilterLabels(label)?.[key] || key
+}
