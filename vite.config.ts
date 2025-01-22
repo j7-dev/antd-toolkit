@@ -36,6 +36,7 @@ const config: UserConfig = {
       external: [
         'react',
         'react/jsx-runtime',
+				'react-router-dom',
         '@refinedev/antd',
         '@refinedev/core',
         'antd',

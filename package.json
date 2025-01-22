@@ -112,6 +112,7 @@
 	},
 	"packageManager": "yarn@1.22.19",
 	"peerDependencies": {
+		"react-router-dom": "6.27.0",
 		"@refinedev/antd": "^5.43.1",
 		"@refinedev/core": "^4.55.0",
 		"antd": "^5.23.1",
