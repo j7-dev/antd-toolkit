@@ -77,7 +77,9 @@ export const General: Story = {
 								),
 							}}
 						>
-							<Story />
+							<div className="w-[900px]">
+								<Story />
+							</div>
 						</Refine>
 					</BunnyProvider>
 				</HashRouter>

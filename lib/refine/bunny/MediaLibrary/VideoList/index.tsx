@@ -6,7 +6,7 @@ import { TBunnyVideo } from '@/refine/bunny/types'
 import { useAtomValue } from 'jotai'
 import VideoInfo from './VideoInfo'
 import VideoItem from './VideoItem'
-import { LoadingCard } from 'antd-toolkit'
+import { LoadingCard } from '@/main/components'
 import FileEncodeProgress from './FileEncodeProgress'
 import FileUploadProgress from './FileUploadProgress'
 import { BunnyProvider, filesInQueueAtom, TMediaLibraryProps } from '@/refine'
@@ -21,6 +21,7 @@ const VideoList: FC<TMediaLibraryProps> = ({
 }) => {
 	const { bunny_library_id } = BunnyProvider.useBunny()
 	const [search, setSearch] = useState('')
+	const [isDragging, setIsDragging] = useState(false)
 	const filesInQueue = useAtomValue(filesInQueueAtom)
 	const {
 		data,
@@ -50,18 +51,18 @@ const VideoList: FC<TMediaLibraryProps> = ({
 
 	const isSearchFetching = isFetching && !isFetchingNextPage
 
-	if (isError) {
-		return (
-			<Result
-				status="error"
-				title="獲取影片失敗"
-				subTitle="Bunny Stream API 回應錯誤，請聯繫網站管理人員或稍候再嘗試"
-			/>
-		)
-	}
+	// if (isError) {
+	// 	return (
+	// 		<Result
+	// 			status="error"
+	// 			title="獲取影片失敗"
+	// 			subTitle="Bunny Stream API 回應錯誤，請聯繫網站管理人員或稍候再嘗試"
+	// 		/>
+	// 	)
+	// }
 
 	return (
-		<>
+		<div className="relative">
 			<Alert
 				message="影片上傳中可以離開此頁，但不要「重新整理」頁面，「重新整理」會導致上傳中斷"
 				banner
@@ -115,8 +116,10 @@ const VideoList: FC<TMediaLibraryProps> = ({
 						{isFetching &&
 							new Array(PAGE_SIZE).fill(0).map((_, index) => (
 								<div key={index} className="w-36">
-									<LoadingCard ratio="aspect-video" />
-									<LoadingCard ratio="h-3 !p-0 rounded-sm">&nbsp;</LoadingCard>
+									<LoadingCard />
+									<LoadingCard className="h-3 !p-0 rounded-sm">
+										&nbsp;
+									</LoadingCard>
 								</div>
 							))}
 					</div>
@@ -143,7 +146,11 @@ const VideoList: FC<TMediaLibraryProps> = ({
 					)}
 				</div>
 			</div>
-		</>
+
+			<div
+				className={`absolute top-0 left-0 w-full h-full bg-black/50 z-50 ${isDragging ? 'tw-block' : 'tw-hidden'}`}
+			></div>
+		</div>
 	)
 }
 

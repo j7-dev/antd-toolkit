@@ -11,12 +11,22 @@ import {
 	filesInQueueAtom,
 } from '@/refine'
 
-export const useMediaUpload = (props?: any) => {
+export type TUseMediaUploadParams = {
+	uploadProps?: UploadProps
+	setActiveKey: React.Dispatch<React.SetStateAction<string>>
+}
+
+/**
+ * 用於處理媒體上傳的 Hook
+ * @param props TUseMediaUploadParams - 上傳配置參數，包含 uploadProps 和 setActiveKey (TAB切換)
+ * @returns 返回上傳所需的配置和狀態
+ */
+export const useMediaUpload = ({
+	uploadProps,
+	setActiveKey,
+}: TUseMediaUploadParams) => {
 	const { bunny_library_id, bunny_stream_axios } = BunnyProvider.useBunny()
 	const setFilesInQueue = useSetAtom(filesInQueueAtom)
-
-	const uploadProps = props?.uploadProps
-	const setActiveKey = props?.setActiveKey
 
 	const [fileList, setFileList] = useState<
 		(UploadFile & {

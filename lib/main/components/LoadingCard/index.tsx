@@ -10,7 +10,7 @@ export const LoadingCard: React.FC<LoadingCardProps> = ({
 }) => (
 	<div
 		className={cn(
-			'aspect-video bg-gray-200 animate-pulse rounded-lg py-[21px] pl-[28px] pr-6 relative mb-[10px] text-gray-500 flex items-center justify-center',
+			'aspect-video w-full bg-gray-200 animate-pulse rounded-lg relative mb-[10px] text-gray-500 flex items-center justify-center',
 			className,
 		)}
 		{...rest}

@@ -6,7 +6,7 @@ import {
 import { createReactBlockSpec } from '@blocknote/react'
 import { schema } from '../../useBlockNote'
 import { ImEmbed2 } from 'react-icons/im'
-import { renderHTML } from 'antd-toolkit'
+import { renderHTML } from '@/main'
 
 export const customHTMLMenuItem = (editor: typeof schema.BlockNoteEditor) => ({
 	key: 'customHTML',

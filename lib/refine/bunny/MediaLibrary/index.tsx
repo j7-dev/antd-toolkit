@@ -8,6 +8,7 @@ import UploadVideo from './UploadVideo'
 import { atom } from 'jotai'
 import NoLibraryId from '@/main/components/formItem/VideoInput/NoLibraryId'
 import { BunnyProvider, TFileInQueue, TMediaLibraryProps } from '@/refine'
+import { Button } from 'antd'
 
 const MediaLibraryComponent: FC<TMediaLibraryProps> = (props) => {
 	const { bunny_library_id, bunny_stream_api_key, bunny_cdn_hostname } =
@@ -32,17 +33,23 @@ const MediaLibraryComponent: FC<TMediaLibraryProps> = (props) => {
 			children: <VideoList {...props} />,
 			icon: <FaPhotoVideo />,
 		},
+		{
+			key: 'bunny-settings',
+			label: 'Bunny 設定',
+			children: <VideoList {...props} />,
+			icon: <FaPhotoVideo />,
+		},
 	]
 
 	return (
 		<>
 			<Heading>選擇或上傳影片</Heading>
 			<Tabs
+				tabBarExtraContent={<Button>上傳影片</Button>}
 				activeKey={activeKey}
 				onChange={setActiveKey}
 				items={items}
 				type="card"
-				className="pc-media-library__tabs"
 			/>
 		</>
 	)

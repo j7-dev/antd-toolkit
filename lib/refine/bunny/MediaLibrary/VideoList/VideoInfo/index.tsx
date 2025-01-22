@@ -1,6 +1,6 @@
 import { TBunnyVideo, BunnyProvider } from '@/refine'
 import { SimpleImage } from '@/main/components'
-import { ObjectTable, CopyText } from 'antd-toolkit'
+import { ObjectTable, CopyText } from '@/main/components'
 import { Button, Tooltip } from 'antd'
 import { CopyOutlined, ExportOutlined } from '@ant-design/icons'
 import { DeleteButton } from '@refinedev/antd'
