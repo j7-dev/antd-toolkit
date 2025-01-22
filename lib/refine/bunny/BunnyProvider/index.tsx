@@ -3,6 +3,9 @@ import { Provider } from 'jotai'
 import axios from 'axios'
 import { bunnyStore, bunnyAtom } from './atom'
 import { useBunny } from './hooks'
+import { dataProvider } from './dataProvider'
+
+const BUNNY_API_URL = 'https://video.bunnycdn.com/library'
 
 const BunnyProviderComponent: FC<{
 	children: React.ReactNode
@@ -19,7 +22,7 @@ const BunnyProviderComponent: FC<{
 }) => {
 	useLayoutEffect(() => {
 		const bunny_stream_axios = axios.create({
-			baseURL: 'https://video.bunnycdn.com/library',
+			baseURL: BUNNY_API_URL,
 			headers: {
 				AccessKey: bunny_stream_api_key,
 			},
@@ -30,6 +33,10 @@ const BunnyProviderComponent: FC<{
 			bunny_stream_api_key,
 			bunny_cdn_hostname,
 			bunny_stream_axios,
+			bunny_data_provider_result: dataProvider(
+				BUNNY_API_URL,
+				bunny_stream_axios,
+			),
 		})
 	}, [bunny_library_id, bunny_stream_api_key, bunny_cdn_hostname])
 	return <Provider store={bunnyStore}>{children}</Provider>

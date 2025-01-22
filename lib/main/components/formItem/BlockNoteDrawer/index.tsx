@@ -1,4 +1,4 @@
-import { FC, useEffect, lazy, Suspense, memo } from 'react'
+import { FC, useEffect, Suspense, memo } from 'react'
 import {
 	Button,
 	Form,

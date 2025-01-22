@@ -8,7 +8,6 @@ const PREVIEW_FILENAME = 'preview.webp'
 const { Text } = Typography
 
 const CheckIcon: FC<HTMLAttributes<SVGElement>> = (props) => {
-	const { bunny_cdn_hostname } = BunnyProvider.useBunny()
 	return (
 		<svg
 			viewBox="0 0 20 20"
@@ -53,6 +52,7 @@ const VideoItem = ({
 		  ) => void)
 	limit: number | undefined
 }) => {
+	const { bunny_cdn_hostname } = BunnyProvider.useBunny()
 	const [filename, setFilename] = useState(video?.thumbnailFileName)
 	const isSelected = selectedVideos?.some(
 		(selectedVideo) => selectedVideo.guid === video.guid,
