@@ -1,5 +1,5 @@
 import React, { FC, useState, HTMLAttributes } from 'react'
-import { TBunnyVideo, useBunny } from '@/refine'
+import { TBunnyVideo, BunnyProvider } from '@/refine'
 import { SimpleImage } from '@/main/components'
 import { Typography, message } from 'antd'
 import { uniqBy } from 'lodash-es'
@@ -8,7 +8,7 @@ const PREVIEW_FILENAME = 'preview.webp'
 const { Text } = Typography
 
 const CheckIcon: FC<HTMLAttributes<SVGElement>> = (props) => {
-	const { bunny_cdn_hostname } = useBunny()
+	const { bunny_cdn_hostname } = BunnyProvider.useBunny()
 	return (
 		<svg
 			viewBox="0 0 20 20"

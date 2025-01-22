@@ -7,11 +7,11 @@ import VideoList from './VideoList'
 import UploadVideo from './UploadVideo'
 import { atom } from 'jotai'
 import NoLibraryId from '@/main/components/formItem/VideoInput/NoLibraryId'
-import { useBunny, TFileInQueue, TMediaLibraryProps } from '@/refine'
+import { BunnyProvider, TFileInQueue, TMediaLibraryProps } from '@/refine'
 
 const MediaLibraryComponent: FC<TMediaLibraryProps> = (props) => {
 	const { bunny_library_id, bunny_stream_api_key, bunny_cdn_hostname } =
-		useBunny()
+		BunnyProvider.useBunny()
 
 	const [activeKey, setActiveKey] = useState('bunny-media-library')
 

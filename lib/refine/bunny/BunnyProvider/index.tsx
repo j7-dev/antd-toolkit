@@ -1,27 +1,17 @@
 import React, { FC, useLayoutEffect } from 'react'
-import { atom, Provider, useAtomValue, createStore } from 'jotai'
-import axios, { AxiosInstance } from 'axios'
+import { Provider } from 'jotai'
+import axios from 'axios'
+import { bunnyStore, bunnyAtom } from './atom'
+import { useBunny } from './hooks'
 
-export const bunnyStore = createStore()
-
-export const bunnyAtom = atom<{
-	bunny_library_id: string
-	bunny_stream_api_key: string
-	bunny_cdn_hostname: string
-	bunny_stream_axios: AxiosInstance
-}>({
-	bunny_library_id: '',
-	bunny_stream_api_key: '',
-	bunny_cdn_hostname: '',
-	bunny_stream_axios: axios,
-})
-
-export const BunnyProvider: FC<{
+const BunnyProviderComponent: FC<{
 	children: React.ReactNode
 	bunny_library_id: string
 	bunny_stream_api_key: string
 	bunny_cdn_hostname: string
-}> = ({
+}> & {
+	useBunny: typeof useBunny
+} = ({
 	children,
 	bunny_library_id,
 	bunny_stream_api_key,
@@ -45,7 +35,7 @@ export const BunnyProvider: FC<{
 	return <Provider store={bunnyStore}>{children}</Provider>
 }
 
-export const useBunny = () => {
-	const bunnyAtomValue = useAtomValue(bunnyAtom)
-	return bunnyAtomValue
-}
+BunnyProviderComponent.useBunny = useBunny
+
+export const BunnyProvider = BunnyProviderComponent
+export * from './atom'

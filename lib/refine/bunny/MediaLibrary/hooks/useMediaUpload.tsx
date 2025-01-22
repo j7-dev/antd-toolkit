@@ -4,7 +4,7 @@ import { RcFile } from 'antd/lib/upload/interface'
 import { useSetAtom } from 'jotai'
 import { getVideoUrl } from '@/main/utils'
 import {
-	useBunny,
+	BunnyProvider,
 	TUploadStatus,
 	TBunnyVideo,
 	TUploadVideoResponse,
@@ -12,7 +12,7 @@ import {
 } from '@/refine'
 
 export const useMediaUpload = (props?: any) => {
-	const { bunny_library_id, bunny_stream_axios } = useBunny()
+	const { bunny_library_id, bunny_stream_axios } = BunnyProvider.useBunny()
 	const setFilesInQueue = useSetAtom(filesInQueueAtom)
 
 	const uploadProps = props?.uploadProps

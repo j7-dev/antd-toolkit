@@ -9,7 +9,7 @@ import VideoItem from './VideoItem'
 import { LoadingCard } from 'antd-toolkit'
 import FileEncodeProgress from './FileEncodeProgress'
 import FileUploadProgress from './FileUploadProgress'
-import { useBunny, filesInQueueAtom, TMediaLibraryProps } from '@/refine'
+import { BunnyProvider, filesInQueueAtom, TMediaLibraryProps } from '@/refine'
 
 const PAGE_SIZE = 50
 
@@ -19,7 +19,7 @@ const VideoList: FC<TMediaLibraryProps> = ({
 	selectButtonProps,
 	limit,
 }) => {
-	const { bunny_library_id } = useBunny()
+	const { bunny_library_id } = BunnyProvider.useBunny()
 	const [search, setSearch] = useState('')
 	const filesInQueue = useAtomValue(filesInQueueAtom)
 	const {

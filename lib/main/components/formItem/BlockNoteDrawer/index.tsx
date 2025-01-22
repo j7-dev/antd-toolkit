@@ -13,7 +13,7 @@ import { LoadingOutlined } from '@ant-design/icons'
 import { useBlockNoteDrawer } from './useBlockNoteDrawer'
 import { useBlockNote } from '@/main'
 import { TUseBlockNoteParams } from '@/main/components/editor/BlockNote/types'
-import { usePlugin, BlockNote } from '@/main'
+import { PluginProvider, BlockNote } from '@/main'
 
 const { Item } = Form
 
@@ -30,7 +30,7 @@ const BlockNoteDrawerComponent: FC<TBlockNoteDrawerProps> = ({
 	dropdownButtonProps,
 	useBlockNoteParams,
 }) => {
-	const { siteUrl = '' } = usePlugin()
+	const { siteUrl = '' } = PluginProvider.usePlugin()
 
 	const form = Form.useFormInstance()
 	const watchId = Form.useWatch(['id'], form)

@@ -1,7 +1,7 @@
 import { Button, Alert } from 'antd'
 
 import { DoubleRightOutlined } from '@ant-design/icons'
-import { useBunny } from '@/refine'
+import { BunnyProvider } from '@/refine'
 import { useLink } from '@refinedev/core'
 
 const NoLibraryId = ({
@@ -10,7 +10,7 @@ const NoLibraryId = ({
 	type?: 'default' | 'video' | 'alert'
 }) => {
 	const { bunny_library_id, bunny_stream_api_key, bunny_cdn_hostname } =
-		useBunny()
+		BunnyProvider.useBunny()
 	const Link = useLink()
 	if ('alert' === type) {
 		return (
