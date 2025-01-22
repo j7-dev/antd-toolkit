@@ -1,20 +1,69 @@
-import React, { FC, useState, memo } from 'react'
-import { Tabs, TabsProps } from 'antd'
+import React, { FC, memo } from 'react'
+import { Tabs, TabsProps, Upload, UploadProps } from 'antd'
 import { FaPhotoVideo } from 'react-icons/fa'
-import { CloudUploadOutlined } from '@ant-design/icons'
-import { Heading } from '@/main/components'
+import { CloudUploadOutlined, SettingOutlined } from '@ant-design/icons'
 import VideoList from './VideoList'
-import UploadVideo from './UploadVideo'
 import { atom } from 'jotai'
 import NoLibraryId from '@/main/components/formItem/VideoInput/NoLibraryId'
 import { BunnyProvider, TFileInQueue, TMediaLibraryProps } from '@/refine'
 import { Button } from 'antd'
+import Settings from './Settings'
+import { useMediaUpload } from '@/refine/bunny/MediaLibrary/hooks'
 
-const MediaLibraryComponent: FC<TMediaLibraryProps> = (props) => {
+/**
+ * MediaLibrary 元件的屬性介面
+ * @interface TMediaLibraryCompoundProps
+ * @property {TMediaLibraryProps} mediaLibraryProps - 媒體庫的基本屬性
+ * @property {UploadProps} [uploadProps] - 可選的上傳元件屬性
+ * @property {TabsProps} [tabsProps] - 可選的標籤頁元件屬性
+ */
+type TMediaLibraryCompoundProps = {
+	mediaLibraryProps: TMediaLibraryProps
+	uploadProps?: UploadProps
+	tabsProps?: TabsProps
+}
+
+/**
+ * 檔案上傳佇列中的檔案狀態
+ * @interface TFileStatus
+ * @property {string} key - 檔案唯一識別碼
+ * @property {File} file - 檔案物件
+ * @property {'active' | 'done' | 'error'} status - 檔案上傳狀態
+ * @property {string} videoId - Bunny Stream 影片 ID
+ * @property {boolean} isEncoding - 是否正在編碼中
+ * @property {number} encodeProgress - 編碼進度 (0-100)
+ * @property {number} uploadProgress - 上傳進度 (0-100)
+ * @property {string} preview - 預覽圖片的 URL
+ */
+export type TFileStatus = {
+	key: string
+	file: File
+	status: 'active' | 'done' | 'error'
+	videoId: string
+	isEncoding: boolean
+	encodeProgress: number
+	uploadProgress: number
+	preview: string
+}
+
+/**
+ * Bunny Stream 媒體庫元件
+ * 提供影片上傳、管理和設定功能
+ * @component
+ * @param {TMediaLibraryCompoundProps} props - 元件屬性
+ * @returns {JSX.Element} MediaLibrary 元件
+ */
+const MediaLibraryComponent: FC<TMediaLibraryCompoundProps> = ({
+	mediaLibraryProps,
+	uploadProps,
+	tabsProps,
+}) => {
 	const { bunny_library_id, bunny_stream_api_key, bunny_cdn_hostname } =
 		BunnyProvider.useBunny()
 
-	const [activeKey, setActiveKey] = useState('bunny-media-library')
+	const bunnyUploadProps = useMediaUpload(
+		uploadProps ? { uploadProps } : undefined,
+	)
 
 	if (!bunny_library_id || !bunny_stream_api_key || !bunny_cdn_hostname) {
 		return <NoLibraryId />
@@ -22,40 +71,41 @@ const MediaLibraryComponent: FC<TMediaLibraryProps> = (props) => {
 
 	const items: TabsProps['items'] = [
 		{
-			key: 'upload-video',
-			label: '上傳影片到 Bunny',
-			children: <UploadVideo setActiveKey={setActiveKey} />,
-			icon: <CloudUploadOutlined />,
-		},
-		{
 			key: 'bunny-media-library',
 			label: 'Bunny 媒體庫',
-			children: <VideoList {...props} />,
+			children: <VideoList {...mediaLibraryProps} />,
 			icon: <FaPhotoVideo />,
 		},
 		{
 			key: 'bunny-settings',
 			label: 'Bunny 設定',
-			children: <VideoList {...props} />,
-			icon: <FaPhotoVideo />,
+			children: <Settings />,
+			icon: <SettingOutlined />,
 		},
 	]
 
 	return (
-		<>
-			<Heading>選擇或上傳影片</Heading>
-			<Tabs
-				tabBarExtraContent={<Button>上傳影片</Button>}
-				activeKey={activeKey}
-				onChange={setActiveKey}
-				items={items}
-				type="card"
-			/>
-		</>
+		<Tabs
+			tabBarExtraContent={
+				<Upload {...bunnyUploadProps}>
+					<Button icon={<CloudUploadOutlined />}>上傳影片</Button>
+				</Upload>
+			}
+			defaultActiveKey="bunny-media-library"
+			items={items}
+			type="card"
+			{...tabsProps}
+		/>
 	)
 }
 
 export const MediaLibrary = memo(MediaLibraryComponent)
+
+/**
+ * 上傳佇列的全域狀態
+ * 使用 jotai 管理上傳中的檔案狀態
+ */
+export const filesInQueueAtom = atom<TFileInQueue[]>([])
 
 // 上傳中
 const FAKES = [
@@ -142,5 +192,3 @@ const FAKES = [
 // 		"preview": "blob:http://test.local/9add96bf-377f-4213-b3e2-8d2c624450b8"
 // 	}
 // ]
-
-export const filesInQueueAtom = atom<TFileInQueue[]>([])

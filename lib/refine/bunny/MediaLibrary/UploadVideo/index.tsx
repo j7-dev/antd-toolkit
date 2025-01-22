@@ -1,15 +1,11 @@
 import React from 'react'
-import {
-	useMediaUpload,
-	TUseMediaUploadParams,
-} from '@/refine/bunny/MediaLibrary/hooks'
+import { UploadProps } from 'antd'
 import { Upload } from '@/wp/components/general'
 
-const UploadVideo = (params: TUseMediaUploadParams) => {
-	const bunnyUploadProps = useMediaUpload(params)
+const UploadVideo = (bunnyUploadProps: UploadProps) => {
 	return (
 		<div className="lg:max-w-[80rem]">
-			<Upload {...bunnyUploadProps} />
+			<Upload uploadProps={bunnyUploadProps} />
 		</div>
 	)
 }

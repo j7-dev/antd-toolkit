@@ -13,18 +13,14 @@ import {
 
 export type TUseMediaUploadParams = {
 	uploadProps?: UploadProps
-	setActiveKey: React.Dispatch<React.SetStateAction<string>>
 }
 
 /**
  * 用於處理媒體上傳的 Hook
- * @param props TUseMediaUploadParams - 上傳配置參數，包含 uploadProps 和 setActiveKey (TAB切換)
+ * @param props TUseMediaUploadParams - 上傳配置參數，包含 uploadProps
  * @returns 返回上傳所需的配置和狀態
  */
-export const useMediaUpload = ({
-	uploadProps,
-	setActiveKey,
-}: TUseMediaUploadParams) => {
+export const useMediaUpload = (props?: TUseMediaUploadParams) => {
 	const { bunny_library_id, bunny_stream_axios } = BunnyProvider.useBunny()
 	const setFilesInQueue = useSetAtom(filesInQueueAtom)
 
@@ -38,7 +34,6 @@ export const useMediaUpload = ({
 		customRequest: async (options) => {
 			const file = options?.file as RcFile
 			const preview = getVideoUrl(file) // 用瀏覽器轉換為預覽的 URL
-			setActiveKey('bunny-media-library')
 
 			// 添加到佇列
 			setFilesInQueue((prev) => [
@@ -152,7 +147,7 @@ export const useMediaUpload = ({
 		accept: 'video/*',
 		multiple: true, // 是否支持多選文件，ie10+ 支持。按住 ctrl 多選文件
 		// maxCount: 1, // 最大檔案數
-		...uploadProps,
+		...props?.uploadProps,
 	}
 
 	return { uploadProps: mergedUploadProps, fileList, setFileList }
