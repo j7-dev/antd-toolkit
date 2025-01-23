@@ -1,6 +1,5 @@
-import { useAtomValue } from 'jotai'
-import { bunnyAtom } from './atom'
+import { bunnyAtom, bunnyStore } from './atom'
 export const useBunny = () => {
-	const bunnyAtomValue = useAtomValue(bunnyAtom)
+	const bunnyAtomValue = bunnyStore.get(bunnyAtom)
 	return bunnyAtomValue
 }

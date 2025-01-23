@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
 import { MediaLibrary } from './index'
 import { TBunnyVideo } from '../types'
@@ -8,6 +8,7 @@ import { BunnyProvider } from '../BunnyProvider'
 import { HashRouter } from 'react-router-dom'
 import axios from 'axios'
 import { MediaLibraryIndicator } from '../MediaLibraryIndicator'
+import { PluginProvider } from '../../../main/components/PluginProvider'
 
 const meta: Meta<typeof MediaLibrary> & {
 	argTypes: any
@@ -66,26 +67,37 @@ export const General: Story = {
 				},
 			})
 
+			useEffect(() => {
+				window.my_plugin_data = {
+					env: {
+						APP_NAME: 'my_plugin',
+						SITE_URL: 'https://www.example.com',
+					},
+				}
+			}, [])
+
 			return (
 				<HashRouter>
-					<BunnyProvider {...bunnyConfig}>
-						<Refine
-							dataProvider={{
-								default: dataProvider(
-									'https://www.example.com/wp-json/my-plugin',
-								),
-								'bunny-stream': bunnyStreamDataProvider(
-									'https://video.bunnycdn.com/library',
-									bunnyStreamAxios,
-								),
-							}}
-						>
-							<div className="w-[900px]">
-								<Story />
-								<MediaLibraryIndicator />
-							</div>
-						</Refine>
-					</BunnyProvider>
+					<PluginProvider app_domain="my_plugin_data">
+						<BunnyProvider {...bunnyConfig}>
+							<Refine
+								dataProvider={{
+									default: dataProvider(
+										'https://www.example.com/wp-json/my-plugin',
+									),
+									'bunny-stream': bunnyStreamDataProvider(
+										'https://video.bunnycdn.com/library',
+										bunnyStreamAxios,
+									),
+								}}
+							>
+								<div className="w-[900px]">
+									<Story />
+									<MediaLibraryIndicator />
+								</div>
+							</Refine>
+						</BunnyProvider>
+					</PluginProvider>
 				</HashRouter>
 			)
 		},
