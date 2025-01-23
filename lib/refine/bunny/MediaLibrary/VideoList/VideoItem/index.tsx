@@ -58,7 +58,7 @@ const VideoItem = ({
 		(selectedVideo) => selectedVideo.guid === video.guid,
 	)
 
-	const handleClick = (e) => {
+	const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
 		// 上一個選中的
 		const prevSelected = selectedVideos?.length
 			? selectedVideos?.slice(-1)?.[0]
