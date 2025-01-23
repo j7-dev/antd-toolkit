@@ -10,19 +10,17 @@ import {
 	TUploadVideoResponse,
 	filesInQueueAtom,
 } from '@/refine'
-
-export type TUseMediaUploadParams = {
-	uploadProps?: UploadProps
-}
+import { useInvalidate } from '@refinedev/core'
 
 /**
  * 用於處理媒體上傳的 Hook
- * @param props TUseMediaUploadParams - 上傳配置參數，包含 uploadProps
+ * @param uploadProps UploadProps - 上傳配置參數
  * @returns 返回上傳所需的配置和狀態
  */
-export const useMediaUpload = (props?: TUseMediaUploadParams) => {
+export const useMediaUpload = (uploadProps?: UploadProps) => {
 	const { bunny_library_id, bunny_stream_axios } = BunnyProvider.useBunny()
 	const setFilesInQueue = useSetAtom(filesInQueueAtom)
+	const invalidate = useInvalidate()
 
 	const [fileList, setFileList] = useState<
 		(UploadFile & {
@@ -107,6 +105,12 @@ export const useMediaUpload = (props?: TUseMediaUploadParams) => {
 							return fileInQueue
 						})
 					})
+
+					invalidate({
+						dataProviderName: 'bunny-stream',
+						resource: `${bunny_library_id}/videos`,
+						invalidates: ['list'],
+					})
 				} else {
 					// 顯示失敗
 					setFilesInQueue((prev) => {
@@ -147,7 +151,7 @@ export const useMediaUpload = (props?: TUseMediaUploadParams) => {
 		accept: 'video/*',
 		multiple: true, // 是否支持多選文件，ie10+ 支持。按住 ctrl 多選文件
 		// maxCount: 1, // 最大檔案數
-		...props?.uploadProps,
+		...uploadProps,
 	}
 
 	return { uploadProps: mergedUploadProps, fileList, setFileList }

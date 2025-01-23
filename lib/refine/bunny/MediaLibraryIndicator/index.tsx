@@ -107,7 +107,7 @@ const MediaLibraryIndicatorComponent = () => {
 	}
 
 	return (
-		<div className="tw-fixed w-[20rem] bottom-0 right-8 bg-white rounded-t-md px-6 pt-3 pb-2 shadow-md text-gray-800 text-sm cursor-pointer z-[1001]">
+		<div className="tw-fixed w-[20rem] bottom-0 right-8 bg-white rounded-t-lg px-6 pt-3 pb-2 shadow-md text-gray-800 text-sm cursor-pointer z-[1001]">
 			<div
 				className="flex items-center justify-between"
 				onClick={() => setIsExpanded(!isExpanded)}

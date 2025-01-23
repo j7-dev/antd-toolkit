@@ -1,7 +1,6 @@
 import {
 	useCustomMutation,
 	useApiUrl,
-	useInvalidate,
 	UseCustomMutationReturnType,
 	UseLoadingOvertimeReturnType,
 	BaseRecord,
@@ -9,6 +8,7 @@ import {
 } from '@refinedev/core'
 import { FormInstance, message } from 'antd'
 import { useCallback } from 'react'
+import { PluginProvider } from '@/main'
 
 type TUseSaveParams = {
 	/** Antd Form 實例 */
@@ -32,7 +32,7 @@ type TUseSaveReturn = {
 export const useSave = ({ form }: TUseSaveParams): TUseSaveReturn => {
 	const apiUrl = useApiUrl()
 	const mutation = useCustomMutation()
-	const invalidate = useInvalidate()
+	const { siteUrl } = PluginProvider.usePlugin()
 	const { mutate } = mutation
 
 	const handleSave = useCallback(() => {
@@ -47,7 +47,7 @@ export const useSave = ({ form }: TUseSaveParams): TUseSaveReturn => {
 		form.validateFields().then((values) => {
 			mutate(
 				{
-					url: `${apiUrl}/options`,
+					url: `${siteUrl}/wp-json/powerhouse/v2/options`, // 預設 API 路徑
 					method: 'post',
 					values,
 				},

@@ -46,7 +46,7 @@ const Filter = ({
 					dataProviderName: 'bunny-stream',
 					resource: `${bunny_library_id}/videos`,
 					id: video.guid,
-					mutationMode: 'undoable',
+					// mutationMode: 'undoable',
 				},
 				{
 					onSuccess: () => {

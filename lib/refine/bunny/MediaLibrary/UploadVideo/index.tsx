@@ -4,7 +4,7 @@ import { Upload } from '@/wp/components/general'
 
 const UploadVideo = (bunnyUploadProps: UploadProps) => {
 	return (
-		<div className="lg:max-w-[80rem]">
+		<div className="w-full h-full max-h-[30rem]">
 			<Upload uploadProps={bunnyUploadProps} />
 		</div>
 	)

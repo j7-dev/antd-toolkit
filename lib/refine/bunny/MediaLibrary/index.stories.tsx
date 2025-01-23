@@ -7,6 +7,7 @@ import { bunnyStreamDataProvider, dataProvider } from '../../dataProvider'
 import { BunnyProvider } from '../BunnyProvider'
 import { HashRouter } from 'react-router-dom'
 import axios from 'axios'
+import { MediaLibraryIndicator } from '../MediaLibraryIndicator'
 
 const meta: Meta<typeof MediaLibrary> & {
 	argTypes: any
@@ -37,9 +38,9 @@ type Story = StoryObj<typeof MediaLibrary>
 
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
 const bunnyConfig = {
-	bunny_library_id: '1234567890',
-	bunny_stream_api_key: '1234567890',
-	bunny_cdn_hostname: '1234567890',
+	bunny_library_id: '244459',
+	bunny_cdn_hostname: 'vz-da633ab8-b36.b-cdn.net',
+	bunny_stream_api_key: '192d0f46-75b7-4148-8645a8530673-9081-40fb',
 }
 
 export const General: Story = {
@@ -49,8 +50,10 @@ export const General: Story = {
 
 		return (
 			<MediaLibrary
-				selectedVideos={selectedVideos}
-				setSelectedVideos={setSelectedVideos}
+				mediaLibraryProps={{
+					selectedVideos,
+					setSelectedVideos,
+				}}
 			/>
 		)
 	},
@@ -79,6 +82,7 @@ export const General: Story = {
 						>
 							<div className="w-[900px]">
 								<Story />
+								<MediaLibraryIndicator />
 							</div>
 						</Refine>
 					</BunnyProvider>

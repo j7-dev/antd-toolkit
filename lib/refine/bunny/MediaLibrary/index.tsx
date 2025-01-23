@@ -1,4 +1,4 @@
-import React, { FC, memo } from 'react'
+import React, { FC, memo, useRef, useEffect, useState } from 'react'
 import { Tabs, TabsProps, Upload, UploadProps } from 'antd'
 import { FaPhotoVideo } from 'react-icons/fa'
 import { CloudUploadOutlined, SettingOutlined } from '@ant-design/icons'
@@ -9,6 +9,7 @@ import { BunnyProvider, TFileInQueue, TMediaLibraryProps } from '@/refine'
 import { Button } from 'antd'
 import Settings from './Settings'
 import { useMediaUpload } from '@/refine/bunny/MediaLibrary/hooks'
+import UploadVideo from './UploadVideo'
 
 /**
  * MediaLibrary 元件的屬性介面
@@ -58,12 +59,51 @@ const MediaLibraryComponent: FC<TMediaLibraryCompoundProps> = ({
 	uploadProps,
 	tabsProps,
 }) => {
+	const dropZoneRef = useRef<HTMLDivElement>(null)
+	const [isDragging, setIsDragging] = useState(false)
+
 	const { bunny_library_id, bunny_stream_api_key, bunny_cdn_hostname } =
 		BunnyProvider.useBunny()
 
-	const bunnyUploadProps = useMediaUpload(
-		uploadProps ? { uploadProps } : undefined,
-	)
+	const bunnyUploadProps = useMediaUpload(uploadProps)
+
+	useEffect(() => {
+		if (dropZoneRef.current) {
+			const handleDragEnter = (e: DragEvent) => {
+				e.preventDefault()
+				e.stopPropagation()
+				const relatedTarget = e.relatedTarget as Node
+				if (!dropZoneRef.current?.contains(relatedTarget)) {
+					setIsDragging(true)
+				}
+			}
+
+			const handleDragLeave = (e: DragEvent) => {
+				e.preventDefault()
+				e.stopPropagation()
+				const relatedTarget = e.relatedTarget as Node
+				if (!dropZoneRef.current?.contains(relatedTarget)) {
+					setIsDragging(false)
+				}
+			}
+
+			const handleDrop = (e: DragEvent) => {
+				e.preventDefault()
+				e.stopPropagation()
+				setIsDragging(false)
+			}
+
+			dropZoneRef.current.addEventListener('dragenter', handleDragEnter)
+			dropZoneRef.current.addEventListener('dragleave', handleDragLeave)
+			dropZoneRef.current.addEventListener('drop', handleDrop)
+
+			return () => {
+				dropZoneRef.current?.removeEventListener('dragenter', handleDragEnter)
+				dropZoneRef.current?.removeEventListener('dragleave', handleDragLeave)
+				dropZoneRef.current?.removeEventListener('drop', handleDrop)
+			}
+		}
+	}, [])
 
 	if (!bunny_library_id || !bunny_stream_api_key || !bunny_cdn_hostname) {
 		return <NoLibraryId />
@@ -85,17 +125,28 @@ const MediaLibraryComponent: FC<TMediaLibraryCompoundProps> = ({
 	]
 
 	return (
-		<Tabs
-			tabBarExtraContent={
-				<Upload {...bunnyUploadProps}>
-					<Button icon={<CloudUploadOutlined />}>上傳影片</Button>
-				</Upload>
-			}
-			defaultActiveKey="bunny-media-library"
-			items={items}
-			type="card"
-			{...tabsProps}
-		/>
+		<div className="relative">
+			<div ref={dropZoneRef} className="relative">
+				<Tabs
+					className={isDragging ? 'opacity-0' : 'opacity-100'}
+					tabBarExtraContent={
+						<Upload {...bunnyUploadProps}>
+							<Button icon={<CloudUploadOutlined />}>上傳影片</Button>
+						</Upload>
+					}
+					defaultActiveKey="bunny-media-library"
+					items={items}
+					type="card"
+					{...tabsProps}
+				/>
+
+				<div
+					className={`absolute top-0 left-0 w-full h-full ${isDragging ? 'opacity-100 z-50' : 'opacity-0 -z-50'}`}
+				>
+					<UploadVideo {...bunnyUploadProps} />
+				</div>
+			</div>
+		</div>
 	)
 }
 
