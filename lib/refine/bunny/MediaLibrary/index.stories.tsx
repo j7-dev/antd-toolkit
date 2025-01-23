@@ -38,10 +38,13 @@ export default meta
 type Story = StoryObj<typeof MediaLibrary>
 
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
+// 載入環境變數
 const bunnyConfig = {
-	bunny_library_id: '244459',
-	bunny_cdn_hostname: 'vz-da633ab8-b36.b-cdn.net',
-	bunny_stream_api_key: '192d0f46-75b7-4148-8645a8530673-9081-40fb',
+	bunny_library_id: import.meta.env?.STORYBOOK_BUNNY_LIBRARY_ID || '1234567890',
+	bunny_cdn_hostname:
+		import.meta.env?.STORYBOOK_BUNNY_CDN_HOSTNAME || '1234567890',
+	bunny_stream_api_key:
+		import.meta.env?.STORYBOOK_BUNNY_STREAM_API_KEY || '1234567890',
 }
 
 export const General: Story = {
