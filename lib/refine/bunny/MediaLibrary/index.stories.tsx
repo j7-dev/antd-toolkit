@@ -9,6 +9,7 @@ import { HashRouter } from 'react-router-dom'
 import axios from 'axios'
 import { MediaLibraryIndicator } from '../MediaLibraryIndicator'
 import { PluginProvider } from '../../../main/components/PluginProvider'
+import { refineDecorator } from '../../../stories'
 
 const meta: Meta<typeof MediaLibrary> & {
 	argTypes: any
@@ -53,56 +54,16 @@ export const General: Story = {
 		const [selectedVideos, setSelectedVideos] = useState<TBunnyVideo[]>([])
 
 		return (
-			<MediaLibrary
-				mediaLibraryProps={{
-					selectedVideos,
-					setSelectedVideos,
-				}}
-			/>
+			<>
+				<MediaLibrary
+					mediaLibraryProps={{
+						selectedVideos,
+						setSelectedVideos,
+					}}
+				/>
+				<MediaLibraryIndicator />
+			</>
 		)
 	},
-	decorators: [
-		(Story) => {
-			const bunnyStreamAxios = axios.create({
-				baseURL: 'https://video.bunnycdn.com/library',
-				headers: {
-					AccessKey: bunnyConfig.bunny_stream_api_key,
-				},
-			})
-
-			useEffect(() => {
-				window.my_plugin_data = {
-					env: {
-						APP_NAME: 'my_plugin',
-						SITE_URL: 'https://www.example.com',
-					},
-				}
-			}, [])
-
-			return (
-				<HashRouter>
-					<PluginProvider app_domain="my_plugin_data">
-						<BunnyProvider {...bunnyConfig}>
-							<Refine
-								dataProvider={{
-									default: dataProvider(
-										'https://www.example.com/wp-json/my-plugin',
-									),
-									'bunny-stream': bunnyStreamDataProvider(
-										'https://video.bunnycdn.com/library',
-										bunnyStreamAxios,
-									),
-								}}
-							>
-								<div className="w-[900px]">
-									<Story />
-									<MediaLibraryIndicator />
-								</div>
-							</Refine>
-						</BunnyProvider>
-					</PluginProvider>
-				</HashRouter>
-			)
-		},
-	],
+	decorators: [refineDecorator],
 }

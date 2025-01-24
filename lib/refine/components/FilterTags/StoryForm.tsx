@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Button, Form, Input, Select } from 'antd'
 import { FilterTags } from './index'
 import { BooleanRadioButton } from '@/main/components/BooleanRadioButton'
 import { BooleanSegmented } from '@/main/components/BooleanSegmented'
+import { DeleteButton } from '@refinedev/antd'
 
 const StoryForm = () => {
 	const [form] = Form.useForm()
@@ -11,6 +12,10 @@ const StoryForm = () => {
 	const handleFinish = () => {
 		setKey(key + 1)
 	}
+
+	useEffect(() => {
+		form.submit()
+	}, [])
 
 	return (
 		<>
