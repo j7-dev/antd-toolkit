@@ -158,11 +158,11 @@ export const dataProvider = (
 	getOne: async ({ resource, id, meta }) => {
 		let url = `${apiUrl}/${resource}/${id}?`
 
-		const { headers, method, ...rest } = meta ?? {}
+		const { headers, method, variables = {} } = meta ?? {}
 		const requestMethod = (method as THttpMethods) ?? 'get'
 
-		if (rest) {
-			url = `${url}&${stringify(rest, { arrayFormat: 'bracket' })}`
+		if (variables) {
+			url = `${url}&${stringify(variables, { arrayFormat: 'bracket' })}`
 		}
 
 		const result = await httpClient[requestMethod](url, { headers })
