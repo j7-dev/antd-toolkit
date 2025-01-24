@@ -2,6 +2,7 @@ import { memo } from 'react'
 import { renderHTML, defaultImage } from '@/main/utils'
 import { Image, ImageProps } from 'antd'
 import { EyeOutlined } from '@ant-design/icons'
+import { cn } from '@/main/utils'
 
 type TBaseRecord = {
 	id: string
@@ -19,6 +20,7 @@ type TProductNameProps<T extends TBaseRecord> = {
 	renderBelowTitle?: React.ReactNode
 	hideImage?: boolean
 	imageProps?: ImageProps
+	className?: string
 }
 
 const ProductNameComponent = <T extends TBaseRecord>({
@@ -28,17 +30,18 @@ const ProductNameComponent = <T extends TBaseRecord>({
 	renderBelowTitle,
 	hideImage = false,
 	imageProps,
+	className,
 }: TProductNameProps<T>) => {
 	const { id = '', sku = '', name = '', images = [] } = record
 	const image_url = hideImage ? undefined : images?.[0]?.url || defaultImage
 
 	return (
 		<>
-			<div className="flex items-center">
+			<div className={cn('flex items-center', className)}>
 				{!hideImage && (
 					<div className="mr-4">
 						<Image
-							className="rounded-lg object-cover"
+							className="product-image rounded-lg object-cover"
 							preview={{
 								mask: <EyeOutlined />,
 								maskClassName: 'rounded-lg',
@@ -59,16 +62,18 @@ const ProductNameComponent = <T extends TBaseRecord>({
 						renderTitle
 					) : (
 						<div className="flex mb-1 items-end">
-							<p className="min-w-0 m-0 text-primary text-base [&_*]:truncate">
+							<p className="product-name min-w-0 m-0 text-primary text-base [&_*]:truncate">
 								{renderHTML(name)}
 							</p>
-							<p className="my-0 ml-2 text-gray-400 text-xs shrink-0">#{id}</p>
+							<p className="product-id my-0 ml-2 text-gray-400 text-xs shrink-0">
+								#{id}
+							</p>
 						</div>
 					)}
 					{renderBelowTitle ? (
 						renderBelowTitle
 					) : (
-						<div className="flex text-[0.625rem] text-gray-500">
+						<div className="product-meta flex text-[0.625rem] text-gray-500">
 							{sku && <span className="pr-3">{`SKU: ${sku}`}</span>}
 						</div>
 					)}
