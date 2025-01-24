@@ -61,7 +61,7 @@ const ProductNameComponent = <T extends TBaseRecord>({
 					{renderTitle ? (
 						renderTitle
 					) : (
-						<div className="flex mb-1 items-end">
+						<div className="flex items-end">
 							<p className="product-name min-w-0 m-0 text-primary text-base [&_*]:truncate">
 								{renderHTML(name)}
 							</p>
@@ -73,7 +73,7 @@ const ProductNameComponent = <T extends TBaseRecord>({
 					{renderBelowTitle ? (
 						renderBelowTitle
 					) : (
-						<div className="product-meta flex text-[0.625rem] text-gray-500">
+						<div className="product-meta flex text-[0.625rem] text-gray-500 mb-1">
 							{sku && <span className="pr-3">{`SKU: ${sku}`}</span>}
 						</div>
 					)}
