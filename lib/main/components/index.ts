@@ -17,6 +17,7 @@ export * from '@/main/components/formItem'
 export * from '@/main/components/editor'
 export * from '@/main/components/PluginProvider'
 export * from '@/main/components/SecondToStr'
+export * from '@/main/components/PopconfirmDelete'
 
 // @deprecated
 export * from '@/refine/components/FilterTags'
