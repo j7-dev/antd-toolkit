@@ -51,6 +51,9 @@ export default {
 				'.tw-block': {
 					display: 'block',
 				},
+				'.tw-inline': {
+					display: 'inline',
+				},
 			}
 			addUtilities(newUtilities, ['responsive', 'hover'])
 		},
@@ -62,5 +65,6 @@ export default {
 		'columns-2',
 		'fixed',
 		'block',
+		'inline',
 	],
 }

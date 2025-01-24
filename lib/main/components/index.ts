@@ -16,6 +16,7 @@ export * from '@/main/components/Heading'
 export * from '@/main/components/formItem'
 export * from '@/main/components/editor'
 export * from '@/main/components/PluginProvider'
+export * from '@/main/components/SecondToStr'
 
 // @deprecated
 export * from '@/refine/components/FilterTags'
