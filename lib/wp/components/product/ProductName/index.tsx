@@ -73,7 +73,7 @@ const ProductNameComponent = <T extends TBaseRecord>({
 					{renderBelowTitle ? (
 						renderBelowTitle
 					) : (
-						<div className="product-meta flex text-[0.625rem] text-gray-500 mb-1">
+						<div className="product-meta flex text-[0.625rem] text-gray-500">
 							{sku && <span className="pr-3">{`SKU: ${sku}`}</span>}
 						</div>
 					)}
