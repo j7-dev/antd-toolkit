@@ -1,16 +1,25 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import ImgCrop, { ImgCropProps } from 'antd-img-crop'
-import { Upload, UploadProps, Form, UploadFile, GetProp } from 'antd'
+import {
+	Upload,
+	UploadProps,
+	Form,
+	UploadFile,
+	GetProp,
+	FormItemProps,
+} from 'antd'
 import { InboxOutlined, DeleteOutlined } from '@ant-design/icons'
 
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0]
 type TFileUploadProps = {
+	formItemProps?: FormItemProps
 	aspect?: number
 	uploadProps?: UploadProps
 	imgCropProps?: ImgCropProps
 }
 
 const { Dragger } = Upload
+const { Item } = Form
 
 const getBase64 = (img: FileType, callback: (url: string) => void) => {
 	const reader = new FileReader()
@@ -25,16 +34,17 @@ const getBase64 = (img: FileType, callback: (url: string) => void) => {
  * aspect 是圖片寬高比，預設為 1，如果希望比例是 16:9 可以輸入 1.778
  */
 export const FileUpload = ({
+	formItemProps = { name: ['files'] },
 	aspect = 1,
 	uploadProps,
 	imgCropProps,
 }: TFileUploadProps) => {
 	const [fileList, setFileList] = useState<UploadFile[]>([])
 	const form = Form.useFormInstance()
-	const watchId = Form.useWatch(['id'], form)
+	const fieldName = formItemProps?.name || ['files']
 
 	const beforeUpload = (file: FileType) => {
-		form.setFieldValue('files', file)
+		form.setFieldValue(fieldName, file)
 		getBase64(file, (url: string) => {
 			setFileList([
 				{
@@ -46,22 +56,6 @@ export const FileUpload = ({
 		return false
 	}
 
-	useEffect(() => {
-		if (watchId) {
-			const images = form.getFieldValue(['images'])
-			if (images?.length) {
-				setFileList([
-					{
-						uid: '-1',
-						name: 'feature_image_url.png',
-						status: 'done',
-						url: images[0]?.url,
-					},
-				])
-			}
-		}
-	}, [watchId])
-
 	const handleDelete = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation()
 		setFileList([])
@@ -69,6 +63,7 @@ export const FileUpload = ({
 
 	return (
 		<div className="flex justify-center w-full mb-4">
+			<Item hidden {...formItemProps} />
 			<ImgCrop
 				aspect={aspect}
 				quality={1}
