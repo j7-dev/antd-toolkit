@@ -1,7 +1,7 @@
 import React from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
 import { BlockNoteDrawer } from './index'
-import { PluginProvider } from '@/main'
+import { PluginProvider } from '../../PluginProvider'
 import { Refine } from '@refinedev/core'
 import {
 	bunnyStreamDataProvider,

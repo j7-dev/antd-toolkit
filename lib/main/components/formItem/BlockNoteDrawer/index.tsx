@@ -7,8 +7,9 @@ import {
 	Alert,
 	Dropdown,
 	Tooltip,
-	DropdownProps,
+	FormItemProps,
 } from 'antd'
+import { DropdownButtonProps } from 'antd/es/dropdown/dropdown-button'
 import { LoadingOutlined } from '@ant-design/icons'
 import { useBlockNoteDrawer } from './useBlockNoteDrawer'
 import { useBlockNote } from '@/main'
@@ -18,29 +19,24 @@ import { PluginProvider, BlockNote } from '@/main'
 const { Item } = Form
 
 type TBlockNoteDrawerProps = {
-	name?: string | number | (string | number)[]
-	itemLabel?: string
-	dropdownButtonProps?: DropdownProps
+	formItemProps?: FormItemProps
+	dropdownButtonProps?: DropdownButtonProps
 	useBlockNoteParams: TUseBlockNoteParams
 }
 
 const BlockNoteDrawerComponent: FC<TBlockNoteDrawerProps> = ({
-	name = ['description'],
-	itemLabel = '',
+	formItemProps = { name: ['description'], label: '' },
 	dropdownButtonProps,
 	useBlockNoteParams,
 }) => {
+	const { name, label } = formItemProps
 	const { siteUrl = '' } = PluginProvider.usePlugin()
-
 	const form = Form.useFormInstance()
 	const watchId = Form.useWatch(['id'], form)
 	const { blockNoteViewProps, html, setHTML } = useBlockNote(useBlockNoteParams)
-
 	const { editor } = blockNoteViewProps
 
-	const { drawerProps, show, close, open } = useBlockNoteDrawer({
-		itemLabel,
-	})
+	const { drawerProps, show, close, open } = useBlockNoteDrawer()
 
 	const handleConfirm = () => {
 		form.setFieldValue(name, html)
@@ -64,36 +60,38 @@ const BlockNoteDrawerComponent: FC<TBlockNoteDrawerProps> = ({
 		}
 	}, [watchId, open])
 
+	const parsedDropdownButtonProps: DropdownButtonProps = {
+		trigger: ['click'],
+		placement: 'bottomLeft',
+		menu: {
+			items: [
+				{
+					key: 'elementor',
+					label: watchId ? (
+						<a
+							href={`${siteUrl}/wp-admin/post.php?post=${watchId}&action=elementor`}
+							target="_blank"
+							rel="noreferrer"
+						>
+							或 使用 Elementor 編輯器
+						</a>
+					) : (
+						<Tooltip title="先儲存後就可以使用 Elementor 編輯了">
+							或 使用 Elementor 編輯器 🚫
+						</Tooltip>
+					),
+				},
+			],
+		},
+		onClick: show,
+		...dropdownButtonProps,
+	}
+
 	return (
 		<div>
-			<p className="mb-2">編輯{itemLabel}</p>
-			{!!dropdownButtonProps?.menu?.items?.length ? (
-				<Dropdown.Button
-					trigger={['click']}
-					placement="bottomLeft"
-					menu={{
-						items: [
-							{
-								key: 'elementor',
-								label: watchId ? (
-									<a
-										href={`${siteUrl}/wp-admin/post.php?post=${watchId}&action=elementor`}
-										target="_blank"
-										rel="noreferrer"
-									>
-										或 使用 Elementor 編輯器
-									</a>
-								) : (
-									<Tooltip title="先儲存後就可以使用 Elementor 編輯了">
-										或 使用 Elementor 編輯器 🚫
-									</Tooltip>
-								),
-							},
-						],
-					}}
-					onClick={show}
-					{...dropdownButtonProps}
-				>
+			<p className="mb-2">編輯{label}</p>
+			{!!parsedDropdownButtonProps?.menu?.items?.length ? (
+				<Dropdown.Button {...parsedDropdownButtonProps}>
 					使用 Power 編輯器
 				</Dropdown.Button>
 			) : (
@@ -102,7 +100,7 @@ const BlockNoteDrawerComponent: FC<TBlockNoteDrawerProps> = ({
 				</Button>
 			)}
 
-			<Item name={name} label={itemLabel} hidden>
+			<Item hidden {...formItemProps}>
 				<Input.TextArea rows={8} disabled />
 			</Item>
 			<Drawer
@@ -132,7 +130,7 @@ const BlockNoteDrawerComponent: FC<TBlockNoteDrawerProps> = ({
 						<ol className="pl-4">
 							<li>
 								確認變更只是確認內文有沒有變更，您還是需要儲存才會存進
-								{itemLabel}
+								{label}
 							</li>
 							<li>可以使用 WordPress shortcode</li>
 							<li>圖片在前台顯示皆為 100% ，縮小圖片並不影響前台顯示</li>

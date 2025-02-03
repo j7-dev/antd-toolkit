@@ -9,12 +9,10 @@ import { DrawerProps } from 'antd'
 
 type TUseBlockNoteDrawerParams = {
 	drawerProps?: DrawerProps
-	itemLabel?: string
 }
 
 export function useBlockNoteDrawer(props?: TUseBlockNoteDrawerParams) {
 	const drawerProps = props?.drawerProps || {}
-	const itemLabel = props?.itemLabel || '課程'
 	const [open, setOpen] = useState(false)
 
 	const show = () => {
@@ -26,7 +24,7 @@ export function useBlockNoteDrawer(props?: TUseBlockNoteDrawerParams) {
 	}
 
 	const mergedDrawerProps: DrawerProps = {
-		title: itemLabel === '課程' ? '編輯課程重點描述' : `編輯${itemLabel}內容`,
+		title: '編輯內容',
 		forceRender: false,
 		placement: 'left',
 		onClose: close,
