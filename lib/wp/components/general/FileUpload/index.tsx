@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import ImgCrop from 'antd-img-crop'
+import ImgCrop, { ImgCropProps } from 'antd-img-crop'
 import { Upload, UploadProps, Form, UploadFile, GetProp } from 'antd'
 import { InboxOutlined, DeleteOutlined } from '@ant-design/icons'
 
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0]
+type TFileUploadProps = {
+	aspect?: number
+	uploadProps?: UploadProps
+	imgCropProps?: ImgCropProps
+}
 
 const { Dragger } = Upload
 
@@ -15,9 +20,15 @@ const getBase64 = (img: FileType, callback: (url: string) => void) => {
 
 /**
  * 這種 UPLOAD onChange 時不會發 API，只會取得 File 資訊
+ * 需要自己再將 File 透過 API 發送給後端
+ * File 會存在 form 中，可以透過 form.getFieldValue('files') 取得
+ * aspect 是圖片寬高比，預設為 1，如果希望比例是 16:9 可以輸入 1.778
  */
-
-export const FileUpload = () => {
+export const FileUpload = ({
+	aspect = 1,
+	uploadProps,
+	imgCropProps,
+}: TFileUploadProps) => {
 	const [fileList, setFileList] = useState<UploadFile[]>([])
 	const form = Form.useFormInstance()
 	const watchId = Form.useWatch(['id'], form)
@@ -59,7 +70,7 @@ export const FileUpload = () => {
 	return (
 		<div className="flex justify-center w-full mb-4">
 			<ImgCrop
-				aspect={1.778}
+				aspect={aspect}
 				quality={1}
 				rotationSlider
 				showReset
@@ -71,15 +82,20 @@ export const FileUpload = () => {
 				modalProps={{
 					zIndex: 999999,
 				}}
+				{...imgCropProps}
 			>
 				<Dragger
 					name="files"
 					accept="image/*"
 					maxCount={1}
 					fileList={fileList}
-					className="w-full aspect-video"
+					className="w-full"
 					showUploadList={false}
 					beforeUpload={beforeUpload}
+					style={{
+						aspectRatio: aspect,
+					}}
+					{...uploadProps}
 				>
 					<p className="ant-upload-drag-icon">
 						<InboxOutlined />
