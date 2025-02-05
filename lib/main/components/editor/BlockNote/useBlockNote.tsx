@@ -56,12 +56,13 @@ export const schema = BlockNoteSchema.create({
 })
 
 export const useBlockNote = ({
-	options = {},
+	editor,
+	options,
 	deps = [],
 	apiConfig,
 }: TUseBlockNoteParams) => {
 	/** @see https://www.blocknotejs.org/docs/editor-basics/setup */
-	const editor = useCreateBlockNote(
+	const defaultEditor = useCreateBlockNote(
 		{
 			schema,
 			uploadFile: uploadWP(apiConfig),
@@ -78,7 +79,7 @@ export const useBlockNote = ({
 		DefaultInlineContentSchema,
 		DefaultStyleSchema
 	> = {
-		editor,
+		editor: editor ? editor : defaultEditor,
 		onChange: async () => {
 			// Saves the document JSON to state.
 			setBlocks(editor.document as Block[])

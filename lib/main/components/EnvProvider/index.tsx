@@ -17,7 +17,17 @@ export type TEnv = {
 	[key: string]: any
 }
 
-export const EnvContext = createContext<TEnv | undefined>(undefined)
+export const EnvContext = createContext<TEnv>({
+	SITE_URL: '',
+	AJAX_URL: '',
+	CURRENT_USER_ID: 0,
+	CURRENT_POST_ID: '',
+	PERMALINK: '',
+	APP_NAME: '',
+	KEBAB: '',
+	SNAKE: '',
+	NONCE: '',
+})
 
 export const EnvProvider: FC<{
 	children: React.ReactNode
