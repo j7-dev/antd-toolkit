@@ -32,7 +32,7 @@ type TUseSaveReturn = {
 export const useSave = ({ form }: TUseSaveParams): TUseSaveReturn => {
 	const apiUrl = useApiUrl()
 	const mutation = useCustomMutation()
-	const { siteUrl } = PluginProvider.usePlugin()
+	const { SITE_URL } = PluginProvider.usePlugin()
 	const { mutate } = mutation
 
 	const handleSave = useCallback(() => {
@@ -47,7 +47,7 @@ export const useSave = ({ form }: TUseSaveParams): TUseSaveReturn => {
 		form.validateFields().then((values) => {
 			mutate(
 				{
-					url: `${siteUrl}/wp-json/powerhouse/v2/options`, // 預設 API 路徑
+					url: `${SITE_URL}/wp-json/powerhouse/v2/options`, // 預設 API 路徑
 					method: 'post',
 					values,
 				},

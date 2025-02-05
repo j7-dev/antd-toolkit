@@ -8,7 +8,7 @@ export const mediaLibraryAtom = atom<{
 	onSelect?: () => void
 	modalProps: ModalProps
 	mediaLibraryProps: Omit<TMediaLibraryProps, 'setSelectedVideos'>
-	confirmedSelectedVideos: TBunnyVideo[]
+	confirmedSelectedVideos: TBunnyVideo[] // 已按下"選擇影片"按鈕後確認選擇的影片
 	key: string
 }>({
 	form: undefined,
@@ -28,6 +28,6 @@ export const mediaLibraryAtom = atom<{
 		limit: 1,
 		selectedVideos: [],
 	},
-	confirmedSelectedVideos: [],
+	confirmedSelectedVideos: [], // 已按下"選擇影片"按鈕後確認選擇的影片
 	key: '',
 })

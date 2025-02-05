@@ -18,10 +18,10 @@ const Settings = ({ onFinish }: TSettingProps) => {
 	const { isLoading: isSaveLoading } = mutation
 	const { isLoading: isGetLoading } = useOptions({ form })
 	return (
-		<Spin spinning={isGetLoading}>
-			<Form layout="vertical" form={form} onFinish={onFinish || handleSave}>
-				<div className="flex flex-col md:flex-row gap-8">
-					<div className="w-full max-w-[400px]">
+		<Form layout="vertical" form={form} onFinish={onFinish || handleSave}>
+			<div className="flex flex-col md:flex-row gap-8">
+				<div className="w-full max-w-[400px]">
+					<Spin spinning={isGetLoading}>
 						<Item
 							className="mt-4"
 							name={['bunny_library_id']}
@@ -43,51 +43,51 @@ const Settings = ({ onFinish }: TSettingProps) => {
 								儲存
 							</Button>
 						</Item>
-					</div>
-					<div className="flex-1 h-auto md:h-[calc(100%-5.375rem)] md:overflow-y-auto">
-						<p className="font-bold mb-4">說明</p>
-						<Alert
-							message="沒有 Bunny 帳號？"
-							className="mb-4"
-							description={
-								<>
-									若還沒有 Bunny 帳號，可以
-									<a
-										href="https://bunny.net?ref=wd7c7lcrv4"
-										target="_blank"
-										rel="noopener noreferrer"
-										className="ml-2 font-bold"
-									>
-										點此申請 <RxExternalLink className="relative top-0.5" />
-									</a>
-								</>
-							}
-							type="info"
-							showIcon
+					</Spin>
+				</div>
+				<div className="flex-1 h-auto md:h-[calc(100%-5.375rem)] md:overflow-y-auto">
+					<p className="font-bold mb-4">說明</p>
+					<Alert
+						message="沒有 Bunny 帳號？"
+						className="mb-4"
+						description={
+							<>
+								若還沒有 Bunny 帳號，可以
+								<a
+									href="https://bunny.net?ref=wd7c7lcrv4"
+									target="_blank"
+									rel="noopener noreferrer"
+									className="ml-2 font-bold"
+								>
+									點此申請 <RxExternalLink className="relative top-0.5" />
+								</a>
+							</>
+						}
+						type="info"
+						showIcon
+					/>
+					<div className="mb-4">
+						<p>1. 前往 Bunny 後台，選擇 「Stream」 並進入 「Library」</p>
+						<SimpleImage
+							src={bunnyTutorial1}
+							ratio="aspect-[2.1]"
+							className="w-full"
 						/>
-						<div className="mb-4">
-							<p>1. 前往 Bunny 後台，選擇 「Stream」 並進入 「Library」</p>
-							<SimpleImage
-								src={bunnyTutorial1}
-								ratio="aspect-[2.1]"
-								className="w-full"
-							/>
-						</div>
-						<div className="mb-4">
-							<p>
-								2. 進入「API」分頁，複製 Library ID 、 CDN Hostname 和 Stream
-								API Key
-							</p>
-							<SimpleImage
-								src={bunnyTutorial2}
-								ratio="aspect-[2.1]"
-								className="w-full"
-							/>
-						</div>
+					</div>
+					<div className="mb-4">
+						<p>
+							2. 進入「API」分頁，複製 Library ID 、 CDN Hostname 和 Stream API
+							Key
+						</p>
+						<SimpleImage
+							src={bunnyTutorial2}
+							ratio="aspect-[2.1]"
+							className="w-full"
+						/>
 					</div>
 				</div>
-			</Form>
-		</Spin>
+			</div>
+		</Form>
 	)
 }
 

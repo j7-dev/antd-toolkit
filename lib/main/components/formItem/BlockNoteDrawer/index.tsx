@@ -30,7 +30,7 @@ const BlockNoteDrawerComponent: FC<TBlockNoteDrawerProps> = ({
 	useBlockNoteParams,
 }) => {
 	const { name, label } = formItemProps
-	const { siteUrl = '' } = PluginProvider.usePlugin()
+	const { SITE_URL = '' } = PluginProvider.usePlugin()
 	const form = Form.useFormInstance()
 	const watchId = Form.useWatch(['id'], form)
 	const { blockNoteViewProps, html, setHTML } = useBlockNote(useBlockNoteParams)
@@ -69,7 +69,7 @@ const BlockNoteDrawerComponent: FC<TBlockNoteDrawerProps> = ({
 					key: 'elementor',
 					label: watchId ? (
 						<a
-							href={`${siteUrl}/wp-admin/post.php?post=${watchId}&action=elementor`}
+							href={`${SITE_URL}/wp-admin/post.php?post=${watchId}&action=elementor`}
 							target="_blank"
 							rel="noreferrer"
 						>

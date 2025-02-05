@@ -56,16 +56,16 @@ export type TGetVideosResponse = {
 }
 
 export type TMediaLibraryProps = {
-	selectedVideos: TBunnyVideo[]
+	selectedVideos: TBunnyVideo[] // 已選擇的影片
 	setSelectedVideos:
 		| React.Dispatch<React.SetStateAction<TBunnyVideo[]>>
 		| ((
 				_videosOrFunction:
 					| TBunnyVideo[]
 					| ((_videos: TBunnyVideo[]) => TBunnyVideo[]),
-		  ) => void)
-	limit?: number
-	selectButtonProps?: ButtonProps
+		  ) => void) // 已選擇的影片 setter
+	limit?: number // 能選擇的影片數量
+	selectButtonProps?: ButtonProps // "選取影片"按鈕的屬性，可以設定 onClick 後的動作
 }
 
 export type TUploadStatus =
@@ -78,10 +78,10 @@ export type TUploadStatus =
 export type TFileInQueue = {
 	key: string
 	file: RcFile
-	status?: TUploadStatus
-	videoId: string
-	isEncoding: boolean
-	encodeProgress: number
-	uploadProgress: number
-	preview?: string
+	status?: TUploadStatus // 上傳狀態
+	videoId: string // 影片 ID
+	isEncoding: boolean // 是否正在編碼
+	encodeProgress: number // 編碼進度
+	uploadProgress: number // 上傳進度
+	preview?: string // 預覽圖片
 }

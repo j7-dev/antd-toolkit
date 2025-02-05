@@ -62,11 +62,11 @@ export const useOptions = <
 	form,
 	useCustomParams,
 }: TUseOptionsParams<TQueryFnData, TError, TQuery, TPayload, TData>) => {
-	const { siteUrl } = PluginProvider.usePlugin()
+	const { SITE_URL } = PluginProvider.usePlugin()
 
 	// 使用 useCustom hook 發送請求
 	const result = useCustom<TQueryFnData, TError, TQuery, TPayload, TData>({
-		url: `${siteUrl}/wp-json/powerhouse/v2/options`, // 預設 API 路徑
+		url: `${SITE_URL}/wp-json/powerhouse/v2/options`, // 預設 API 路徑
 		method: 'get',
 		...useCustomParams,
 	})
