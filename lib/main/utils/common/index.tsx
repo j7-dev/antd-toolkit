@@ -167,3 +167,23 @@ export function getGCDItems<T>(items: T[][], key = 'id'): T[] {
 export function getFileExtension(url: string) {
 	return url?.split('.')?.pop()?.toLowerCase() ?? ''
 }
+
+/**
+ * 簡單解密
+ */
+export function simpleDecrypt(str: string): any {
+	// 反向位移
+	let decoded = ''
+	for (let i = 0; i < str.length; i++) {
+		decoded += String.fromCharCode(str.charCodeAt(i) - 1)
+	}
+
+	// base64 解碼
+	const jsonStr = atob(decoded)
+	try {
+		return JSON.parse(jsonStr)
+	} catch (error) {
+		console.error('JSON.parse env 參數解析失敗:', error)
+		return null
+	}
+}

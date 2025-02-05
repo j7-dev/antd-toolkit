@@ -5,13 +5,5 @@ import { pluginAtom, pluginStore } from './atom'
  */
 export const usePlugin = () => {
 	const pluginAtomValue = pluginStore.get(pluginAtom)
-	const appDomain = pluginAtomValue.app_domain
-	// @ts-ignore
-	const env = window?.[appDomain]?.env
-	// @ts-ignore
-	const wpApiSettings = window?.[appDomain]?.wpApiSettings
-	return {
-		...env,
-		...wpApiSettings,
-	}
+	return pluginAtomValue
 }

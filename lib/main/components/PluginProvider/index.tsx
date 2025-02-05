@@ -1,19 +1,19 @@
 import React, { FC, useLayoutEffect } from 'react'
 import { Provider } from 'jotai'
-import { pluginStore, pluginAtom } from './atom'
+import { pluginStore, pluginAtom, TEnv } from './atom'
 import { usePlugin } from './hooks'
+import { simpleDecrypt } from '@/main/utils'
 
 const PluginProviderComponent: FC<{
 	children: React.ReactNode
-	app_domain: string
+	env: string // 加密後的環境變數
 }> & {
 	usePlugin: typeof usePlugin
-} = ({ children, app_domain }) => {
+} = ({ children, env }) => {
 	useLayoutEffect(() => {
-		pluginStore.set(pluginAtom, {
-			app_domain,
-		})
-	}, [app_domain])
+		const decryptedEnv = simpleDecrypt(env) as TEnv
+		pluginStore.set(pluginAtom, decryptedEnv)
+	}, [env])
 	return <Provider store={pluginStore}>{children}</Provider>
 }
 
