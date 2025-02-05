@@ -1,17 +1,38 @@
-import React, { FC, useLayoutEffect } from 'react'
-import { envAtom, TEnv, envStore } from './atom'
-import { Provider } from 'jotai'
+import React, { FC, createContext, useContext, useMemo } from 'react'
 
-const EnvProviderComponent: FC<{
+export type TEnv = {
+	SITE_URL: string
+	AJAX_URL: string
+	CURRENT_USER_ID: number
+	CURRENT_POST_ID: string | false
+	PERMALINK: string
+	APP_NAME: string
+	KEBAB: string
+	SNAKE: string
+	NONCE: string
+	BUNNY_LIBRARY_ID?: string
+	BUNNY_CDN_HOSTNAME?: string
+	BUNNY_STREAM_API_KEY?: string
+} & {
+	[key: string]: any
+}
+
+export const EnvContext = createContext<TEnv | undefined>(undefined)
+
+export const EnvProvider: FC<{
 	children: React.ReactNode
 	env: TEnv
 }> = ({ children, env }) => {
-	useLayoutEffect(() => {
-		envStore.set(envAtom, env)
-	}, [env])
-	return <Provider store={envStore}>{children}</Provider>
+	const parentContext = useContext(EnvContext)
+
+	const context = useMemo(() => {
+		return {
+			...parentContext,
+			...env,
+		}
+	}, [env, parentContext])
+
+	return <EnvContext.Provider value={context}>{children}</EnvContext.Provider>
 }
 
-export const EnvProvider = EnvProviderComponent
-export * from './atom'
 export * from './hooks'

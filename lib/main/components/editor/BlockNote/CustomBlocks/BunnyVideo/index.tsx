@@ -3,7 +3,7 @@ import { createReactBlockSpec } from '@blocknote/react'
 import { schema } from '../../useBlockNote'
 import { FaPhotoVideo } from 'react-icons/fa'
 import MediaLibraryButton, { TMediaLibraryButton } from './MediaLibraryButton'
-import { bunnyStore, bunnyAtom } from '@/refine'
+import { useBunny } from '@/refine'
 
 export const bunnyVideoMenuItem = (editor: typeof schema.BlockNoteEditor) => ({
 	key: 'bunnyVideo',
@@ -32,7 +32,8 @@ const bunnyVideoBlockConfig: CustomBlockConfig = {
 export const BunnyVideo = createReactBlockSpec(bunnyVideoBlockConfig, {
 	render: (props) => {
 		// 取得 bunny 的 library_id
-		const bunny_library_id = bunnyStore?.get(bunnyAtom)?.bunny_library_id
+		// @ts-ignore
+		const { bunny_library_id = '' } = useBunny()
 
 		const vId = props.block.props.vId
 		const videoUrl = `https://iframe.mediadelivery.net/embed/${bunny_library_id}/${vId}?autoplay=false&loop=false&muted=false&preload=true&responsive=true`
@@ -61,7 +62,8 @@ export const BunnyVideo = createReactBlockSpec(bunnyVideoBlockConfig, {
 	// ❗toExternalHTML 是例如，將區塊複製到剪貼簿到外部時，會複製的 內容，如果沒有定義就使用 render
 	toExternalHTML: (props) => {
 		// 取得 bunny 的 library_id
-		const bunny_library_id = bunnyStore?.get(bunnyAtom)?.bunny_library_id
+		// @ts-ignore
+		const { bunny_library_id = '' } = useBunny()
 
 		const vId = props.block.props.vId
 		const videoUrl = `https://iframe.mediadelivery.net/embed/${bunny_library_id}/${vId}?autoplay=false&loop=false&muted=false&preload=true&responsive=true`

@@ -1,26 +1,31 @@
-import React, { FC, useLayoutEffect } from 'react'
-import { Provider } from 'jotai'
+import React, { FC, useContext, useMemo, createContext } from 'react'
 import axios from 'axios'
-import { bunnyStore, bunnyAtom } from './atom'
-import { useBunny } from './hooks'
 import { dataProvider } from './dataProvider'
+import { AxiosInstance } from 'axios'
 
 const BUNNY_API_URL = 'https://video.bunnycdn.com/library'
 
-const BunnyProviderComponent: FC<{
-	children: React.ReactNode
+type TBunnyContext = {
 	bunny_library_id: string
 	bunny_stream_api_key: string
 	bunny_cdn_hostname: string
-}> & {
-	useBunny: typeof useBunny
-} = ({
+	bunny_stream_axios: AxiosInstance
+	bunny_data_provider_result: any
+}
+
+export const BunnyContext = createContext<TBunnyContext | undefined>(undefined)
+
+export const BunnyProvider: FC<
+	TBunnyContext & { children: React.ReactNode }
+> = ({
 	children,
 	bunny_library_id,
 	bunny_stream_api_key,
 	bunny_cdn_hostname,
 }) => {
-	useLayoutEffect(() => {
+	const parentContext = useContext(BunnyContext)
+
+	const context = useMemo(() => {
 		const bunny_stream_axios = axios.create({
 			baseURL: BUNNY_API_URL,
 			headers: {
@@ -28,7 +33,8 @@ const BunnyProviderComponent: FC<{
 			},
 		})
 
-		bunnyStore.set(bunnyAtom, {
+		return {
+			...parentContext,
 			bunny_library_id,
 			bunny_stream_api_key,
 			bunny_cdn_hostname,
@@ -37,12 +43,17 @@ const BunnyProviderComponent: FC<{
 				BUNNY_API_URL,
 				bunny_stream_axios,
 			),
-		})
-	}, [bunny_library_id, bunny_stream_api_key, bunny_cdn_hostname])
-	return <Provider store={bunnyStore}>{children}</Provider>
+		}
+	}, [
+		bunny_library_id,
+		bunny_stream_api_key,
+		bunny_cdn_hostname,
+		parentContext,
+	])
+
+	return (
+		<BunnyContext.Provider value={context}>{children}</BunnyContext.Provider>
+	)
 }
 
-BunnyProviderComponent.useBunny = useBunny
-
-export const BunnyProvider = BunnyProviderComponent
-export * from './atom'
+export * from './hooks'

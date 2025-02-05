@@ -3,7 +3,7 @@ import { createReactBlockSpec } from '@blocknote/react'
 import { schema } from '../../useBlockNote'
 import { MdOutlineAudioFile } from 'react-icons/md'
 import MediaLibraryButton, { TMediaLibraryButton } from './MediaLibraryButton'
-import { bunnyStore, bunnyAtom } from '@/refine'
+import { useBunny } from '@/refine'
 
 export const bunnyAudioMenuItem = (editor: typeof schema.BlockNoteEditor) => ({
 	key: 'bunnyAudio',
@@ -32,7 +32,8 @@ const bunnyAudioBlockConfig: CustomBlockConfig = {
 export const BunnyAudio = createReactBlockSpec(bunnyAudioBlockConfig, {
 	render: (props) => {
 		// 取得 bunny 的 library_id
-		const bunny_cdn_hostname = bunnyStore?.get(bunnyAtom)?.bunny_cdn_hostname
+		// @ts-ignore
+		const { bunny_cdn_hostname = '' } = useBunny()
 
 		const vId = props.block.props.vId
 		const audioUrl = `https://${bunny_cdn_hostname}/${vId}/playlist.m3u8`
@@ -53,7 +54,8 @@ export const BunnyAudio = createReactBlockSpec(bunnyAudioBlockConfig, {
 	// ❗toExternalHTML 是例如，將區塊複製到剪貼簿到外部時，會複製的 內容，如果沒有定義就使用 render
 	toExternalHTML: (props) => {
 		// 取得 bunny 的 library_id
-		const bunny_cdn_hostname = bunnyStore?.get(bunnyAtom)?.bunny_cdn_hostname
+		// @ts-ignore
+		const { bunny_cdn_hostname = '' } = useBunny()
 
 		const vId = props.block.props.vId
 		const audioUrl = `https://${bunny_cdn_hostname}/${vId}/playlist.m3u8`

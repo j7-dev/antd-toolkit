@@ -1,5 +1,7 @@
-import { bunnyAtom, bunnyStore } from './atom'
+import { useContext } from 'react'
+import { BunnyContext } from './index'
+
 export const useBunny = () => {
-	const bunnyAtomValue = bunnyStore.get(bunnyAtom)
-	return bunnyAtomValue
+	const context = useContext(BunnyContext)
+	return context
 }
