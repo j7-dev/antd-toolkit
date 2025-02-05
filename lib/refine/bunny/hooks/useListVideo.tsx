@@ -2,7 +2,7 @@ import { useList } from '@refinedev/core'
 import { UseQueryOptions, QueryKey } from '@tanstack/react-query'
 import { GetListResponse, HttpError } from '@refinedev/core'
 import { TBunnyVideo } from '../types'
-import { BunnyProvider } from '@/refine'
+import { useBunny } from '@/refine'
 
 type TUseListVideoParams<T = TBunnyVideo> = {
 	queryOptions?:
@@ -16,7 +16,7 @@ type TUseListVideoParams<T = TBunnyVideo> = {
 }
 
 export const useListVideo = (params?: TUseListVideoParams) => {
-	const { bunny_library_id } = BunnyProvider.useBunny()
+	const { bunny_library_id } = useBunny()
 	const queryOptions = params?.queryOptions
 	const result = useList({
 		resource: `${bunny_library_id}/videos`,

@@ -1,6 +1,6 @@
 import { useEffect, memo } from 'react'
 import { Button } from 'antd'
-import { mediaLibraryAtom, BunnyProvider } from '@/refine'
+import { mediaLibraryAtom, useBunny } from '@/refine'
 import { useAtom } from 'jotai'
 import { ReactCustomBlockRenderProps } from '@blocknote/react'
 import {
@@ -17,7 +17,7 @@ export type TMediaLibraryButton = ReactCustomBlockRenderProps<
 >
 
 const MediaLibraryButton = (props: TMediaLibraryButton) => {
-	const { bunny_library_id } = BunnyProvider.useBunny()
+	const { bunny_library_id } = useBunny()
 	const [mediaLibrary, setMediaLibrary] = useAtom(mediaLibraryAtom)
 
 	const confirmedSelectedVId = mediaLibrary.confirmedSelectedVideos?.[0]?.guid

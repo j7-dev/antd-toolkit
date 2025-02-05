@@ -13,7 +13,13 @@ type TBunnyContext = {
 	bunny_data_provider_result: any
 }
 
-export const BunnyContext = createContext<TBunnyContext | undefined>(undefined)
+export const BunnyContext = createContext<TBunnyContext>({
+	bunny_library_id: '',
+	bunny_stream_api_key: '',
+	bunny_cdn_hostname: '',
+	bunny_stream_axios: axios,
+	bunny_data_provider_result: {},
+})
 
 export const BunnyProvider: FC<
 	TBunnyContext & { children: React.ReactNode }

@@ -1,5 +1,5 @@
 import React, { FC, useState, HTMLAttributes } from 'react'
-import { TBunnyVideo, BunnyProvider } from '@/refine'
+import { TBunnyVideo, useBunny } from '@/refine'
 import { SimpleImage } from '@/main/components'
 import { Typography, message } from 'antd'
 import { uniqBy } from 'lodash-es'
@@ -52,7 +52,7 @@ const VideoItem = ({
 		  ) => void)
 	limit: number | undefined
 }) => {
-	const { bunny_cdn_hostname } = BunnyProvider.useBunny()
+	const { bunny_cdn_hostname } = useBunny()
 	const [filename, setFilename] = useState(video?.thumbnailFileName)
 	const isSelected = selectedVideos?.some(
 		(selectedVideo) => selectedVideo.guid === video.guid,

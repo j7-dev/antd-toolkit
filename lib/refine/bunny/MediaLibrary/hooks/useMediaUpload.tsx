@@ -4,7 +4,7 @@ import { RcFile } from 'antd/lib/upload/interface'
 import { useSetAtom } from 'jotai'
 import { getVideoUrl } from '@/main/utils'
 import {
-	BunnyProvider,
+	useBunny,
 	TUploadStatus,
 	TBunnyVideo,
 	TUploadVideoResponse,
@@ -18,7 +18,7 @@ import { useInvalidate } from '@refinedev/core'
  * @returns 返回上傳所需的配置和狀態
  */
 export const useMediaUpload = (uploadProps?: UploadProps) => {
-	const { bunny_library_id, bunny_stream_axios } = BunnyProvider.useBunny()
+	const { bunny_library_id, bunny_stream_axios } = useBunny()
 	const setFilesInQueue = useSetAtom(filesInQueueAtom)
 	const invalidate = useInvalidate()
 

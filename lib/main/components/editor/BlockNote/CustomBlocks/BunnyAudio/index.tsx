@@ -32,7 +32,6 @@ const bunnyAudioBlockConfig: CustomBlockConfig = {
 export const BunnyAudio = createReactBlockSpec(bunnyAudioBlockConfig, {
 	render: (props) => {
 		// 取得 bunny 的 library_id
-		// @ts-ignore
 		const { bunny_cdn_hostname = '' } = useBunny()
 
 		const vId = props.block.props.vId
@@ -54,7 +53,6 @@ export const BunnyAudio = createReactBlockSpec(bunnyAudioBlockConfig, {
 	// ❗toExternalHTML 是例如，將區塊複製到剪貼簿到外部時，會複製的 內容，如果沒有定義就使用 render
 	toExternalHTML: (props) => {
 		// 取得 bunny 的 library_id
-		// @ts-ignore
 		const { bunny_cdn_hostname = '' } = useBunny()
 
 		const vId = props.block.props.vId

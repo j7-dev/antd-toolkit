@@ -4,12 +4,12 @@ import { DeleteOutlined } from '@ant-design/icons'
 import NoLibraryId from './NoLibraryId'
 import { TVideo } from '@/main/types'
 import { useSetAtom } from 'jotai'
-import { BunnyProvider, mediaLibraryAtom } from '@/refine'
+import { useBunny, mediaLibraryAtom } from '@/refine'
 
 const { Item } = Form
 const Bunny: FC<FormItemProps> = (formItemProps) => {
 	const { bunny_library_id, bunny_stream_api_key, bunny_cdn_hostname } =
-		BunnyProvider.useBunny()
+		useBunny()
 	const form = Form.useFormInstance()
 
 	const name = formItemProps?.name

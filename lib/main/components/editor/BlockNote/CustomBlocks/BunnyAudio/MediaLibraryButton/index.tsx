@@ -1,6 +1,6 @@
 import { useEffect, memo } from 'react'
 import { Button } from 'antd'
-import { mediaLibraryAtom, BunnyProvider } from '@/refine'
+import { mediaLibraryAtom, useBunny } from '@/refine'
 import { useAtom } from 'jotai'
 import { ReactCustomBlockRenderProps } from '@blocknote/react'
 import {
@@ -16,7 +16,7 @@ export type TMediaLibraryButton = ReactCustomBlockRenderProps<
 >
 
 const MediaLibraryButton = (props: TMediaLibraryButton) => {
-	const { bunny_cdn_hostname } = BunnyProvider.useBunny()
+	const { bunny_cdn_hostname } = useBunny()
 
 	const [mediaLibrary, setMediaLibrary] = useAtom(mediaLibraryAtom)
 

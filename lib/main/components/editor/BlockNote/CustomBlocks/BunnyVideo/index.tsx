@@ -32,7 +32,6 @@ const bunnyVideoBlockConfig: CustomBlockConfig = {
 export const BunnyVideo = createReactBlockSpec(bunnyVideoBlockConfig, {
 	render: (props) => {
 		// 取得 bunny 的 library_id
-		// @ts-ignore
 		const { bunny_library_id = '' } = useBunny()
 
 		const vId = props.block.props.vId
@@ -62,7 +61,6 @@ export const BunnyVideo = createReactBlockSpec(bunnyVideoBlockConfig, {
 	// ❗toExternalHTML 是例如，將區塊複製到剪貼簿到外部時，會複製的 內容，如果沒有定義就使用 render
 	toExternalHTML: (props) => {
 		// 取得 bunny 的 library_id
-		// @ts-ignore
 		const { bunny_library_id = '' } = useBunny()
 
 		const vId = props.block.props.vId

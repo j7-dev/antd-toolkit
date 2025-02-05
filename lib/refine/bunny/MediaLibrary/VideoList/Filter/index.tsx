@@ -7,7 +7,7 @@ import {
 	message,
 	ButtonProps,
 } from 'antd'
-import { TBunnyVideo, BunnyProvider } from '@/refine'
+import { TBunnyVideo, useBunny } from '@/refine'
 import { useDelete, useInvalidate } from '@refinedev/core'
 
 const { Search } = Input
@@ -32,7 +32,7 @@ const Filter = ({
 	loading?: boolean
 	selectButtonProps?: ButtonProps
 } & InputProps) => {
-	const { bunny_library_id } = BunnyProvider.useBunny()
+	const { bunny_library_id } = useBunny()
 	const [value, setValue] = useState('')
 	const [isLoading, setIsLoading] = useState(false)
 	const { mutate: deleteVideo } = useDelete()
