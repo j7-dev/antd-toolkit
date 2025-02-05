@@ -1,4 +1,6 @@
-import { atom } from 'jotai'
+import { atom, createStore } from 'jotai'
+
+export const envStore = createStore()
 
 export type TEnv = {
 	SITE_URL: string
@@ -17,7 +19,7 @@ export type TEnv = {
 	[key: string]: any
 }
 
-export const pluginAtom = atom<TEnv>({
+export const envAtom = atom<TEnv>({
 	SITE_URL: '',
 	AJAX_URL: '',
 	CURRENT_USER_ID: 0,

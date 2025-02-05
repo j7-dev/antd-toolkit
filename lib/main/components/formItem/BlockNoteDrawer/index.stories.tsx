@@ -1,7 +1,7 @@
 import React from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
 import { BlockNoteDrawer } from './index'
-import { PluginProvider } from '../../PluginProvider'
+import { EnvProvider } from '../../EnvProvider'
 import { Refine } from '@refinedev/core'
 import {
 	bunnyStreamDataProvider,
@@ -60,7 +60,7 @@ export const General: Story = {
 			})
 
 			return (
-				<PluginProvider app_domain="test">
+				<EnvProvider app_domain="test">
 					<BunnyProvider {...BUNNY_CONFIG}>
 						<Refine
 							dataProvider={{
@@ -80,7 +80,7 @@ export const General: Story = {
 							</div>
 						</Refine>
 					</BunnyProvider>
-				</PluginProvider>
+				</EnvProvider>
 			)
 		},
 	],

@@ -15,7 +15,7 @@ export * from '@/main/components/SimpleImage'
 export * from '@/main/components/Heading'
 export * from '@/main/components/formItem'
 export * from '@/main/components/editor'
-export * from '@/main/components/PluginProvider'
+export * from '@/main/components/EnvProvider'
 export * from '@/main/components/SecondToStr'
 export * from '@/main/components/PopconfirmDelete'
 

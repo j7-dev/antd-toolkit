@@ -6,7 +6,7 @@ import {
 	BaseRecord,
 } from '@refinedev/core'
 import { FormInstance } from 'antd'
-import { usePlugin } from '@/main'
+import { useEnv } from '@/main'
 
 /**
  * API 回應的基本型別定義
@@ -62,7 +62,7 @@ export const useOptions = <
 	form,
 	useCustomParams,
 }: TUseOptionsParams<TQueryFnData, TError, TQuery, TPayload, TData>) => {
-	const { SITE_URL } = usePlugin()
+	const { SITE_URL } = useEnv()
 
 	// 使用 useCustom hook 發送請求
 	const result = useCustom<TQueryFnData, TError, TQuery, TPayload, TData>({

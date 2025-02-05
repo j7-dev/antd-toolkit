@@ -8,7 +8,7 @@ import {
 } from '@refinedev/core'
 import { FormInstance, message } from 'antd'
 import { useCallback } from 'react'
-import { usePlugin } from '@/main'
+import { useEnv } from '@/main'
 
 type TUseSaveParams = {
 	/** Antd Form 實例 */
@@ -32,7 +32,7 @@ type TUseSaveReturn = {
 export const useSave = ({ form }: TUseSaveParams): TUseSaveReturn => {
 	const apiUrl = useApiUrl()
 	const mutation = useCustomMutation()
-	const { SITE_URL } = usePlugin()
+	const { SITE_URL } = useEnv()
 	const { mutate } = mutation
 
 	const handleSave = useCallback(() => {

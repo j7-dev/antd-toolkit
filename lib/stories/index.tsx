@@ -2,7 +2,7 @@ import { HashRouter } from 'react-router-dom'
 import { Refine } from '@refinedev/core'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { StyleProvider } from '@ant-design/cssinjs'
-import { PluginProvider } from '@/main'
+import { EnvProvider } from '@/main'
 import { BunnyProvider, bunnyStreamDataProvider, dataProvider } from '@/refine'
 import axios from 'axios'
 import { useEffect } from 'react'
@@ -53,7 +53,7 @@ export const refineDecorator = (Story: any) => {
 		<QueryClientProvider client={queryClient}>
 			<StyleProvider hashPriority="low">
 				<HashRouter>
-					<PluginProvider app_domain="my_plugin_data">
+					<EnvProvider app_domain="my_plugin_data">
 						<BunnyProvider {...BUNNY_CONFIG}>
 							<Refine
 								dataProvider={{
@@ -71,7 +71,7 @@ export const refineDecorator = (Story: any) => {
 								</div>
 							</Refine>
 						</BunnyProvider>
-					</PluginProvider>
+					</EnvProvider>
 				</HashRouter>
 			</StyleProvider>
 		</QueryClientProvider>

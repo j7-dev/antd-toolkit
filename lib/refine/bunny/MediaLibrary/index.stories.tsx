@@ -8,7 +8,7 @@ import { BunnyProvider } from '../BunnyProvider'
 import { HashRouter } from 'react-router-dom'
 import axios from 'axios'
 import { MediaLibraryIndicator } from '../MediaLibraryIndicator'
-import { PluginProvider } from '../../../main/components/PluginProvider'
+import { EnvProvider } from '../../../main/components/EnvProvider'
 import { refineDecorator } from '../../../stories'
 
 const meta: Meta<typeof MediaLibrary> & {

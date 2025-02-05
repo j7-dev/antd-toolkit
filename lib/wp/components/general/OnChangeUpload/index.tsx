@@ -3,7 +3,7 @@ import ImgCrop from 'antd-img-crop'
 import { Upload, UploadProps, Form, Input, UploadFile } from 'antd'
 import { useApiUrl } from '@refinedev/core'
 import { InboxOutlined, DeleteOutlined } from '@ant-design/icons'
-import { usePlugin } from '@/main/components/PluginProvider'
+import { useEnv } from '@/main/components/EnvProvider'
 
 const { Item } = Form
 
@@ -14,7 +14,7 @@ const { Dragger } = Upload
  */
 
 export const OnChangeUpload = () => {
-	const { NONCE } = usePlugin()
+	const { NONCE } = useEnv()
 	const [fileList, setFileList] = useState<UploadFile[]>([])
 	const form = Form.useFormInstance()
 	const watchId = Form.useWatch(['id'], form)
