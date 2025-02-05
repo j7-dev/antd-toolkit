@@ -1,6 +1,6 @@
 import React, { memo } from 'react'
 import { cn } from '@/main/utils'
-import { PluginProvider } from '@/main'
+import { usePlugin } from '@/main'
 
 type TBackToWpAdminProps = {
 	iconClassName?: string
@@ -13,7 +13,7 @@ const BackToWpAdminComponent = ({
 	collapsed = false,
 	href = '',
 }: TBackToWpAdminProps) => {
-	const { SITE_URL = '' } = PluginProvider.usePlugin()
+	const { SITE_URL = '' } = usePlugin()
 	return (
 		<a
 			href={href ? href : `${SITE_URL}/wp-admin/`}

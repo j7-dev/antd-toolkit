@@ -1,4 +1,4 @@
-import { atom, createStore } from 'jotai'
+import { atom } from 'jotai'
 
 export type TEnv = {
 	SITE_URL: string
