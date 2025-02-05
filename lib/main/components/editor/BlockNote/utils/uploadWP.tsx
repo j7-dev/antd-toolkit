@@ -22,7 +22,7 @@ export const uploadWP =
 		const { apiEndpoint, headers } = apiConfig
 		const formData = new FormData()
 		formData.append('files', file)
-		formData.append('upload_only', '1')
+		// formData.append('upload_only', '0')
 
 		try {
 			const call = await fetch(apiEndpoint, {
