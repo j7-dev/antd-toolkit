@@ -66,7 +66,7 @@ export const useOptions = <
 
 	// 使用 useCustom hook 發送請求
 	const result = useCustom<TQueryFnData, TError, TQuery, TPayload, TData>({
-		url: `${SITE_URL}/wp-json/powerhouse/v2/options`, // 預設 API 路徑
+		url: `${SITE_URL}/wp-json/v2/powerhouse/options`, // 預設 API 路徑
 		method: 'get',
 		...useCustomParams,
 	})

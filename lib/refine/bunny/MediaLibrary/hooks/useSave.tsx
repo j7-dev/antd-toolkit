@@ -47,7 +47,7 @@ export const useSave = ({ form }: TUseSaveParams): TUseSaveReturn => {
 		form.validateFields().then((values) => {
 			mutate(
 				{
-					url: `${SITE_URL}/wp-json/powerhouse/v2/options`, // 預設 API 路徑
+					url: `${SITE_URL}/wp-json/v2/powerhouse/options`, // 預設 API 路徑
 					method: 'post',
 					values,
 				},
