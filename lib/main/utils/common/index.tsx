@@ -171,8 +171,7 @@ export function getFileExtension(url: string) {
 /**
  * 簡單解密
  */
-export function simpleDecrypt(str: string | undefined): string {
-	if (!str) return ''
+export function simpleDecrypt(str: string): any {
 	// 反向位移
 	let decoded = ''
 	for (let i = 0; i < str.length; i++) {
@@ -180,5 +179,11 @@ export function simpleDecrypt(str: string | undefined): string {
 	}
 
 	// base64 解碼
-	return atob(decoded)
+	const jsonStr = atob(decoded)
+	try {
+		return JSON.parse(jsonStr)
+	} catch (error) {
+		console.error('JSON.parse env 參數解析失敗:', error)
+		return null
+	}
 }
