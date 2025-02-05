@@ -7,7 +7,7 @@
 
 import { DataProvider } from '@refinedev/core'
 import { generateSort, generateFilter } from '../utils'
-import { AxiosInstance, AxiosResponse } from 'axios'
+import axios, { AxiosInstance, AxiosResponse } from 'axios'
 import queryString from 'query-string'
 import { THttpMethods, THttpMethodsWithBody } from '@/main/types'
 import { TGetVideosResponse } from '@/refine'
@@ -17,7 +17,7 @@ const { stringify } = queryString
 
 export const bunnyStreamDataProvider = (
 	apiUrl: string,
-	httpClient: AxiosInstance = bunnyStreamAxios,
+	httpClient: AxiosInstance = axios,
 ): Omit<
 	Required<DataProvider>,
 	'createMany' | 'updateMany' | 'deleteMany'
