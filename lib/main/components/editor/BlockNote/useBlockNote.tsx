@@ -56,7 +56,7 @@ export const schema = BlockNoteSchema.create({
 })
 
 export const useBlockNote = ({
-	editor,
+	editor: overrideEditor,
 	options,
 	deps = [],
 	apiConfig,
@@ -71,6 +71,8 @@ export const useBlockNote = ({
 		deps,
 	)
 
+	const editor = overrideEditor ? overrideEditor : defaultEditor
+
 	const [blocks, setBlocks] = useState<Block[]>([])
 	const [html, setHTML] = useState<string>('')
 
@@ -79,7 +81,7 @@ export const useBlockNote = ({
 		DefaultInlineContentSchema,
 		DefaultStyleSchema
 	> = {
-		editor: editor ? editor : defaultEditor,
+		editor,
 		onChange: async () => {
 			// Saves the document JSON to state.
 			setBlocks(editor.document as Block[])
