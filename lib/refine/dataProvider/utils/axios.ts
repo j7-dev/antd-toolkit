@@ -1,10 +1,8 @@
 import { HttpError } from '@refinedev/core'
 import axios, { AxiosInstance } from 'axios'
-import { getDefaultStore } from 'jotai';
-import {pluginAtom } from '@/main'
+import { pluginAtom, pluginStore } from '@/main'
 
-const defaultStore = getDefaultStore();
-const { NONCE } = defaultStore.get(pluginAtom)
+const { NONCE } = pluginStore.get(pluginAtom)
 const axiosInstance: AxiosInstance = axios.create({
 	timeout: 30000,
 	headers: {
