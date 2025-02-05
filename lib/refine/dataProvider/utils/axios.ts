@@ -1,13 +1,11 @@
 import { HttpError } from '@refinedev/core'
 import axios, { AxiosInstance } from 'axios'
-import { pluginAtom, pluginStore } from '@/main'
 
-const { NONCE } = pluginStore.get(pluginAtom)
 const axiosInstance: AxiosInstance = axios.create({
 	timeout: 30000,
 	headers: {
 		// @ts-ignore
-		'X-WP-Nonce': NONCE || '',
+		'X-WP-Nonce': '',
 		'Content-Type': 'application/json',
 	},
 })

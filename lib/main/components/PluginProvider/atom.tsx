@@ -17,8 +17,6 @@ export type TEnv = {
 	[key: string]: any
 }
 
-export const pluginStore = createStore()
-
 export const pluginAtom = atom<TEnv>({
 	SITE_URL: '',
 	AJAX_URL: '',

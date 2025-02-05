@@ -1,6 +1,6 @@
 import React, { FC, useLayoutEffect } from 'react'
-import { Provider } from 'jotai'
-import { pluginStore, pluginAtom, TEnv } from './atom'
+import { useSetAtom } from 'jotai'
+import { pluginAtom, TEnv } from './atom'
 import { usePlugin } from './hooks'
 
 const PluginProviderComponent: FC<{
@@ -9,10 +9,11 @@ const PluginProviderComponent: FC<{
 }> & {
 	usePlugin: typeof usePlugin
 } = ({ children, env }) => {
+	const setPluginAtom = useSetAtom(pluginAtom)
 	useLayoutEffect(() => {
-		pluginStore.set(pluginAtom, env)
+		setPluginAtom(env)
 	}, [env])
-	return <Provider store={pluginStore}>{children}</Provider>
+	return <>{children}</>
 }
 
 PluginProviderComponent.usePlugin = usePlugin
