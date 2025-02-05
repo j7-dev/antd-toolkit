@@ -1,20 +1,22 @@
 import React, { memo } from 'react'
 import { cn } from '@/main/utils'
+import { PluginProvider } from '@/main'
 
 type TBackToWpAdminProps = {
 	iconClassName?: string
 	collapsed: boolean
-	siteUrl: string
+	href?: string
 }
 
 const BackToWpAdminComponent = ({
 	iconClassName = '',
 	collapsed = false,
-	siteUrl,
+	href = '',
 }: TBackToWpAdminProps) => {
+	const { SITE_URL = '' } = PluginProvider.usePlugin()
 	return (
 		<a
-			href={`${siteUrl}/wp-admin/`}
+			href={href ? href : `${SITE_URL}/wp-admin/`}
 			className="hover:opacity-75 transition duration-300"
 		>
 			<div className="flex gap-4 items-center">
