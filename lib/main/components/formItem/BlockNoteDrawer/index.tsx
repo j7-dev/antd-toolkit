@@ -21,12 +21,16 @@ type TBlockNoteDrawerProps = {
 	formItemProps?: FormItemProps
 	dropdownButtonProps?: DropdownButtonProps
 	useBlockNoteParams: TUseBlockNoteParams
+	renderBefore?: React.ReactNode
+	renderAfter?: React.ReactNode
 }
 
 const BlockNoteDrawerComponent: FC<TBlockNoteDrawerProps> = ({
 	formItemProps = { name: ['description'], label: '' },
 	dropdownButtonProps,
 	useBlockNoteParams,
+	renderBefore,
+	renderAfter,
 }) => {
 	const { name, label } = formItemProps
 	const { SITE_URL = '' } = useEnv()
@@ -124,25 +128,9 @@ const BlockNoteDrawerComponent: FC<TBlockNoteDrawerProps> = ({
 					</div>
 				}
 			>
-				<Alert
-					className="mb-4"
-					message="注意事項"
-					description={
-						<ol className="pl-4">
-							<li>
-								確認變更只是確認內文有沒有變更，您還是需要儲存才會存進
-								{label}
-							</li>
-							<li>可以使用 WordPress shortcode</li>
-							<li>圖片在前台顯示皆為 100% ，縮小圖片並不影響前台顯示</li>
-							<li>未來有新功能持續擴充</li>
-						</ol>
-					}
-					type="warning"
-					showIcon
-					closable
-				/>
+				{renderBefore ? renderBefore : null}
 				<BlockNote {...blockNoteViewProps} />
+				{renderAfter ? renderAfter : null}
 			</Drawer>
 		</div>
 	)
