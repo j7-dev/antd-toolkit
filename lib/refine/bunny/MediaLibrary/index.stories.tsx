@@ -1,14 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
 import { MediaLibrary } from './index'
 import { TBunnyVideo } from '../types'
-import { Refine } from '@refinedev/core'
-import { bunnyStreamDataProvider, dataProvider } from '../../dataProvider'
-import { BunnyProvider } from '../BunnyProvider'
-import { HashRouter } from 'react-router-dom'
-import axios from 'axios'
 import { MediaLibraryIndicator } from '../MediaLibraryIndicator'
-import { EnvProvider } from '../../../main/components/EnvProvider'
 import { refineDecorator } from '../../../stories'
 
 const meta: Meta<typeof MediaLibrary> & {

@@ -9,11 +9,14 @@ type TBunnyContext = {
 	bunny_library_id: string
 	bunny_stream_api_key: string
 	bunny_cdn_hostname: string
-	bunny_stream_axios: AxiosInstance
-	bunny_data_provider_result: any
 }
 
-export const BunnyContext = createContext<TBunnyContext>({
+export const BunnyContext = createContext<
+	TBunnyContext & {
+		bunny_stream_axios: AxiosInstance
+		bunny_data_provider_result: any
+	}
+>({
 	bunny_library_id: '',
 	bunny_stream_api_key: '',
 	bunny_cdn_hostname: '',

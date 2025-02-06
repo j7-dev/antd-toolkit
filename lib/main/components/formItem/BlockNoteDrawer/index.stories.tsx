@@ -1,16 +1,7 @@
 import React from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
 import { BlockNoteDrawer } from './index'
-import { EnvProvider } from '../../EnvProvider'
-import { Refine } from '@refinedev/core'
-import {
-	bunnyStreamDataProvider,
-	dataProvider,
-} from '../../../../refine/dataProvider'
-import { BunnyProvider } from '../../../../refine/bunny'
-import axios from 'axios'
-import { BUNNY_CONFIG, ENV } from '../../../../stories'
-import { Form } from 'antd'
+import { refineDecorator, ENV } from '../../../../stories'
 
 const meta: Meta<typeof BlockNoteDrawer> & {
 	argTypes: any
@@ -49,39 +40,5 @@ export const General: Story = {
 			},
 		},
 	},
-
-	decorators: [
-		(Story) => {
-			const bunnyStreamAxios = axios.create({
-				baseURL: ENV.BUNNY_API,
-				headers: {
-					AccessKey: BUNNY_CONFIG.bunny_stream_api_key,
-				},
-			})
-
-			return (
-				<EnvProvider app_domain="test">
-					<BunnyProvider {...BUNNY_CONFIG}>
-						<Refine
-							dataProvider={{
-								default: dataProvider(
-									'https://www.example.com/wp-json/my-plugin',
-								),
-								'bunny-stream': bunnyStreamDataProvider(
-									'https://video.bunnycdn.com/library',
-									bunnyStreamAxios,
-								),
-							}}
-						>
-							<div className="w-[40rem]">
-								<Form>
-									<Story />
-								</Form>
-							</div>
-						</Refine>
-					</BunnyProvider>
-				</EnvProvider>
-			)
-		},
-	],
+	decorators: [refineDecorator],
 }

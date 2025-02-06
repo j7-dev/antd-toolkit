@@ -6,9 +6,22 @@ import { EnvProvider } from '@/main'
 import { BunnyProvider, bunnyStreamDataProvider, dataProvider } from '@/refine'
 import axios from 'axios'
 import { useEffect } from 'react'
+import { Form } from 'antd'
+
+const { Item } = Form
 
 // StoryBook 用的環境變數
 export const ENV = {
+	SITE_URL: 'https://www.example.com',
+	AJAX_URL: 'https://www.example.com/wp-json/my-plugin',
+	CURRENT_USER_ID: 1,
+	CURRENT_POST_ID: '1',
+	PERMALINK: 'https://www.example.com/post/1',
+	APP_NAME: 'my_plugin',
+	KEBAB: 'my-plugin',
+	SNAKE: 'my_plugin',
+	NONCE: '1234567890',
+	//----
 	UPLOAD_API: 'http://test.local/wp-json/power-course/upload',
 	BUNNY_API: 'https://video.bunnycdn.com/library',
 	USERNAME: 'j7',
@@ -53,7 +66,7 @@ export const refineDecorator = (Story: any) => {
 		<QueryClientProvider client={queryClient}>
 			<StyleProvider hashPriority="low">
 				<HashRouter>
-					<EnvProvider app_domain="my_plugin_data">
+					<EnvProvider env={ENV}>
 						<BunnyProvider {...BUNNY_CONFIG}>
 							<Refine
 								dataProvider={{
@@ -67,7 +80,10 @@ export const refineDecorator = (Story: any) => {
 								}}
 							>
 								<div className="w-[900px]">
-									<Story />
+									<Form>
+										<Story />
+										<Item name={['id']} initialValue={1} />
+									</Form>
 								</div>
 							</Refine>
 						</BunnyProvider>

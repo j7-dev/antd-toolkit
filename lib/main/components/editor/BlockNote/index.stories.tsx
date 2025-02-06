@@ -1,15 +1,7 @@
 import React, { useEffect } from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
 import { BlockNote, useBlockNote } from './index'
-import { Refine } from '@refinedev/core'
-import {
-	bunnyStreamDataProvider,
-	dataProvider,
-} from '../../../../refine/dataProvider'
-import { BunnyProvider } from '../../../../refine/bunny'
-import axios from 'axios'
-import { BUNNY_CONFIG, ENV } from '../../../../stories'
-import { Form } from 'antd'
+import { refineDecorator, ENV } from '../../../../stories'
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 
@@ -233,36 +225,5 @@ export const General: Story = {
 	name: '一般用法',
 	args: {},
 	render: () => <BlockNoteWithHooks />,
-	decorators: [
-		(Story) => {
-			const bunnyStreamAxios = axios.create({
-				baseURL: ENV.BUNNY_API,
-				headers: {
-					AccessKey: BUNNY_CONFIG.bunny_stream_api_key,
-				},
-			})
-
-			return (
-				<BunnyProvider {...BUNNY_CONFIG}>
-					<Refine
-						dataProvider={{
-							default: dataProvider(
-								'https://www.example.com/wp-json/my-plugin',
-							),
-							'bunny-stream': bunnyStreamDataProvider(
-								'https://video.bunnycdn.com/library',
-								bunnyStreamAxios,
-							),
-						}}
-					>
-						<div className="w-[40rem]">
-							<Form>
-								<Story />
-							</Form>
-						</div>
-					</Refine>
-				</BunnyProvider>
-			)
-		},
-	],
+	decorators: [refineDecorator],
 }

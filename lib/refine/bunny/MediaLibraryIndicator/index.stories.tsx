@@ -1,10 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
 import { MediaLibraryIndicator } from './index'
-import { Refine } from '@refinedev/core'
-import { bunnyStreamDataProvider, dataProvider } from '../../dataProvider'
-import { BunnyProvider } from '../BunnyProvider'
-import axios from 'axios'
 import { refineDecorator } from '../../../stories'
 
 const meta: Meta<typeof MediaLibraryIndicator> & {
