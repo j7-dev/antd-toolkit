@@ -36,9 +36,6 @@ const config: UserConfig = {
       external: [
         'react',
         'react/jsx-runtime',
-				"@blocknote/core",
-        '@blocknote/mantine',
-        '@blocknote/react',
         '@refinedev/antd',
         '@refinedev/core',
         'antd',
