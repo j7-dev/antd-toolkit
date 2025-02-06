@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import ImgCrop, { ImgCropProps } from 'antd-img-crop'
 import {
 	Upload,
@@ -12,7 +12,8 @@ import { InboxOutlined, DeleteOutlined } from '@ant-design/icons'
 
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0]
 type TFileUploadProps = {
-	formItemProps?: FormItemProps
+	formItemProps?: FormItemProps // 前端傳給後端的 欄位名稱
+	formItemPropsPreview?: FormItemProps // 後端傳給前端的 欄位名稱
 	aspect?: number
 	uploadProps?: UploadProps
 	imgCropProps?: ImgCropProps
@@ -35,6 +36,7 @@ const getBase64 = (img: FileType, callback: (url: string) => void) => {
  */
 export const FileUpload = ({
 	formItemProps = { name: ['files'] },
+	formItemPropsPreview = { name: ['images'] },
 	aspect = 1,
 	uploadProps,
 	imgCropProps,
@@ -42,6 +44,7 @@ export const FileUpload = ({
 	const [fileList, setFileList] = useState<UploadFile[]>([])
 	const form = Form.useFormInstance()
 	const fieldName = formItemProps?.name || ['files']
+	const watchId = Form.useWatch(['id'], form)
 
 	const beforeUpload = (file: FileType) => {
 		form.setFieldValue(fieldName, file)
@@ -61,9 +64,27 @@ export const FileUpload = ({
 		setFileList([])
 	}
 
+	useEffect(() => {
+		// 後端傳給前端資料時的欄位名稱 & 顯示預覽圖
+		if (watchId) {
+			const images = form.getFieldValue(formItemPropsPreview.name)
+			if (images?.length && Array.isArray(images)) {
+				setFileList([
+					{
+						uid: '-1',
+						name: 'feature_image_url.png',
+						status: 'done',
+						url: images[0]?.url,
+					},
+				])
+			}
+		}
+	}, [watchId])
+
 	return (
 		<div className="flex justify-center w-full mb-4">
 			<Item hidden {...formItemProps} />
+			<Item hidden initialValue={[]} {...formItemPropsPreview} />
 			<ImgCrop
 				aspect={aspect}
 				quality={1}
