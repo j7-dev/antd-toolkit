@@ -28,7 +28,13 @@ const MediaLibraryButton = (props: TMediaLibraryButton) => {
 
 	useEffect(() => {
 		const timer = setTimeout(() => {
+			console.log('⭐  confirmedSelectedVId:', {
+				confirmedSelectedVId,
+				key,
+				blockId,
+			})
 			if (confirmedSelectedVId && key === blockId) {
+				console.log('⭐  updateBlock')
 				props.editor.updateBlock(props.block, {
 					type: 'bunnyAudio',
 					props: { vId: confirmedSelectedVId as any },

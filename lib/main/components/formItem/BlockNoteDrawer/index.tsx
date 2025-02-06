@@ -1,4 +1,4 @@
-import { FC, useEffect, Suspense, memo } from 'react'
+import { FC, useEffect, memo } from 'react'
 import {
 	Button,
 	Form,
@@ -10,7 +10,6 @@ import {
 	FormItemProps,
 } from 'antd'
 import { DropdownButtonProps } from 'antd/es/dropdown/dropdown-button'
-import { LoadingOutlined } from '@ant-design/icons'
 import { useBlockNoteDrawer } from './useBlockNoteDrawer'
 import { useBlockNote } from '@/main'
 import { TUseBlockNoteParams } from '@/main/components/editor/BlockNote/types'
@@ -40,6 +39,8 @@ const BlockNoteDrawerComponent: FC<TBlockNoteDrawerProps> = ({
 
 	const handleConfirm = () => {
 		form.setFieldValue(name, html)
+		// TEST
+		console.log('⭐ handleConfirm setFieldValue:', html)
 		close()
 	}
 
@@ -141,15 +142,7 @@ const BlockNoteDrawerComponent: FC<TBlockNoteDrawerProps> = ({
 					showIcon
 					closable
 				/>
-				<Suspense
-					fallback={
-						<Button type="text" icon={<LoadingOutlined />}>
-							Loading...
-						</Button>
-					}
-				>
-					<BlockNote {...blockNoteViewProps} />
-				</Suspense>
+				<BlockNote {...blockNoteViewProps} />
 			</Drawer>
 		</div>
 	)
