@@ -35,12 +35,12 @@
 		"publish:npm": "yarn build && yarn publish && git push"
 	},
 	"dependencies": {
-		"@blocknote/core": "^0.17.1",
-		"@blocknote/mantine": "^0.17.1",
-		"@blocknote/react": "^0.17.1",
+		"@blocknote/core": "^0.23.1",
+		"@blocknote/mantine": "^0.23.1",
+		"@blocknote/react": "^0.23.1",
 		"@refinedev/antd": "^5.43.1",
 		"@refinedev/core": "^4.55.0",
-		"antd": "^5.23.1",
+		"antd": "^5.23.4",
 		"antd-img-crop": "^4.23.0",
 		"axios": "^1.7.7",
 		"canvas-confetti": "^1.9.3",
@@ -51,7 +51,7 @@
 		"nanoid": "^5.0.8",
 		"query-string": "^9.1.1",
 		"react-countdown": "^2.3.6",
-		"react-highlight-words": "^0.20.0",
+		"react-highlight-words": "^0.21.0",
 		"storybook": "^8.1.11",
 		"tailwind-merge": "^2.5.4"
 	},
