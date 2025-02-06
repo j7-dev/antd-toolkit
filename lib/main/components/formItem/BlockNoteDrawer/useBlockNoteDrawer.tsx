@@ -25,7 +25,7 @@ export function useBlockNoteDrawer(props?: TUseBlockNoteDrawerParams) {
 
 	const mergedDrawerProps: DrawerProps = {
 		title: '編輯內容',
-		forceRender: true, // 如果不 forceRender storynbook 會噴錯，可能跟 BlockNote lazy load 有關
+		forceRender: false, // 如果不 forceRender storybook 會噴錯，可能跟 BlockNote lazy load 有關
 		placement: 'left',
 		onClose: close,
 		open,
