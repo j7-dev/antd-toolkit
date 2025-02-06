@@ -4,7 +4,6 @@ import {
 	Form,
 	Drawer,
 	Input,
-	Alert,
 	Dropdown,
 	Tooltip,
 	FormItemProps,
@@ -49,7 +48,8 @@ const BlockNoteDrawerComponent: FC<TBlockNoteDrawerProps> = ({
 	}
 
 	useEffect(() => {
-		if (watchId && open) {
+		console.log('⭐  form:', form)
+		if (watchId && open && form) {
 			const description = form.getFieldValue(name)
 
 			async function loadInitialHTML() {
@@ -63,7 +63,7 @@ const BlockNoteDrawerComponent: FC<TBlockNoteDrawerProps> = ({
 			setHTML('')
 			editor.removeBlocks(editor.document)
 		}
-	}, [watchId, open])
+	}, [watchId, open, form])
 
 	const parsedDropdownButtonProps: DropdownButtonProps = {
 		trigger: ['click'],
