@@ -7,14 +7,15 @@ import { schema } from './useBlockNote'
 import './index.scss'
 import { Button } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
+import { BlockNoteView } from '@blocknote/mantine'
 
 export * from './useBlockNote'
 
-const BlockNoteView = lazy(() =>
-	import('@blocknote/mantine').then((module) => ({
-		default: module.BlockNoteView,
-	})),
-)
+// const BlockNoteView = lazy(() =>
+// 	import('@blocknote/mantine').then((module) => ({
+// 		default: module.BlockNoteView,
+// 	})),
+// )
 
 /**
  * TODO
@@ -27,15 +28,16 @@ export const BlockNote: FC<
 		DefaultStyleSchema
 	>
 > = (blockNoteViewProps) => {
-	return (
-		<Suspense
-			fallback={
-				<Button type="text" icon={<LoadingOutlined />}>
-					Loading...
-				</Button>
-			}
-		>
-			<BlockNoteView {...blockNoteViewProps} />
-		</Suspense>
-	)
+	return <BlockNoteView {...blockNoteViewProps} />
+	// return (
+	// 	<Suspense
+	// 		fallback={
+	// 			<Button type="text" icon={<LoadingOutlined />}>
+	// 				Loading...
+	// 			</Button>
+	// 		}
+	// 	>
+	// 		<BlockNoteView {...blockNoteViewProps} />
+	// 	</Suspense>
+	// )
 }

@@ -14,7 +14,7 @@ export type TApiConfig = {
 }
 
 export type TUseBlockNoteParams = {
-	editor: BlockNoteEditor<BlockSchemaFromSpecs<any>>
+	editor?: BlockNoteEditor<BlockSchemaFromSpecs<any>>
 	options?: BlockNoteEditorOptions<
 		typeof schema.blockSchema,
 		DefaultInlineContentSchema,
