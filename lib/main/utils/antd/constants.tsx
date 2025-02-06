@@ -1,17 +1,18 @@
 import { SelectProps, RadioGroupProps, TableProps } from 'antd'
 
 export const defaultSelectProps: SelectProps = {
+	placeholder: '搜尋',
 	className: 'w-full',
+	allowClear: true,
+	showSearch: true,
 	mode: 'multiple',
 	optionRender: ({ value, label }) => {
 		return (
 			<span>
-				<sub className="text-gray-500">#{value}</sub> {label}
+				{label} <span className="text-gray-400 text-xs">#{value}</span>
 			</span>
 		)
 	},
-	allowClear: true,
-	showSearch: true,
 	optionFilterProp: 'label',
 }
 
