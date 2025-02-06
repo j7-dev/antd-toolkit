@@ -7,6 +7,7 @@ import {
 	Dropdown,
 	Tooltip,
 	FormItemProps,
+	FormInstance,
 } from 'antd'
 import { DropdownButtonProps } from 'antd/es/dropdown/dropdown-button'
 import { useBlockNoteDrawer } from './useBlockNoteDrawer'
@@ -17,6 +18,7 @@ import { useEnv, BlockNote } from '@/main'
 const { Item } = Form
 
 type TBlockNoteDrawerProps = {
+	// form: FormInstance
 	formItemProps?: FormItemProps
 	dropdownButtonProps?: DropdownButtonProps
 	useBlockNoteParams: TUseBlockNoteParams
@@ -25,6 +27,7 @@ type TBlockNoteDrawerProps = {
 }
 
 const BlockNoteDrawerComponent: FC<TBlockNoteDrawerProps> = ({
+	// form,
 	formItemProps = { name: ['description'], label: '' },
 	dropdownButtonProps,
 	useBlockNoteParams,
