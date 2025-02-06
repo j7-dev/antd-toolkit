@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useSelect } from '@refinedev/antd'
 import { SelectProps } from 'antd'
 import { BaseRecord, UseSelectProps, HttpError } from '@refinedev/core'
-import { defaultSelectProps } from 'antd-toolkit'
+import { defaultSelectProps } from '@/main'
 
 type TUseItemSelectParams<T extends BaseRecord> = {
 	selectProps?: SelectProps
