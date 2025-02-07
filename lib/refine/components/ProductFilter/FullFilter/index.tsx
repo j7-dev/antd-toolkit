@@ -167,7 +167,7 @@ const FullFilter: FC<{
 						<Input placeholder="模糊搜尋" allowClear />
 					</Item>
 				</div>
-				<div className="at-grid at-grid-cols-2 at-xl:at-grid-cols-4 at-gap-x-4 at-mt-4">
+				<div className="at-grid at-grid-cols-2 xl:at-grid-cols-4 at-gap-x-4 at-mt-4">
 					<Button
 						htmlType="submit"
 						type="primary"

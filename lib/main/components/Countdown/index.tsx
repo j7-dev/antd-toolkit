@@ -13,7 +13,7 @@ const CountdownDigit: FC<{ countdownProps: CountdownRenderProps }> = ({
 
 	return (
 		<div
-			className="au_countdown at-grid at-gap-x-3 at-md:at-gap-x-8 at-gap-y-4"
+			className="au_countdown at-grid at-gap-x-3 md:at-gap-x-8 at-gap-y-4"
 			style={{
 				gridTemplateColumns: 'repeat(4, minmax(0, 1fr))',
 			}}
