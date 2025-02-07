@@ -50,7 +50,7 @@ export const FilterContext = createContext<TProductFilterOptions>(
 const ProductFilterComponent: FC<{
 	searchFormProps: FormProps
 	options: TProductFilterOptions
-	mobileWidth: number // 螢幕尺寸低於多少使用手機板
+	mobileWidth?: number // 螢幕尺寸低於多少使用手機板
 }> = ({ searchFormProps, options, mobileWidth = 810 }) => {
 	const { width = 1920 } = useWindowSize()
 	const isMobile = width ? width < mobileWidth : false
