@@ -1,5 +1,6 @@
-import { TProductType, TProductFilterProps } from '@/wp/types'
-import { CrudFilters } from '@refinedev/core'
+import { TProductType } from '@/wp/types'
+import { TProductFilterProps } from '@/refine'
+
 
 // 無庫存下單
 export const BACKORDERS = [
@@ -96,112 +97,6 @@ export const getIsVariation = (productType: TProductType) => {
   return ['variation', 'subscription_variation'].includes(productType)
 }
 
-export const getFilterLabels = <T>(
-	label = '商品',
-): {
-	[key in keyof T]: string
-} => ({
-	//@ts-ignore
-	s: '關鍵字',
-	sku: '貨號(sku)',
-	product_category_id: `${label}分類`,
-	product_tag_id: `${label}標籤`,
-	product_brand_id: '品牌',
-	status: `${label}狀態`,
-	featured: '精選商品',
-	downloadable: '可下載',
-	virtual: '虛擬商品',
-	sold_individually: '單獨販售',
-	backorders: '允許延期交貨',
-	stock_status: '庫存狀態',
-	date_created: `${label}發佈日期`,
-	is_course: '是否為課程商品',
-	price_range: '價格範圍',
-})
-
-
-export const onSearch = (
-	values: TProductFilterProps,
-): CrudFilters | Promise<CrudFilters> => {
-	return [
-		{
-			field: 's',
-			operator: 'eq',
-			value: values.s,
-		},
-		{
-			field: 'sku',
-			operator: 'eq',
-			value: values.sku,
-		},
-		{
-			field: 'product_category_id',
-			operator: 'in',
-			value: values.product_category_id,
-		},
-		{
-			field: 'product_tag_id',
-			operator: 'in',
-			value: values.product_tag_id,
-		},
-		{
-			field: 'product_brand_id',
-			operator: 'in',
-			value: values.product_brand_id,
-		},
-		{
-			field: 'status',
-			operator: 'in',
-			value: values.status,
-		},
-		{
-			field: 'featured',
-			operator: 'eq',
-			value: values.featured,
-		},
-		{
-			field: 'is_course',
-			operator: 'eq',
-			value: values.is_course,
-		},
-		{
-			field: 'downloadable',
-			operator: 'eq',
-			value: values.downloadable,
-		},
-		{
-			field: 'virtual',
-			operator: 'eq',
-			value: values.virtual,
-		},
-		{
-			field: 'sold_individually',
-			operator: 'eq',
-			value: values.sold_individually,
-		},
-		{
-			field: 'backorders',
-			operator: 'eq',
-			value: values.backorders,
-		},
-		{
-			field: 'stock_status',
-			operator: 'eq',
-			value: values.stock_status,
-		},
-		{
-			field: 'date_created',
-			operator: 'between',
-			value: values?.date_created,
-		},
-		{
-			field: 'price_range',
-			operator: 'eq',
-			value: values?.price_range,
-		},
-	]
-}
-
 /** Label 對應 */
 export const getProductFilterLabels = (
 	label = '商品',
@@ -221,10 +116,9 @@ export const getProductFilterLabels = (
 	backorders: '允許延期交貨',
 	stock_status: '庫存狀態',
 	date_created: `${label}發佈日期`,
-	is_course: '是否為課程商品',
 	price_range: '價格範圍',
 })
 
-export const productKeyLabelMapper = (key: keyof TProductFilterProps, label = '商品') => {
+export const productKeyLabelMapper = (key: keyof TProductFilterProps, label = '商品'):string => {
 	return getProductFilterLabels(label)?.[key] || key
 }

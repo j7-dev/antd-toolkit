@@ -36,6 +36,7 @@ const config: UserConfig = {
       external: [
         'react',
         'react/jsx-runtime',
+				'@uidotdev/usehooks',
         '@refinedev/antd',
         '@refinedev/core',
         'antd',
@@ -49,7 +50,11 @@ const config: UserConfig = {
         'query-string',
         'react-countdown',
         'react-highlight-words',
+				'react-icons',
 				'storybook',
+
+
+				// ---
         '@storybook/builder-manager@7.4.6',
         '@storybook/cli@7.4.6',
         '@storybook/codemod@7.4.6',

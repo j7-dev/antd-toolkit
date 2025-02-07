@@ -3,7 +3,6 @@ import {
 	PRODUCT_STOCK_STATUS,
 	BACKORDERS,
 } from '@/wp/utils'
-import { Dayjs } from 'dayjs'
 import { TTerm, TImage } from '@/wp/types'
 
 // 商品類型
@@ -15,24 +14,6 @@ export type TProductStockStatus = (typeof PRODUCT_STOCK_STATUS)[number]['value']
 // 商品允許缺貨
 export type TBackorders = (typeof BACKORDERS)[number]['value']
 
-
-export type TProductFilterProps = Partial<{
-	s: string
-	sku: string
-	product_category_id?: string[]
-	product_tag_id?: string[]
-	product_brand_id?: string[]
-	status: string
-	featured: boolean
-	downloadable: boolean
-	virtual: boolean
-	sold_individually: boolean
-	backorders: string
-	stock_status: string
-	date_created: [Dayjs, Dayjs]
-	is_course: boolean
-	price_range: [number, number]
-}>
 
 export type TProductAttribute = {
 	name: string
