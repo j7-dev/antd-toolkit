@@ -58,7 +58,7 @@ const FullFilter: FC<{
 				initialValues={initialFilteredValues}
 				className="antd-form-sm"
 			>
-				<div className="grid grid-cols-2 xl:grid-cols-4 gap-x-4">
+				<div className="at-grid at-grid-cols-2 xl:at-grid-cols-4 at-gap-x-4">
 					<Item name={['s']} label={productKeyLabelMapper('s')}>
 						<Input placeholder="模糊搜尋" allowClear />
 					</Item>

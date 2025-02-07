@@ -120,7 +120,7 @@ const MediaLibraryIndicatorComponent = () => {
 			</div>
 			<div
 				className={` at-mt-2 at-border-t at-border-gray-200 -at-mx-6 ${
-					isExpanded ? 'at-block' : 'at-tw-hidden'
+					isExpanded ? 'at-tw-block' : 'at-tw-hidden'
 				}`}
 			>
 				<Alert

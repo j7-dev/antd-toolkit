@@ -42,7 +42,7 @@ export const useColumnSearch = <
 			clearFilters,
 		}) => (
 			<div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
-				<div className="at-w-60 at-block">
+				<div className="at-w-60 at-tw-block">
 					<Input.Search
 						ref={searchInput}
 						placeholder={`Search ${dataIndex}`}
