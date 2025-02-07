@@ -34,7 +34,7 @@ export const General: Story = {
 	decorators: [
 		(Story) => (
 			<Form layout="vertical">
-				<div className="w-[20rem]">
+				<div className="at-w-[20rem]">
 					<Story />
 				</div>
 			</Form>

@@ -74,10 +74,10 @@ const Filter = ({
 	}
 
 	return (
-		<div className="pc-media-library__tabs__filter flex items-center justify-between sticky backdrop-blur-sm z-50 top-0 -mx-6 px-6 pb-4 mb-4">
+		<div className="pc-media-library__tabs__filter at-flex at-items-center at-justify-between at-sticky at-backdrop-blur-sm at-z-50 at-top-0 at--mx-6 at-px-6 at-pb-4 at-mb-4">
 			<Search
 				placeholder="搜尋關鍵字，按 ENTER 也能搜"
-				className="w-[20rem]"
+				className="at-w-[20rem]"
 				value={value}
 				onChange={(e) => setValue(e.target.value)}
 				allowClear
@@ -87,8 +87,8 @@ const Filter = ({
 				{...inputProps}
 			/>
 
-			<div className="flex items-center gap-2">
-				<p className="text-sm m-0 text-gray-500">
+			<div className="at-flex at-items-center at-gap-2">
+				<p className="at-text-sm at-m-0 at-text-gray-500">
 					已經選取 {selectedVideos?.length ?? 0} 個影片
 				</p>
 				<Popconfirm

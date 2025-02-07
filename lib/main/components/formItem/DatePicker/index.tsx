@@ -27,7 +27,7 @@ const DatePickerComponent: FC<{
 		>
 			<AntdDatePicker
 				placeholder="選擇日期"
-				className="w-full"
+				className="at-w-full"
 				showTime={{ defaultValue: dayjs() }}
 				format="YYYY-MM-DD HH:mm"
 				{...datePickerProps}

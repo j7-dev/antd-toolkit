@@ -97,7 +97,7 @@ const BlockNoteDrawerComponent: FC<TBlockNoteDrawerProps> = ({
 
 	return (
 		<div>
-			<p className="mb-2">編輯{label}</p>
+			<p className="at-mb-2">編輯{label}</p>
 			{!!parsedDropdownButtonProps?.menu?.items?.length ? (
 				<Dropdown.Button {...parsedDropdownButtonProps}>
 					使用 Power 編輯器
@@ -114,7 +114,7 @@ const BlockNoteDrawerComponent: FC<TBlockNoteDrawerProps> = ({
 			<Drawer
 				{...drawerProps}
 				extra={
-					<div className="flex gap-x-4">
+					<div className="at-flex at-gap-x-4">
 						<Button
 							type="default"
 							danger

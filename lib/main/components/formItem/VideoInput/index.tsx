@@ -33,11 +33,11 @@ const VideoInputComponent: FC<TVideoInputProps> = ({
 					...name,
 					'type',
 				]}
-				className="mb-1"
+				className="at-mb-1"
 				initialValue="none"
 			>
 				<Select
-					className="w-full"
+					className="at-w-full"
 					size="small"
 					onChange={handleChange}
 					options={[

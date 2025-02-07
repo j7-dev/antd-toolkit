@@ -62,7 +62,7 @@ const WatchLimitComponent: FC<{
 				{...formItemProps}
 			>
 				<Radio.Group
-					className="w-full w-avg"
+					className="at-w-full w-avg"
 					options={[
 						{ label: '無期限', value: 'unlimited' },
 						{ label: '固定天數', value: 'fixed' },
@@ -90,8 +90,8 @@ const WatchLimitComponent: FC<{
 			)}
 			{'fixed' === watchLimitType && (
 				<Space.Compact block>
-					<Item name={['limit_value']} initialValue={1} className="w-full">
-						<InputNumber className="w-full" min={1} />
+					<Item name={['limit_value']} initialValue={1} className="at-w-full">
+						<InputNumber className="at-w-full" min={1} />
 					</Item>
 					<Item name={['limit_unit']} initialValue="day">
 						<Select
@@ -100,7 +100,7 @@ const WatchLimitComponent: FC<{
 								{ label: '月', value: 'month' },
 								{ label: '年', value: 'year' },
 							]}
-							className="w-16"
+							className="at-w-16"
 						/>
 					</Item>
 				</Space.Compact>
@@ -127,10 +127,10 @@ const WatchLimitComponent: FC<{
 			{'follow_subscription' === watchLimitType && (
 				<>
 					<Alert
-						className="my-4"
+						className="at-my-4"
 						message="注意事項"
 						description={
-							<ol className="pl-4">
+							<ol className="at-pl-4">
 								<li>選擇跟隨訂閱，課程就必須是訂閱商品</li>
 								<li>
 									你也可以選擇不跟隨訂閱，讓課程維持簡單商品，使用銷售方案創建定期定額銷售方案，再去

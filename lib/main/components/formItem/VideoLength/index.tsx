@@ -42,7 +42,7 @@ const VideoLengthComponent: FC<FormItemProps> = (formItemProps) => {
 	return (
 		<>
 			{formItemProps?.label && (
-				<label className="mb-2">{formItemProps?.label}</label>
+				<label className="at-mb-2">{formItemProps?.label}</label>
 			)}
 			<Space.Compact block>
 				<InputNumber

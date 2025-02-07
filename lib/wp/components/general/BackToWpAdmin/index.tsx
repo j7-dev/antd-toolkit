@@ -17,12 +17,12 @@ const BackToWpAdminComponent = ({
 	return (
 		<a
 			href={href ? href : `${SITE_URL}/wp-admin/`}
-			className="hover:opacity-75 transition duration-300"
+			className="hover:at-opacity-75 at-transition at-duration-300"
 		>
-			<div className="flex gap-4 items-center">
+			<div className="at-flex at-gap-4 at-items-center">
 				<>
 					<svg
-						className={cn('w-6 h-6', iconClassName)}
+						className={cn('at-w-6 at-h-6', iconClassName)}
 						viewBox="0 0 24 24"
 						fill="none"
 						xmlns="http://www.w3.org/2000/svg"
@@ -39,7 +39,7 @@ const BackToWpAdminComponent = ({
 					</svg>
 				</>
 				{!collapsed && (
-					<span className="text-gray-600 font-light">回網站後台</span>
+					<span className="at-text-gray-600 at-font-light">回網站後台</span>
 				)}
 			</div>
 		</a>

@@ -4,7 +4,7 @@ import { FC } from 'react'
 export const SecondToStr: FC<{
 	className?: string
 	second: number
-}> = ({ className = 'text-gray-400 text-xs', second }) => {
+}> = ({ className = 'at-text-gray-400 at-text-xs', second }) => {
 	if (!second) return <div className={className}>-- 時 -- 分 -- 秒</div>
 
 	const hours = Math.floor(second / 60 / 60)

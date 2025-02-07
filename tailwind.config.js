@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-	important: '.tailwind',
+	prefix: 'at-',
 	corePlugins: {
 		preflight: false,
 	},

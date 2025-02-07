@@ -15,12 +15,12 @@ const HeadingComponent: FC<
 		return (
 			<Divider
 				orientation="left"
-				className="text-sm text-gray-500 my-8"
+				className="at-text-sm at-text-gray-500 at-my-8"
 				plain
 				orientationMargin="0"
 				{...rest}
 			>
-				<SendOutlined className="mr-2" /> {children}
+				<SendOutlined className="at-mr-2" /> {children}
 			</Divider>
 		)
 	}
@@ -29,7 +29,7 @@ const HeadingComponent: FC<
 		<Divider orientation="left" orientationMargin={0} plain {...rest}>
 			<Title
 				level={2}
-				className="font-bold text-lg pl-2"
+				className="at-font-bold at-text-lg at-pl-2"
 				style={{
 					borderLeft: '4px solid #60a5fa',
 					lineHeight: '1',

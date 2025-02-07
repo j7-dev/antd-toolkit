@@ -62,7 +62,7 @@ export const ObjectTable: React.FC<{
 					render: (arr: (string | number)[], rowRecord: any, _k: number) =>
 						editable && isEditing ? (
 							<Form.Item
-								className="m-0"
+								className="at-m-0"
 								name={[key]}
 								initialValue={rowRecord?.[key]}
 							>
@@ -85,7 +85,7 @@ export const ObjectTable: React.FC<{
 		}
 		return editable && isEditing ? (
 			<Form.Item
-				className="m-0"
+				className="at-m-0"
 				name={[dataIndex]}
 				initialValue={record?.[dataIndex]}
 			>
@@ -99,7 +99,7 @@ export const ObjectTable: React.FC<{
 	return (
 		<>
 			{editable && (
-				<div className="flex justify-end mb-4">
+				<div className="at-flex at-justify-end at-mb-4">
 					<ActionButton
 						onEdit={() => setIsEditing(true)}
 						onCancel={() => setIsEditing(false)}
@@ -107,7 +107,7 @@ export const ObjectTable: React.FC<{
 				</div>
 			)}
 
-			<table className="table table-vertical mb-4">
+			<table className="table table-vertical at-mb-4">
 				<tbody>
 					{(columns ? columns : defaultColumns).map((column, i) => {
 						return (

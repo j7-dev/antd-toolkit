@@ -58,7 +58,7 @@ const UserAvatarUploadComponent = ({
 	}, [watchId])
 
 	return (
-		<div className="flex justify-center w-full mb-4">
+		<div className="at-flex at-justify-center at-w-full at-mb-4">
 			<ImgCrop
 				quality={1}
 				rotationSlider
@@ -89,7 +89,7 @@ const UserAvatarUploadComponent = ({
 					// beforeUpload={beforeUpload}
 				>
 					{fileList.length < 1 && (
-						<p className="text-xs">
+						<p className="at-text-xs">
 							建議尺寸
 							<br />
 							400x400

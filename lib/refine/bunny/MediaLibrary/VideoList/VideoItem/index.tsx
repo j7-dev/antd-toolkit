@@ -98,7 +98,7 @@ const VideoItem = ({
 	}
 
 	return (
-		<div className="w-36 relative">
+		<div className="at-w-36 at-relative">
 			<SimpleImage
 				onClick={handleClick}
 				onMouseEnter={() => {
@@ -107,22 +107,22 @@ const VideoItem = ({
 				onMouseLeave={() => {
 					setFilename(video?.thumbnailFileName)
 				}}
-				className={`rounded-md overflow-hidden cursor-pointer ${
+				className={`at-rounded-md at-overflow-hidden at-cursor-pointer ${
 					isSelected
-						? 'outline outline-4 outline-yellow-300 outline-offset-1'
+						? 'at-outline at-outline-4 at-outline-yellow-300 at-outline-offset-1'
 						: ''
 				}`}
-				loadingClassName="text-sm text-gray-500 font-bold"
+				loadingClassName="at-text-sm at-text-gray-500 at-font-bold"
 				src={`https://${bunny_cdn_hostname}/${video.guid}/${filename}`}
 			>
 				{children}
 			</SimpleImage>
-			<Text className="text-xs text-gray-800" ellipsis>
+			<Text className="at-text-xs at-text-gray-800" ellipsis>
 				{video.title}
 			</Text>
 			{isSelected && (
-				<div className="bg-white absolute -top-2 -right-2 z-30 w-6 h-6 -1 rounded-full flex items-center justify-center">
-					<CheckIcon className="w-5 h-5 [&_path]:fill-yellow-300" />
+				<div className="at-bg-white at-absolute at--top-2 at--right-2 at-z-30 at-w-6 at-h-6 at-rounded-full at-flex at-items-center at-justify-center">
+					<CheckIcon className="at-w-5 at-h-5 [&_path]:at-fill-yellow-300" />
 				</div>
 			)}
 		</div>

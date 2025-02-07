@@ -35,7 +35,6 @@ export const initialFilteredValues = {
 	downloadable: '',
 	virtual: '',
 	sold_individually: '',
-	is_course: '',
 }
 
 export const FilterContext = createContext<TProductFilterOptions>(

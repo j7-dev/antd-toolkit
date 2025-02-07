@@ -107,47 +107,47 @@ const MediaLibraryIndicatorComponent = () => {
 	}
 
 	return (
-		<div className="tw-fixed w-[20rem] bottom-0 right-8 bg-white rounded-t-lg px-6 pt-3 pb-2 shadow-md text-gray-800 text-sm cursor-pointer z-[1001]">
+		<div className="at-fixed at-w-[20rem] at-bottom-0 at-right-8 at-bg-white at-rounded-t-lg at-px-6 at-pt-3 at-pb-2 at-shadow-md at-text-gray-800 at-text-sm at-cursor-pointer at-z-[1001]">
 			<div
-				className="flex items-center justify-between"
+				className="at-flex at-items-center at-justify-between"
 				onClick={() => setIsExpanded(!isExpanded)}
 			>
 				<div>
-					<LoadingOutlined className="mr-2 text-primary" /> 目前有{' '}
+					<LoadingOutlined className="at-mr-2 at-text-primary" /> 目前有{' '}
 					{filesInQueue.length} 個檔案正在上傳中...
 				</div>
 				{isExpanded ? <DownOutlined /> : <UpOutlined />}
 			</div>
 			<div
-				className={` mt-2 border-t border-gray-200 -mx-6 ${
-					isExpanded ? 'block' : 'tw-hidden'
+				className={` at-mt-2 at-border-t at-border-gray-200 -at-mx-6 ${
+					isExpanded ? 'at-block' : 'at-tw-hidden'
 				}`}
 			>
 				<Alert
-					className="text-xs text-center"
+					className="at-text-xs at-text-center"
 					banner
 					message={
 						<>
-							<ExclamationCircleFilled className="mr-2 text-[#faad14]" />
+							<ExclamationCircleFilled className="at-mr-2 at-text-[#faad14]" />
 							請不要重新整理頁面
 						</>
 					}
 					type="warning"
 					showIcon={false}
 				/>
-				<div className="px-6 pt-2">
+				<div className="at-px-6 at-pt-2">
 					{filesInQueue.map(
 						({ key, encodeProgress, file, uploadProgress, isEncoding }) => (
-							<div className="flex items-center mb-1" key={key}>
+							<div className="at-flex at-items-center at-mb-1" key={key}>
 								<Tooltip
 									title={isEncoding ? 'Bunny 編碼中' : '檔案上傳中'}
-									className="w-32 line-clamp-1 mr-2 text-xs flex items-center gap-2"
+									className="at-w-32 at-line-clamp-1 at-mr-2 at-text-xs at-flex at-items-center at-gap-2"
 								>
 									{isEncoding ? <CodeOutlined /> : <CloudUploadOutlined />}
 									{file?.name}
 								</Tooltip>
 								<Progress
-									className="w-32"
+									className="at-w-32"
 									percent={isEncoding ? encodeProgress : uploadProgress}
 									size="small"
 								/>

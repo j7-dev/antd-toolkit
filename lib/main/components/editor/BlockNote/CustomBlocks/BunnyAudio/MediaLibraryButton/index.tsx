@@ -67,17 +67,12 @@ const MediaLibraryButton = (props: TMediaLibraryButton) => {
 
 	return (
 		<div
-			className={'bn-file-block-content-wrapper w-full'}
+			className={'bn-file-block-content-wrapper at-w-full'}
 			data-editable="1"
 			ref={props.contentRef}
 		>
 			{!vId && (
-				<Button
-					size="small"
-					type="primary"
-					className=""
-					onClick={handleOpenMediaLibrary}
-				>
+				<Button size="small" type="primary" onClick={handleOpenMediaLibrary}>
 					開啟 Bunny 媒體庫
 				</Button>
 			)}

@@ -21,7 +21,7 @@ const RangePickerComponent: FC<{
 			{...formItemProps}
 		>
 			<AntdRangePicker
-				className="w-full"
+				className="at-w-full"
 				allowEmpty={[true, true]}
 				format="YYYY-MM-DD HH:mm"
 				placeholder={['開始日期', '結束日期']}

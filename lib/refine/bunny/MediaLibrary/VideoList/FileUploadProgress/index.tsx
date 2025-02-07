@@ -19,7 +19,7 @@ const FileUploadProgress: FC<{
 
 	return (
 		<>
-			<p className="m-2 text-xs">影片上傳中</p>
+			<p className="at-m-2 at-text-xs">影片上傳中</p>
 			<Progress
 				percent={uploadProgress}
 				percentPosition={{ align: 'center', type: 'outer' }}

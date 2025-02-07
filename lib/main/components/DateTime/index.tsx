@@ -18,16 +18,18 @@ export const DateTime: React.FC<{
 }> = ({ date, className, dateProps, timeProps, hideTime }) => {
 	if (date.toString().length !== 13) {
 		return (
-			<div className="text-center">
+			<div className="at-text-center">
 				<p>OOPS! 出錯拉</p>
 				<p>date 請輸入 毫秒(13位) 數字</p>
 			</div>
 		)
 	}
 
-	const dateIcon = dateProps?.icon || <CalendarOutlined className="mr-2" />
+	const dateIcon = dateProps?.icon || <CalendarOutlined className="at-mr-2" />
 	const dateFormat = dateProps?.format || 'YYYY-MM-DD'
-	const timeIcon = timeProps?.icon || <ClockCircleOutlined className="mr-2" />
+	const timeIcon = timeProps?.icon || (
+		<ClockCircleOutlined className="at-mr-2" />
+	)
 	const timeFormat = timeProps?.format || 'HH:mm:ss'
 
 	if (hideTime) {
@@ -39,8 +41,8 @@ export const DateTime: React.FC<{
 					</>
 				}
 			>
-				<div className={cn('text-gray-600 text-xs', className)}>
-					<p className="m-0 whitespace-nowrap">
+				<div className={cn('at-text-gray-600 at-text-xs', className)}>
+					<p className="at-m-0 at-whitespace-nowrap">
 						{dateIcon}
 						{dayjs(date).format(dateFormat)}
 					</p>
@@ -50,12 +52,12 @@ export const DateTime: React.FC<{
 	}
 
 	return (
-		<div className={cn('text-gray-600 text-xs', className)}>
-			<p className="m-0 whitespace-nowrap">
+		<div className={cn('at-text-gray-600 at-text-xs', className)}>
+			<p className="at-m-0 at-whitespace-nowrap">
 				{dateIcon}
 				{dayjs(date).format(dateFormat)}
 			</p>
-			<p className="m-0 whitespace-nowrap">
+			<p className="at-m-0 at-whitespace-nowrap">
 				{timeIcon}
 				{dayjs(date).format(timeFormat)}
 			</p>

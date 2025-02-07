@@ -21,7 +21,12 @@ const ProductCatComponent = <T extends TBaseRecord>({
 			<div>
 				{(categories as TTerm[])?.map(({ id, name }) => {
 					return (
-						<Tag key={id} color="blue" bordered={false} className="mb-1 mr-1">
+						<Tag
+							key={id}
+							color="blue"
+							bordered={false}
+							className="at-mb-1 at-mr-1"
+						>
 							{name}
 						</Tag>
 					)
@@ -30,7 +35,10 @@ const ProductCatComponent = <T extends TBaseRecord>({
 			<div>
 				{(tags as TTerm[])?.map(({ id, name }) => {
 					return (
-						<span key={id} className="text-gray-400 text-xs mr-1 mb-1">
+						<span
+							key={id}
+							className="at-text-gray-400 at-text-xs at-mr-1 at-mb-1"
+						>
 							#{name}
 						</span>
 					)

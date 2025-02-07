@@ -18,21 +18,25 @@ export const ToggleContent: React.FC<{
 
 	return (
 		<div
-			className={cn('relative w-full h-[20rem] overflow-hidden', className, {
-				'h-full': isExpand,
-			})}
+			className={cn(
+				'at-relative at-w-full at-h-[20rem] at-overflow-hidden',
+				className,
+				{
+					'at-h-full': isExpand,
+				},
+			)}
 		>
 			{html}
 			{isExpand && (
-				<div className="text-center w-full py-4 cursor-pointer">
-					<span className="px-12" onClick={handleCollapsed}>
+				<div className="at-text-center at-w-full at-py-4 at-cursor-pointer">
+					<span className="at-px-12" onClick={handleCollapsed}>
 						收合全部
 					</span>
 				</div>
 			)}
 			{!isExpand && (
-				<div className="absolute bottom-0 text-center w-full pb-4 pt-12 bg-gradient-to-t from-white to-white/0 cursor-pointer">
-					<span className="px-12" onClick={handleExpand}>
+				<div className="at-absolute at-bottom-0 at-text-center at-w-full at-pb-4 at-pt-12 at-bg-gradient-to-t at-from-white at-to-white/0 at-cursor-pointer">
+					<span className="at-px-12" onClick={handleExpand}>
 						展開全部
 					</span>
 				</div>

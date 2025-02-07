@@ -191,23 +191,23 @@ const BlockNoteWithHooks = () => {
 	}, [html])
 
 	return (
-		<div className="w-full max-w-[50rem]">
+		<div className="at-w-full at-max-w-[50rem]">
 			<BlockNote {...blockNoteViewProps} />
 
-			<hr className="bg-gray-200 w-full h-[1px] mb-6" />
+			<hr className="at-bg-gray-200 at-w-full at-h-[1px] at-mb-6" />
 			<p>數據結構</p>
-			<pre className="my-4 prismjs bg-gray-100 p-4 rounded-md">
+			<pre className="at-my-4 at-prismjs at-bg-gray-100 at-p-4 at-rounded-md">
 				{JSON.stringify(blocks, null, 2)}
 			</pre>
 			<p>serialize HTML</p>
-			<pre className="my-4 prismjs bg-gray-100 p-4 rounded-md whitespace-normal">
+			<pre className="at-my-4 prismjs at-bg-gray-100 at-p-4 at-rounded-md at-whitespace-normal">
 				{html}
 			</pre>
 			<p>
 				render HTML (需用 <code>.bn-container</code> 包住)
 			</p>
 			<div
-				className="bn-editor bn-default-styles bn-container border border-solid border-gray-400"
+				className="bn-editor bn-default-styles bn-container at-border at-border-solid at-border-gray-400"
 				dangerouslySetInnerHTML={{ __html: html }}
 			/>
 			<p>unserialize 上方的HTML</p>

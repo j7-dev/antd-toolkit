@@ -30,10 +30,10 @@ const Code: FC<FormItemProps> = (formItemProps) => {
 	}
 
 	return (
-		<div className="relative">
+		<div className="at-relative">
 			<Input.TextArea
 				allowClear
-				className="mb-1 rounded-lg"
+				className="at-mb-1 at-rounded-lg"
 				rows={12}
 				onChange={handleChange}
 				value={value}

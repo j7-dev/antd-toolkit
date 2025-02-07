@@ -90,16 +90,16 @@ export const Custom: Story = {
 		},
 		onClick: undefined,
 		renderTitle: (
-			<p className="mb-1 mt-0">
-				<span className="mr-2 px-2 bg-primary text-white rounded-lg text-xs">
+			<p className="at-mb-1 at-mt-0">
+				<span className="at-mr-2 at-px-2 at-bg-primary at-text-white at-rounded-lg at-text-xs">
 					Life Hacker
 				</span>
 				test
-				<span className="ml-1 text-gray-400 text-xs">#23 - 講師</span>
+				<span className="at-ml-1 at-text-gray-400 at-text-xs">#23 - 講師</span>
 			</p>
 		),
 		renderBelowTitle: (
-			<span className="ml-1 text-gray-400 text-xs">
+			<span className="at-ml-1 at-text-gray-400 at-text-xs">
 				Life is short, play more !
 			</span>
 		),
@@ -118,7 +118,7 @@ export const LongTitle: Story = {
 	},
 	decorators: [
 		(Story) => (
-			<div className="w-[200px]">
+			<div className="at-w-[200px]">
 				<Story />
 			</div>
 		),

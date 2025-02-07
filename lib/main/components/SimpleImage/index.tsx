@@ -18,18 +18,18 @@ const SimpleImageComponent: FC<SimpleImageProps> = ({
 	...rest
 }) => {
 	return (
-		<div className={cn('relative', className, ratio)} {...rest}>
+		<div className={cn('at-relative', className, ratio)} {...rest}>
 			{render ? (
 				render
 			) : (
 				<img
 					src={src}
 					loading="lazy"
-					className={`relative z-20 w-full ${ratio} object-cover`}
+					className={`at-relative at-z-20 at-w-full ${ratio} at-object-cover`}
 				/>
 			)}
 			<div
-				className={`absolute z-10 top-0 left-0 w-full ${ratio} bg-gray-200 animate-pulse flex items-center justify-center ${loadingClassName}`}
+				className={`at-absolute at-z-10 at-top-0 at-left-0 at-w-full ${ratio} at-bg-gray-200 at-animate-pulse at-flex at-items-center at-justify-center ${loadingClassName}`}
 			>
 				LOADING...
 			</div>

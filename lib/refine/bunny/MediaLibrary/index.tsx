@@ -125,10 +125,10 @@ const MediaLibraryComponent: FC<TMediaLibraryCompoundProps> = ({
 	]
 
 	return (
-		<div className="relative">
-			<div ref={dropZoneRef} className="relative">
+		<div className="at-relative">
+			<div ref={dropZoneRef} className="at-relative">
 				<Tabs
-					className={isDragging ? 'opacity-0' : 'opacity-100'}
+					className={isDragging ? 'at-opacity-0' : 'at-opacity-100'}
 					tabBarExtraContent={
 						<Upload {...bunnyUploadProps}>
 							<Button icon={<CloudUploadOutlined />}>上傳影片</Button>
@@ -141,7 +141,7 @@ const MediaLibraryComponent: FC<TMediaLibraryCompoundProps> = ({
 				/>
 
 				<div
-					className={`absolute top-0 left-0 w-full h-full ${isDragging ? 'opacity-100 z-50' : 'opacity-0 -z-50'}`}
+					className={`at-absolute at-top-0 at-left-0 at-w-full at-h-full ${isDragging ? 'at-opacity-100 at-z-50' : 'at-opacity-0 at--z-50'}`}
 				>
 					<UploadVideo {...bunnyUploadProps} />
 				</div>

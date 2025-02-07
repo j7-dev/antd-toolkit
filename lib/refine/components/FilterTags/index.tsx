@@ -3,6 +3,7 @@ import { Tag, FormInstance } from 'antd'
 import dayjs, { Dayjs } from 'dayjs'
 import { CloseCircleOutlined } from '@ant-design/icons'
 import { BaseRecord } from '@refinedev/core'
+import { NamePath } from 'rc-field-form/es/interface'
 
 export function FilterTagsComponent<T = BaseRecord>({
 	form,
@@ -17,7 +18,7 @@ export function FilterTagsComponent<T = BaseRecord>({
 }): JSX.Element {
 	const searchValues = form?.getFieldsValue()
 	const handleClearSearchProps = (key: string) => () => {
-		form?.setFieldValue([key], undefined)
+		form?.setFieldValue([key] as NamePath<T>, undefined)
 		form?.submit()
 	}
 
@@ -25,7 +26,7 @@ export function FilterTagsComponent<T = BaseRecord>({
 		(key: string, value: string | number, searchValue: (string | number)[]) =>
 		() => {
 			const newValue = searchValue.filter((item) => item !== value)
-			form?.setFieldValue([key], newValue)
+			form?.setFieldValue([key] as NamePath<T>, newValue)
 			form?.submit()
 		}
 
@@ -68,7 +69,7 @@ export function FilterTagsComponent<T = BaseRecord>({
 								key={key as string}
 								bordered={false}
 								color="cyan"
-								className="px-2.5 py-0.5"
+								className="at-px-2.5 at-py-0.5"
 								closeIcon={<CloseCircleOutlined />}
 								onClose={handleClearSearchProps(key as string)}
 							>
@@ -98,7 +99,7 @@ export function FilterTagsComponent<T = BaseRecord>({
 									key={`${key as string}[${value?.toString()}]`}
 									bordered={false}
 									color="cyan"
-									className="px-2.5 py-0.5"
+									className="at-px-2.5 at-py-0.5"
 									closeIcon={<CloseCircleOutlined />}
 									onClose={handleArrayProps(
 										key as string,
@@ -126,7 +127,7 @@ export function FilterTagsComponent<T = BaseRecord>({
 								key={key as string}
 								bordered={false}
 								color="cyan"
-								className="px-2.5 py-0.5"
+								className="at-px-2.5 at-py-0.5"
 								closeIcon={<CloseCircleOutlined />}
 								onClose={handleClearSearchProps(key as string)}
 							>
@@ -150,7 +151,7 @@ export function FilterTagsComponent<T = BaseRecord>({
 							key={key as string}
 							bordered={false}
 							color="cyan"
-							className="px-2.5 py-0.5"
+							className="at-px-2.5 at-py-0.5"
 							closeIcon={<CloseCircleOutlined />}
 							onClose={handleClearSearchProps(key as string)}
 						>

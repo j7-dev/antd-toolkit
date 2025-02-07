@@ -30,10 +30,10 @@ const SelectedRecordComponent = ({
 	return (
 		<div>
 			{(!!ids.length || !hideOnEmpty) && (
-				<div className="flex gap-x-2 items-center">
+				<div className="at-flex at-gap-x-2 at-items-center">
 					<Tooltip
 						title={`包含 ${resourceLabel} id: ${ids.join(',')}`}
-						className="bg-yellow-100 px-2 py-0.5 whitespace-nowrap rounded-[0.25rem]"
+						className="at-bg-yellow-100 at-px-2 at-py-0.5 at-whitespace-nowrap at-rounded-[0.25rem]"
 					>
 						已選擇 {ids.length} 個 {resourceLabel}
 					</Tooltip>
@@ -50,7 +50,7 @@ const SelectedRecordComponent = ({
 					)}
 				</div>
 			)}
-			{!ids.length && hideOnEmpty && <div className="h-8" />}
+			{!ids.length && hideOnEmpty && <div className="at-h-8" />}
 		</div>
 	)
 }

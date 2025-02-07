@@ -16,7 +16,7 @@ export const bunnyVideoMenuItem = (editor: typeof schema.BlockNoteEditor) => ({
 	},
 	aliases: ['bunny'],
 	group: 'Bunny',
-	icon: <FaPhotoVideo className="w-[1.125rem] h-[1.125rem]" />,
+	icon: <FaPhotoVideo className="at-w-[1.125rem] at-h-[1.125rem]" />,
 })
 
 const bunnyVideoBlockConfig: CustomBlockConfig = {
@@ -43,7 +43,7 @@ export const BunnyVideo = createReactBlockSpec(bunnyVideoBlockConfig, {
 		if (!editable) {
 			return (
 				<iframe
-					className="border-0 w-full aspect-video rounded-xl"
+					className="at-border-0 at-w-full at-aspect-video at-rounded-xl"
 					src={videoUrl}
 					loading="lazy"
 					allow="encrypted-media;picture-in-picture;"
@@ -67,7 +67,7 @@ export const BunnyVideo = createReactBlockSpec(bunnyVideoBlockConfig, {
 		const videoUrl = `https://iframe.mediadelivery.net/embed/${bunny_library_id}/${vId}?autoplay=false&loop=false&muted=false&preload=true&responsive=true`
 		return (
 			<iframe
-				className="border-0 absolute top-0 left-0 w-full h-full rounded-xl"
+				className="at-border-0 at-absolute at-top-0 at-left-0 at-w-full at-h-full at-rounded-xl"
 				src={videoUrl}
 				loading="lazy"
 				allow="encrypted-media;picture-in-picture;"

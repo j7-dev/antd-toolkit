@@ -14,11 +14,11 @@ const VideoInfo = ({ video }: { video: TBunnyVideo }) => {
 	return (
 		<>
 			<SimpleImage
-				className="w-full rounded-md overflow-hidden"
-				loadingClassName="text-sm text-gray-500 font-bold"
+				className="at-w-full at-rounded-md at-overflow-hidden"
+				loadingClassName="at-text-sm at-text-gray-500 at-font-bold"
 				src={`https://${bunny_cdn_hostname}/${guid}/preview.webp`}
 			/>
-			<div className="flex gap-4 my-4">
+			<div className="at-flex at-gap-4 at-my-4">
 				<CopyText text={iframeText}>
 					<Button type="default" icon={<CopyOutlined />} iconPosition="end">
 						複製 iframe 影片嵌入代碼
@@ -29,7 +29,7 @@ const VideoInfo = ({ video }: { video: TBunnyVideo }) => {
 						type="default"
 						href={bunnyUrl}
 						target="_blank"
-						className="px-0 w-8"
+						className="at-px-0 at-w-8"
 					>
 						<ExportOutlined />
 					</Button>

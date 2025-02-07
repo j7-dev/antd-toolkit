@@ -4,41 +4,43 @@ import { message } from 'antd'
 import { ConfigOptions } from 'antd/es/message/interface'
 
 export const CopyText: React.FC<{
-  text: string
-  children?: React.ReactNode
-  messageConfig?: ConfigOptions
+	text: string
+	children?: React.ReactNode
+	messageConfig?: ConfigOptions
 }> = ({
-  text,
-  children = <CopyOutlined className="text-blue-500 hover:text-blue-500/70" />,
-  messageConfig,
+	text,
+	children = (
+		<CopyOutlined className="at-text-blue-500 hover:at-text-blue-500/70" />
+	),
+	messageConfig,
 }) => {
-  const [messageApi, contextHolder] = message.useMessage(messageConfig)
+	const [messageApi, contextHolder] = message.useMessage(messageConfig)
 
-  const copyToClipboard = (textToCopy: string) => () => {
-    // 檢查剪貼簿API是否可用
+	const copyToClipboard = (textToCopy: string) => () => {
+		// 檢查剪貼簿API是否可用
 
-    if (navigator.clipboard) {
-      // 請求剪貼簿權限
+		if (navigator.clipboard) {
+			// 請求剪貼簿權限
 
-      navigator.clipboard
-        .writeText(textToCopy)
-        .then(() => {
-          messageApi.success('複製成功')
-        })
-        .catch((err) => {
-          messageApi.error('OOPS! 複製失敗')
-        })
-    } else {
-      messageApi.error('OOPS! 剪貼簿不可用')
-    }
-  }
+			navigator.clipboard
+				.writeText(textToCopy)
+				.then(() => {
+					messageApi.success('複製成功')
+				})
+				.catch((err) => {
+					messageApi.error('OOPS! 複製失敗')
+				})
+		} else {
+			messageApi.error('OOPS! 剪貼簿不可用')
+		}
+	}
 
-  return (
-    <>
-      {contextHolder}
-      <div onClick={copyToClipboard(text)} className="cursor-pointer">
-        {children}
-      </div>
-    </>
-  )
+	return (
+		<>
+			{contextHolder}
+			<div onClick={copyToClipboard(text)} className="at-cursor-pointer">
+				{children}
+			</div>
+		</>
+	)
 }

@@ -19,20 +19,24 @@ const NoLibraryId = ({
 				description={
 					<>
 						{!bunny_library_id && (
-							<div className="text-sm font-normal">缺少 Bunny Library Id</div>
+							<div className="at-text-sm at-font-normal">
+								缺少 Bunny Library Id
+							</div>
 						)}
 						{!bunny_stream_api_key && (
-							<div className="text-sm font-normal">
+							<div className="at-text-sm at-font-normal">
 								缺少 Bunny Stream Api Key
 							</div>
 						)}
 						{!bunny_cdn_hostname && (
-							<div className="text-sm font-normal">缺少 Bunny Cdn Hostname</div>
+							<div className="at-text-sm at-font-normal">
+								缺少 Bunny Cdn Hostname
+							</div>
 						)}
 
 						<Link to="/settings">
 							<Button
-								className="pl-0 ml-0"
+								className="at-pl-0 at-ml-0"
 								type="link"
 								icon={<DoubleRightOutlined />}
 								iconPosition="end"
@@ -51,24 +55,32 @@ const NoLibraryId = ({
 	const className = ((value: string) =>
 		({
 			video:
-				'aspect-video shadow rounded-lg border border-dashed border-gray-300 flex flex-col items-center justify-center',
-			default: 'flex flex-col items-start justify-center w-full h-full',
-		})[value] ?? 'flex flex-col items-start justify-center w-full h-full')(type)
+				'at-aspect-video at-shadow at-rounded-lg at-border at-border-dashed at-border-gray-300 at-flex at-flex-col at-items-center at-justify-center',
+			default:
+				'at-flex at-flex-col at-items-start at-justify-center at-w-full at-h-full',
+		})[value] ??
+		'at-flex at-flex-col at-items-start at-justify-center at-w-full at-h-full')(
+		type,
+	)
 
 	return (
 		<div className={className}>
 			{!bunny_library_id && (
-				<div className="text-base font-normal">缺少 Bunny Library Id</div>
+				<div className="at-text-base at-font-normal">缺少 Bunny Library Id</div>
 			)}
 			{!bunny_stream_api_key && (
-				<div className="text-base font-normal">缺少 Bunny Stream Api Key</div>
+				<div className="at-text-base at-font-normal">
+					缺少 Bunny Stream Api Key
+				</div>
 			)}
 			{!bunny_cdn_hostname && (
-				<div className="text-base font-normal">缺少 Bunny Cdn Hostname</div>
+				<div className="at-text-base at-font-normal">
+					缺少 Bunny Cdn Hostname
+				</div>
 			)}
 			<Link to="/settings">
 				<Button
-					className="pl-0 ml-0"
+					className="at-pl-0 at-ml-0"
 					type="link"
 					icon={<DoubleRightOutlined />}
 					iconPosition="end"

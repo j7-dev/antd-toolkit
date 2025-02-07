@@ -37,14 +37,14 @@ const ProductNameComponent = <T extends TBaseRecord>({
 
 	return (
 		<>
-			<div className={cn('flex items-center', className)}>
+			<div className={cn('at-flex at-items-center', className)}>
 				{!hideImage && (
-					<div className="mr-4">
+					<div className="at-mr-4">
 						<Image
-							className="product-image rounded-lg object-cover"
+							className="product-image at-rounded-lg at-object-cover"
 							preview={{
 								mask: <EyeOutlined />,
-								maskClassName: 'rounded-lg',
+								maskClassName: 'at-rounded-lg',
 							}}
 							width={40}
 							height={40}
@@ -55,17 +55,17 @@ const ProductNameComponent = <T extends TBaseRecord>({
 					</div>
 				)}
 				<div
-					className={`flex-1 min-w-0 ${onClick ? 'cursor-pointer hover:opacity-75' : ''}`}
+					className={`at-flex-1 at-min-w-0 ${onClick ? 'at-cursor-pointer hover:at-opacity-75' : ''}`}
 					onClick={onClick ? () => onClick(record) : undefined}
 				>
 					{renderTitle ? (
 						renderTitle
 					) : (
-						<div className="flex items-end">
-							<p className="product-name min-w-0 m-0 text-primary text-base [&_*]:truncate">
+						<div className="at-flex at-items-end">
+							<p className="product-name at-min-w-0 at-m-0 at-text-primary at-text-base [&_*]:at-truncate">
 								{renderHTML(name)}
 							</p>
-							<p className="product-id my-0 ml-2 text-gray-400 text-xs shrink-0">
+							<p className="product-id at-my-0 at-ml-2 at-text-gray-400 at-text-xs at-shrink-0">
 								#{id}
 							</p>
 						</div>
@@ -73,8 +73,8 @@ const ProductNameComponent = <T extends TBaseRecord>({
 					{renderBelowTitle ? (
 						renderBelowTitle
 					) : (
-						<div className="product-meta flex text-[0.625rem] text-gray-500">
-							{sku && <span className="pr-3">{`SKU: ${sku}`}</span>}
+						<div className="product-meta at-flex at-text-[0.625rem] at-text-gray-500">
+							{sku && <span className="at-pr-3">{`SKU: ${sku}`}</span>}
 						</div>
 					)}
 				</div>

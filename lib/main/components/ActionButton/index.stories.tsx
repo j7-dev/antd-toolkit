@@ -48,7 +48,7 @@ const meta: Meta<typeof ActionButton> & {
 	},
 	decorators: [
 		(Story) => (
-			<div className="flex justify-end w-[300px]">
+			<div className="at-flex at-justify-end at-w-[300px]">
 				<Story />
 			</div>
 		),

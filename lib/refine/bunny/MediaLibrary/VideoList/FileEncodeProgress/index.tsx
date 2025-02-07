@@ -22,7 +22,7 @@ const FileEncodeProgress: FC<{
 						查看編碼狀態
 					</>
 				}
-				className="m-2 text-xs"
+				className="at-m-2 at-text-xs"
 			>
 				Bunny 編碼中...
 			</Tooltip>

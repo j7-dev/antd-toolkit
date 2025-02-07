@@ -13,14 +13,17 @@ const CountdownDigit: FC<{ countdownProps: CountdownRenderProps }> = ({
 
 	return (
 		<div
-			className="au_countdown grid gap-x-3 md:gap-x-8 gap-y-4"
+			className="au_countdown at-grid at-gap-x-3 at-md:at-gap-x-8 at-gap-y-4"
 			style={{
 				gridTemplateColumns: 'repeat(4, minmax(0, 1fr))',
 			}}
 		>
 			{timeUnits.map((timeUnitArr, i) => {
 				return (
-					<div key={`_${i}`} className="grid gap-x-1 md:gap-x-2 grid-cols-2">
+					<div
+						key={`_${i}`}
+						className="at-grid at-gap-x-1 md:at-gap-x-2 at-grid-cols-2"
+					>
 						{timeUnitArr.map((number, j) => (
 							<div key={`_${i}_${j}`} className="au_countdown_digit">
 								{number}
@@ -30,10 +33,10 @@ const CountdownDigit: FC<{ countdownProps: CountdownRenderProps }> = ({
 				)
 			})}
 
-			<div className="text-center text-xs">Days</div>
-			<div className="text-center text-xs">Hours</div>
-			<div className="text-center text-xs">Minutes</div>
-			<div className="text-center text-xs">Seconds</div>
+			<div className="at-text-center at-text-xs">Days</div>
+			<div className="at-text-center at-text-xs">Hours</div>
+			<div className="at-text-center at-text-xs">Minutes</div>
+			<div className="at-text-center at-text-xs">Seconds</div>
 		</div>
 	)
 }
@@ -43,10 +46,10 @@ export const Countdown: FC<{
 	title?: React.ReactNode
 	className?: string
 	width?: string | number
-}> = ({ date, title, className = 'text-center', width }) => {
+}> = ({ date, title, className = 'at-text-center', width }) => {
 	if (date.toString().length !== 13) {
 		return (
-			<div className="text-center">
+			<div className="at-text-center">
 				<p>OOPS! 出錯拉</p>
 				<p>date 請輸入 毫秒(13位) 數字</p>
 			</div>

@@ -149,7 +149,7 @@ export const LongTitle: Story = {
 	},
 	decorators: [
 		(Story) => (
-			<div className="w-[300px]">
+			<div className="at-w-[300px]">
 				<Story />
 			</div>
 		),

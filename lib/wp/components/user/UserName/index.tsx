@@ -30,14 +30,14 @@ const UserNameComponent = <T extends TBaseRecord>({
 	const { display_name, user_email, id, user_avatar_url } = record
 
 	return (
-		<div className="flex items-center">
+		<div className="at-flex at-items-center">
 			{!hideImage && (
-				<div className="mr-4">
+				<div className="at-mr-4">
 					<Image
-						className="rounded-full object-cover"
+						className="at-rounded-full at-object-cover"
 						preview={{
 							mask: <EyeOutlined />,
-							maskClassName: 'rounded-full',
+							maskClassName: 'at-rounded-full',
 						}}
 						src={user_avatar_url || defaultImage}
 						fallback={defaultImage}
@@ -48,24 +48,26 @@ const UserNameComponent = <T extends TBaseRecord>({
 				</div>
 			)}
 			<div
-				className={`flex-1 min-w-0 ${onClick ? 'cursor-pointer hover:opacity-75' : ''}`}
+				className={`at-flex-1 at-min-w-0 ${onClick ? 'at-cursor-pointer hover:at-opacity-75' : ''}`}
 				onClick={onClick ? () => onClick(record) : undefined}
 			>
 				{renderTitle ? (
 					renderTitle
 				) : (
-					<div className="flex mb-1 items-end">
-						<p className="min-w-0 m-0 text-base [&_*]:truncate">
+					<div className="at-flex at-mb-1 at-items-end">
+						<p className="at-min-w-0 at-m-0 at-text-base [&_*]:at-truncate">
 							{renderHTML(display_name)}
 						</p>
-						<p className="my-0 ml-2 text-gray-400 text-xs shrink-0">#{id}</p>
+						<p className="at-my-0 at-ml-2 at-text-gray-400 at-text-xs at-shrink-0">
+							#{id}
+						</p>
 					</div>
 				)}
 
 				{renderBelowTitle ? (
 					renderBelowTitle
 				) : (
-					<p className="my-0 text-xs text-gray-400">{user_email}</p>
+					<p className="at-my-0 at-text-xs at-text-gray-400">{user_email}</p>
 				)}
 			</div>
 		</div>

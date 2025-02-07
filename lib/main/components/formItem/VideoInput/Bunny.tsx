@@ -57,11 +57,11 @@ const Bunny: FC<FormItemProps> = (formItemProps) => {
 	}
 
 	return (
-		<div className="relative">
+		<div className="at-relative">
 			<Button
 				size="small"
 				type="link"
-				className="ml-0 mb-2 pl-0"
+				className="at-ml-0 at-mb-2 at-pl-0"
 				onClick={handleOpenMediaLibrary}
 			>
 				開啟 Bunny 媒體庫
@@ -69,18 +69,18 @@ const Bunny: FC<FormItemProps> = (formItemProps) => {
 			<Item hidden {...formItemProps} />
 			{/* 如果章節已經有存影片，則顯示影片，有瀏覽器 preview，則以 瀏覽器 preview 優先 */}
 			{recordId && !isEmpty && (
-				<div className="relative aspect-video rounded-lg border border-dashed border-gray-300">
-					<div className="absolute w-full h-full top-0 left-0 p-2">
-						<div className="w-full h-full rounded-xl overflow-hidden">
+				<div className="at-relative at-aspect-video at-rounded-lg at-border at-border-dashed at-border-gray-300">
+					<div className="at-absolute at-w-full at-h-full at-top-0 at-left-0 at-p-2">
+						<div className="at-w-full at-h-full at-rounded-xl at-overflow-hidden">
 							<div
-								className={`rounded-xl bg-gray-200 ${!isEmpty ? 'tw-block' : 'tw-hidden'}`}
+								className={`at-rounded-xl at-bg-gray-200 ${!isEmpty ? 'at-tw-block' : 'at-tw-hidden'}`}
 								style={{
 									position: 'relative',
 									paddingTop: '56.25%',
 								}}
 							>
 								<iframe
-									className="border-0 absolute top-0 left-0 w-full h-full rounded-xl"
+									className="at-border-0 at-absolute at-top-0 at-left-0 at-w-full at-h-full at-rounded-xl"
 									src={videoUrl}
 									loading="lazy"
 									allow="encrypted-media;picture-in-picture;"
@@ -89,9 +89,9 @@ const Bunny: FC<FormItemProps> = (formItemProps) => {
 
 								<div
 									onClick={handleDelete}
-									className="group absolute top-4 right-4 rounded-md w-12 h-12 bg-white shadow-lg flex justify-center items-center transition duration-300 hover:bg-red-500 cursor-pointer"
+									className="at-group at-absolute at-top-4 at-right-4 at-rounded-md at-w-12 at-h-12 at-bg-white at-shadow-lg at-flex at-justify-center at-items-center at-transition at-duration-300 hover:at-bg-red-500 at-cursor-pointer"
 								>
-									<DeleteOutlined className="text-red-500 group-hover:text-white" />
+									<DeleteOutlined className="at-text-red-500 group-hover:at-text-white" />
 								</div>
 							</div>
 						</div>

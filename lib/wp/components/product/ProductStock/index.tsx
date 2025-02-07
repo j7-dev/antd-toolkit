@@ -34,7 +34,7 @@ const ProductStockComponent = <T extends TBaseRecord>({
 
 	if (type === 'tag') {
 		return (
-			<Tag bordered={false} className={`m-0 ${color}`} icon={<Icon />}>
+			<Tag bordered={false} className={`at-m-0 ${color}`} icon={<Icon />}>
 				{label}
 				{Number.isInteger(stock_quantity) && <> ({stock_quantity})</>}
 			</Tag>
@@ -42,8 +42,8 @@ const ProductStockComponent = <T extends TBaseRecord>({
 	}
 
 	return (
-		<p className="m-0 text-gray-500 text-xs">
-			<Icon className={`mr-2 ${color}`} />
+		<p className="at-m-0 at-text-gray-500 at-text-xs">
+			<Icon className={`at-mr-2 ${color}`} />
 			{label}
 			{Number.isInteger(stock_quantity) && <> ({stock_quantity})</>}
 		</p>

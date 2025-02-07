@@ -57,7 +57,7 @@ export const General: Story = {
 	},
 	decorators: [
 		(Story) => (
-			<div className="w-[10rem]">
+			<div className="at-w-[10rem]">
 				<Story />
 			</div>
 		),

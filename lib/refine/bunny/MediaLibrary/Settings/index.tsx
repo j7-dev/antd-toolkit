@@ -19,11 +19,11 @@ const Settings = ({ onFinish }: TSettingProps) => {
 	const { isLoading: isGetLoading } = useOptions({ form })
 	return (
 		<Form layout="vertical" form={form} onFinish={onFinish || handleSave}>
-			<div className="flex flex-col md:flex-row gap-8">
-				<div className="w-full max-w-[400px]">
+			<div className="at-flex at-flex-col at-md:at-flex-row at-at-gap-8">
+				<div className="at-w-full at-max-w-[400px]">
 					<Spin spinning={isGetLoading}>
 						<Item
-							className="mt-4"
+							className="at-mt-4"
 							name={['bunny_library_id']}
 							label="Bunny Library ID"
 						>
@@ -45,8 +45,8 @@ const Settings = ({ onFinish }: TSettingProps) => {
 						</Item>
 					</Spin>
 				</div>
-				<div className="flex-1 h-auto md:h-[calc(100%-5.375rem)] md:overflow-y-auto">
-					<p className="font-bold mb-4">說明</p>
+				<div className="at-flex-1 at-h-auto md:at-h-[calc(100%-5.375rem)] md:at-overflow-y-auto">
+					<p className="at-font-bold at-mb-4">說明</p>
 					<Alert
 						message="沒有 Bunny 帳號？"
 						className="mb-4"
@@ -57,24 +57,24 @@ const Settings = ({ onFinish }: TSettingProps) => {
 									href="https://bunny.net?ref=wd7c7lcrv4"
 									target="_blank"
 									rel="noopener noreferrer"
-									className="ml-2 font-bold"
+									className="at-ml-2 at-font-bold"
 								>
-									點此申請 <RxExternalLink className="relative top-0.5" />
+									點此申請 <RxExternalLink className="at-relative at-top-0.5" />
 								</a>
 							</>
 						}
 						type="info"
 						showIcon
 					/>
-					<div className="mb-4">
+					<div className="at-mb-4">
 						<p>1. 前往 Bunny 後台，選擇 「Stream」 並進入 「Library」</p>
 						<SimpleImage
 							src={bunnyTutorial1}
 							ratio="aspect-[2.1]"
-							className="w-full"
+							className="at-w-full"
 						/>
 					</div>
-					<div className="mb-4">
+					<div className="at-mb-4">
 						<p>
 							2. 進入「API」分頁，複製 Library ID 、 CDN Hostname 和 Stream API
 							Key
@@ -82,7 +82,7 @@ const Settings = ({ onFinish }: TSettingProps) => {
 						<SimpleImage
 							src={bunnyTutorial2}
 							ratio="aspect-[2.1]"
-							className="w-full"
+							className="at-w-full"
 						/>
 					</div>
 				</div>

@@ -82,7 +82,7 @@ export const FileUpload = ({
 	}, [watchId])
 
 	return (
-		<div className="flex justify-center w-full mb-4">
+		<div className="at-flex at-justify-center at-w-full at-mb-4">
 			<Item hidden {...formItemProps} />
 			<Item hidden initialValue={[]} {...formItemPropsPreview} />
 			<ImgCrop
@@ -105,7 +105,7 @@ export const FileUpload = ({
 					accept="image/*"
 					maxCount={1}
 					fileList={fileList}
-					className="w-full"
+					className="at-w-full"
 					showUploadList={false}
 					beforeUpload={beforeUpload}
 					style={{
@@ -119,17 +119,17 @@ export const FileUpload = ({
 					<p className="ant-upload-text">點擊或拖曳文件到這裡上傳</p>
 					<p className="ant-upload-hint">僅支持 image/* 類型 文件</p>
 					{fileList.length > 0 && fileList?.[0]?.url && (
-						<div className="w-full h-full absolute top-0 left-0 p-2">
-							<div className="w-full h-full rounded-lg overflow-hidden">
+						<div className="at-w-full at-h-full at-absolute at-top-0 at-left-0 at-p-2">
+							<div className="at-w-full at-h-full at-rounded-lg at-overflow-hidden">
 								<img
 									src={fileList?.[0]?.url}
-									className="w-full h-full object-cover"
+									className="at-w-full at-h-full at-object-cover"
 								/>
 								<div
 									onClick={handleDelete}
-									className="group absolute top-4 right-4 rounded-md w-12 h-12 bg-white shadow-lg flex justify-center items-center transition duration-300 hover:bg-red-500 cursor-pointer"
+									className="at-group at-absolute at-top-4 at-right-4 at-rounded-md at-w-12 at-h-12 at-bg-white at-shadow-lg at-flex at-justify-center at-items-center at-transition at-duration-300 hover:at-bg-red-500 at-cursor-pointer"
 								>
-									<DeleteOutlined className="text-red-500 group-hover:text-white" />
+									<DeleteOutlined className="at-text-red-500 group-hover:at-text-white" />
 								</div>
 							</div>
 						</div>

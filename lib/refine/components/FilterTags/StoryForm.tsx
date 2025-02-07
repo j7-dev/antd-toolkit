@@ -3,7 +3,6 @@ import { Button, Form, Input, Select } from 'antd'
 import { FilterTags } from './index'
 import { BooleanRadioButton } from '@/main/components/BooleanRadioButton'
 import { BooleanSegmented } from '@/main/components/BooleanSegmented'
-import { DeleteButton } from '@refinedev/antd'
 
 const StoryForm = () => {
 	const [form] = Form.useForm()
@@ -19,7 +18,7 @@ const StoryForm = () => {
 
 	return (
 		<>
-			<div className="rounded-xl bg-gray-100 p-8 w-[720px] mb-8">
+			<div className="at-rounded-xl at-bg-gray-100 at-p-8 at-w-[720px] at-mb-8">
 				<p>StoryBook 用 Filter</p>
 				<Form form={form} layout="vertical" onFinish={handleFinish}>
 					<Form.Item name="username" label="username" initialValue="example">

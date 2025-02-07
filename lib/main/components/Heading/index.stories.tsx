@@ -57,7 +57,7 @@ export const General: Story = {
 	},
 	decorators: [
 		(Story) => (
-			<div className="w-[1000px]">
+			<div className="at-w-[1000px]">
 				<Story />
 			</div>
 		),
@@ -72,7 +72,7 @@ export const Small: Story = {
 	},
 	decorators: [
 		(Story) => (
-			<div className="w-[20rem]">
+			<div className="at-w-[20rem]">
 				<Story />
 			</div>
 		),

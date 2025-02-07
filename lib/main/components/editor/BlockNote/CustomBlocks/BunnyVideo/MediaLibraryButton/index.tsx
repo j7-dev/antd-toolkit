@@ -79,33 +79,28 @@ const MediaLibraryButton = (props: TMediaLibraryButton) => {
 
 	return (
 		<div
-			className={'bn-file-block-content-wrapper w-full'}
+			className={'bn-file-block-content-wrapper at-w-full'}
 			data-editable="1"
 			ref={props.contentRef}
 		>
 			{!vId && (
-				<Button
-					size="small"
-					type="primary"
-					className=""
-					onClick={handleOpenMediaLibrary}
-				>
+				<Button size="small" type="primary" onClick={handleOpenMediaLibrary}>
 					開啟 Bunny 媒體庫
 				</Button>
 			)}
 			{!!vId && (
-				<div className="relative aspect-video rounded-lg border border-dashed border-gray-300">
-					<div className="absolute w-full h-full top-0 left-0 p-2">
-						<div className="w-full h-full rounded-xl overflow-hidden">
+				<div className="at-relative at-aspect-video at-rounded-lg at-border at-border-dashed at-border-gray-300">
+					<div className="at-absolute at-w-full at-h-full at-top-0 at-left-0 at-p-2">
+						<div className="at-w-full at-h-full at-rounded-xl at-overflow-hidden">
 							<div
-								className="rounded-xl bg-gray-200 tw-block"
+								className="at-rounded-xl at-bg-gray-200 at-tw-block"
 								style={{
 									position: 'relative',
 									paddingTop: '56.25%',
 								}}
 							>
 								<iframe
-									className="border-0 absolute top-0 left-0 w-full h-full rounded-xl"
+									className="at-border-0 at-absolute at-top-0 at-left-0 at-w-full at-h-full at-rounded-xl"
 									src={videoUrl}
 									loading="lazy"
 									allow="encrypted-media;picture-in-picture;"
@@ -114,9 +109,9 @@ const MediaLibraryButton = (props: TMediaLibraryButton) => {
 
 								<div
 									onClick={handleSwitch}
-									className="group absolute top-4 right-4 rounded-md w-12 h-12 bg-white shadow-lg flex justify-center items-center transition duration-300 hover:bg-primary cursor-pointer"
+									className="at-group at-absolute at-top-4 at-right-4 at-rounded-md at-w-12 at-h-12 at-bg-white at-shadow-lg at-flex at-justify-center at-items-center at-transition at-duration-300 hover:at-bg-primary at-cursor-pointer"
 								>
-									<TbSwitchHorizontal className="text-primary group-hover:text-white" />
+									<TbSwitchHorizontal className="at-text-primary group-hover:at-text-white" />
 								</div>
 							</div>
 						</div>

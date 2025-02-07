@@ -40,7 +40,7 @@ export const General: Story = {
 	decorators: [
 		(Story) => (
 			<Form>
-				<div className="w-[20rem]">
+				<div className="at-w-[20rem]">
 					<Story />
 				</div>
 			</Form>

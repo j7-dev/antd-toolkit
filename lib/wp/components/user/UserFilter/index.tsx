@@ -16,7 +16,8 @@ type TUserFilterProps<T extends TBaseRecord> = {
 	hideInclude?: boolean
 }
 
-const defaultWrapperClassName = 'grid grid-cols-2 md:grid-cols-3 gap-x-4'
+const defaultWrapperClassName =
+	'at-grid at-grid-cols-2 md:at-grid-cols-3 at-gap-x-4'
 
 const UserFilterComponent = <T extends TBaseRecord>({
 	formProps,
@@ -27,7 +28,7 @@ const UserFilterComponent = <T extends TBaseRecord>({
 	const form = formProps?.form as FormInstance<T>
 
 	return (
-		<div className="mb-2">
+		<div className="at-mb-2">
 			<Form layout="vertical" {...formProps}>
 				<div
 					className={
@@ -42,7 +43,7 @@ const UserFilterComponent = <T extends TBaseRecord>({
 					</Item>
 
 					{!hideInclude && (
-						<Item name="include" label="包含指定用戶" className="col-span-2">
+						<Item name="include" label="包含指定用戶" className="at-col-span-2">
 							<Select mode="tags" placeholder="輸入用戶 ID" allowClear />
 						</Item>
 					)}
@@ -57,14 +58,14 @@ const UserFilterComponent = <T extends TBaseRecord>({
 					<Button
 						htmlType="submit"
 						type="primary"
-						className="w-full"
+						className="at-w-full"
 						icon={<SearchOutlined />}
 					>
 						篩選
 					</Button>
 					<Button
 						type="default"
-						className="w-full"
+						className="at-w-full"
 						onClick={() => {
 							form.resetFields()
 							form.submit()

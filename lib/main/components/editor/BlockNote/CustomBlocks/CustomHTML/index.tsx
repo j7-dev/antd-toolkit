@@ -45,12 +45,12 @@ export const CustomHTML = createReactBlockSpec(customHTMLBlockConfig, {
 
 		return (
 			<div
-				className={'bn-file-block-content-wrapper w-full'}
+				className={'bn-file-block-content-wrapper at-w-full'}
 				data-editable="1"
 				ref={props.contentRef}
 			>
 				<textarea
-					className="w-full rounded-md border-2 border-solid border-gray-200 p-2 whitespace-pre-wrap"
+					className="at-w-full at-rounded-md at-border-2 at-border-solid at-border-gray-200 at-p-2 at-whitespace-pre-wrap"
 					rows={10}
 					onChange={(e) => {
 						props.editor.updateBlock(props.block, {

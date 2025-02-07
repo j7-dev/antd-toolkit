@@ -66,7 +66,7 @@ const Iframe: FC<{
 	}
 
 	return (
-		<div className="relative">
+		<div className="at-relative">
 			<Input
 				size="small"
 				allowClear
@@ -82,7 +82,7 @@ const Iframe: FC<{
 						meta: {},
 					})
 				}}
-				className="mb-1"
+				className="at-mb-1"
 			/>
 			<Item {...formItemProps} hidden />
 
@@ -90,23 +90,23 @@ const Iframe: FC<{
 			{validVideoId && (
 				<>
 					<div
-						className="aspect-video w-full p-2"
+						className="at-aspect-video at-w-full at-p-2"
 						style={{
 							border: '1px dashed #d9d9d9',
 							backgroundColor: 'rgba(0, 0, 0, 0.02)',
 							borderRadius: '8px',
 						}}
 					>
-						<div className="w-full h-full rounded-xl overflow-hidden">
+						<div className="at-w-full at-h-full at-rounded-xl at-overflow-hidden">
 							<div
-								className={`rounded-xl bg-gray-200 ${watchField ? 'tw-block' : 'tw-hidden'}`}
+								className={`at-rounded-xl at-bg-gray-200 ${watchField ? 'at-tw-block' : 'at-tw-hidden'}`}
 								style={{
 									position: 'relative',
 									paddingTop: '56.25%',
 								}}
 							>
 								<iframe
-									className="border-0 absolute top-0 left-0 w-full h-full rounded-xl"
+									className="at-border-0 at-absolute at-top-0 at-left-0 at-w-full at-h-full at-rounded-xl"
 									src={embedVideoUrl}
 									loading="lazy"
 									frameBorder="0"
@@ -117,9 +117,9 @@ const Iframe: FC<{
 								></iframe>
 								<div
 									onClick={handleDelete}
-									className="group absolute top-4 right-4 rounded-md w-12 h-12 bg-white shadow-lg flex justify-center items-center transition duration-300 hover:bg-red-500 cursor-pointer"
+									className="at-group at-absolute at-top-4 at-right-4 at-rounded-md at-w-12 at-h-12 at-bg-white at-shadow-lg at-flex at-justify-center at-items-center at-transition at-duration-300 hover:at-bg-red-500 at-cursor-pointer"
 								>
-									<DeleteOutlined className="text-red-500 group-hover:text-white" />
+									<DeleteOutlined className="at-text-red-500 group-hover:at-text-white" />
 								</div>
 							</div>
 						</div>

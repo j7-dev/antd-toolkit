@@ -17,7 +17,10 @@ export const Gallery: React.FC<{
 
 	if (images.length === 0) {
 		return (
-			<img className="aspect-square w-full object-cover" src={defaultImage} />
+			<img
+				className="at-aspect-square at-w-full at-object-cover"
+				src={defaultImage}
+			/>
 		)
 	}
 	const isInclude = images.some((i) => i === selectedImage)
@@ -30,14 +33,18 @@ export const Gallery: React.FC<{
 
 	return (
 		<>
-			<img className="aspect-square w-full object-cover" src={mainSrc} />
+			<img
+				className="at-aspect-square at-w-full at-object-cover"
+				src={mainSrc}
+			/>
 			{images.length > 1 && (
-				<div className="mt-2 w-full grid grid-cols-4 gap-2">
+				<div className="at-mt-2 at-w-full at-grid at-grid-cols-4 at-gap-2">
 					{images.map((image) => (
 						<img
 							key={nanoid()}
-							className={`aspect-square cursor-pointer object-cover w-full ${
-								image === selected && 'border-2 border-blue-500 border-solid'
+							className={`at-aspect-square at-cursor-pointer at-object-cover at-w-full ${
+								image === selected &&
+								'at-border-2 at-border-blue-500 at-border-solid'
 							}`}
 							onClick={handleClick(image)}
 							src={image}

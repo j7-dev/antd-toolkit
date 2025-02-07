@@ -39,24 +39,24 @@ const ProductTypeComponent = <T extends TBaseRecord>({
 	const tag = PRODUCT_TYPES.find((productType) => productType.value === type)
 	if (!type) return null
 	return (
-		<div className="flex items-center gap-2">
+		<div className="at-flex at-items-center at-gap-2">
 			{renderBefore}
-			<Tag bordered={false} color={tag?.color} className="m-0">
+			<Tag bordered={false} color={tag?.color} className="at-m-0">
 				{tag?.label}
 			</Tag>
 			<Tooltip zIndex={1000000 + 20} title={`${featured ? '' : '非'}精選商品`}>
 				{featured ? (
-					<StarFilled className="text-yellow-400" />
+					<StarFilled className="at-text-yellow-400" />
 				) : (
-					<StarOutlined className="text-gray-400" />
+					<StarOutlined className="at-text-gray-400" />
 				)}
 			</Tooltip>
 
 			<Tooltip zIndex={1000000 + 20} title={`${virtual ? '' : '非'}虛擬商品`}>
 				{virtual ? (
-					<CloudFilled className="text-primary" />
+					<CloudFilled className="at-text-primary" />
 				) : (
-					<CloudOutlined className="text-gray-400" />
+					<CloudOutlined className="at-text-gray-400" />
 				)}
 			</Tooltip>
 
@@ -66,9 +66,9 @@ const ProductTypeComponent = <T extends TBaseRecord>({
 					title={`${downloadable ? '' : '不'}可下載`}
 				>
 					{downloadable ? (
-						<IoMdDownload className="text-gray-700" />
+						<IoMdDownload className="at-text-gray-700" />
 					) : (
-						<IoMdDownload className="text-gray-300" />
+						<IoMdDownload className="at-text-gray-300" />
 					)}
 				</Tooltip>
 			)}

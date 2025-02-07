@@ -59,7 +59,11 @@ export const NotExpired: Story = {
 	name: '未到期',
 	args: {
 		date: dayjs().endOf('day').valueOf(),
-		title: <p className="text-xl text-center font-bold">距離晚上 12 點還有</p>,
+		title: (
+			<p className="at-text-xl at-text-center at-font-bold">
+				距離晚上 12 點還有
+			</p>
+		),
 		width: 800,
 		className: '',
 	},
@@ -68,7 +72,11 @@ export const Expired: Story = {
 	name: '已到期',
 	args: {
 		date: dayjs().startOf('day').valueOf(),
-		title: <p className="text-xl text-center font-bold">距離晚上 12 點還有</p>,
+		title: (
+			<p className="at-text-xl at-text-center at-font-bold">
+				距離晚上 12 點還有
+			</p>
+		),
 		width: 800,
 		className: '',
 	},

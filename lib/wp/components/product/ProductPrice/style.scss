@@ -2,26 +2,26 @@ div[class^="ant-"] {
 	.at-product-price {
 		del,
 		ins {
-			@apply ml-0 tw-block;
+			@apply at-ml-0 at-tw-block;
 		}
 
 		.woocommerce-Price-currencySymbol {
-			@apply mr-2;
+			@apply at-mr-2;
 		}
 
 		&,
 		bdi,
 		.woocommerce-Price-amount {
-			@apply text-gray-500 font-light opacity-100;
+			@apply at-text-gray-500 at-font-light at-opacity-100;
 		}
 
 		ins {
 			bdi {
-				@apply text-red-500 no-underline font-bold;
+				@apply at-text-red-500 at-no-underline at-font-bold;
 			}
 		}
 	}
 	.screen-reader-text {
-		@apply tw-hidden;
+		@apply at-tw-hidden;
 	}
 }

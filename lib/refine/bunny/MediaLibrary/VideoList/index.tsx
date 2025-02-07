@@ -66,7 +66,7 @@ const VideoList: FC<TMediaLibraryProps> = ({
 			<Alert
 				message="影片上傳中可以離開此頁，但不要「重新整理」頁面，「重新整理」會導致上傳中斷"
 				banner
-				className="mb-8"
+				className="at-mb-8"
 			/>
 
 			<Filter
@@ -77,21 +77,21 @@ const VideoList: FC<TMediaLibraryProps> = ({
 				loading={isSearchFetching}
 				selectButtonProps={selectButtonProps}
 			/>
-			<div className="flex">
-				<div className="flex-1">
-					<div className="flex flex-wrap gap-4">
+			<div className="at-flex">
+				<div className="at-flex-1">
+					<div className="at-flex at-flex-wrap at-gap-4">
 						{filesInQueue.map((fileInQueue) =>
 							fileInQueue?.isEncoding ? (
 								<div
 									key={fileInQueue?.key}
-									className="w-36 aspect-video bg-gray-200 rounded-md px-4 py-2 flex flex-col justify-center items-center"
+									className="at-w-36 at-aspect-video at-bg-gray-200 at-rounded-md at-px-4 at-py-2 at-flex at-flex-col at-items-center at-justify-center"
 								>
 									<FileEncodeProgress fileInQueue={fileInQueue} />
 								</div>
 							) : (
 								<div
 									key={fileInQueue?.key}
-									className="w-36 aspect-video bg-gray-200 rounded-md px-4 py-2 flex flex-col justify-center items-center"
+									className="at-w-36 at-aspect-video at-bg-gray-200 at-rounded-md at-px-4 at-py-2 at-flex at-flex-col at-items-center at-justify-center"
 								>
 									<FileUploadProgress
 										key={fileInQueue?.key}
@@ -116,9 +116,9 @@ const VideoList: FC<TMediaLibraryProps> = ({
 
 						{isFetching &&
 							new Array(PAGE_SIZE).fill(0).map((_, index) => (
-								<div key={index} className="w-36">
+								<div key={index} className="at-w-36">
 									<LoadingCard />
-									<LoadingCard className="h-3 !p-0 rounded-sm">
+									<LoadingCard className="at-h-3 !at-p-0 at-rounded-sm">
 										&nbsp;
 									</LoadingCard>
 								</div>
@@ -126,11 +126,11 @@ const VideoList: FC<TMediaLibraryProps> = ({
 					</div>
 
 					{!allVideos?.length && !isFetching && (
-						<Empty className="my-24" description="找不到影片資料" />
+						<Empty className="at-my-24" description="找不到影片資料" />
 					)}
 
 					{hasNextPage && (
-						<div className="text-center mt-8">
+						<div className="at-text-center at-mt-8">
 							<Button
 								type="link"
 								onClick={() => fetchNextPage()}
@@ -141,7 +141,7 @@ const VideoList: FC<TMediaLibraryProps> = ({
 						</div>
 					)}
 				</div>
-				<div className="w-[28rem]">
+				<div className="at-w-[28rem]">
 					{selectedVideos?.length > 0 && (
 						<VideoInfo video={selectedVideos.slice(-1)[0]} />
 					)}
