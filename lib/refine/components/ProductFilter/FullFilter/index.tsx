@@ -21,12 +21,10 @@ import {
 
 import { SearchOutlined, UndoOutlined } from '@ant-design/icons'
 import { BsChevronDoubleDown, BsChevronDoubleUp } from 'react-icons/bs'
-import { FilterContext, defaultOptions } from '../index'
+import { FilterContext, initialFilteredValues } from '../index'
 
 const { Item } = Form
 const { RangePicker } = DatePicker
-
-const { isLoading: defaultIsLoading, ...initialFilteredValues } = defaultOptions
 
 /**
  * Filter Component for WooCommerce Product Selector
