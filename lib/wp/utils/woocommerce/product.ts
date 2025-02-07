@@ -1,4 +1,4 @@
-import { TProductTypes, TFilterProps } from '@/wp/types'
+import { TProductType, TProductFilterProps } from '@/wp/types'
 import { CrudFilters } from '@refinedev/core'
 
 // 無庫存下單
@@ -92,7 +92,7 @@ export const PRODUCT_TYPES = [
 /**
  * 判斷是否為商品變體
  */
-export const getIsVariation = (productType: TProductTypes) => {
+export const getIsVariation = (productType: TProductType) => {
   return ['variation', 'subscription_variation'].includes(productType)
 }
 
@@ -121,7 +121,7 @@ export const getFilterLabels = <T>(
 
 
 export const onSearch = (
-	values: TFilterProps,
+	values: TProductFilterProps,
 ): CrudFilters | Promise<CrudFilters> => {
 	return [
 		{
@@ -206,7 +206,7 @@ export const onSearch = (
 export const getProductFilterLabels = (
 	label = '商品',
 ): {
-	[key in keyof TFilterProps]: string
+	[key in keyof TProductFilterProps]: string
 } => ({
 	s: '關鍵字',
 	sku: '貨號(sku)',
@@ -225,6 +225,6 @@ export const getProductFilterLabels = (
 	price_range: '價格範圍',
 })
 
-export const productKeyLabelMapper = (key: keyof TFilterProps, label = '商品') => {
+export const productKeyLabelMapper = (key: keyof TProductFilterProps, label = '商品') => {
 	return getProductFilterLabels(label)?.[key] || key
 }

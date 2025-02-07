@@ -8,10 +8,10 @@ import {
 } from '@ant-design/icons'
 import { IoMdDownload } from 'react-icons/io'
 import { PRODUCT_TYPES } from '@/wp/utils'
-import { TProductTypes } from '@/wp/types'
+import { TProductType } from '@/wp/types'
 
 type TBaseRecord = {
-	type?: TProductTypes
+	type?: TProductType
 	featured?: boolean
 	virtual?: boolean
 	downloadable?: boolean
