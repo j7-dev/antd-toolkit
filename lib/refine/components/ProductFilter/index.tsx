@@ -5,7 +5,7 @@ import FullFilter from './FullFilter'
 import MobileFilter from './MobileFilter'
 import { TTerm } from '@/wp'
 
-export type TOptions = {
+export type TProductFilterOptions = {
 	product_cats: TTerm[]
 	product_tags: TTerm[]
 	product_brands: (TTerm & {
@@ -19,7 +19,7 @@ export type TOptions = {
 	isLoading: boolean
 }
 
-export const defaultOptions: TOptions = {
+export const defaulTProductFilterOptions: TProductFilterOptions = {
 	product_cats: [],
 	product_tags: [],
 	product_brands: [],
@@ -38,7 +38,9 @@ export const initialFilteredValues = {
 	is_course: '',
 }
 
-export const FilterContext = createContext<TOptions>(defaultOptions)
+export const FilterContext = createContext<TProductFilterOptions>(
+	defaulTProductFilterOptions,
+)
 
 /**
  * 預設的產品過濾器
@@ -47,7 +49,7 @@ export const FilterContext = createContext<TOptions>(defaultOptions)
 
 const ProductFilterComponent: FC<{
 	searchFormProps: FormProps
-	options: TOptions
+	options: TProductFilterOptions
 	mobileWidth: number // 螢幕尺寸低於多少使用手機板
 }> = ({ searchFormProps, options, mobileWidth = 810 }) => {
 	const { width = 1920 } = useWindowSize()

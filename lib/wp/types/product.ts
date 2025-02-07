@@ -89,9 +89,9 @@ export type TProductBaseRecord = {
 	_subscription_trial_period?: string
 
 	// 可變商品變體
-	children?: TProductVariation[]
+	children?: TProductVariationBase[]
 }
 
-export type TProductVariation = TProductBaseRecord & {
+export type TProductVariationBase = TProductBaseRecord & {
 	type: Extract<TProductType, 'variation' | "subscription_variation">
 }
