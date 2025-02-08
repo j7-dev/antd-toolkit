@@ -10,15 +10,7 @@ import {
 	BaseRecord,
 } from '@refinedev/core'
 import { useItemSelect } from '@/wp'
-import { TLimit } from 'antd-toolkit'
-
-type TBindItemsProps<T> = {
-	product_ids: string[] // 要綁在哪些商品上
-	useCustomMutationParams: UseCustomMutationParams<T> // 綁定 API，最少需要填 url
-	useSelectProps: UseSelectProps<T, HttpError, T> // 選擇資源的 API useSelectProps
-	selectProps?: SelectProps // 選擇資源的 select props
-	label?: string // 資源名稱
-}
+import { TLimit } from '@/main'
 
 /**
  * 通用的綁定項目元件
@@ -30,6 +22,14 @@ type TBindItemsProps<T> = {
  * @property {SelectProps}                                               [selectProps]                 - Select 元件 props
  * @property {string}                                                    [label]                       - 資源名稱
  */
+type TBindItemsProps<T> = {
+	product_ids: string[] // 要綁在哪些商品上
+	useCustomMutationParams: UseCustomMutationParams<T> // 綁定 API，最少需要填 url
+	useSelectProps: UseSelectProps<T, HttpError, T> // 選擇資源的 API useSelectProps
+	selectProps?: SelectProps // 選擇資源的 select props
+	label?: string // 資源名稱
+}
+
 const BindItemsComponent = <
 	T extends BaseRecord & { name: string; id: string },
 >({
