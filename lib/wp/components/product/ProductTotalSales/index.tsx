@@ -10,7 +10,7 @@ const COLOR_GRADE = {
 }
 
 type TBaseRecord = {
-	total_sales?: number
+	total_sales: number
 }
 
 type TProductTotalSalesProps<T extends TBaseRecord> = {

@@ -27,7 +27,7 @@ import { TLimit } from '@/main'
  */
 type TBindItemsProps<T> = {
 	product_ids: string[] // 要綁在哪些商品上
-	url: string // 綁定 API 的 url 預設為 `${apiUrl}/products/bind-items`
+	url?: string // 綁定 API 的 url 預設為 `${apiUrl}/products/bind-items`
 	meta_key: string // 綁定 API 的 meta_key
 	useSelectProps: UseSelectProps<T, HttpError, T> // 選擇資源的 API useSelectProps
 	selectProps?: SelectProps // 選擇資源的 select props

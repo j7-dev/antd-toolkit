@@ -11,10 +11,10 @@ import { PRODUCT_TYPES } from '@/wp/utils'
 import { TProductType } from '@/wp/types'
 
 type TBaseRecord = {
-	type?: TProductType
-	featured?: boolean
-	virtual?: boolean
-	downloadable?: boolean
+	type: TProductType
+	featured: boolean
+	virtual: boolean
+	downloadable: boolean
 }
 
 type TProductTypeProps<T extends TBaseRecord> = {

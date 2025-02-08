@@ -3,14 +3,13 @@ import { renderHTML, defaultImage } from '@/main/utils'
 import { Image, ImageProps } from 'antd'
 import { EyeOutlined } from '@ant-design/icons'
 import { cn } from '@/main/utils'
+import { TImage } from '@/wp'
 
 type TBaseRecord = {
 	id: string
 	name: string
 	sku?: string
-	images?: {
-		url: string
-	}[]
+	images?: TImage[]
 }
 
 type TProductNameProps<T extends TBaseRecord> = {
