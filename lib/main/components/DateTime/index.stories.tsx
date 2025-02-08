@@ -56,7 +56,7 @@ export const Flex: Story = {
 	name: 'Flex 水平布局',
 	args: {
 		date: dayjs().endOf('day').valueOf(),
-		className: 'flex gap-x-4',
+		className: 'at-flex at-gap-x-4',
 	},
 }
 
@@ -64,7 +64,7 @@ export const Small: Story = {
 	name: '不同尺寸 & 自訂顏色',
 	args: {
 		date: dayjs().endOf('day').valueOf(),
-		className: 'text-base text-gray-500',
+		className: 'at-text-base at-text-gray-500',
 	},
 }
 
@@ -72,7 +72,7 @@ export const HideTime: Story = {
 	name: '隱藏時間',
 	args: {
 		date: dayjs().endOf('day').valueOf(),
-		className: 'text-xs text-gray-500',
+		className: 'at-text-xs at-text-gray-500',
 		hideTime: true,
 	},
 }

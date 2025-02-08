@@ -60,7 +60,7 @@ export const Default: Story = {
 	name: '預設樣式',
 	args: {
 		formItemProps: {
-			className: 'w-80',
+			className: 'at-w-80',
 		},
 		type: 'default',
 	},
@@ -70,7 +70,7 @@ export const Icon: Story = {
 	name: '只有 icon',
 	args: {
 		formItemProps: {
-			className: 'w-80',
+			className: 'at-w-80',
 		},
 		type: 'icon',
 	},
@@ -79,7 +79,7 @@ export const Text: Story = {
 	name: '只有文字',
 	args: {
 		formItemProps: {
-			className: 'w-80',
+			className: 'at-w-80',
 		},
 		type: 'text',
 	},
@@ -89,7 +89,7 @@ export const Vertical: Story = {
 	name: '垂直顯示',
 	args: {
 		formItemProps: {
-			className: 'w-80',
+			className: 'at-w-80',
 		},
 		type: 'vertical',
 	},

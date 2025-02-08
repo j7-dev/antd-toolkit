@@ -2,7 +2,7 @@ import { SelectProps, RadioGroupProps, TableProps } from 'antd'
 
 export const defaultSelectProps: SelectProps = {
 	placeholder: '搜尋',
-	className: 'w-full',
+	className: 'at-w-full',
 	allowClear: true,
 	showSearch: true,
 	mode: 'multiple',

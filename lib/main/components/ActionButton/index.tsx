@@ -20,7 +20,7 @@ type TActionButton = {
 
 const defaultButtonProps = {
 	type: 'primary',
-	className: 'mx-1',
+	className: 'at-mx-1',
 }
 
 // TODO 需要留嗎?

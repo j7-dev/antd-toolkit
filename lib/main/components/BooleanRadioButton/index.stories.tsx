@@ -60,7 +60,7 @@ export const AverageWidth: Story = {
 	name: '平均寬度',
 	args: {
 		formItemProps: {
-			className: 'w-40',
+			className: 'at-w-40',
 		},
 	},
 }
@@ -68,7 +68,7 @@ export const AutoWidth: Story = {
 	name: '自動寬度',
 	args: {
 		formItemProps: {
-			className: 'w-40',
+			className: 'at-w-40',
 		},
 		averageWidth: false,
 	},

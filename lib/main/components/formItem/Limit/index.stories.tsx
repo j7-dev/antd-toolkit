@@ -1,15 +1,17 @@
 import React from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
-import { WatchLimit } from './index'
+import { Limit } from './index'
 import { Form } from 'antd'
 
-const meta: Meta<typeof WatchLimit> & {
+const meta: Meta<typeof Limit> & {
 	argTypes: any
 } = {
-	title: 'MAIN/FormItem/WatchLimit',
-	component: WatchLimit,
+	title: 'MAIN/FormItem/Limit',
+
+	component: Limit,
 	parameters: {
 		layout: 'centered',
+
 		docs: {
 			description: {
 				component: `
@@ -24,7 +26,7 @@ const meta: Meta<typeof WatchLimit> & {
 }
 
 export default meta
-type Story = StoryObj<typeof WatchLimit>
+type Story = StoryObj<typeof Limit>
 
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
 
