@@ -1,9 +1,7 @@
 import { memo, FC } from 'react'
-import { Typography, Tag, Tooltip } from 'antd'
+import { Tag, Tooltip } from 'antd'
 import dayjs from 'dayjs'
-import { TLimit, cn } from '@/main'
-
-const { Text } = Typography
+import { TLimit, cn, NameId } from '@/main'
 
 const LIMIT_UNIT_LABEL = {
 	day: '日',
@@ -47,14 +45,7 @@ const ProductBoundItemsComponent: FC<TProductBoundItemsProps> = ({
 						</Tooltip>
 					)}
 					{!hideName && (
-						<Text
-							ellipsis={{
-								tooltip: name || '未知的名稱',
-							}}
-						>
-							<span className="at-text-gray-400 at-text-xs">#{id}</span>{' '}
-							{name || '未知的名稱'}
-						</Text>
+						<NameId name={name || '未知的名稱'} id={id} tooltipProps={{}} />
 					)}
 				</div>
 

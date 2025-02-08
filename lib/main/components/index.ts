@@ -19,6 +19,4 @@ export * from '@/main/components/EnvProvider'
 export * from '@/main/components/SecondToStr'
 export * from '@/main/components/PopconfirmDelete'
 export * from '@/main/components/WatchStatusTag'
-
-// @deprecated
-export * from '@/refine/components/FilterTags'
+export * from '@/main/components/NameId'

@@ -13,11 +13,18 @@ const StoryForm = () => {
 	}
 
 	useEffect(() => {
-		form.submit()
+		handleFinish()
 	}, [])
 
 	return (
 		<>
+			<div className="at-flex at-gap-x-2 at-w-[200px] at-bg-red-100">
+				<div className="at-flex-1 at-bg-blue-100 max-w-0">
+					NameNameNameNameNameName
+				</div>
+				<div className="at-w-fit at-bg-green-100">#123456</div>
+			</div>
+
 			<div className="at-rounded-xl at-bg-gray-100 at-p-8 at-w-[720px] at-mb-8">
 				<p>StoryBook 用 Filter</p>
 				<Form form={form} layout="vertical">

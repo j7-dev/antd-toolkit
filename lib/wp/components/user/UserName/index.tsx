@@ -1,7 +1,7 @@
 import { memo } from 'react'
 import { Image, ImageProps } from 'antd'
 import { EyeOutlined } from '@ant-design/icons'
-import { defaultImage, renderHTML } from '@/main/utils'
+import { defaultImage, renderHTML, NameId } from '@/main'
 
 type TBaseRecord = {
 	display_name: string
@@ -54,14 +54,7 @@ const UserNameComponent = <T extends TBaseRecord>({
 				{renderTitle ? (
 					renderTitle
 				) : (
-					<div className="at-flex at-mb-1 at-items-end">
-						<p className="at-min-w-0 at-m-0 at-text-base [&_*]:at-truncate">
-							{renderHTML(display_name)}
-						</p>
-						<p className="at-my-0 at-ml-2 at-text-gray-400 at-text-xs at-shrink-0">
-							#{id}
-						</p>
-					</div>
+					<NameId className="at-text-base" name={display_name} id={id} />
 				)}
 
 				{renderBelowTitle ? (

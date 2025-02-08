@@ -1,4 +1,5 @@
 import { SelectProps, RadioGroupProps, TableProps } from 'antd'
+import { NameId } from '@/main'
 
 export const defaultSelectProps: SelectProps = {
 	placeholder: '搜尋',
@@ -7,11 +8,7 @@ export const defaultSelectProps: SelectProps = {
 	showSearch: true,
 	mode: 'multiple',
 	optionRender: ({ value, label }) => {
-		return (
-			<span>
-				{label} <span className="at-text-gray-400 at-text-xs">#{value}</span>
-			</span>
-		)
+		return <NameId name={label} id={value as string} />
 	},
 	optionFilterProp: 'label',
 }

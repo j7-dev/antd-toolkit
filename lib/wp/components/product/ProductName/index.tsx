@@ -1,9 +1,8 @@
 import { memo } from 'react'
-import { renderHTML, defaultImage } from '@/main/utils'
 import { Image, ImageProps } from 'antd'
 import { EyeOutlined } from '@ant-design/icons'
-import { cn } from '@/main/utils'
 import { TImage } from '@/wp'
+import { defaultImage, cn, NameId } from '@/main'
 
 type TBaseRecord = {
 	id: string
@@ -60,14 +59,11 @@ const ProductNameComponent = <T extends TBaseRecord>({
 					{renderTitle ? (
 						renderTitle
 					) : (
-						<div className="at-flex at-items-end">
-							<p className="product-name at-min-w-0 at-m-0 at-text-primary at-text-base [&_*]:at-truncate">
-								{renderHTML(name)}
-							</p>
-							<p className="product-id at-my-0 at-ml-2 at-text-gray-400 at-text-xs at-shrink-0">
-								#{id}
-							</p>
-						</div>
+						<NameId
+							className="at-text-primary at-text-base"
+							name={name}
+							id={id}
+						/>
 					)}
 					{renderBelowTitle ? (
 						renderBelowTitle
