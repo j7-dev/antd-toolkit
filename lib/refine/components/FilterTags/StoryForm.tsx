@@ -20,7 +20,7 @@ const StoryForm = () => {
 		<>
 			<div className="at-rounded-xl at-bg-gray-100 at-p-8 at-w-[720px] at-mb-8">
 				<p>StoryBook 用 Filter</p>
-				<Form form={form} layout="vertical" onFinish={handleFinish}>
+				<Form form={form} layout="vertical">
 					<Form.Item name="username" label="username" initialValue="example">
 						<Input />
 					</Form.Item>
@@ -70,7 +70,7 @@ const StoryForm = () => {
 						/>
 					</Form.Item>
 
-					<Button htmlType="submit" type="primary">
+					<Button onClick={handleFinish} type="primary">
 						篩選
 					</Button>
 				</Form>

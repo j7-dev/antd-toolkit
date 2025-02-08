@@ -80,7 +80,7 @@ export const refineDecorator = (Story: any) => {
 								}}
 							>
 								<div className="at-w-[900px]">
-									<Form>
+									<Form layout="vertical">
 										<Story />
 										<Item name={['id']} initialValue={1} />
 									</Form>

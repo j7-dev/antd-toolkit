@@ -62,7 +62,8 @@ export function FilterTagsComponent<T = BaseRecord>({
 						Array.isArray(filteredValue) &&
 						(filteredValue as unknown[])?.every(
 							(item: unknown) => item instanceof dayjs,
-						)
+						) &&
+						filteredValue?.length > 0
 					) {
 						return (
 							<Tag
