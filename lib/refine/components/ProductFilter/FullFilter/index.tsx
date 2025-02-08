@@ -83,6 +83,13 @@ const FullFilter: FC<{
 							placeholder="可多選"
 						/>
 					</Item>
+					<Item name={['status']} label={productKeyLabelMapper('status')}>
+						<Select
+							{...defaultSelectProps}
+							options={POST_STATUS}
+							placeholder="可多選"
+						/>
+					</Item>
 					{/* <Item
             name={['price_range']}
             label={productKeyLabelMapper('price_range')}
@@ -130,13 +137,6 @@ const FullFilter: FC<{
 							}}
 						/>
 					))}
-					<Item name={['status']} label={productKeyLabelMapper('status')}>
-						<Select
-							{...defaultSelectProps}
-							options={POST_STATUS}
-							placeholder="可多選"
-						/>
-					</Item>
 					<Item
 						name={['backorders']}
 						label={productKeyLabelMapper('backorders')}
@@ -161,7 +161,10 @@ const FullFilter: FC<{
 						name={['date_created']}
 						label={productKeyLabelMapper('date_created')}
 					>
-						<RangePicker className="at-w-full" />
+						<RangePicker
+							placeholder={['開始日期', '結束日期']}
+							className="at-w-full"
+						/>
 					</Item>
 					<Item name={['sku']} label={productKeyLabelMapper('sku')}>
 						<Input placeholder="模糊搜尋" allowClear />
