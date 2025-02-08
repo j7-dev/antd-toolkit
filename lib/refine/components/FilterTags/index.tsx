@@ -16,27 +16,27 @@ export function FilterTagsComponent<T = BaseRecord>({
 	valueLabelMapper?: (key: string) => string
 	booleanKeys?: (keyof T)[]
 }): JSX.Element {
-	const searchValues = form?.getFieldsValue()
-	const handleClearSearchProps = (key: string) => () => {
+	const filteredValues = form?.getFieldsValue()
+	const handleClearFilterProps = (key: string) => () => {
 		form?.setFieldValue([key] as NamePath<T>, undefined)
 		form?.submit()
 	}
 
 	const handleArrayProps =
-		(key: string, value: string | number, searchValue: (string | number)[]) =>
+		(key: string, value: string | number, filteredValue: (string | number)[]) =>
 		() => {
-			const newValue = searchValue.filter((item) => item !== value)
+			const newValue = filteredValue.filter((item) => item !== value)
 			form?.setFieldValue([key] as NamePath<T>, newValue)
 			form?.submit()
 		}
 
-	const searchKeys = Object.keys(searchValues || {}) as (keyof T)[]
+	const filterKeys = Object.keys(filteredValues || {}) as (keyof T)[]
 
 	return (
 		<>
-			{searchValues &&
-				searchKeys.map((key) => {
-					const searchValue = searchValues?.[key]
+			{filteredValues &&
+				filterKeys.map((key) => {
+					const filteredValue = filteredValues?.[key]
 
 					/**
 					 * If the value is undefined, null or empty string, we will not display the tag
@@ -45,9 +45,9 @@ export function FilterTagsComponent<T = BaseRecord>({
 					 */
 
 					if (
-						searchValue === undefined ||
-						searchValue === null ||
-						searchValue === ''
+						filteredValue === undefined ||
+						filteredValue === null ||
+						filteredValue === ''
 					)
 						return null
 
@@ -59,8 +59,8 @@ export function FilterTagsComponent<T = BaseRecord>({
 					 */
 
 					if (
-						Array.isArray(searchValue) &&
-						(searchValue as unknown[])?.every(
+						Array.isArray(filteredValue) &&
+						(filteredValue as unknown[])?.every(
 							(item: unknown) => item instanceof dayjs,
 						)
 					) {
@@ -71,10 +71,10 @@ export function FilterTagsComponent<T = BaseRecord>({
 								color="cyan"
 								className="at-px-2.5 at-py-0.5"
 								closeIcon={<CloseCircleOutlined />}
-								onClose={handleClearSearchProps(key as string)}
+								onClose={handleClearFilterProps(key as string)}
 							>
 								{keyLabelMapper(key)}:{' '}
-								{(searchValues[key] as Dayjs[])
+								{(filteredValues[key] as Dayjs[])
 									.map((date) => (date ? date.format('YYYY/MM/DD') : ''))
 									.join(' ~ ')}
 							</Tag>
@@ -87,14 +87,17 @@ export function FilterTagsComponent<T = BaseRecord>({
 					 * @returns Multiple Tags
 					 */
 
-					if (Array.isArray(searchValue)) {
+					if (Array.isArray(filteredValue)) {
+						if (filteredValue.length === 0) {
+							return null
+						}
 						// ensue every item in the array is a string or number
 
-						const isStringOrNumber = (searchValue as unknown[]).every(
+						const isStringOrNumber = (filteredValue as unknown[]).every(
 							(item) => typeof item === 'string' || typeof item === 'number',
 						)
 						if (isStringOrNumber) {
-							return (searchValue as (string | number)[]).map((value) => (
+							return (filteredValue as (string | number)[]).map((value) => (
 								<Tag
 									key={`${key as string}[${value?.toString()}]`}
 									bordered={false}
@@ -104,7 +107,7 @@ export function FilterTagsComponent<T = BaseRecord>({
 									onClose={handleArrayProps(
 										key as string,
 										value,
-										searchValue as (string | number)[],
+										filteredValue as (string | number)[],
 									)}
 								>
 									{keyLabelMapper(key)}: {valueLabelMapper(value?.toString())}
@@ -121,7 +124,7 @@ export function FilterTagsComponent<T = BaseRecord>({
 					 * @returns Tag with 'true' or 'false'
 					 */
 
-					if (typeof searchValue === 'boolean') {
+					if (typeof filteredValue === 'boolean') {
 						return (
 							<Tag
 								key={key as string}
@@ -129,10 +132,10 @@ export function FilterTagsComponent<T = BaseRecord>({
 								color="cyan"
 								className="at-px-2.5 at-py-0.5"
 								closeIcon={<CloseCircleOutlined />}
-								onClose={handleClearSearchProps(key as string)}
+								onClose={handleClearFilterProps(key as string)}
 							>
 								{keyLabelMapper(key)}: {keyLabelMapper(key)}:{' '}
-								{valueLabelMapper(searchValue?.toString())}
+								{valueLabelMapper(filteredValue?.toString())}
 							</Tag>
 						)
 					}
@@ -153,14 +156,14 @@ export function FilterTagsComponent<T = BaseRecord>({
 							color="cyan"
 							className="at-px-2.5 at-py-0.5"
 							closeIcon={<CloseCircleOutlined />}
-							onClose={handleClearSearchProps(key as string)}
+							onClose={handleClearFilterProps(key as string)}
 						>
 							{keyLabelMapper(key)}:{' '}
 							{isBoolean &&
 								valueLabelMapper(
-									searchValue?.toString() === '1' ? 'true' : 'false',
+									filteredValue?.toString() === '1' ? 'true' : 'false',
 								)}
-							{!isBoolean && valueLabelMapper(searchValue?.toString())}
+							{!isBoolean && valueLabelMapper(filteredValue?.toString())}
 						</Tag>
 					)
 				})}
