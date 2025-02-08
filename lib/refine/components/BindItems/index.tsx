@@ -17,16 +17,22 @@ import { TLimit } from '@/main'
  * 可以把項目的使用期限綁定在商品上
  * @interface TBindItemsProps
  * @property {string[]}                                                  product_ids                   - 要綁定的商品 ID 陣列
+ * @property {string}                                                    url                           - 綁定 API 的 url 預設為 `${apiUrl}/products/bind-items`
+ * @property {string}                                                    meta_key                      - 綁定 API 的 meta_key
  * @property {UseCustomMutationParams<TDocBaseRecord>}                   useCustomMutationParams       - 綁定 API 參數
  * @property {UseSelectProps<TDocBaseRecord, HttpError, TDocBaseRecord>} useSelectProps                - 選擇資源 API props
+
  * @property {SelectProps}                                               [selectProps]                 - Select 元件 props
  * @property {string}                                                    [label]                       - 資源名稱
  */
 type TBindItemsProps<T> = {
 	product_ids: string[] // 要綁在哪些商品上
-	useCustomMutationParams: UseCustomMutationParams<T> // 綁定 API，最少需要填 url
+	url: string // 綁定 API 的 url 預設為 `${apiUrl}/products/bind-items`
+	meta_key: string // 綁定 API 的 meta_key
 	useSelectProps: UseSelectProps<T, HttpError, T> // 選擇資源的 API useSelectProps
 	selectProps?: SelectProps // 選擇資源的 select props
+	useCustomMutationParams: UseCustomMutationParams<T> // 綁定 API，如果要改寫 values 或 headers 可以用
+
 	label?: string // 資源名稱
 }
 
@@ -34,10 +40,12 @@ const BindItemsComponent = <
 	T extends BaseRecord & { name: string; id: string },
 >({
 	product_ids,
-	label = '',
+	url,
+	meta_key,
 	useSelectProps,
 	selectProps,
 	useCustomMutationParams,
+	label = '',
 }: TBindItemsProps<T>) => {
 	const { selectProps: selectResourceProps, itemIds: item_ids } =
 		useItemSelect<T>({
@@ -48,19 +56,22 @@ const BindItemsComponent = <
 	const { mutate, isLoading } = useCustomMutation()
 	const apiUrl = useApiUrl()
 	const invalidate = useInvalidate()
-	const form = Form.useFormInstance()
+	const form = Form.useFormInstance<TLimit>()
 	const resource = useSelectProps.resource
 
 	const handleClick = () => {
-		const values: TLimit = form.getFieldsValue()
+		const { limit_type, limit_value, limit_unit } = form.getFieldsValue()
 		mutate(
 			{
-				url: `${apiUrl}/products/bind-courses`,
+				url: url || `${apiUrl}/products/bind-items`,
 				method: 'post',
 				values: {
 					product_ids,
 					item_ids,
-					...values,
+					meta_key,
+					limit_type,
+					limit_value,
+					limit_unit,
 				},
 				config: {
 					headers: {
