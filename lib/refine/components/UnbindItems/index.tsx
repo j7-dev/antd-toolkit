@@ -6,19 +6,19 @@ import { message } from 'antd'
 /**
  * 解除綁定項目的 Props
  * @interface TUnbindItemsProps
- * @property {string}   [url]        - 解除綁定 API 的 url，預設為 `${apiUrl}/products/unbind-items`
  * @property {string[]} product_ids   - 要解除綁定的商品 ID 陣列
  * @property {string[]} item_ids      - 要解除綁定的項目 ID 陣列
  * @property {string}   meta_key      - 解除綁定 API 的 meta_key
  * @property {Function} onSettled     - 解除綁定成功後的回調函數
+ * @property {string}   [url]        - 解除綁定 API 的 url，預設為 `${apiUrl}/products/unbind-items`
  * @property {string}   [label]       - 資源名稱
  */
 type TUnbindItemsProps = {
-	url?: string // 綁定 API 的 url 預設為 `${apiUrl}/products/unbind-items`
 	product_ids: string[] // 要綁在哪些商品上
 	item_ids: string[] // 要解除綁定的項目 id
 	meta_key: string // 綁定 API 的 meta_key
 	onSettled: () => void // 解除綁定成功後的 callback
+	url?: string // 綁定 API 的 url 預設為 `${apiUrl}/products/unbind-items`
 	label?: string // 資源名稱
 }
 
@@ -26,6 +26,7 @@ const UnbindItemsComponent = ({
 	url,
 	product_ids,
 	item_ids,
+	meta_key,
 	onSettled,
 	label = '',
 }: TUnbindItemsProps) => {
@@ -43,6 +44,7 @@ const UnbindItemsComponent = ({
 				values: {
 					product_ids,
 					item_ids,
+					meta_key,
 				},
 				config: {
 					headers: {

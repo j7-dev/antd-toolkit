@@ -6,28 +6,30 @@ import { TLimit } from '@/main'
 /**
  * 批量修改綁定項目的 Props
  * @interface TUpdateBoundItemsProps
- * @property {string}   [url]        - 修改綁定 API 的 url，預設為 `${apiUrl}/products/update-bound-items`
  * @property {string[]} product_ids   - 要修改的商品 ID 陣列
  * @property {string[]} item_ids      - 要修改的項目 ID 陣列
+ * @property {string}   meta_key      - 修改綁定 API 的 meta_key
  * @property {Function} onSettled     - 修改成功後的回調函數
- * @property {string}   [label]       - 資源名稱
+ * @property {string}   [url]        - 修改綁定 API 的 url，預設為 `${apiUrl}/products/update-bound-items`
  */
 type TUpdateBoundItemsProps = {
-	url?: string // 綁定 API 的 url 預設為 `${apiUrl}/products/update-bound-items`
 	product_ids: string[] // 要綁在哪些商品上
 	item_ids: string[] // 要綁定的項目 id
+	meta_key: string // 綁定 API 的 meta_key
 	onSettled: () => void // 綁定成功後的 callback
-	label?: string // 資源名稱
+	url?: string // 綁定 API 的 url 預設為 `${apiUrl}/products/update-bound-items`
 }
 
 const UpdateBoundItemsComponent = ({
-	url,
 	product_ids,
 	item_ids,
+	meta_key,
 	onSettled,
+	url,
 }: TUpdateBoundItemsProps) => {
 	const { mutate, isLoading } = useCustomMutation()
 	const apiUrl = useApiUrl()
+
 	const invalidate = useInvalidate()
 	const form = Form.useFormInstance()
 
@@ -40,6 +42,7 @@ const UpdateBoundItemsComponent = ({
 				values: {
 					product_ids,
 					item_ids,
+					meta_key,
 					...values,
 				},
 				config: {
