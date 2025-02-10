@@ -1,11 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+	important: '.tailwind',
 	prefix: 'at-',
 	corePlugins: {
 		preflight: false,
 	},
 	content: ['./lib/**/*.{ts,tsx,js,jsx}'],
-	darkMode: ['class', '[data-mode="dark"]'],
 	theme: {
 		extend: {
 			animation: {
