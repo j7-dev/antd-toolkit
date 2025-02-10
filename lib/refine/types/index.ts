@@ -1,7 +1,14 @@
 import { Dayjs } from 'dayjs'
-import {
-	MetaQuery,
-} from '@refinedev/core'
+import { MetaQuery } from '@refinedev/core'
+import {TExpireDate} from '@/main'
+
+export type TGrantedItemBase = {
+	id: string
+	name: string
+	expire_date: TExpireDate
+}
+
+
 
 export type TProductFilterProps = Partial<{
 	s: string

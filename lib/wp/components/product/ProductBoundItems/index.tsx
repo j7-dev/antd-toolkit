@@ -9,17 +9,17 @@ const LIMIT_UNIT_LABEL = {
 	year: '年',
 }
 
-export type TBoundItemsData = TLimit & { id: string; name: string }
+export type TBoundItemData = TLimit & { id: string; name: string }
 
 /**
  * 顯示此商品已綁定項目的 props
  * @interface TProductBoundItemsProps
- * @property {TBoundItemsData[]} items - 綁定項目的資料陣列
+ * @property {TBoundItemData[]} items - 綁定項目的資料陣列
  * @property {string}                                     [className]   - 自訂 CSS class
  * @property {boolean}                                    [hideName]    - 是否隱藏名稱
  */
 export type TProductBoundItemsProps = {
-	items: TBoundItemsData[]
+	items: TBoundItemData[]
 	className?: string
 	hideName?: boolean
 }
