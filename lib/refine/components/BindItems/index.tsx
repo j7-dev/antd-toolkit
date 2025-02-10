@@ -32,7 +32,6 @@ type TBindItemsProps<T> = {
 	useSelectProps: UseSelectProps<T, HttpError, T> // 選擇資源的 API useSelectProps
 	selectProps?: SelectProps // 選擇資源的 select props
 	useCustomMutationParams?: UseCustomMutationParams<T> // 綁定 API，如果要改寫 values 或 headers 可以用
-
 	label?: string // 資源名稱
 }
 
@@ -119,7 +118,7 @@ const BindItemsComponent = <
 	)
 }
 
-export const BindItems = memo(BindItemsComponent)
+export const BindItems = memo(BindItemsComponent) as typeof BindItemsComponent
 
 // refine useCustomMutation 的型別
 type UseCustomMutationParams<TVariables> = {
