@@ -9,9 +9,14 @@ const NameIdBase: FC<{
 	className?: string
 }> = ({ name, id, className }) => {
 	return (
-		<div className={cn('at-flex at-items-end', className)}>
+		<div className={cn('at-flex at-items-end at-gap-x-1', className)}>
 			<div className="at-name at-min-w-0 at-m-0 [&_*]:at-truncate">{name}</div>
-			<div className="at-id at-my-0 at-ml-0 at-text-gray-400 at-text-[0.5em] at-font-light at-shrink-0">
+			<div
+				className="at-id at-my-0 at-ml-0 at-text-gray-400 at-text-[0.75em] at-font-light at-shrink-0"
+				style={{
+					lineHeight: 'normal',
+				}}
+			>
 				#{id}
 			</div>
 		</div>
