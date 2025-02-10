@@ -31,7 +31,7 @@ type TBindItemsProps<T> = {
 	meta_key: string // 綁定 API 的 meta_key
 	useSelectProps: UseSelectProps<T, HttpError, T> // 選擇資源的 API useSelectProps
 	selectProps?: SelectProps // 選擇資源的 select props
-	useCustomMutationParams: UseCustomMutationParams<T> // 綁定 API，如果要改寫 values 或 headers 可以用
+	useCustomMutationParams?: UseCustomMutationParams<T> // 綁定 API，如果要改寫 values 或 headers 可以用
 
 	label?: string // 資源名稱
 }
