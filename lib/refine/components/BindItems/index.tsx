@@ -11,6 +11,7 @@ import {
 } from '@refinedev/core'
 import { useItemSelect } from '@/wp'
 import { TLimit } from '@/main'
+import { UseCustomMutationParams } from '@/refine/types'
 
 /**
  * 通用的綁定項目元件
@@ -21,7 +22,7 @@ import { TLimit } from '@/main'
  * @property {UseSelectProps<TDocBaseRecord, HttpError, TDocBaseRecord>} useSelectProps                - 選擇資源 API props
  * @property {string}                                                    url                           - 綁定 API 的 url 預設為 `${apiUrl}/products/bind-items`
  * @property {SelectProps}                                               [selectProps]                 - Select 元件 props
- * @property {UseCustomMutationParams<TDocBaseRecord>}                   useCustomMutationParams       - 綁定 API 參數
+ * @property {UseCustomMutationParams}                   useCustomMutationParams       - 綁定 API 參數
  * @property {string}                                                    [label]                       - 資源名稱
  */
 type TBindItemsProps<T> = {
@@ -30,7 +31,7 @@ type TBindItemsProps<T> = {
 	useSelectProps: UseSelectProps<T, HttpError, T> // 選擇資源的 API useSelectProps
 	url?: string // 綁定 API 的 url 預設為 `${apiUrl}/products/bind-items`
 	selectProps?: SelectProps // 選擇資源的 select props
-	useCustomMutationParams?: UseCustomMutationParams<T> // 綁定 API，如果要改寫 values 或 headers 可以用
+	useCustomMutationParams?: UseCustomMutationParams // 綁定 API，如果要改寫 values 或 headers 可以用
 	label?: string // 資源名稱
 }
 
@@ -118,16 +119,3 @@ const BindItemsComponent = <
 }
 
 export const BindItems = memo(BindItemsComponent) as typeof BindItemsComponent
-
-// refine useCustomMutation 的型別
-type UseCustomMutationParams<TVariables> = {
-	url: string
-	method?: 'post' | 'put' | 'patch' | 'delete'
-	values?: TVariables
-	meta?: MetaQuery
-	metaData?: MetaQuery
-	dataProviderName?: string
-	config?: {
-		headers?: {}
-	}
-}

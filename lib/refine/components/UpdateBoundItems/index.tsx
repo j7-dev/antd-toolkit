@@ -2,6 +2,7 @@ import { memo } from 'react'
 import { Button, message, Form } from 'antd'
 import { useCustomMutation, useApiUrl, useInvalidate } from '@refinedev/core'
 import { TLimit } from '@/main'
+import { UseCustomMutationParams } from '@/refine/types'
 
 /**
  * 批量修改綁定項目的 Props
@@ -11,6 +12,7 @@ import { TLimit } from '@/main'
  * @property {string}   meta_key      - 修改綁定 API 的 meta_key
  * @property {Function} onSettled     - 修改成功後的回調函數
  * @property {string}   [url]        - 修改綁定 API 的 url，預設為 `${apiUrl}/products/update-bound-items`
+ * @property {UseCustomMutationParams}                   useCustomMutationParams       -  API 參數
  */
 type TUpdateBoundItemsProps = {
 	product_ids: string[] // 要綁在哪些商品上
@@ -18,6 +20,7 @@ type TUpdateBoundItemsProps = {
 	meta_key: string // 綁定 API 的 meta_key
 	onSettled: () => void // 綁定成功後的 callback
 	url?: string // 綁定 API 的 url 預設為 `${apiUrl}/products/update-bound-items`
+	useCustomMutationParams?: UseCustomMutationParams // 綁定 API，如果要改寫 values 或 headers 可以用
 }
 
 const UpdateBoundItemsComponent = ({
@@ -26,6 +29,7 @@ const UpdateBoundItemsComponent = ({
 	meta_key,
 	onSettled,
 	url,
+	useCustomMutationParams,
 }: TUpdateBoundItemsProps) => {
 	const { mutate, isLoading } = useCustomMutation()
 	const apiUrl = useApiUrl()
@@ -50,6 +54,7 @@ const UpdateBoundItemsComponent = ({
 						'Content-Type': 'multipart/form-data;',
 					},
 				},
+				...(useCustomMutationParams as any),
 			},
 			{
 				onSuccess: () => {

@@ -1,4 +1,7 @@
 import { Dayjs } from 'dayjs'
+import {
+	MetaQuery,
+} from '@refinedev/core'
 
 export type TProductFilterProps = Partial<{
 	s: string
@@ -17,3 +20,20 @@ export type TProductFilterProps = Partial<{
 	is_course: boolean
 	price_range: [number, number]
 }>
+
+
+
+// refine useCustomMutation 的型別
+export type UseCustomMutationParams<TVariables = {
+	[key: string]: any
+}> = {
+	url: string
+	method?: 'post' | 'put' | 'patch' | 'delete'
+	values?: TVariables
+	meta?: MetaQuery
+	metaData?: MetaQuery
+	dataProviderName?: string
+	config?: {
+		headers?: {}
+	}
+}
