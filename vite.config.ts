@@ -8,10 +8,6 @@ import { extname, relative, resolve } from 'path'
 import { fileURLToPath } from 'node:url'
 import { glob } from 'glob'
 
-// if(process.env.NODE_ENV === "development") {
-
-console.log('⭐  process.env.BUILD_ENV:', process.env.BUILD_ENV)
-
 const isBuildForStoryBook = process.env.BUILD_ENV === 'storybook'
 
 const defaultPlugins = [alias(), react(), tsconfigPaths()]
