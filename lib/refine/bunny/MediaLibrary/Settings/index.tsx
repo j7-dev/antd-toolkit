@@ -19,7 +19,7 @@ const Settings = ({ onFinish }: TSettingProps) => {
 	const { isLoading: isGetLoading } = useOptions({ form })
 	return (
 		<Form layout="vertical" form={form} onFinish={onFinish || handleSave}>
-			<div className="at-flex at-flex-col md:at-flex-row at-at-gap-8">
+			<div className="at-flex at-flex-col md:at-flex-row at-gap-8">
 				<div className="at-w-full at-max-w-[400px]">
 					<Spin spinning={isGetLoading}>
 						<Item
