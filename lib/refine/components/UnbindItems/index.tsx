@@ -19,7 +19,7 @@ type TUnbindItemsProps = {
 	product_ids: string[] // 要綁在哪些商品上
 	item_ids: string[] // 要解除綁定的項目 id
 	meta_key: string // 綁定 API 的 meta_key
-	onSettled: () => void // 解除綁定成功後的 callback
+	onSettled?: () => void // 解除綁定成功後的 callback
 	url?: string // 綁定 API 的 url 預設為 `${apiUrl}/products/unbind-items`
 	useCustomMutationParams?: UseCustomMutationParams // 綁定 API，如果要改寫 values 或 headers 可以用
 	label?: string // 資源名稱
@@ -75,7 +75,7 @@ const UnbindItemsComponent = ({
 					})
 				},
 				onSettled: () => {
-					onSettled()
+					onSettled?.()
 				},
 			},
 		)

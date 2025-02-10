@@ -6,34 +6,31 @@ import { UseCustomMutationParams } from '@/refine/types'
 
 /**
  * 移除項目權限的 Props
- * @interface TRemoveItemAccessProps
+ * @interface TRevokeUsersProps
  * @property {React.Key[]} user_ids - 要移除權限的用戶 ID 陣列
  * @property {string[]} item_ids - 要移除權限的項目 ID 陣列
- * @property {string} meta_key - API 的 meta_key
  * @property {Function} onSettled - 移除成功後的回調函數
  * @property {string} [url] - API 的 url，預設為 `${apiUrl}/courses/remove-users`
  * @property {UseCustomMutationParams} [useCustomMutationParams] - API 參數
  * @property {string} [label] - 資源名稱
  */
-type TRemoveItemAccessProps = {
+type TRevokeUsersProps = {
 	user_ids: React.Key[]
 	item_ids: string[]
-	meta_key: string
-	onSettled: () => void
+	onSettled?: () => void
 	url?: string
 	useCustomMutationParams?: UseCustomMutationParams
 	label?: string
 }
 
-const RemoveItemAccessComponent = ({
+const RevokeUsersComponent = ({
 	user_ids,
 	item_ids,
-	meta_key,
 	onSettled,
 	url,
 	useCustomMutationParams,
 	label = '',
-}: TRemoveItemAccessProps) => {
+}: TRevokeUsersProps) => {
 	const apiUrl = useApiUrl()
 	const invalidate = useInvalidate()
 
@@ -43,12 +40,11 @@ const RemoveItemAccessComponent = ({
 	const handleRemove = () => {
 		mutate(
 			{
-				url: url || `${apiUrl}/courses/remove-users`,
+				url: url || `${apiUrl}/limit/revoke-users`,
 				method: 'post',
 				values: {
 					user_ids,
 					item_ids,
-					meta_key,
 				},
 				config: {
 					headers: {
@@ -60,7 +56,7 @@ const RemoveItemAccessComponent = ({
 			{
 				onSuccess: () => {
 					message.success({
-						content: '移除用戶成功！',
+						content: '撤銷用戶成功！',
 						key: 'remove-users',
 					})
 					invalidate({
@@ -70,12 +66,12 @@ const RemoveItemAccessComponent = ({
 				},
 				onError: () => {
 					message.error({
-						content: '移除用戶失敗！',
+						content: '撤銷用戶失敗！',
 						key: 'remove-users',
 					})
 				},
 				onSettled: () => {
-					onSettled()
+					onSettled?.()
 				},
 			},
 		)
@@ -97,6 +93,6 @@ const RemoveItemAccessComponent = ({
 	)
 }
 
-export const RemoveItemAccess = memo(
-	RemoveItemAccessComponent,
-) as typeof RemoveItemAccessComponent
+export const RevokeUsers = memo(
+	RevokeUsersComponent,
+) as typeof RevokeUsersComponent

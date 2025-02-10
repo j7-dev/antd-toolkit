@@ -14,36 +14,36 @@ import { useItemSelect } from '@/wp'
 
 /**
  * 授予項目權限的 Props
- * @interface TGrantItemAccessProps
+ * @interface TGrantUsersProps
  * @property {string[]} user_ids - 要授予權限的用戶 ID 陣列
- * @property {string} meta_key - 授權 API 的 meta_key
  * @property {SelectProps} [selectProps] - Select 元件 props
  * @property {UseSelectProps<T, HttpError, T>} useSelectProps - 選擇資源的 API useSelectProps
  * @property {string} [url] - 授權 API 的 url，預設為 `${apiUrl}/courses/add-students`
  * @property {UseCustomMutationParams} [useCustomMutationParams] - API 參數
  * @property {string} [label] - 資源名稱
+ * @property {boolean} [hideLabel] - 是否隱藏 label
  */
-type TGrantItemAccessProps<T> = {
+type TGrantUsersProps<T> = {
 	user_ids: string[] // 要綁在哪些商品上
-	meta_key: string // 綁定 API 的 meta_key
 	selectProps?: SelectProps // 選擇資源的 select props
 	useSelectProps: UseSelectProps<T, HttpError, T> // 選擇資源的 API useSelectProps
 	url?: string // 綁定 API 的 url 預設為 `${apiUrl}/products/bind-items`
 	useCustomMutationParams?: UseCustomMutationParams // 綁定 API，如果要改寫 values 或 headers 可以用
 	label?: string // 資源名稱
+	hideLabel?: boolean // 是否隱藏 label
 }
 
-const GrantItemAccessComponent = <
+const GrantUsersComponent = <
 	T extends BaseRecord & { name: string; id: string },
 >({
 	user_ids,
-	meta_key,
 	selectProps,
 	useSelectProps,
 	url,
 	useCustomMutationParams,
 	label = '',
-}: TGrantItemAccessProps<T>) => {
+	hideLabel = false,
+}: TGrantUsersProps<T>) => {
 	const { selectProps: selectResourceProps, itemIds: item_ids } =
 		useItemSelect<T>({
 			selectProps,
@@ -59,12 +59,11 @@ const GrantItemAccessComponent = <
 	const handleClick = () => {
 		mutate(
 			{
-				url: url || `${apiUrl}/courses/add-students`,
+				url: url || `${apiUrl}/limit/grant-users`,
 				method: 'post',
 				values: {
 					user_ids,
 					item_ids,
-					meta_key,
 					expire_date: time ? time.unix() : 0,
 				},
 				config: {
@@ -97,7 +96,7 @@ const GrantItemAccessComponent = <
 
 	return (
 		<>
-			{label && <label className="tw-block mb-2">{label}</label>}
+			{!hideLabel && <label className="tw-block mb-2">添加其他{label}</label>}
 			<Space.Compact className="w-full">
 				<Select {...selectResourceProps} />
 				<DatePicker
@@ -122,6 +121,6 @@ const GrantItemAccessComponent = <
 	)
 }
 
-export const GrantItemAccess = memo(
-	GrantItemAccessComponent,
-) as typeof GrantItemAccessComponent
+export const GrantUsers = memo(
+	GrantUsersComponent,
+) as typeof GrantUsersComponent

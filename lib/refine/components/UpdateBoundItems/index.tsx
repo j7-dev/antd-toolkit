@@ -18,7 +18,7 @@ type TUpdateBoundItemsProps = {
 	product_ids: string[] // 要綁在哪些商品上
 	item_ids: string[] // 要綁定的項目 id
 	meta_key: string // 綁定 API 的 meta_key
-	onSettled: () => void // 綁定成功後的 callback
+	onSettled?: () => void // 綁定成功後的 callback
 	url?: string // 綁定 API 的 url 預設為 `${apiUrl}/products/update-bound-items`
 	useCustomMutationParams?: UseCustomMutationParams // 綁定 API，如果要改寫 values 或 headers 可以用
 }
@@ -74,7 +74,7 @@ const UpdateBoundItemsComponent = ({
 					})
 				},
 				onSettled: () => {
-					onSettled()
+					onSettled?.()
 				},
 			},
 		)

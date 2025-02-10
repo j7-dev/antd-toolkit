@@ -6,31 +6,28 @@ import { UseCustomMutationParams } from '@/refine/types'
 
 /**
  * 修改項目到期日期的 Props
- * @interface TModifyItemExpireDateProps
+ * @interface TUpdateGrantedUsersProps
  * @property {string[]} user_ids - 要修改的用戶 ID 陣列
  * @property {string[]} item_ids - 要修改的項目 ID 陣列
- * @property {string} meta_key - API 的 meta_key
  * @property {Function} onSettled - 修改成功後的回調函數
  * @property {string} [url] - API 的 url，預設為 `${apiUrl}/courses/update-students`
  * @property {UseCustomMutationParams} [useCustomMutationParams] - API 參數
  */
-type TModifyItemExpireDateProps = {
+type TUpdateGrantedUsersProps = {
 	user_ids: string[]
 	item_ids: string[]
-	meta_key: string
-	onSettled: () => void
+	onSettled?: () => void
 	url?: string
 	useCustomMutationParams?: UseCustomMutationParams
 }
 
-const ModifyItemExpireDateComponent = ({
+const UpdateGrantedUsersComponent = ({
 	user_ids,
 	item_ids,
-	meta_key,
 	onSettled,
 	url,
 	useCustomMutationParams,
-}: TModifyItemExpireDateProps) => {
+}: TUpdateGrantedUsersProps) => {
 	const [time, setTime] = useState<Dayjs | undefined>(undefined)
 	const { mutate, isLoading } = useCustomMutation()
 	const apiUrl = useApiUrl()
@@ -39,12 +36,11 @@ const ModifyItemExpireDateComponent = ({
 	const handleUpdate = () => () => {
 		mutate(
 			{
-				url: url || `${apiUrl}/courses/update-students`,
+				url: url || `${apiUrl}/limit/update-users`,
 				method: 'post',
 				values: {
 					user_ids,
 					item_ids,
-					meta_key,
 					timestamp: time ? time?.unix() : 0,
 				},
 				config: {
@@ -58,7 +54,7 @@ const ModifyItemExpireDateComponent = ({
 				onSuccess: () => {
 					message.success({
 						content: '批量修改觀看期限成功！',
-						key: 'update-users',
+						key: 'update-granted-users',
 					})
 
 					invalidate({
@@ -70,11 +66,11 @@ const ModifyItemExpireDateComponent = ({
 				onError: () => {
 					message.error({
 						content: '批量修改觀看期限失敗！',
-						key: 'update-users',
+						key: 'update-granted-users',
 					})
 				},
 				onSettled: () => {
-					onSettled()
+					onSettled?.()
 				},
 			},
 		)
@@ -105,6 +101,6 @@ const ModifyItemExpireDateComponent = ({
 	)
 }
 
-export const ModifyItemExpireDate = memo(
-	ModifyItemExpireDateComponent,
-) as typeof ModifyItemExpireDateComponent
+export const UpdateGrantedUsers = memo(
+	UpdateGrantedUsersComponent,
+) as typeof UpdateGrantedUsersComponent
