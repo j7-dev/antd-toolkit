@@ -96,7 +96,7 @@ const GrantUsersComponent = <
 
 	return (
 		<>
-			{!hideLabel && <label className="tw-block mb-2">添加其他{label}</label>}
+			{!hideLabel && <label className="tw-block mb-2">{label}</label>}
 			<Space.Compact className="w-full">
 				<Select {...selectResourceProps} />
 				<DatePicker
@@ -114,7 +114,7 @@ const GrantUsersComponent = <
 					disabled={!user_ids.length || !item_ids.length}
 					onClick={handleClick}
 				>
-					添加其他{label}
+					{label}
 				</Button>
 			</Space.Compact>
 		</>

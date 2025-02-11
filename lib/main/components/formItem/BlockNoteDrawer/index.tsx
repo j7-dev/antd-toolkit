@@ -7,7 +7,6 @@ import {
 	Dropdown,
 	Tooltip,
 	FormItemProps,
-	FormInstance,
 } from 'antd'
 import { DropdownButtonProps } from 'antd/es/dropdown/dropdown-button'
 import { useBlockNoteDrawer } from './useBlockNoteDrawer'
@@ -17,6 +16,16 @@ import { useEnv, BlockNote } from '@/main'
 
 const { Item } = Form
 
+/**
+ * BlockNoteDrawer 的 Props
+ * BUG 自訂 Block 無法被成功轉成 html ReactInlineContentSpec: renderHTML() failed，需要從 BlockNote 內部去除錯
+ * @interface TBlockNoteDrawerProps
+ * @property {FormItemProps}                              [formItemProps]         - Form.Item 的 props
+ * @property {DropdownButtonProps}                        [dropdownButtonProps]   - Dropdown.Button 的 props
+ * @property {TUseBlockNoteParams}                       useBlockNoteParams     - BlockNote 編輯器的參數
+ * @property {React.ReactNode}                           [renderBefore]         - 在編輯器前方要渲染的內容
+ * @property {React.ReactNode}                           [renderAfter]          - 在編輯器後方要渲染的內容
+ */
 type TBlockNoteDrawerProps = {
 	// form: FormInstance
 	formItemProps?: FormItemProps
@@ -45,8 +54,6 @@ const BlockNoteDrawerComponent: FC<TBlockNoteDrawerProps> = ({
 
 	const handleConfirm = () => {
 		form.setFieldValue(name, html)
-		// TEST
-		console.log('⭐ handleConfirm setFieldValue:', html)
 		close()
 	}
 
