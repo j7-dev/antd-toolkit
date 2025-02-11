@@ -10,7 +10,6 @@ import { cn } from '@/main'
  * @param {[number, number]} [props.mainPadding=[12, 24]] - Main 區域的內縮 [mobile, desktop] padding
  * @param {number} [props.collapsedWidth=80] - 收起時 Sider 的寬度
  * @param {number} [props.expandedWidth=200] - 展開時 Sider 的寬度
- * @param {string} [props.className] - 額外的 CSS class
  * @param {React.CSSProperties} [props.style] - 額外的 CSS 樣式
  * @param {React.ReactNode} props.children - 子元件
  * @returns {JSX.Element} ActionArea 元件
@@ -19,7 +18,6 @@ type TActionAreaProps = {
 	mainPadding?: [number, number] // Main 區域的內縮 [mobile, desktop] padding
 	collapsedWidth?: number // 收起時 Sider 的寬度
 	expandedWidth?: number // 展開時 Sider 的寬度
-	className?: string
 	style?: React.CSSProperties
 	children: React.ReactNode
 }
@@ -29,7 +27,6 @@ export const ActionArea: FC<TActionAreaProps> = ({
 	collapsedWidth = 80,
 	expandedWidth = 200,
 	children,
-	className,
 	style,
 }) => {
 	const breakpoint = Grid.useBreakpoint()
@@ -44,13 +41,11 @@ export const ActionArea: FC<TActionAreaProps> = ({
 	const mobileWidth = `calc(100% - ${padding * 2}px)`
 	return (
 		<div
-			className={cn(
-				'at-tw-fixed at-bottom-0 at-bg-white at-w-full at-py-3 at-px-6 at-shadow-[0_0px_60px_-24px_rgba(0,0,0,0.3)]',
-				className,
-			)}
+			className="at-sticky at-bottom-0 at-bg-white at-w-full at-py-3 at-px-6 at-shadow-[0_0px_60px_-24px_rgba(0,0,0,0.3)]"
 			style={{
 				width: isMobile ? mobileWidth : deskWidth,
-				right: padding,
+				right: `${padding}px`,
+				marginBottom: `-${padding}px`,
 				...style,
 			}}
 		>
