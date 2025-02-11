@@ -45,7 +45,7 @@ export const ActionArea: FC<TActionAreaProps> = ({
 	return (
 		<div
 			className={cn(
-				'tw-fixed bottom-0 bg-white w-full py-3 px-6 shadow-[0_0px_60px_-24px_rgba(0,0,0,0.3)]',
+				'at-tw-fixed at-bottom-0 at-bg-white at-w-full at-py-3 at-px-6 at-shadow-[0_0px_60px_-24px_rgba(0,0,0,0.3)]',
 				className,
 			)}
 			style={{
