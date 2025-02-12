@@ -4,7 +4,7 @@ import { FaPhotoVideo } from 'react-icons/fa'
 import { CloudUploadOutlined, SettingOutlined } from '@ant-design/icons'
 import VideoList from './VideoList'
 import { atom } from 'jotai'
-import { TFileInQueue, TMediaLibraryProps } from '@/refine'
+import { TFileInQueue, TMediaLibraryProps, useBunny } from '@/refine'
 import { Button } from 'antd'
 import Settings from './Settings'
 import { useMediaUpload } from '@/refine/bunny/MediaLibrary/hooks'
@@ -115,6 +115,13 @@ const MediaLibraryComponent: FC<TMediaLibraryCompoundProps> = ({
 			icon: <SettingOutlined />,
 		},
 	]
+
+	const { bunny_library_id, bunny_stream_api_key, bunny_cdn_hostname } =
+		useBunny()
+
+	if (!bunny_library_id || !bunny_stream_api_key || !bunny_cdn_hostname) {
+		return <Settings />
+	}
 
 	return (
 		<div className="at-relative">
