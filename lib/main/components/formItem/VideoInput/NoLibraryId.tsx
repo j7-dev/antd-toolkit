@@ -34,7 +34,7 @@ const NoLibraryId = ({
 							</div>
 						)}
 
-						<Link to="/settings">
+						<Link to="/media-library?tab=bunny-settings">
 							<Button
 								className="at-pl-0 at-ml-0"
 								type="link"

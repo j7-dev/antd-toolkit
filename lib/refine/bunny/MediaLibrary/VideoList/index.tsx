@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import { FC, useState } from 'react'
 import Filter from './Filter'
 import { useInfiniteList } from '@refinedev/core'
 import { Button, Empty, Result, Alert } from 'antd'
@@ -10,6 +10,7 @@ import { LoadingCard } from '@/main/components'
 import FileEncodeProgress from './FileEncodeProgress'
 import FileUploadProgress from './FileUploadProgress'
 import { useBunny, filesInQueueAtom, TMediaLibraryProps } from '@/refine'
+import NoLibraryId from '@/main/components/formItem/VideoInput/NoLibraryId'
 
 const PAGE_SIZE = 50
 
@@ -19,7 +20,8 @@ const VideoList: FC<TMediaLibraryProps> = ({
 	selectButtonProps,
 	limit,
 }) => {
-	const { bunny_library_id } = useBunny()
+	const { bunny_library_id, bunny_stream_api_key, bunny_cdn_hostname } =
+		useBunny()
 	const [search, setSearch] = useState('')
 
 	const filesInQueue = useAtomValue(filesInQueueAtom)
@@ -48,6 +50,10 @@ const VideoList: FC<TMediaLibraryProps> = ({
 	const allVideos = ([] as TBunnyVideo[]).concat(
 		...(data?.pages ?? []).map((page) => page?.data || []),
 	)
+
+	if (!bunny_library_id || !bunny_stream_api_key || !bunny_cdn_hostname) {
+		return <NoLibraryId type="alert" />
+	}
 
 	const isSearchFetching = isFetching && !isFetchingNextPage
 
