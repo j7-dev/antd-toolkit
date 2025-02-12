@@ -101,12 +101,19 @@ const MediaLibraryComponent: FC<TMediaLibraryCompoundProps> = ({
 		}
 	}, [])
 
+	const { bunny_library_id, bunny_stream_api_key, bunny_cdn_hostname } =
+		useBunny()
+
+	const disabledBunny =
+		!bunny_library_id || !bunny_stream_api_key || !bunny_cdn_hostname
+
 	const items: TabsProps['items'] = [
 		{
 			key: 'bunny-media-library',
 			label: 'Bunny 媒體庫',
 			children: <VideoList {...mediaLibraryProps} />,
 			icon: <FaPhotoVideo />,
+			disabled: disabledBunny,
 		},
 		{
 			key: 'bunny-settings',
@@ -115,13 +122,6 @@ const MediaLibraryComponent: FC<TMediaLibraryCompoundProps> = ({
 			icon: <SettingOutlined />,
 		},
 	]
-
-	const { bunny_library_id, bunny_stream_api_key, bunny_cdn_hostname } =
-		useBunny()
-
-	if (!bunny_library_id || !bunny_stream_api_key || !bunny_cdn_hostname) {
-		return <Settings />
-	}
 
 	return (
 		<div className="at-relative">
@@ -133,7 +133,9 @@ const MediaLibraryComponent: FC<TMediaLibraryCompoundProps> = ({
 							<Button icon={<CloudUploadOutlined />}>上傳影片</Button>
 						</Upload>
 					}
-					defaultActiveKey="bunny-media-library"
+					defaultActiveKey={
+						disabledBunny ? 'bunny-settings' : 'bunny-media-library'
+					}
 					items={items}
 					type="card"
 					{...tabsProps}
