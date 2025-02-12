@@ -1,4 +1,4 @@
-import React, { FC, memo, useRef, useEffect, useState } from 'react'
+import { FC, memo, useRef, useEffect, useState } from 'react'
 import { Tabs, TabsProps, Upload, UploadProps } from 'antd'
 import { FaPhotoVideo } from 'react-icons/fa'
 import { CloudUploadOutlined, SettingOutlined } from '@ant-design/icons'
@@ -104,10 +104,6 @@ const MediaLibraryComponent: FC<TMediaLibraryCompoundProps> = ({
 			}
 		}
 	}, [])
-
-	if (!bunny_library_id || !bunny_stream_api_key || !bunny_cdn_hostname) {
-		return <NoLibraryId />
-	}
 
 	const items: TabsProps['items'] = [
 		{

@@ -58,7 +58,6 @@ const BlockNoteDrawerComponent: FC<TBlockNoteDrawerProps> = ({
 	}
 
 	useEffect(() => {
-		console.log('⭐  form:', form)
 		if (watchId && open && form) {
 			const description = form.getFieldValue(name)
 
