@@ -1,5 +1,5 @@
-import React, { useState, useEffect, memo } from 'react'
-import { filesInQueueAtom, useListVideo } from '@/refine'
+import { useState, useEffect, memo } from 'react'
+import { filesInQueueAtom, useListVideo, useBunny } from '@/refine'
 import { useAtom } from 'jotai'
 import { Progress, Tooltip, Alert } from 'antd'
 import {
@@ -11,11 +11,14 @@ import {
 	ExclamationCircleFilled,
 } from '@ant-design/icons'
 import { getEstimateUploadTimeInSeconds } from '@/main/utils'
+import { useInvalidate } from '@refinedev/core'
 
 const REFETCH_INTERVAL = 30000 // 30 秒
 
 const MediaLibraryIndicatorComponent = () => {
 	const [isExpanded, setIsExpanded] = useState(false)
+	const { bunny_library_id } = useBunny()
+	const invalidate = useInvalidate()
 
 	const [filesInQueue, setFilesInQueue] = useAtom(filesInQueueAtom)
 	const enabled =
@@ -84,7 +87,7 @@ const MediaLibraryIndicatorComponent = () => {
 	useEffect(() => {
 		if (!isFetching) {
 			setFilesInQueue((prev) => {
-				return prev
+				const newFilesInQueue = prev
 					.map((fileInQueue) => {
 						const item = items.find(
 							(video) => video.guid === fileInQueue.videoId,
@@ -98,6 +101,17 @@ const MediaLibraryIndicatorComponent = () => {
 						}
 					})
 					.filter((fileInQueue) => fileInQueue.encodeProgress !== 100)
+
+				// 如果已經有編碼 100% 的 invalidate
+				if (newFilesInQueue.length < prev.length) {
+					invalidate({
+						dataProviderName: 'bunny-stream',
+						resource: `${bunny_library_id}/videos`,
+						invalidates: ['list'],
+					})
+				}
+
+				return newFilesInQueue
 			})
 		}
 	}, [isFetching])

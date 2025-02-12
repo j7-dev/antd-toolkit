@@ -1,4 +1,3 @@
-import React from 'react'
 import { UploadProps } from 'antd'
 import { Upload } from '@/wp/components/general'
 
