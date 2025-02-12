@@ -9,7 +9,6 @@ import { Button } from 'antd'
 import Settings from './Settings'
 import { useMediaUpload } from '@/refine/bunny/MediaLibrary/hooks'
 import UploadVideo from './UploadVideo'
-import { useSearchParams } from 'react-router-dom'
 
 /**
  * MediaLibrary 元件的屬性介面
@@ -117,9 +116,6 @@ const MediaLibraryComponent: FC<TMediaLibraryCompoundProps> = ({
 		},
 	]
 
-	const [searchParams] = useSearchParams()
-	const defaultActiveKey = searchParams.get('tab') || 'bunny-media-library'
-
 	const { bunny_library_id, bunny_stream_api_key, bunny_cdn_hostname } =
 		useBunny()
 
@@ -137,7 +133,7 @@ const MediaLibraryComponent: FC<TMediaLibraryCompoundProps> = ({
 							<Button icon={<CloudUploadOutlined />}>上傳影片</Button>
 						</Upload>
 					}
-					defaultActiveKey={defaultActiveKey}
+					defaultActiveKey="bunny-media-library"
 					items={items}
 					type="card"
 					{...tabsProps}
