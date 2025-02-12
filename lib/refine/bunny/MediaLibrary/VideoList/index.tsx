@@ -45,6 +45,10 @@ const VideoList: FC<TMediaLibraryProps> = ({
 				value: search,
 			},
 		],
+		queryOptions: {
+			enabled:
+				!!bunny_library_id && !!bunny_stream_api_key && !!bunny_cdn_hostname,
+		},
 	})
 
 	const allVideos = ([] as TBunnyVideo[]).concat(
