@@ -4,8 +4,7 @@ import { FaPhotoVideo } from 'react-icons/fa'
 import { CloudUploadOutlined, SettingOutlined } from '@ant-design/icons'
 import VideoList from './VideoList'
 import { atom } from 'jotai'
-import NoLibraryId from '@/main/components/formItem/VideoInput/NoLibraryId'
-import { useBunny, TFileInQueue, TMediaLibraryProps } from '@/refine'
+import { TFileInQueue, TMediaLibraryProps } from '@/refine'
 import { Button } from 'antd'
 import Settings from './Settings'
 import { useMediaUpload } from '@/refine/bunny/MediaLibrary/hooks'
@@ -61,9 +60,6 @@ const MediaLibraryComponent: FC<TMediaLibraryCompoundProps> = ({
 }) => {
 	const dropZoneRef = useRef<HTMLDivElement>(null)
 	const [isDragging, setIsDragging] = useState(false)
-
-	const { bunny_library_id, bunny_stream_api_key, bunny_cdn_hostname } =
-		useBunny()
 
 	const bunnyUploadProps = useMediaUpload(uploadProps)
 
