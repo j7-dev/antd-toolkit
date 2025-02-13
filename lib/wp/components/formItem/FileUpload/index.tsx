@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react'
+import React, { memo } from 'react'
 import ImgCrop, { ImgCropProps } from 'antd-img-crop'
 import {
 	Upload,
@@ -19,21 +19,23 @@ type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0]
  * File 會存在 form 中，可以透過 form.getFieldValue('images') 取得
  * aspect 是圖片寬高比，預設為 1，如果希望比例是 16:9 可以輸入 1.778
  * @param {object} props
+ * @param {UploadFile[]} props.fileList - 檔案列表，例如: [{uid: '-1', name: 'feature_image_url.png', status: 'done', url: 'https://example.com/image.png'}]
+ * @param {React.Dispatch<React.SetStateAction<UploadFile<any>[]>>} props.setFileList - 設定檔案列表
  * @param {FormItemProps} props.formItemProps - 前端傳給後端的欄位設定
  * @param {number} props.aspect - 圖片裁切比例，預設為 1，例如 16:9 可設定為 1.778
  * @param {UploadProps} props.uploadProps - antd Upload 元件的 props
  * @param {ImgCropProps} props.imgCropProps - antd ImgCrop 元件的 props
  * @param {boolean} props.disableImgCrop - 是否停用圖片裁切功能
- * @param {UploadFile[]} props.defaultFileList - 預設的檔案列表，例如: [{uid: '-1', name: 'feature_image_url.png', status: 'done', url: 'https://example.com/image.png'}]
  * @returns {JSX.Element} FileUpload 元件
  */
 type TFileUploadProps = {
+	fileList: UploadFile[]
+	setFileList: React.Dispatch<React.SetStateAction<UploadFile<any>[]>>
 	formItemProps?: FormItemProps // 前端傳給後端的 欄位名稱
 	aspect?: number
 	uploadProps?: UploadProps
 	imgCropProps?: ImgCropProps
 	disableImgCrop?: boolean
-	defaultFileList?: UploadFile[]
 }
 
 const { Dragger } = Upload
@@ -46,14 +48,14 @@ const getBase64 = (img: FileType, callback: (url: string) => void) => {
 }
 
 const FileUploadComponent = ({
+	fileList = [],
+	setFileList,
 	formItemProps = { name: ['images'] },
 	aspect = 1,
 	uploadProps,
 	imgCropProps,
 	disableImgCrop = false,
-	defaultFileList = [],
 }: TFileUploadProps) => {
-	const [fileList, setFileList] = useState<UploadFile[]>(defaultFileList)
 	const form = Form.useFormInstance()
 	const fieldName = formItemProps?.name || ['images']
 
