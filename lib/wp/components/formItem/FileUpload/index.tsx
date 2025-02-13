@@ -75,6 +75,7 @@ const FileUploadComponent = ({
 	const handleDelete = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation()
 		setFileList([])
+		form.setFieldValue(fieldName, 'delete')
 	}
 
 	const DraggerComponent = () => (
