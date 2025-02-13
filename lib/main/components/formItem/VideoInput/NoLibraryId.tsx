@@ -57,11 +57,9 @@ const NoLibraryId = ({
 			video:
 				'at-aspect-video at-shadow at-rounded-lg at-border at-border-dashed at-border-gray-300 at-flex at-flex-col at-items-center at-justify-center',
 			default:
-				'at-flex at-flex-col at-items-start at-justify-center at-w-full at-h-full',
+				'at-flex at-flex-col at-items-start at-justify-center at-size-full',
 		})[value] ??
-		'at-flex at-flex-col at-items-start at-justify-center at-w-full at-h-full')(
-		type,
-	)
+		'at-flex at-flex-col at-items-start at-justify-center at-size-full')(type)
 
 	return (
 		<div className={className}>

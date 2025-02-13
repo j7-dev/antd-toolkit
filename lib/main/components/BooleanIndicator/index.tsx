@@ -12,7 +12,7 @@ export const BooleanIndicator: React.FC<{
 			<Tooltip {...tooltipProps}>
 				<div
 					className={cn(
-						'at-w-3 at-h-3 at-rounded-full at-inline-block',
+						'at-size-3 at-rounded-full at-inline-block',
 						{
 							'at-bg-teal-500': enabled,
 							'at-bg-rose-500': !enabled,
@@ -27,7 +27,7 @@ export const BooleanIndicator: React.FC<{
 	return (
 		<div
 			className={cn(
-				'at-w-3 at-h-3 at-rounded-full',
+				'at-size-3 at-rounded-full',
 				{
 					'at-bg-teal-500': enabled,
 					'at-bg-rose-500': !enabled,

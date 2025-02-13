@@ -22,7 +22,7 @@ const BackToWpAdminComponent = ({
 			<div className="at-flex at-gap-4 at-items-center">
 				<>
 					<svg
-						className={cn('at-w-6 at-h-6', iconClassName)}
+						className={cn('at-size-6', iconClassName)}
 						viewBox="0 0 24 24"
 						fill="none"
 						xmlns="http://www.w3.org/2000/svg"

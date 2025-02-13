@@ -56,6 +56,6 @@ export const CustomClassname: Story = {
 			enabled: true,
 			title: '啟用狀態',
 		},
-		className: 'at-rounded-none at-h-8 at-w-8',
+		className: 'at-rounded-none at-size-8',
 	},
 }

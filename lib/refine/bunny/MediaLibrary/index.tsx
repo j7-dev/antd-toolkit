@@ -142,7 +142,7 @@ const MediaLibraryComponent: FC<TMediaLibraryCompoundProps> = ({
 				/>
 
 				<div
-					className={`at-absolute at-top-0 at-left-0 at-w-full at-h-full ${isDragging ? 'at-opacity-100 at-z-50' : 'at-opacity-0 at--z-50'}`}
+					className={`at-absolute at-top-0 at-left-0 at-size-full ${isDragging ? 'at-opacity-100 at-z-50' : 'at-opacity-0 at--z-50'}`}
 				>
 					<UploadVideo {...bunnyUploadProps} />
 				</div>

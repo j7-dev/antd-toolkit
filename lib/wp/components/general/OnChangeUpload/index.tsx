@@ -103,15 +103,15 @@ export const OnChangeUpload = () => {
 					<p className="ant-upload-text">點擊或拖曳文件到這裡上傳</p>
 					<p className="ant-upload-hint">僅支持 image/* 類型 文件</p>
 					{fileList.length > 0 && fileList?.[0]?.url && (
-						<div className="at-w-full at-h-full at-absolute at-top-0 at-left-0 at-p-2">
-							<div className="at-w-full at-h-full at-rounded-lg at-overflow-hidden">
+						<div className="at-size-full at-absolute at-top-0 at-left-0 at-p-2">
+							<div className="at-size-full at-rounded-lg at-overflow-hidden">
 								<img
 									src={fileList?.[0]?.url}
-									className="at-w-full at-h-full at-object-cover"
+									className="at-size-full at-object-cover"
 								/>
 								<div
 									onClick={handleDelete}
-									className="at-group at-absolute at-top-4 at-right-4 at-rounded-md at-w-12 at-h-12 at-bg-white at-shadow-lg at-flex at-justify-center at-items-center at-transition at-duration-300 hover:at-bg-red-500 at-cursor-pointer"
+									className="at-group at-absolute at-top-4 at-right-4 at-rounded-md at-size-12 at-bg-white at-shadow-lg at-flex at-justify-center at-items-center at-transition at-duration-300 hover:at-bg-red-500 at-cursor-pointer"
 								>
 									<DeleteOutlined className="at-text-red-500 group-hover:at-text-white" />
 								</div>

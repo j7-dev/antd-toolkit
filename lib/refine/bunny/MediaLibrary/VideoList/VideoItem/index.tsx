@@ -121,8 +121,8 @@ const VideoItem = ({
 				{video.title}
 			</Text>
 			{isSelected && (
-				<div className="at-bg-white at-absolute at--top-2 at--right-2 at-z-30 at-w-6 at-h-6 at-rounded-full at-flex at-items-center at-justify-center">
-					<CheckIcon className="at-w-5 at-h-5 [&_path]:at-fill-yellow-300" />
+				<div className="at-bg-white at-absolute at--top-2 at--right-2 at-z-30 at-size-6 at-rounded-full at-flex at-items-center at-justify-center">
+					<CheckIcon className="at-size-5 [&_path]:at-fill-yellow-300" />
 				</div>
 			)}
 		</div>

@@ -43,6 +43,6 @@ export const General: Story = {
 export const Custom: Story = {
 	name: '自訂顏色 & 大小',
 	args: {
-		className: 'at-w-6 at-h-6 at-bg-purple-400',
+		className: 'at-size-6 at-bg-purple-400',
 	},
 }

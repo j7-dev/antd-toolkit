@@ -97,7 +97,7 @@ const Iframe: FC<{
 							borderRadius: '8px',
 						}}
 					>
-						<div className="at-w-full at-h-full at-rounded-xl at-overflow-hidden">
+						<div className="at-size-full at-rounded-xl at-overflow-hidden">
 							<div
 								className={`at-rounded-xl at-bg-gray-200 ${watchField ? 'at-tw-block' : 'at-tw-hidden'}`}
 								style={{
@@ -106,7 +106,7 @@ const Iframe: FC<{
 								}}
 							>
 								<iframe
-									className="at-border-0 at-absolute at-top-0 at-left-0 at-w-full at-h-full at-rounded-xl"
+									className="at-border-0 at-absolute at-top-0 at-left-0 at-size-full at-rounded-xl"
 									src={embedVideoUrl}
 									loading="lazy"
 									frameBorder="0"
@@ -117,7 +117,7 @@ const Iframe: FC<{
 								></iframe>
 								<div
 									onClick={handleDelete}
-									className="at-group at-absolute at-top-4 at-right-4 at-rounded-md at-w-12 at-h-12 at-bg-white at-shadow-lg at-flex at-justify-center at-items-center at-transition at-duration-300 hover:at-bg-red-500 at-cursor-pointer"
+									className="at-group at-absolute at-top-4 at-right-4 at-rounded-md at-size-12 at-bg-white at-shadow-lg at-flex at-justify-center at-items-center at-transition at-duration-300 hover:at-bg-red-500 at-cursor-pointer"
 								>
 									<DeleteOutlined className="at-text-red-500 group-hover:at-text-white" />
 								</div>

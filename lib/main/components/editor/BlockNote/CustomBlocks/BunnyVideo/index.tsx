@@ -16,7 +16,7 @@ export const bunnyVideoMenuItem = (editor: typeof schema.BlockNoteEditor) => ({
 	},
 	aliases: ['bunny'],
 	group: 'Bunny',
-	icon: <FaPhotoVideo className="at-w-[1.125rem] at-h-[1.125rem]" />,
+	icon: <FaPhotoVideo className="at-size-[1.125rem]" />,
 })
 
 const bunnyVideoBlockConfig: CustomBlockConfig = {
@@ -67,7 +67,7 @@ export const BunnyVideo = createReactBlockSpec(bunnyVideoBlockConfig, {
 		const videoUrl = `https://iframe.mediadelivery.net/embed/${bunny_library_id}/${vId}?autoplay=false&loop=false&muted=false&preload=true&responsive=true`
 		return (
 			<iframe
-				className="at-border-0 at-absolute at-top-0 at-left-0 at-w-full at-h-full at-rounded-xl"
+				className="at-border-0 at-absolute at-top-0 at-left-0 at-size-full at-rounded-xl"
 				src={videoUrl}
 				loading="lazy"
 				allow="encrypted-media;picture-in-picture;"
