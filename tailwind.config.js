@@ -1,10 +1,15 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-	important: '.tailwind',
+	important: '#tw',
 	prefix: 'at-',
 	corePlugins: {
 		preflight: false,
 	},
+	future: {
+		disableColorOpacityUtilitiesByDefault: true,
+		respectDefaultRingColorOpacity: true,
+	},
+	colorSpace: 'srgb',
 	content: ['./lib/**/*.{ts,tsx,js,jsx}'],
 	theme: {
 		extend: {
