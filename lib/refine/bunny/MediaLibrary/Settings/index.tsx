@@ -24,15 +24,21 @@ const Settings = ({ onFinish }: TSettingProps) => {
 					<Spin spinning={isGetLoading}>
 						<Item
 							className="at-mt-4"
-							name={['bunny_library_id']}
+							name={['powerhouse_settings', 'bunny_library_id']}
 							label="Bunny Library ID"
 						>
 							<Input allowClear placeholder="xxxxxxx" />
 						</Item>
-						<Item name={['bunny_cdn_hostname']} label="Bunny CDN Hostname">
+						<Item
+							name={['powerhouse_settings', 'bunny_cdn_hostname']}
+							label="Bunny CDN Hostname"
+						>
 							<Input allowClear placeholder="xx-xxxxxxxx-xxx.b-cdn.net" />
 						</Item>
-						<Item name={['bunny_stream_api_key']} label="Bunny Stream API Key">
+						<Item
+							name={['powerhouse_settings', 'bunny_stream_api_key']}
+							label="Bunny Stream API Key"
+						>
 							<Input
 								allowClear
 								placeholder="xxxxxxxx-xxxx-xxxx-xxxxxxxxxxxx-xxxx-xxxx"
