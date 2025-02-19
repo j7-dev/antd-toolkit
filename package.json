@@ -150,6 +150,9 @@
 		"./refine": {
 			"import": "./dist/refine/index.js",
 			"types": "./dist/refine/types/index.d.ts"
+		},
+		"./style.css": {
+			"import": "./dist/style.css"
 		}
 	},
 	"resolutions": {
