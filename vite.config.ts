@@ -3,17 +3,17 @@ import react from '@vitejs/plugin-react'
 import tsconfigPaths from 'vite-tsconfig-paths'
 import alias from '@rollup/plugin-alias'
 import dts from 'vite-plugin-dts'
-import { libInjectCss } from 'vite-plugin-lib-inject-css'
 import { extname, relative, resolve } from 'path'
 import { fileURLToPath } from 'node:url'
 import { glob } from 'glob'
 
 const isBuildForStoryBook = process.env.BUILD_ENV === 'storybook'
+console.log("⭐ isBuildForStoryBook:", isBuildForStoryBook)
 
 const defaultPlugins = [alias(), react(), tsconfigPaths()]
 const plugins = isBuildForStoryBook
   ? defaultPlugins
-  : [...defaultPlugins, libInjectCss(), dts({ include: ['lib'] })]
+  : [...defaultPlugins, dts({ include: ['lib'] })]
 
 const config: UserConfig = {
   plugins,
@@ -23,10 +23,12 @@ const config: UserConfig = {
     },
   },
   build: {
+		cssCodeSplit: false,
     copyPublicDir: false,
     lib: {
       entry: resolve(__dirname, 'lib/main.ts'),
       formats: ['es'],
+			fileName: 'style',
     },
     rollupOptions: {
       external: [
@@ -74,7 +76,6 @@ const config: UserConfig = {
           ]),
       ),
       output: {
-        assetFileNames: 'assets/[name][extname]',
         entryFileNames: '[name].js',
       },
     },
