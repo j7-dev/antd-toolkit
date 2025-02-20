@@ -108,12 +108,6 @@ export const useMediaUpload = (uploadProps?: UploadProps) => {
 							return fileInQueue
 						})
 					})
-
-					invalidate({
-						dataProviderName: 'bunny-stream',
-						resource: `${bunny_library_id}/videos`,
-						invalidates: ['list'],
-					})
 				} else {
 					// 顯示失敗
 					setFilesInQueue((prev) => {

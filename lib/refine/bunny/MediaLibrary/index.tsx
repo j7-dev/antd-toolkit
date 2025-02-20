@@ -63,43 +63,43 @@ const MediaLibraryComponent: FC<TMediaLibraryCompoundProps> = ({
 
 	const { uploadProps: bunnyUploadProps } = useMediaUpload(uploadProps)
 
-	useEffect(() => {
-		if (dropZoneRef.current) {
-			const handleDragEnter = (e: DragEvent) => {
-				e.preventDefault()
-				e.stopPropagation()
-				const relatedTarget = e.relatedTarget as Node
-				if (!dropZoneRef.current?.contains(relatedTarget)) {
-					setIsDragging(true)
-				}
-			}
+	// useEffect(() => {
+	// 	if (dropZoneRef.current) {
+	// 		const handleDragEnter = (e: DragEvent) => {
+	// 			e.preventDefault()
+	// 			e.stopPropagation()
+	// 			const relatedTarget = e.relatedTarget as Node
+	// 			if (!dropZoneRef.current?.contains(relatedTarget)) {
+	// 				setIsDragging(true)
+	// 			}
+	// 		}
 
-			const handleDragLeave = (e: DragEvent) => {
-				e.preventDefault()
-				e.stopPropagation()
-				const relatedTarget = e.relatedTarget as Node
-				if (!dropZoneRef.current?.contains(relatedTarget)) {
-					setIsDragging(false)
-				}
-			}
+	// 		const handleDragLeave = (e: DragEvent) => {
+	// 			e.preventDefault()
+	// 			e.stopPropagation()
+	// 			const relatedTarget = e.relatedTarget as Node
+	// 			if (!dropZoneRef.current?.contains(relatedTarget)) {
+	// 				setIsDragging(false)
+	// 			}
+	// 		}
 
-			const handleDrop = (e: DragEvent) => {
-				e.preventDefault()
-				e.stopPropagation()
-				setIsDragging(false)
-			}
+	// 		const handleDrop = (e: DragEvent) => {
+	// 			e.preventDefault()
+	// 			e.stopPropagation()
+	// 			setIsDragging(false)
+	// 		}
 
-			dropZoneRef.current.addEventListener('dragenter', handleDragEnter)
-			dropZoneRef.current.addEventListener('dragleave', handleDragLeave)
-			dropZoneRef.current.addEventListener('drop', handleDrop)
+	// 		dropZoneRef.current.addEventListener('dragenter', handleDragEnter)
+	// 		dropZoneRef.current.addEventListener('dragleave', handleDragLeave)
+	// 		dropZoneRef.current.addEventListener('drop', handleDrop)
 
-			return () => {
-				dropZoneRef.current?.removeEventListener('dragenter', handleDragEnter)
-				dropZoneRef.current?.removeEventListener('dragleave', handleDragLeave)
-				dropZoneRef.current?.removeEventListener('drop', handleDrop)
-			}
-		}
-	}, [])
+	// 		return () => {
+	// 			dropZoneRef.current?.removeEventListener('dragenter', handleDragEnter)
+	// 			dropZoneRef.current?.removeEventListener('dragleave', handleDragLeave)
+	// 			dropZoneRef.current?.removeEventListener('drop', handleDrop)
+	// 		}
+	// 	}
+	// }, [])
 
 	const { bunny_library_id, bunny_stream_api_key, bunny_cdn_hostname } =
 		useBunny()
