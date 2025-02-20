@@ -152,22 +152,8 @@ export const useMediaUpload = (uploadProps?: UploadProps) => {
 		itemRender: () => <></>,
 		fileList,
 		accept: 'video/*',
-		multiple: false, // 是否支持多選文件，ie10+ 支持。按住 ctrl 多選文件
-		maxCount: 1, // 最大檔案數
-		onDrop(e) {
-			// 這邊 droppedFiles 真正型別是 FileList || File[] ，但因為 UploadFile 是繼承 File 的 antd 型別，還不清楚怎麼把 File 轉換成 UploadFile
-			// 所以先斷言處理
-			const droppedFiles = (e?.dataTransfer?.files ||
-				[]) as unknown as UploadFile[]
-			console.log('⭐ droppedFiles:', droppedFiles)
-			setFileList((prev) => [...prev, ...droppedFiles])
-			// 觸發上傳
-			mergedUploadProps.customRequest?.({
-				file: droppedFiles[0] as RcFile,
-				action: '',
-				method: 'POST',
-			})
-		},
+		multiple: true, // 是否支持多選文件，ie10+ 支持。按住 ctrl 多選文件
+		// maxCount: 1, // 最大檔案數
 		...uploadProps,
 	}
 

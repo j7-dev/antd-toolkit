@@ -126,11 +126,20 @@ const MediaLibraryComponent: FC<TMediaLibraryCompoundProps> = ({
 	return (
 		<div className="at-relative">
 			<div ref={dropZoneRef} className="at-relative">
+				{/* <div
+					className={`at-absolute at-top-0 at-left-0 at-size-full ${isDragging ? 'at-opacity-100 at-z-50' : 'at-opacity-0 -at-z-50'}`}
+				> */}
+				<div className="at-mb-4">
+					<UploadVideo uploadProps={bunnyUploadProps} />
+				</div>
+				{/* </div> */}
 				<Tabs
 					className={isDragging ? 'at-opacity-0' : 'at-opacity-100'}
 					tabBarExtraContent={
 						<Upload {...bunnyUploadProps}>
-							<Button icon={<CloudUploadOutlined />}>上傳影片</Button>
+							<Button disabled={disabledBunny} icon={<CloudUploadOutlined />}>
+								上傳影片
+							</Button>
 						</Upload>
 					}
 					defaultActiveKey={
@@ -140,12 +149,6 @@ const MediaLibraryComponent: FC<TMediaLibraryCompoundProps> = ({
 					type="card"
 					{...tabsProps}
 				/>
-
-				<div
-					className={`at-absolute at-top-0 at-left-0 at-size-full ${isDragging ? 'at-opacity-100 at-z-50' : 'at-opacity-0 at--z-50'}`}
-				>
-					<UploadVideo uploadProps={bunnyUploadProps} />
-				</div>
 			</div>
 		</div>
 	)
