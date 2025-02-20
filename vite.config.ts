@@ -8,6 +8,7 @@ import { fileURLToPath } from 'node:url'
 import { glob } from 'glob'
 
 const isBuildForStoryBook = process.env.BUILD_ENV === 'storybook'
+
 console.log("⭐ isBuildForStoryBook:", isBuildForStoryBook)
 
 const defaultPlugins = [alias(), react(), tsconfigPaths()]

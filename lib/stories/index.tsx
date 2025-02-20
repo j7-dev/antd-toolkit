@@ -10,28 +10,50 @@ import { Form } from 'antd'
 
 const { Item } = Form
 
+const {
+	STORYBOOK_SITE_URL,
+	STORYBOOK_AJAX_URL,
+	STORYBOOK_API_URL,
+	STORYBOOK_APP_NAME,
+	STORYBOOK_KEBAB,
+	STORYBOOK_SNAKE,
+	STORYBOOK_BUNNY_LIBRARY_ID = '',
+	STORYBOOK_BUNNY_CDN_HOSTNAME = '',
+	STORYBOOK_BUNNY_STREAM_API_KEY = '',
+	STORYBOOK_UPLOAD_API,
+	STORYBOOK_BUNNY_API,
+	STORYBOOK_USERNAME,
+	STORYBOOK_PASSWORD,
+} = import.meta.env
+
+console.log('ENV', import.meta.env)
+
 // StoryBook 用的環境變數
 export const ENV = {
-	SITE_URL: 'https://www.example.com',
-	AJAX_URL: 'https://www.example.com/wp-json/my-plugin',
+	SITE_URL: STORYBOOK_SITE_URL,
+	AJAX_URL: STORYBOOK_AJAX_URL,
+	API_URL: STORYBOOK_API_URL,
 	CURRENT_USER_ID: 1,
 	CURRENT_POST_ID: '1',
 	PERMALINK: 'https://www.example.com/post/1',
-	APP_NAME: 'my_plugin',
-	KEBAB: 'my-plugin',
-	SNAKE: 'my_plugin',
+	APP_NAME: STORYBOOK_APP_NAME,
+	KEBAB: STORYBOOK_KEBAB,
+	SNAKE: STORYBOOK_SNAKE,
 	NONCE: '1234567890',
+	BUNNY_LIBRARY_ID: STORYBOOK_BUNNY_LIBRARY_ID,
+	BUNNY_CDN_HOSTNAME: STORYBOOK_BUNNY_CDN_HOSTNAME,
+	BUNNY_STREAM_API_KEY: STORYBOOK_BUNNY_STREAM_API_KEY,
 	//----
-	UPLOAD_API: 'http://test.local/wp-json/power-course/upload',
-	BUNNY_API: 'https://video.bunnycdn.com/library',
-	USERNAME: 'j7',
-	PASSWORD: 'gRJ0 14kC n9ye kQft k2Iz 5BAP',
+	UPLOAD_API: STORYBOOK_UPLOAD_API,
+	BUNNY_API: STORYBOOK_BUNNY_API,
+	USERNAME: STORYBOOK_USERNAME,
+	PASSWORD: STORYBOOK_PASSWORD,
 }
 
 export const BUNNY_CONFIG = {
-	bunny_library_id: '1234567890',
-	bunny_stream_api_key: '1234567890',
-	bunny_cdn_hostname: '1234567890',
+	bunny_library_id: STORYBOOK_BUNNY_LIBRARY_ID,
+	bunny_stream_api_key: STORYBOOK_BUNNY_STREAM_API_KEY,
+	bunny_cdn_hostname: STORYBOOK_BUNNY_CDN_HOSTNAME,
 }
 
 // Refine 用 decorators
@@ -46,7 +68,7 @@ export const refineDecorator = (Story: any) => {
 	})
 
 	const bunnyStreamAxios = axios.create({
-		baseURL: 'https://video.bunnycdn.com/library',
+		baseURL: ENV.BUNNY_API,
 		headers: {
 			AccessKey: BUNNY_CONFIG.bunny_stream_api_key,
 		},
@@ -56,8 +78,8 @@ export const refineDecorator = (Story: any) => {
 		// @ts-ignore
 		window.my_plugin_data = {
 			env: {
-				APP_NAME: 'my_plugin',
-				SITE_URL: 'https://www.example.com',
+				APP_NAME: ENV.APP_NAME,
+				SITE_URL: ENV.SITE_URL,
 			},
 		}
 	}, [])
@@ -70,11 +92,9 @@ export const refineDecorator = (Story: any) => {
 						<BunnyProvider {...BUNNY_CONFIG}>
 							<Refine
 								dataProvider={{
-									default: dataProvider(
-										'https://www.example.com/wp-json/my-plugin',
-									),
+									default: dataProvider(ENV.API_URL),
 									'bunny-stream': bunnyStreamDataProvider(
-										'https://video.bunnycdn.com/library',
+										ENV.BUNNY_API,
 										bunnyStreamAxios,
 									),
 								}}

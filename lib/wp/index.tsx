@@ -4,4 +4,3 @@ export * from '@/wp/components'
 export * from '@/wp/types'
 export * from '@/wp/utils'
 export * from '@/wp/hooks'
-

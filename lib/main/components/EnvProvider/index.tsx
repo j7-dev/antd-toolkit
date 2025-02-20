@@ -3,6 +3,7 @@ import React, { FC, createContext, useContext, useMemo } from 'react'
 export type TEnv = {
 	SITE_URL: string
 	AJAX_URL: string
+	API_URL: string
 	CURRENT_USER_ID: number
 	CURRENT_POST_ID: string | false
 	PERMALINK: string
@@ -20,6 +21,7 @@ export type TEnv = {
 export const EnvContext = createContext<TEnv>({
 	SITE_URL: '',
 	AJAX_URL: '',
+	API_URL: '',
 	CURRENT_USER_ID: 0,
 	CURRENT_POST_ID: '',
 	PERMALINK: '',

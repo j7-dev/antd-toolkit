@@ -55,7 +55,7 @@ const preview: Preview = {
 	decorators: [
 		// 添加新的 decorator 來包裝 .tailwind 容器
 		(Story) => (
-			<div className="tailwind">
+			<div id="tw">
 				<Story />
 			</div>
 		),
