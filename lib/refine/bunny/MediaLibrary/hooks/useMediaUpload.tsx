@@ -159,6 +159,7 @@ export const useMediaUpload = (uploadProps?: UploadProps) => {
 			// 所以先斷言處理
 			const droppedFiles = (e?.dataTransfer?.files ||
 				[]) as unknown as UploadFile[]
+			console.log('⭐ droppedFiles:', droppedFiles)
 			setFileList((prev) => [...prev, ...droppedFiles])
 			// 觸發上傳
 			mergedUploadProps.customRequest?.({
