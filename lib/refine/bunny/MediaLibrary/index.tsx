@@ -61,7 +61,7 @@ const MediaLibraryComponent: FC<TMediaLibraryCompoundProps> = ({
 	const dropZoneRef = useRef<HTMLDivElement>(null)
 	const [isDragging, setIsDragging] = useState(false)
 
-	const bunnyUploadProps = useMediaUpload(uploadProps)
+	const { uploadProps: bunnyUploadProps } = useMediaUpload(uploadProps)
 
 	useEffect(() => {
 		if (dropZoneRef.current) {
@@ -144,7 +144,7 @@ const MediaLibraryComponent: FC<TMediaLibraryCompoundProps> = ({
 				<div
 					className={`at-absolute at-top-0 at-left-0 at-size-full ${isDragging ? 'at-opacity-100 at-z-50' : 'at-opacity-0 at--z-50'}`}
 				>
-					<UploadVideo {...bunnyUploadProps} />
+					<UploadVideo uploadProps={bunnyUploadProps} />
 				</div>
 			</div>
 		</div>
