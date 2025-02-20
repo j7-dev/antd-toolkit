@@ -31,9 +31,12 @@ export const Upload: React.FC<TUploadProps> = ({ uploadProps, children }) => {
 							<InboxOutlined />
 						</p>
 						<p className="ant-upload-text">點擊或拖曳文件到這裡上傳</p>
-						<p className="ant-upload-hint">
-							支持單個或批量上傳。{accept ? `僅支持 ${accept} 類型檔案` : ''}
-						</p>
+
+						{accept ? (
+							<p className="ant-upload-hint">僅支持 ${accept} 類型檔案</p>
+						) : (
+							''
+						)}
 					</>
 				)}
 			</Dragger>
