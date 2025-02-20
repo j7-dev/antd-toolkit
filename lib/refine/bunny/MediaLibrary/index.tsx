@@ -1,5 +1,5 @@
 import { FC, memo, useRef, useEffect, useState } from 'react'
-import { Tabs, TabsProps, Upload, UploadProps } from 'antd'
+import { Tabs, TabsProps, Upload, UploadProps, UploadFile } from 'antd'
 import { FaPhotoVideo } from 'react-icons/fa'
 import { CloudUploadOutlined, SettingOutlined } from '@ant-design/icons'
 import VideoList from './VideoList'
@@ -63,43 +63,41 @@ const MediaLibraryComponent: FC<TMediaLibraryCompoundProps> = ({
 
 	const { uploadProps: bunnyUploadProps } = useMediaUpload(uploadProps)
 
-	// useEffect(() => {
-	// 	if (dropZoneRef.current) {
-	// 		const handleDragEnter = (e: DragEvent) => {
-	// 			e.preventDefault()
-	// 			e.stopPropagation()
-	// 			const relatedTarget = e.relatedTarget as Node
-	// 			if (!dropZoneRef.current?.contains(relatedTarget)) {
-	// 				setIsDragging(true)
-	// 			}
-	// 		}
+	useEffect(() => {
+		if (dropZoneRef.current) {
+			const handleDragEnter = (e: DragEvent) => {
+				e.preventDefault()
+				e.stopPropagation()
+				const relatedTarget = e.relatedTarget as Node
+				if (!dropZoneRef.current?.contains(relatedTarget)) {
+					setIsDragging(true)
+				}
+			}
 
-	// 		const handleDragLeave = (e: DragEvent) => {
-	// 			e.preventDefault()
-	// 			e.stopPropagation()
-	// 			const relatedTarget = e.relatedTarget as Node
-	// 			if (!dropZoneRef.current?.contains(relatedTarget)) {
-	// 				setIsDragging(false)
-	// 			}
-	// 		}
+			const handleDragLeave = (e: DragEvent) => {
+				e.preventDefault()
+				e.stopPropagation()
+				const relatedTarget = e.relatedTarget as Node
+				if (!dropZoneRef.current?.contains(relatedTarget)) {
+					setIsDragging(false)
+				}
+			}
 
-	// 		const handleDrop = (e: DragEvent) => {
-	// 			e.preventDefault()
-	// 			e.stopPropagation()
-	// 			setIsDragging(false)
-	// 		}
+			const handleDrop = (e: DragEvent) => {
+				setIsDragging(false)
+			}
 
-	// 		dropZoneRef.current.addEventListener('dragenter', handleDragEnter)
-	// 		dropZoneRef.current.addEventListener('dragleave', handleDragLeave)
-	// 		dropZoneRef.current.addEventListener('drop', handleDrop)
+			dropZoneRef.current.addEventListener('dragenter', handleDragEnter)
+			dropZoneRef.current.addEventListener('dragleave', handleDragLeave)
+			dropZoneRef.current.addEventListener('drop', handleDrop)
 
-	// 		return () => {
-	// 			dropZoneRef.current?.removeEventListener('dragenter', handleDragEnter)
-	// 			dropZoneRef.current?.removeEventListener('dragleave', handleDragLeave)
-	// 			dropZoneRef.current?.removeEventListener('drop', handleDrop)
-	// 		}
-	// 	}
-	// }, [])
+			return () => {
+				dropZoneRef.current?.removeEventListener('dragenter', handleDragEnter)
+				dropZoneRef.current?.removeEventListener('dragleave', handleDragLeave)
+				dropZoneRef.current?.removeEventListener('drop', handleDrop)
+			}
+		}
+	}, [])
 
 	const { bunny_library_id, bunny_stream_api_key, bunny_cdn_hostname } =
 		useBunny()
@@ -126,13 +124,11 @@ const MediaLibraryComponent: FC<TMediaLibraryCompoundProps> = ({
 	return (
 		<div className="at-relative">
 			<div ref={dropZoneRef} className="at-relative">
-				{/* <div
+				<div
 					className={`at-absolute at-top-0 at-left-0 at-size-full ${isDragging ? 'at-opacity-100 at-z-50' : 'at-opacity-0 -at-z-50'}`}
-				> */}
-				<div className="at-mb-4">
+				>
 					<UploadVideo uploadProps={bunnyUploadProps} />
 				</div>
-				{/* </div> */}
 				<Tabs
 					className={isDragging ? 'at-opacity-0' : 'at-opacity-100'}
 					tabBarExtraContent={

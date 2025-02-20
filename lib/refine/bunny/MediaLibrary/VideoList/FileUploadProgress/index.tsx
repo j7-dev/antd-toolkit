@@ -15,11 +15,11 @@ import { TFileInQueue } from '@/refine'
 const FileUploadProgress: FC<{
 	fileInQueue: TFileInQueue
 }> = ({ fileInQueue }) => {
-	const { status = 'active', uploadProgress } = fileInQueue
+	const { status = 'active', uploadProgress, file } = fileInQueue
 
 	return (
 		<>
-			<p className="at-m-2 at-text-xs">影片上傳中</p>
+			<p className="at-m-2 at-text-xs">{file?.name} 影片上傳中</p>
 			<Progress
 				percent={uploadProgress}
 				percentPosition={{ align: 'center', type: 'outer' }}
