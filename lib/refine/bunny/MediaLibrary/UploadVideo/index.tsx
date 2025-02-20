@@ -21,7 +21,7 @@ const UploadVideo: FC<{
 						</p>
 						<p className="ant-upload-text">點擊或拖曳文件到這裡上傳</p>
 						{accept ? (
-							<p className="ant-upload-hint">僅支持 ${accept} 類型檔案</p>
+							<p className="ant-upload-hint">僅支持 {accept} 類型檔案</p>
 						) : (
 							''
 						)}
