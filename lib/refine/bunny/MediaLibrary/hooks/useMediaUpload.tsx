@@ -24,6 +24,7 @@ export const useMediaUpload = (uploadProps?: UploadProps) => {
 	const setFilesInQueue = useSetAtom(filesInQueueAtom)
 	const invalidate = useInvalidate()
 
+	// 這個是想做多檔同時上傳，但目前應該是比較不會用到
 	const [fileList, setFileList] = useState<
 		(UploadFile & {
 			videoId?: string
@@ -159,6 +160,12 @@ export const useMediaUpload = (uploadProps?: UploadProps) => {
 			const droppedFiles = (e?.dataTransfer?.files ||
 				[]) as unknown as UploadFile[]
 			setFileList((prev) => [...prev, ...droppedFiles])
+			// 觸發上傳
+			mergedUploadProps.customRequest?.({
+				file: droppedFiles[0] as RcFile,
+				action: '',
+				method: 'POST',
+			})
 		},
 		...uploadProps,
 	}
