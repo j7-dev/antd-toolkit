@@ -6,8 +6,8 @@ import {
 	useInvalidate,
 	UseSelectProps,
 	HttpError,
-	MetaQuery,
 	BaseRecord,
+	UseInvalidateProp,
 } from '@refinedev/core'
 import { useItemSelect } from '@/wp'
 import { TLimit } from '@/main'
@@ -24,6 +24,7 @@ import { UseCustomMutationParams } from '@/refine/types'
  * @property {SelectProps}                                               [selectProps]                 - Select 元件 props
  * @property {UseCustomMutationParams}                   useCustomMutationParams       - 綁定 API 參數
  * @property {string}                                                    [label]                       - 資源名稱
+ * @property {UseInvalidateProp}                       useInvalidateProp             - invalidate 參數
  */
 type TBindItemsProps<T> = {
 	product_ids: string[] // 要綁在哪些商品上
@@ -33,6 +34,7 @@ type TBindItemsProps<T> = {
 	selectProps?: SelectProps // 選擇資源的 select props
 	useCustomMutationParams?: UseCustomMutationParams // 綁定 API，如果要改寫 values 或 headers 可以用
 	label?: string // 資源名稱
+	useInvalidateProp?: UseInvalidateProp // invalidate 參數
 }
 
 const BindItemsComponent = <
@@ -45,6 +47,7 @@ const BindItemsComponent = <
 	url,
 	useCustomMutationParams,
 	label = '',
+	useInvalidateProp,
 }: TBindItemsProps<T>) => {
 	const { selectProps: selectResourceProps, itemIds: item_ids } =
 		useItemSelect<T>({
@@ -88,6 +91,7 @@ const BindItemsComponent = <
 					invalidate({
 						resource: 'products',
 						invalidates: ['list'],
+						...useInvalidateProp,
 					})
 				},
 				onError: () => {

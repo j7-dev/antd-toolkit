@@ -1,6 +1,11 @@
 import { memo } from 'react'
 import { PopconfirmDelete } from '@/main'
-import { useCustomMutation, useApiUrl, useInvalidate } from '@refinedev/core'
+import {
+	useCustomMutation,
+	useApiUrl,
+	useInvalidate,
+	UseInvalidateProp,
+} from '@refinedev/core'
 import { message } from 'antd'
 import { UseCustomMutationParams } from '@/refine/types'
 
@@ -14,6 +19,7 @@ import { UseCustomMutationParams } from '@/refine/types'
  * @property {string}   [url]        - 解除綁定 API 的 url，預設為 `${apiUrl}/products/unbind-items`
  * @property {UseCustomMutationParams}                   useCustomMutationParams       -  API 參數
  * @property {string}   [label]       - 資源名稱
+ * @property {UseInvalidateProp}                       useInvalidateProp             - invalidate 參數
  */
 type TUnbindItemsProps = {
 	product_ids: string[] // 要綁在哪些商品上
@@ -23,6 +29,7 @@ type TUnbindItemsProps = {
 	url?: string // 綁定 API 的 url 預設為 `${apiUrl}/products/unbind-items`
 	useCustomMutationParams?: UseCustomMutationParams // 綁定 API，如果要改寫 values 或 headers 可以用
 	label?: string // 資源名稱
+	useInvalidateProp?: UseInvalidateProp // invalidate 參數
 }
 
 const UnbindItemsComponent = ({
@@ -33,6 +40,7 @@ const UnbindItemsComponent = ({
 	onSettled,
 	useCustomMutationParams,
 	label = '',
+	useInvalidateProp,
 }: TUnbindItemsProps) => {
 	const apiUrl = useApiUrl()
 	const invalidate = useInvalidate()
@@ -66,6 +74,7 @@ const UnbindItemsComponent = ({
 					invalidate({
 						resource: 'products',
 						invalidates: ['list'],
+						...useInvalidateProp,
 					})
 				},
 				onError: () => {

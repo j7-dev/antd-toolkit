@@ -1,7 +1,12 @@
 import { useState, memo } from 'react'
 import { Space, DatePicker, Button, message } from 'antd'
 import { Dayjs } from 'dayjs'
-import { useCustomMutation, useApiUrl, useInvalidate } from '@refinedev/core'
+import {
+	useCustomMutation,
+	useApiUrl,
+	useInvalidate,
+	UseInvalidateProp,
+} from '@refinedev/core'
 import { UseCustomMutationParams } from '@/refine/types'
 
 /**
@@ -12,6 +17,7 @@ import { UseCustomMutationParams } from '@/refine/types'
  * @property {Function} onSettled - 修改成功後的回調函數
  * @property {string} [url] - API 的 url，預設為 `${apiUrl}/courses/update-students`
  * @property {UseCustomMutationParams} [useCustomMutationParams] - API 參數
+ * @property {UseInvalidateProp} [useInvalidateProp] - invalidate 參數
  */
 type TUpdateGrantedUsersProps = {
 	user_ids: string[]
@@ -19,6 +25,7 @@ type TUpdateGrantedUsersProps = {
 	onSettled?: () => void
 	url?: string
 	useCustomMutationParams?: UseCustomMutationParams
+	useInvalidateProp?: UseInvalidateProp
 }
 
 const UpdateGrantedUsersComponent = ({
@@ -27,6 +34,7 @@ const UpdateGrantedUsersComponent = ({
 	onSettled,
 	url,
 	useCustomMutationParams,
+	useInvalidateProp,
 }: TUpdateGrantedUsersProps) => {
 	const [time, setTime] = useState<Dayjs | undefined>(undefined)
 	const { mutate, isLoading } = useCustomMutation()
@@ -60,6 +68,7 @@ const UpdateGrantedUsersComponent = ({
 					invalidate({
 						resource: 'users',
 						invalidates: ['list'],
+						...useInvalidateProp,
 					})
 					setTime(undefined)
 				},
