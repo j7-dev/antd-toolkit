@@ -41,11 +41,10 @@ export const ActionArea: FC<TActionAreaProps> = ({
 	const mobileWidth = `calc(100% - ${padding * 2}px)`
 	return (
 		<div
-			className="at-sticky at-bottom-0 at-bg-white at-w-full at-py-3 at-px-6 at-shadow-[0_0px_60px_-24px_rgba(0,0,0,0.3)]"
+			className="at-tw-fixed at-bottom-0 at-bg-white at-w-full at-py-3 at-px-6 at-shadow-[0_0px_60px_-24px_rgba(0,0,0,0.3)]"
 			style={{
 				width: isMobile ? mobileWidth : deskWidth,
 				right: `${padding}px`,
-				marginBottom: `-${padding}px`,
 				...style,
 			}}
 		>
