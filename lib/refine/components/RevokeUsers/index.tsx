@@ -18,7 +18,7 @@ import { UseCustomMutationParams } from '@/refine/types'
  * @property {string} [url] - API 的 url，預設為 `${apiUrl}/courses/remove-users`
  * @property {UseCustomMutationParams} [useCustomMutationParams] - API 參數
  * @property {string} [label] - 資源名稱
- * @property {UseInvalidateProp} [useInvalidateProp] - invalidate 參數
+ * @property {Partial<UseInvalidateProp>} [useInvalidateProp] - invalidate 參數
  */
 type TRevokeUsersProps = {
 	user_ids: React.Key[]
@@ -27,7 +27,7 @@ type TRevokeUsersProps = {
 	url?: string
 	useCustomMutationParams?: UseCustomMutationParams
 	label?: string
-	useInvalidateProp?: UseInvalidateProp
+	useInvalidateProp?: Partial<UseInvalidateProp>
 }
 
 const RevokeUsersComponent = ({

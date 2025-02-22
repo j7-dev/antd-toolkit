@@ -23,7 +23,7 @@ import { useItemSelect } from '@/wp'
  * @property {UseCustomMutationParams} [useCustomMutationParams] - API 參數
  * @property {string} [label] - 資源名稱
  * @property {boolean} [hideLabel] - 是否隱藏 label
- * @property {UseInvalidateProp} [useInvalidateProp] - invalidate 參數
+ * @property {Partial<UseInvalidateProp>} [useInvalidateProp] - invalidate 參數
  */
 type TGrantUsersProps<T> = {
 	user_ids: string[] // 要綁在哪些商品上
@@ -33,7 +33,7 @@ type TGrantUsersProps<T> = {
 	useCustomMutationParams?: UseCustomMutationParams // 綁定 API，如果要改寫 values 或 headers 可以用
 	label?: string // 資源名稱
 	hideLabel?: boolean // 是否隱藏 label
-	useInvalidateProp?: UseInvalidateProp // invalidate 參數
+	useInvalidateProp?: Partial<UseInvalidateProp> // invalidate 參數
 }
 
 const GrantUsersComponent = <
