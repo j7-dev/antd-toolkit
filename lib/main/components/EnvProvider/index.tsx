@@ -1,4 +1,5 @@
 import React, { FC, createContext, useContext, useMemo } from 'react'
+import { AxiosInstance } from 'axios'
 
 export type TEnv = {
 	SITE_URL: string
@@ -14,6 +15,7 @@ export type TEnv = {
 	BUNNY_LIBRARY_ID?: string
 	BUNNY_CDN_HOSTNAME?: string
 	BUNNY_STREAM_API_KEY?: string
+	AXIOS_INSTANCE?: AxiosInstance
 } & {
 	[key: string]: any
 }
