@@ -1,11 +1,11 @@
 import { BaseRecord, CrudFilters, NotificationProvider } from '@refinedev/core'
 import { DeleteButtonProps } from '@refinedev/antd'
+import { notification } from 'antd'
 import {
-	notification,
+	InfoCircleTwoTone,
 	CheckCircleTwoTone,
 	CloseCircleTwoTone,
-	InfoCircleTwoTone,
-} from 'antd'
+} from '@ant-design/icons'
 
 export * from './woocommerce'
 
