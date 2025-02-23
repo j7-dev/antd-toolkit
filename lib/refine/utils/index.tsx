@@ -1,5 +1,11 @@
-import { BaseRecord, CrudFilters } from '@refinedev/core'
+import { BaseRecord, CrudFilters, NotificationProvider } from '@refinedev/core'
 import { DeleteButtonProps } from '@refinedev/antd'
+import {
+	notification,
+	CheckCircleTwoTone,
+	CloseCircleTwoTone,
+	InfoCircleTwoTone,
+} from 'antd'
 
 export * from './woocommerce'
 
@@ -40,4 +46,60 @@ export const defaultDeleteButtonProps: DeleteButtonProps = {
 	confirmCancelText: '取消',
 	hideText: true,
 	type: 'text',
+}
+
+export const notificationProvider: NotificationProvider = {
+	open: ({ key, message, type, description }) => {
+		const notificationType = type === 'progress' ? 'info' : type
+
+		const getColorAndIcon = (nt: string) => {
+			switch (nt) {
+				case 'open':
+					return {
+						color: '#1677ff',
+						icon: (
+							<InfoCircleTwoTone
+								twoToneColor="#1677ff"
+								style={{ transform: 'scale(0.75)' }}
+							/>
+						),
+					}
+				case 'success':
+					return {
+						color: '#52c41a',
+						icon: (
+							<CheckCircleTwoTone
+								twoToneColor="#52c41a"
+								style={{ transform: 'scale(0.75)' }}
+							/>
+						),
+					}
+
+				default:
+					return {
+						color: '#ff4d4f',
+						icon: (
+							<CloseCircleTwoTone
+								twoToneColor="#ff4d4f"
+								style={{ transform: 'scale(0.75)' }}
+							/>
+						),
+					}
+			}
+		}
+
+		const { color, icon } = getColorAndIcon(notificationType)
+
+		notification?.[notificationType as keyof typeof notification]({
+			key,
+			description,
+			message: <span style={{ color }}>{message}</span>,
+			showProgress: true,
+			pauseOnHover: true,
+			icon,
+		} as any)
+	},
+	close: (key) => {
+		notification.destroy(key)
+	},
 }
