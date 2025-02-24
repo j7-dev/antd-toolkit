@@ -61,11 +61,6 @@ export const useSave = ({ form }: TUseSaveParams): TUseSaveReturn => {
 
 						// 刷新頁面
 						window.location.reload()
-
-						// 使所有的 query cache 失效
-						// invalidate({
-						// 	invalidates: ['all'],
-						// })
 					},
 				},
 			)

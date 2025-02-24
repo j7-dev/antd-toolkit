@@ -8,6 +8,7 @@ import {
 	HttpError,
 	UseSelectProps,
 	BaseRecord,
+	UseInvalidateProp,
 } from '@refinedev/core'
 import { UseCustomMutationParams } from '@/refine/types'
 import { useItemSelect } from '@/wp'
@@ -22,6 +23,7 @@ import { useItemSelect } from '@/wp'
  * @property {UseCustomMutationParams} [useCustomMutationParams] - API 參數
  * @property {string} [label] - 資源名稱
  * @property {boolean} [hideLabel] - 是否隱藏 label
+ * @property {Partial<UseInvalidateProp>} [useInvalidateProp] - invalidate 參數
  */
 type TGrantUsersProps<T> = {
 	user_ids: string[] // 要綁在哪些商品上
@@ -31,6 +33,7 @@ type TGrantUsersProps<T> = {
 	useCustomMutationParams?: UseCustomMutationParams // 綁定 API，如果要改寫 values 或 headers 可以用
 	label?: string // 資源名稱
 	hideLabel?: boolean // 是否隱藏 label
+	useInvalidateProp?: Partial<UseInvalidateProp> // invalidate 參數
 }
 
 const GrantUsersComponent = <
@@ -43,6 +46,7 @@ const GrantUsersComponent = <
 	useCustomMutationParams,
 	label = '',
 	hideLabel = false,
+	useInvalidateProp,
 }: TGrantUsersProps<T>) => {
 	const { selectProps: selectResourceProps, itemIds: item_ids } =
 		useItemSelect<T>({
@@ -82,6 +86,7 @@ const GrantUsersComponent = <
 					invalidate({
 						resource: 'users',
 						invalidates: ['list'],
+						...useInvalidateProp,
 					})
 				},
 				onError: () => {

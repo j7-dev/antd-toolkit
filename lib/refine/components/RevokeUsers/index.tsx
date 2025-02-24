@@ -1,6 +1,11 @@
 import React, { memo } from 'react'
 import { PopconfirmDelete } from '@/main'
-import { useCustomMutation, useApiUrl, useInvalidate } from '@refinedev/core'
+import {
+	useCustomMutation,
+	useApiUrl,
+	useInvalidate,
+	UseInvalidateProp,
+} from '@refinedev/core'
 import { message } from 'antd'
 import { UseCustomMutationParams } from '@/refine/types'
 
@@ -13,6 +18,7 @@ import { UseCustomMutationParams } from '@/refine/types'
  * @property {string} [url] - API 的 url，預設為 `${apiUrl}/courses/remove-users`
  * @property {UseCustomMutationParams} [useCustomMutationParams] - API 參數
  * @property {string} [label] - 資源名稱
+ * @property {Partial<UseInvalidateProp>} [useInvalidateProp] - invalidate 參數
  */
 type TRevokeUsersProps = {
 	user_ids: React.Key[]
@@ -21,6 +27,7 @@ type TRevokeUsersProps = {
 	url?: string
 	useCustomMutationParams?: UseCustomMutationParams
 	label?: string
+	useInvalidateProp?: Partial<UseInvalidateProp>
 }
 
 const RevokeUsersComponent = ({
@@ -30,6 +37,7 @@ const RevokeUsersComponent = ({
 	url,
 	useCustomMutationParams,
 	label = '',
+	useInvalidateProp,
 }: TRevokeUsersProps) => {
 	const apiUrl = useApiUrl()
 	const invalidate = useInvalidate()
@@ -62,6 +70,7 @@ const RevokeUsersComponent = ({
 					invalidate({
 						resource: 'users',
 						invalidates: ['list'],
+						...useInvalidateProp,
 					})
 				},
 				onError: () => {

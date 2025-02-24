@@ -1,5 +1,5 @@
 import { DataProvider } from '@refinedev/core'
-import { axiosInstance, generateSort, generateFilter } from './utils'
+import { generateSort, generateFilter } from './utils'
 import { AxiosInstance } from 'axios'
 import queryString from 'query-string'
 import { TOrderBy, TOrder, THttpMethods, THttpMethodsWithBody } from '@/main/types'
@@ -11,7 +11,7 @@ const { stringify } = queryString
 
 export const dataProvider = (
 	apiUrl: string,
-	httpClient: AxiosInstance = axiosInstance,
+	httpClient: AxiosInstance,
 ): Required<DataProvider> => ({
 	getList: async ({ resource, pagination, filters, sorters, meta }) => {
 		const url = `${apiUrl}/${resource}`

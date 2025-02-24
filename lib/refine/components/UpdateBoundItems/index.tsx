@@ -1,6 +1,11 @@
 import { memo } from 'react'
 import { Button, message, Form } from 'antd'
-import { useCustomMutation, useApiUrl, useInvalidate } from '@refinedev/core'
+import {
+	useCustomMutation,
+	useApiUrl,
+	useInvalidate,
+	UseInvalidateProp,
+} from '@refinedev/core'
 import { TLimit } from '@/main'
 import { UseCustomMutationParams } from '@/refine/types'
 
@@ -13,6 +18,7 @@ import { UseCustomMutationParams } from '@/refine/types'
  * @property {Function} onSettled     - 修改成功後的回調函數
  * @property {string}   [url]        - 修改綁定 API 的 url，預設為 `${apiUrl}/products/update-bound-items`
  * @property {UseCustomMutationParams}                   useCustomMutationParams       -  API 參數
+ * @property {Partial<UseInvalidateProp>}                       useInvalidateProp             - invalidate 參數
  */
 type TUpdateBoundItemsProps = {
 	product_ids: string[] // 要綁在哪些商品上
@@ -21,6 +27,7 @@ type TUpdateBoundItemsProps = {
 	onSettled?: () => void // 綁定成功後的 callback
 	url?: string // 綁定 API 的 url 預設為 `${apiUrl}/products/update-bound-items`
 	useCustomMutationParams?: UseCustomMutationParams // 綁定 API，如果要改寫 values 或 headers 可以用
+	useInvalidateProp?: Partial<UseInvalidateProp> // invalidate 參數
 }
 
 const UpdateBoundItemsComponent = ({
@@ -30,6 +37,7 @@ const UpdateBoundItemsComponent = ({
 	onSettled,
 	url,
 	useCustomMutationParams,
+	useInvalidateProp,
 }: TUpdateBoundItemsProps) => {
 	const { mutate, isLoading } = useCustomMutation()
 	const apiUrl = useApiUrl()
@@ -65,6 +73,7 @@ const UpdateBoundItemsComponent = ({
 					invalidate({
 						resource: 'products',
 						invalidates: ['list'],
+						...useInvalidateProp,
 					})
 				},
 				onError: () => {
