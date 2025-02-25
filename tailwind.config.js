@@ -36,7 +36,7 @@ export default {
 	plugins: [
 		function ({ addUtilities }) {
 			const newUtilities = {
-				'.rtl': {
+				'.right-to-left': {
 					direction: 'rtl',
 				},
 
