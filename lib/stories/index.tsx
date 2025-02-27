@@ -1,14 +1,10 @@
 import { HashRouter } from 'react-router-dom'
-import { Refine } from '@refinedev/core'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { StyleProvider } from '@ant-design/cssinjs'
 import { EnvProvider } from '@/main'
-import { BunnyProvider, bunnyStreamDataProvider, dataProvider } from '@/refine'
-import axios from 'axios'
+import { BunnyProvider } from '@/refine'
 import { useEffect } from 'react'
-import { Form } from 'antd'
-
-const { Item } = Form
+import { App } from './App'
 
 const {
 	STORYBOOK_SITE_URL,
@@ -24,6 +20,7 @@ const {
 	STORYBOOK_BUNNY_API,
 	STORYBOOK_USERNAME,
 	STORYBOOK_PASSWORD,
+	STORYBOOK_NONCE,
 } = import.meta.env
 
 console.log('ENV', import.meta.env)
@@ -39,7 +36,7 @@ export const ENV = {
 	APP_NAME: STORYBOOK_APP_NAME,
 	KEBAB: STORYBOOK_KEBAB,
 	SNAKE: STORYBOOK_SNAKE,
-	NONCE: '1234567890',
+	NONCE: STORYBOOK_NONCE,
 	BUNNY_LIBRARY_ID: STORYBOOK_BUNNY_LIBRARY_ID,
 	BUNNY_CDN_HOSTNAME: STORYBOOK_BUNNY_CDN_HOSTNAME,
 	BUNNY_STREAM_API_KEY: STORYBOOK_BUNNY_STREAM_API_KEY,
@@ -67,13 +64,6 @@ export const refineDecorator = (Story: any) => {
 		},
 	})
 
-	const bunnyStreamAxios = axios.create({
-		baseURL: ENV.BUNNY_API,
-		headers: {
-			AccessKey: BUNNY_CONFIG.bunny_stream_api_key,
-		},
-	})
-
 	useEffect(() => {
 		// @ts-ignore
 		window.my_plugin_data = {
@@ -90,22 +80,7 @@ export const refineDecorator = (Story: any) => {
 				<HashRouter>
 					<EnvProvider env={ENV}>
 						<BunnyProvider {...BUNNY_CONFIG}>
-							<Refine
-								dataProvider={{
-									default: dataProvider(ENV.API_URL),
-									'bunny-stream': bunnyStreamDataProvider(
-										ENV.BUNNY_API,
-										bunnyStreamAxios,
-									),
-								}}
-							>
-								<div className="at-w-[900px]">
-									<Form layout="vertical">
-										<Story />
-										<Item name={['id']} initialValue={1} />
-									</Form>
-								</div>
-							</Refine>
+							<App story={Story} />
 						</BunnyProvider>
 					</EnvProvider>
 				</HashRouter>

@@ -77,17 +77,16 @@ export const dataProvider = (
 		const { headers, method } = meta ?? {}
 		const requestMethod = (method as THttpMethodsWithBody) ?? 'post'
 
+
+
 		// @ts-ignore
-		const { data } = await httpClient[requestMethod](url, variables, {
+		const result = await httpClient[requestMethod](url, variables, {
 			headers: {
 				'Content-Type': 'multipart/form-data;',
 				...headers,
 			},
 		})
-
-		return {
-			data,
-		}
+		return result
 	},
 
 	createMany: async ({ resource, variables, meta }) => {
@@ -102,16 +101,14 @@ export const dataProvider = (
 		const requestMethod = (method as THttpMethodsWithBody) ?? 'post'
 
 		// @ts-ignore
-		const { data } = await httpClient[requestMethod](url, formattedVariables, {
+		const result = await httpClient[requestMethod](url, formattedVariables, {
 			headers: {
 				'Content-Type': 'multipart/form-data;',
 				...headers,
 			},
 		})
 
-		return {
-			data,
-		}
+		return result
 	},
 
 	update: async ({ resource, id, variables, meta }) => {
@@ -121,16 +118,14 @@ export const dataProvider = (
 		const requestMethod = (method as THttpMethodsWithBody) ?? 'post'
 
 		// @ts-ignore
-		const { data } = await httpClient[requestMethod](url, variables, {
+		const result = await httpClient[requestMethod](url, variables, {
 			headers: {
 				'Content-Type': 'multipart/form-data;',
 				...headers,
 			},
 		})
 
-		return {
-			data,
-		}
+		return result
 	},
 
 	updateMany: async ({ resource, ids, variables, meta }) => {
@@ -177,7 +172,7 @@ export const dataProvider = (
 		const requestMethod = (method as THttpMethodsWithBody) ?? 'delete'
 
 		// @ts-ignore
-		const { data } = await httpClient[requestMethod](url, {
+		const result = await httpClient[requestMethod](url, {
 			data: variables,
 			headers: {
 				'Content-Type': 'multipart/form-data;',
@@ -185,9 +180,7 @@ export const dataProvider = (
 			},
 		})
 
-		return {
-			data,
-		}
+		return result
 	},
 
 	deleteMany: async ({ resource, ids, variables, meta }) => {
@@ -197,7 +190,7 @@ export const dataProvider = (
 		const requestMethod = (method as THttpMethodsWithBody) ?? 'delete'
 
 		// @ts-ignore
-		const { data } = await httpClient[requestMethod](url, {
+		const result = await httpClient[requestMethod](url, {
 			data: {
 				...variables,
 				ids,
@@ -208,9 +201,7 @@ export const dataProvider = (
 			},
 		})
 
-		return {
-			data,
-		}
+		return result
 	},
 
 	getApiUrl: () => {

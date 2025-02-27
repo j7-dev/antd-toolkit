@@ -9,14 +9,24 @@ import { CheckCircleTwoTone, CloseCircleTwoTone } from '@ant-design/icons'
  * axiosInstance 可以用來發 api & 給 refine 使用
  */
 export const useEnv = () => {
+	const { STORYBOOK_USERNAME, STORYBOOK_PASSWORD } = import.meta.env
+
 	const context = useContext(EnvContext)
 	const { NONCE } = context
+
+	const headers = NONCE
+		? {
+				'X-WP-Nonce': NONCE,
+			}
+		: {
+				Authorization:
+					'Basic ' + btoa(STORYBOOK_USERNAME + ':' + STORYBOOK_PASSWORD),
+			}
 
 	const axiosInstance: AxiosInstance = axios.create({
 		timeout: 30000,
 		headers: {
-			// @ts-ignore
-			'X-WP-Nonce': NONCE,
+			...headers,
 			'Content-Type': 'application/json',
 		},
 	})
