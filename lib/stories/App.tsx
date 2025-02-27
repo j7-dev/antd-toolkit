@@ -1,6 +1,6 @@
 import { Refine } from '@refinedev/core'
 import { useEnv } from '@/main'
-import { useBunny, dataProvider } from '@/refine'
+import { useBunny, dataProvider, notificationProvider } from '@/refine'
 import { Form } from 'antd'
 
 const { Item } = Form
@@ -16,6 +16,7 @@ export const App = ({ story }: { story: any }) => {
 				default: dataProvider(API_URL, AXIOS_INSTANCE),
 				'bunny-stream': bunny_data_provider_result,
 			}}
+			notificationProvider={notificationProvider}
 		>
 			<div className="at-w-[900px]">
 				<Form layout="vertical">

@@ -49,7 +49,10 @@ export const defaultDeleteButtonProps: DeleteButtonProps = {
 }
 
 export const notificationProvider: NotificationProvider = {
-	open: ({ key, message, type, description }) => {
+	open: (params) => {
+		// console.log('⭐ params:', params)
+		const { key, message, type, description } = params
+
 		const notificationType = type === 'progress' ? 'info' : type
 
 		const getColorAndIcon = (nt: string) => {
