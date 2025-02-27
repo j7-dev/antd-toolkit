@@ -1,4 +1,9 @@
-import { BaseRecord, CrudFilters, NotificationProvider } from '@refinedev/core'
+import {
+	BaseRecord,
+	CrudFilters,
+	NotificationProvider,
+	UseCreateProps,
+} from '@refinedev/core'
 import { DeleteButtonProps } from '@refinedev/antd'
 import { notification } from 'antd'
 import {
@@ -50,7 +55,6 @@ export const defaultDeleteButtonProps: DeleteButtonProps = {
 
 export const notificationProvider: NotificationProvider = {
 	open: (params) => {
-		// console.log('⭐ params:', params)
 		const { key, message, type, description } = params
 
 		const notificationType = type === 'progress' ? 'info' : type
@@ -104,5 +108,20 @@ export const notificationProvider: NotificationProvider = {
 	},
 	close: (key) => {
 		notification.destroy(key)
+	},
+}
+
+/**
+ * 給 useCreate / useUpdate 的 notification 使用
+ */
+export const notificationProps: {
+	successNotification?: any
+	errorNotification?: any
+} = {
+	successNotification: (data: any, values: any, resource: string) => {
+		return {
+			message: data?.data?.message,
+			type: 'success',
+		}
 	},
 }
