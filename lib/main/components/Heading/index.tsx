@@ -9,8 +9,9 @@ const HeadingComponent: FC<
 		children: React.ReactNode
 		titleProps?: TypographyProps['Title']
 		size?: 'sm' | 'md'
+		hideIcon?: boolean
 	} & DividerProps
-> = ({ children, titleProps, size = 'md', ...rest }) => {
+> = ({ children, titleProps, size = 'md', hideIcon = false, ...rest }) => {
 	if (size === 'sm') {
 		return (
 			<Divider
@@ -20,7 +21,8 @@ const HeadingComponent: FC<
 				orientationMargin="0"
 				{...rest}
 			>
-				<SendOutlined className="at-mr-2" /> {children}
+				{!hideIcon && <SendOutlined className="at-mr-2" />}
+				{children}
 			</Divider>
 		)
 	}
@@ -31,7 +33,7 @@ const HeadingComponent: FC<
 				level={2}
 				className="at-font-bold at-text-lg at-pl-2"
 				style={{
-					borderLeft: '4px solid #60a5fa',
+					borderLeft: hideIcon ? 'none' : '4px solid #60a5fa',
 					lineHeight: '1',
 				}}
 				{...titleProps}

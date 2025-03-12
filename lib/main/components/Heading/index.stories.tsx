@@ -64,11 +64,42 @@ export const General: Story = {
 	],
 }
 
+export const NoIcon: Story = {
+	name: '不顯示 icon',
+	args: {
+		children: '這是一個一般尺寸的標題',
+		hideIcon: true,
+	},
+	decorators: [
+		(Story) => (
+			<div className="at-w-[1000px]">
+				<Story />
+			</div>
+		),
+	],
+}
+
 export const Small: Story = {
 	name: '小標題',
 	args: {
 		children: '這是一個小尺寸的標題',
 		size: 'sm',
+	},
+	decorators: [
+		(Story) => (
+			<div className="at-w-[20rem]">
+				<Story />
+			</div>
+		),
+	],
+}
+
+export const NoIconSmall: Story = {
+	name: '不顯示 icon 的小標題',
+	args: {
+		children: '這是一個小尺寸的標題',
+		size: 'sm',
+		hideIcon: true,
 	},
 	decorators: [
 		(Story) => (
