@@ -24,7 +24,7 @@ export const ObjectTable: React.FC<{
 	editable?: boolean
 	columns?: TColumn[]
 	buttonProps?: ButtonProps
-}> = ({ record, columns, editable = false }) => {
+}> = ({ record, columns, editable = false, buttonProps }) => {
 	const [isEditing, setIsEditing] = useState(false)
 
 	if (!record) return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
@@ -83,7 +83,12 @@ export const ObjectTable: React.FC<{
 		if (render) {
 			return render(record?.[dataIndex as string], record, j, editable)
 		}
-		return editable && isEditing ? (
+
+		if (!editable) {
+			return record?.[dataIndex as string]?.toString()
+		}
+
+		return isEditing ? (
 			<Form.Item
 				className="at-m-0"
 				name={[dataIndex]}
@@ -92,7 +97,14 @@ export const ObjectTable: React.FC<{
 				<Input />
 			</Form.Item>
 		) : (
-			record?.[dataIndex as string]?.toString()
+			<>
+				{record?.[dataIndex as string]?.toString()}
+				<Form.Item
+					hidden
+					name={[dataIndex]}
+					initialValue={record?.[dataIndex]}
+				/>
+			</>
 		)
 	}
 
@@ -103,6 +115,8 @@ export const ObjectTable: React.FC<{
 					<ActionButton
 						onEdit={() => setIsEditing(true)}
 						onCancel={() => setIsEditing(false)}
+						canDelete={false}
+						buttonProps={buttonProps}
 					/>
 				</div>
 			)}
