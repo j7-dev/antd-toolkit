@@ -17,7 +17,7 @@ const NameIdBase: FC<{
 					lineHeight: 'normal',
 				}}
 			>
-				#{id}
+				{id && `#${id}`}
 			</div>
 		</div>
 	)
