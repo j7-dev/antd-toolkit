@@ -1,12 +1,13 @@
 import { useContext } from 'react'
-import { EnvContext } from './index'
+import { EnvContext, TEnv } from './index'
 import axios, { AxiosInstance } from 'axios'
 
 /**
  * 從 Bootstrap::wp_localize_script env 傳給前端的參數
  * axiosInstance 可以用來發 api & 給 refine 使用
+ * @returns {TEnv} 包含 axiosInstance 的環境變數
  */
-export const useEnv = () => {
+export function useEnv<T extends TEnv = TEnv>(): T {
 	const { STORYBOOK_USERNAME, STORYBOOK_PASSWORD } = import.meta.env
 
 	const context = useContext(EnvContext)
@@ -45,5 +46,5 @@ export const useEnv = () => {
 	return {
 		...context,
 		AXIOS_INSTANCE: axiosInstance,
-	}
+	} as T
 }
