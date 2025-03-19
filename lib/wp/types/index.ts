@@ -40,5 +40,6 @@ export type TUserBaseRecord = {
 	orders_count: number | null
 	total_spend: number | null
 	avg_order_value: number | null
+	pc_birthday: number | null // timestamp 10位
 }
 
