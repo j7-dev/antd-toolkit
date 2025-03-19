@@ -48,8 +48,9 @@ export function FilterTagsComponent<T = BaseRecord>({
 						filteredValue === undefined ||
 						filteredValue === null ||
 						filteredValue === ''
-					)
+					) {
 						return null
+					}
 
 					/**
 					 * If the value is an array of dayjs objects, we will format the date range
