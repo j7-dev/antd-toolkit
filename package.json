@@ -1,6 +1,6 @@
 {
 	"name": "antd-toolkit",
-	"version": "1.3.104",
+	"version": "1.3.105",
 	"private": false,
 	"type": "module",
 	"main": "dist/main/index.js",
