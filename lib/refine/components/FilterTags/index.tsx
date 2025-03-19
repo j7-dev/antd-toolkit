@@ -8,12 +8,12 @@ import { NamePath } from 'rc-field-form/es/interface'
 export function FilterTagsComponent<T = BaseRecord>({
 	form,
 	keyLabelMapper = (s) => s?.toString(),
-	valueLabelMapper = (s) => s?.toString(),
+	valueLabelMapper = (s, key) => s?.toString(),
 	booleanKeys = [],
 }: {
 	form: FormInstance<T>
 	keyLabelMapper?: (key: keyof T) => string
-	valueLabelMapper?: (key: string) => string
+	valueLabelMapper?: (value: string, key?: keyof T) => string
 	booleanKeys?: (keyof T)[]
 }): JSX.Element {
 	const filteredValues = form?.getFieldsValue()
@@ -111,7 +111,8 @@ export function FilterTagsComponent<T = BaseRecord>({
 										filteredValue as (string | number)[],
 									)}
 								>
-									{keyLabelMapper(key)}: {valueLabelMapper(value?.toString())}
+									{keyLabelMapper(key)}:{' '}
+									{valueLabelMapper(value?.toString(), key)}
 								</Tag>
 							))
 						} else {
@@ -136,7 +137,7 @@ export function FilterTagsComponent<T = BaseRecord>({
 								onClose={handleClearFilterProps(key as string)}
 							>
 								{keyLabelMapper(key)}: {keyLabelMapper(key)}:{' '}
-								{valueLabelMapper(filteredValue?.toString())}
+								{valueLabelMapper(filteredValue?.toString(), key)}
 							</Tag>
 						)
 					}
@@ -163,8 +164,9 @@ export function FilterTagsComponent<T = BaseRecord>({
 							{isBoolean &&
 								valueLabelMapper(
 									filteredValue?.toString() === '1' ? 'true' : 'false',
+									key,
 								)}
-							{!isBoolean && valueLabelMapper(filteredValue?.toString())}
+							{!isBoolean && valueLabelMapper(filteredValue?.toString(), key)}
 						</Tag>
 					)
 				})}
