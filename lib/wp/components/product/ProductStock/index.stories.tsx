@@ -30,8 +30,8 @@ const meta: Meta<typeof ProductStock> & {
 					summary: 'object',
 					detail: `
 stock_status: "instock" | "outofstock" | "onbackorder",
-stock_quantity: number,
-low_stock_amount: number
+stock_quantity: number | null,
+low_stock_amount: numbe | nullr
 `,
 				},
 			},

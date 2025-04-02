@@ -11,8 +11,8 @@ import {
 
 type TBaseRecord = {
 	stock_status: TProductStockStatus
-	stock_quantity: number
-	low_stock_amount: number
+	stock_quantity: number | null
+	low_stock_amount: number | null
 }
 
 type TProductStockProps<T extends TBaseRecord> = {
@@ -25,7 +25,9 @@ const ProductStockComponent = <T extends TBaseRecord>({
 	type = 'text',
 }: TProductStockProps<T>) => {
 	const { stock_status, stock_quantity, low_stock_amount = 0 } = record
+
 	if (!stock_status) return null
+
 	const { label, color, Icon } = getTagProps(
 		stock_status,
 		stock_quantity,
