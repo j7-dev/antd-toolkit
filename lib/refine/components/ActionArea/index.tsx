@@ -44,6 +44,7 @@ export const ActionArea: FC<TActionAreaProps> = ({
 			className="at-bottom-0 at-bg-white at-w-full at-py-3 at-px-6 at-shadow-[0_0px_60px_-24px_rgba(0,0,0,0.3)]"
 			style={{
 				position: 'fixed',
+				zIndex: 10,
 				width: isMobile ? mobileWidth : deskWidth,
 				right: `${padding}px`,
 				...style,

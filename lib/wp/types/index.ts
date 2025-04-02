@@ -32,14 +32,16 @@ export type TUserBaseRecord = {
 	user_registered: string
 	user_registered_human: string
 	user_avatar_url: string
+	user_birthday: string | '' // YYYY-MM-DD
 	description: string
-	roles: string[]
+	role: string
 	billing_phone: string
 	date_last_active: string | null
 	date_last_order: string | null
 	orders_count: number | null
 	total_spend: number | null
 	avg_order_value: number | null
-	pc_birthday: number | null // timestamp 10位
+	edit_url: string
+	ip_address?: string
 }
 
