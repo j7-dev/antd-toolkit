@@ -7,11 +7,17 @@ const TrendIndicatorComponent = ({
 	tooltipProps,
 	value,
 	compareValue,
+	hideWithoutCompareValue = true,
 }: {
 	tooltipProps: TooltipProps
 	value: number
 	compareValue: number
+	hideWithoutCompareValue?: boolean
 }) => {
+	if (hideWithoutCompareValue && !compareValue) {
+		return null
+	}
+
 	const isGreater = value >= compareValue
 	const percentage = compareValue
 		? round(((value - compareValue) / compareValue) * 100, 2)

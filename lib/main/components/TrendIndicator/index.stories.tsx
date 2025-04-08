@@ -77,13 +77,14 @@ export const LakeValue: Story = {
 }
 
 export const LakeCompareValue: Story = {
-	name: '缺少去年資料',
+	name: '缺少去年資料 & hideWithoutCompareValue = false',
 	args: {
 		tooltipProps: {
 			title: '去年營收 0',
 		},
 		value: 80000,
 		compareValue: 0,
+		hideWithoutCompareValue: false,
 	},
 }
 
