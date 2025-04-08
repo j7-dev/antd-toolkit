@@ -21,3 +21,5 @@ export * from '@/main/components/PopconfirmDelete'
 export * from '@/main/components/WatchStatusTag'
 export * from '@/main/components/NameId'
 export * from '@/main/components/Card'
+export * from '@/main/components/TrendIndicator'
+
