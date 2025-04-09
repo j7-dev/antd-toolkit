@@ -112,17 +112,11 @@ export const dataProvider = (
 	createMany: async ({ resource, variables, meta }) => {
 		return errorHandler(async () => {
 			const url = `${apiUrl}/${resource}`
-
-			const formattedVariables = {
-				...variables,
-				action: 'create-many',
-			}
-
 			const { headers, method } = meta ?? {}
 			const requestMethod = (method as THttpMethodsWithBody) ?? 'post'
 
 			// @ts-ignore
-			const result = await httpClient[requestMethod](url, formattedVariables, {
+			const result = await httpClient[requestMethod](url, variables, {
 				headers: {
 					'Content-Type': 'multipart/form-data;',
 					...headers,
