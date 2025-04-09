@@ -115,6 +115,7 @@ export const dataProvider = (
 			const { headers, method } = meta ?? {}
 			const requestMethod = (method as THttpMethodsWithBody) ?? 'post'
 
+
 			// @ts-ignore
 			const result = await httpClient[requestMethod](url, variables, {
 				headers: {

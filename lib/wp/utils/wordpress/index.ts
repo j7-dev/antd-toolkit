@@ -19,6 +19,11 @@ export const POST_STATUS = [
     value: 'private' as const,
     color: 'purple',
   },
+	{
+    label: '回收桶',
+    value: 'trash' as const,
+    color: 'red',
+  },
 ]
 
 export const USER_ROLES = [

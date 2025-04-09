@@ -2,7 +2,7 @@ import { TProductType } from '@/wp/types'
 import { TProductFilterProps } from '@/refine'
 import { POST_STATUS } from '@/wp'
 
-export const PRODUCT_STATUS = POST_STATUS.filter(({value}) => value !== 'private')
+export const PRODUCT_STATUS = POST_STATUS
 
 // 無庫存下單
 export const BACKORDERS = [
