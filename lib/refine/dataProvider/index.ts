@@ -10,6 +10,11 @@ export * from './bunny-stream'
 const { stringify } = queryString
 
 
+/**
+ * 添加 errorHandler，統一使用 notificationProvider
+ * @param callback
+ * @returns
+ */
 function errorHandler(callback: () => Promise<any>): Promise<any> {
 	return callback().catch((error) => {
 		const message = error?.response?.data?.message || error?.message || error;
@@ -110,7 +115,7 @@ export const dataProvider = (
 
 			const formattedVariables = {
 				...variables,
-				action: 'create',
+				action: 'create-many',
 			}
 
 			const { headers, method } = meta ?? {}
@@ -153,7 +158,7 @@ export const dataProvider = (
 			const formattedVariables = {
 				...variables,
 				ids,
-				action: 'update',
+				action: 'update-many',
 			}
 
 			const { headers, method } = meta ?? {}
