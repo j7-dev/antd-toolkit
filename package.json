@@ -141,15 +141,15 @@
 	"exports": {
 		".": {
 			"import": "./dist/main/index.js",
-			"types": "./dist/main/types/index.d.ts"
+			"types": "./dist/main/index.d.ts"
 		},
 		"./wp": {
 			"import": "./dist/wp/index.js",
-			"types": "./dist/wp/types/index.d.ts"
+			"types": "./dist/wp/index.d.ts"
 		},
 		"./refine": {
 			"import": "./dist/refine/index.js",
-			"types": "./dist/refine/types/index.d.ts"
+			"types": "./dist/refine/index.d.ts"
 		},
 		"./style.css": {
 			"import": "./dist/style.css"
