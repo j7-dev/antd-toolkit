@@ -1,10 +1,10 @@
 import { FC } from 'react'
 import { useThemedLayoutContext } from '@refinedev/antd'
 import { Grid } from 'antd'
-import { cn } from '@/main'
 
 /**
  * 固定在頁面底部的操作區域元件
+ * 通常搭配可選 Table 裡面放批量操作使用
  * @component
  * @param {Object} props
  * @param {[number, number]} [props.mainPadding=[12, 24]] - Main 區域的內縮 [mobile, desktop] padding
