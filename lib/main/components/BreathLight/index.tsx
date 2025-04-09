@@ -5,7 +5,7 @@ type TBreathLightProps = {
 }
 
 export const BreathLight = ({
-	className = 'at-size-3 at-bg-orange-400',
+	className = 'at-bg-orange-400',
 }: TBreathLightProps) => {
 	return (
 		<span
@@ -17,7 +17,7 @@ export const BreathLight = ({
 		>
 			<span
 				className={cn(
-					'at-animate-ping at-absolute at-inline-flex at-size-full at-rounded-full at-opacity-50',
+					'at-animate-ping at-absolute at-inline-flex at-rounded-full at-opacity-50 at-size-3',
 					className,
 				)}
 			></span>

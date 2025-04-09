@@ -48,7 +48,10 @@ export const PRODUCT_DATE_FIELDS = [
   },
 ]
 
-// 商品類型
+/**
+ * 商品類型
+ * @see https://github.com/woocommerce/woocommerce/blob/trunk/plugins/woocommerce/src/Enums/ProductType.php
+ * */
 export const PRODUCT_TYPES = [
   {
     value: 'simple' as const,
@@ -107,6 +110,7 @@ export const getProductFilterLabels = (
 } => ({
 	s: '關鍵字',
 	sku: '貨號(sku)',
+	type: '商品類型',
 	product_category_id: `${label}分類`,
 	product_tag_id: `${label}標籤`,
 	product_brand_id: '品牌',
@@ -119,6 +123,7 @@ export const getProductFilterLabels = (
 	stock_status: '庫存狀態',
 	date_created: `${label}發佈日期`,
 	price_range: '價格範圍',
+	author: '作者',
 })
 
 export const productKeyLabelMapper = (key: keyof TProductFilterProps, label = '商品'):string => {

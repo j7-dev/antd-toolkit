@@ -1,6 +1,7 @@
 import { Dayjs } from 'dayjs'
 import { MetaQuery } from '@refinedev/core'
 import {TExpireDate} from '@/main'
+import { PRODUCT_TYPES } from '@/wp'
 
 export type TGrantedItemBase = {
 	id: string
@@ -13,6 +14,7 @@ export type TGrantedItemBase = {
 export type TProductFilterProps = Partial<{
 	s: string
 	sku: string
+	type: (typeof PRODUCT_TYPES)[number]['value']
 	product_category_id?: string[]
 	product_tag_id?: string[]
 	product_brand_id?: string[]
@@ -26,6 +28,7 @@ export type TProductFilterProps = Partial<{
 	date_created: [Dayjs, Dayjs]
 	is_course: boolean
 	price_range: [number, number]
+	author: string
 }>
 
 
