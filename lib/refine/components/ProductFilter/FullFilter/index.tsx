@@ -10,13 +10,16 @@ import {
 	Divider,
 	Spin,
 } from 'antd'
+import { useSelect } from '@refinedev/antd'
 import { BooleanRadioButton, termToOptions, defaultSelectProps } from '@/main'
 import { TProductFilterProps } from '@/refine'
 import {
 	productKeyLabelMapper,
 	BACKORDERS,
 	PRODUCT_STOCK_STATUS,
-	POST_STATUS,
+	PRODUCT_STATUS,
+	PRODUCT_TYPES,
+	TUserBaseRecord,
 } from '@/wp'
 
 import { SearchOutlined, UndoOutlined } from '@ant-design/icons'
@@ -50,6 +53,26 @@ const FullFilter: FC<{
 		}
 	}, [isLoading])
 
+	const { selectProps } = useSelect<TUserBaseRecord>({
+		resource: 'users',
+		optionLabel: 'display_name',
+		optionValue: 'id',
+		filters: [
+			{
+				field: 'search',
+				operator: 'eq',
+				value: '',
+			},
+		],
+		onSearch: (value) => [
+			{
+				field: 'search',
+				operator: 'eq',
+				value,
+			},
+		],
+	})
+
 	return (
 		<Spin spinning={isLoading}>
 			<Form<TProductFilterProps>
@@ -62,6 +85,13 @@ const FullFilter: FC<{
 					<Item name={['s']} label={productKeyLabelMapper('s')}>
 						<Input placeholder="模糊搜尋" allowClear />
 					</Item>
+					<Item name={['type']} label={productKeyLabelMapper('type')}>
+						<Select
+							{...defaultSelectProps}
+							options={PRODUCT_TYPES}
+							placeholder="可多選"
+						/>
+					</Item>
 					<Item
 						name={['product_category_id']}
 						label={productKeyLabelMapper('product_category_id')}
@@ -73,20 +103,10 @@ const FullFilter: FC<{
 						/>
 					</Item>
 
-					<Item
-						name={['product_tag_id']}
-						label={productKeyLabelMapper('product_tag_id')}
-					>
-						<Select
-							{...defaultSelectProps}
-							options={termToOptions(product_tags)}
-							placeholder="可多選"
-						/>
-					</Item>
 					<Item name={['status']} label={productKeyLabelMapper('status')}>
 						<Select
 							{...defaultSelectProps}
-							options={POST_STATUS}
+							options={PRODUCT_STATUS}
 							placeholder="可多選"
 						/>
 					</Item>
@@ -121,6 +141,16 @@ const FullFilter: FC<{
 				<div
 					className={`at-grid-cols-2 xl:at-grid-cols-4 at-gap-x-4 ${isExpand ? 'at-grid' : 'at-tw-hidden'}`}
 				>
+					<Item
+						name={['product_tag_id']}
+						label={productKeyLabelMapper('product_tag_id')}
+					>
+						<Select
+							{...defaultSelectProps}
+							options={termToOptions(product_tags)}
+							placeholder="可多選"
+						/>
+					</Item>
 					{(
 						[
 							'featured',
@@ -168,6 +198,17 @@ const FullFilter: FC<{
 					</Item>
 					<Item name={['sku']} label={productKeyLabelMapper('sku')}>
 						<Input placeholder="模糊搜尋" allowClear />
+					</Item>
+					<Item name={['author']} label={productKeyLabelMapper('author')}>
+						<Select
+							{...defaultSelectProps}
+							{...selectProps}
+							placeholder="選擇作者"
+							mode={undefined}
+						/>
+					</Item>
+					<Item name={['include']} label="包含指定商品" hidden>
+						<Select mode="tags" placeholder="輸入商品 ID" allowClear />
 					</Item>
 				</div>
 				<div className="at-grid at-grid-cols-2 xl:at-grid-cols-4 at-gap-x-4 at-mt-4">
