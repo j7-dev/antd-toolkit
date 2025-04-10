@@ -129,3 +129,12 @@ export const getProductFilterLabels = (
 export const productKeyLabelMapper = (key: keyof TProductFilterProps, label = '商品'):string => {
 	return getProductFilterLabels(label)?.[key] || key
 }
+
+
+/**
+ * 判斷是否為商品變體
+ */
+export const isVariation = (type: string) => {
+	return type.includes('variation')
+}
+
