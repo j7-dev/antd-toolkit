@@ -29,6 +29,7 @@ export type TProductFilterProps = Partial<{
 	is_course: boolean
 	price_range: [number, number]
 	author: string
+	include: string[]
 }>
 
 

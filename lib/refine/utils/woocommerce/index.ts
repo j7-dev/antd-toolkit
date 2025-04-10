@@ -89,6 +89,11 @@ export const onProductSearch = (
 			operator: 'eq',
 			value: values?.author,
 		},
+		{
+			field: 'include',
+			operator: 'in',
+			value: values?.include,
+		},
 
 	]
 }
