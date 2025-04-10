@@ -1,3 +1,8 @@
+export const BOOLEAN_OPTIONS = [
+	{ label: '是', value: 'yes' },
+	{ label: '否', value: 'no' },
+]
+
 export const POST_STATUS = [
   {
     label: '已發佈',
