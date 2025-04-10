@@ -95,12 +95,7 @@ export const PRODUCT_TYPES = [
   },
 ]
 
-/**
- * 判斷是否為商品變體
- */
-export const getIsVariation = (productType: TProductType) => {
-  return ['variation', 'subscription_variation'].includes(productType)
-}
+
 
 /** Label 對應 */
 export const getProductFilterLabels = (
@@ -130,6 +125,13 @@ export const productKeyLabelMapper = (key: keyof TProductFilterProps, label = '�
 	return getProductFilterLabels(label)?.[key] || key
 }
 
+/**
+ * 判斷是否為商品變體
+ * @deprecated 使用 isVariation 替代
+ */
+export const getIsVariation = (productType: TProductType) => {
+  return isVariation(productType)
+}
 
 /**
  * 判斷是否為商品變體
