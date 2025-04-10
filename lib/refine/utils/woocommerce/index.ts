@@ -15,6 +15,11 @@ export const onProductSearch = (
 			value: values.sku,
 		},
 		{
+			field: 'type',
+			operator: 'in',
+			value: values.type,
+		},
+		{
 			field: 'product_category_id',
 			operator: 'in',
 			value: values.product_category_id,
@@ -74,10 +79,16 @@ export const onProductSearch = (
 			operator: 'between',
 			value: values?.date_created,
 		},
-		{
+		{ // TODO
 			field: 'price_range',
 			operator: 'eq',
 			value: values?.price_range,
 		},
+		{
+			field: 'author',
+			operator: 'eq',
+			value: values?.author,
+		},
+
 	]
 }
