@@ -96,6 +96,28 @@ export const PRODUCT_TYPES = [
 ]
 
 
+export const PRODUCT_CATALOG_VISIBILITIES = [
+	{
+		value: 'hidden' as const,
+		label: '隱藏',
+		color: 'red',
+	},
+  {
+    value: 'visible' as const,
+    label: '出現在商店與搜尋結果',
+    color: 'green',
+  },
+  {
+    value: 'search' as const,
+    label: '只出現在搜尋結果',
+    color: 'blue',
+  },
+  {
+    value: 'catalog' as const,
+    label: '只出現在商店',
+    color: 'orange',
+  },
+]
 
 /** Label 對應 */
 export const getProductFilterLabels = (
