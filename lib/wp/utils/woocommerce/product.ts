@@ -119,6 +119,7 @@ export const getProductFilterLabels = (
 	date_created: `${label}發佈日期`,
 	price_range: '價格範圍',
 	author: '作者',
+	include: '包含指定商品',
 })
 
 export const productKeyLabelMapper = (key: keyof TProductFilterProps, label = '商品'):string => {

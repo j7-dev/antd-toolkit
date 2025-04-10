@@ -207,7 +207,7 @@ const FullFilter: FC<{
 							mode={undefined}
 						/>
 					</Item>
-					<Item name={['include']} label="包含指定商品" hidden>
+					<Item name={['include']} label={productKeyLabelMapper('include')}>
 						<Select mode="tags" placeholder="輸入商品 ID" allowClear />
 					</Item>
 				</div>
