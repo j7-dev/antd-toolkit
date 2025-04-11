@@ -10,8 +10,8 @@ const SwitchComponent: FC<{
 	return (
 		<Item
 			initialValue={false}
-			getValueProps={(value) => (value === 'yes' ? { checked: true } : {})}
-			normalize={(value) => (value ? 'yes' : 'no')}
+			getValueProps={(value) => (isTrue(value) ? { checked: true } : {})}
+			normalize={(value) => (isTrue(value) ? 'yes' : 'no')}
 			{...formItemProps}
 		>
 			<AntdSwitch {...switchProps} />
@@ -23,3 +23,7 @@ const SwitchComponent: FC<{
  * 存入 'yes' 或 'no' 的 switch
  */
 export const Switch = memo(SwitchComponent)
+
+function isTrue(value: string | boolean) {
+	return value === 'yes' || value === true
+}
