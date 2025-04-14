@@ -148,6 +148,14 @@ export const productKeyLabelMapper = (key: keyof TProductFilterProps, label = '�
 	return getProductFilterLabels(label)?.[key] || key
 }
 
+
+/**
+ * 判斷是否為可變商品
+ */
+export const isVariable = (type: string) => {
+	return type.startsWith('variable')
+}
+
 /**
  * 判斷是否為商品變體
  * @deprecated 使用 isVariation 替代
@@ -155,6 +163,7 @@ export const productKeyLabelMapper = (key: keyof TProductFilterProps, label = '�
 export const getIsVariation = (productType: TProductType) => {
   return isVariation(productType)
 }
+
 
 /**
  * 判斷是否為商品變體
