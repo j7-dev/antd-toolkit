@@ -51,6 +51,7 @@ const config: UserConfig = {
         'react-highlight-words',
 				'react-icons',
 				'storybook',
+        'dayjs',
 
 
 				// ---
