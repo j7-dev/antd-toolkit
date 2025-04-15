@@ -31,6 +31,9 @@ export const POST_STATUS = [
   },
 ]
 
+export const PRODUCT_STATUS = POST_STATUS
+
+
 export const USER_ROLES = [
   {
     label: '網站管理員',

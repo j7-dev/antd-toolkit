@@ -2,20 +2,12 @@ import { memo } from 'react'
 import { TTerm } from '@/wp/types'
 import { Tag } from 'antd'
 
-type TBaseRecord = {
+type TProps = {
 	categories: TTerm[]
 	tags: TTerm[]
 }
 
-type TProductCatProps<T extends TBaseRecord> = {
-	record: T
-}
-
-const ProductCatComponent = <T extends TBaseRecord>({
-	record,
-}: TProductCatProps<T>) => {
-	const { categories = [], tags = [] } = record
-
+const ProductCatComponent = ({ categories, tags }: TProps) => {
 	return (
 		<>
 			<div>
