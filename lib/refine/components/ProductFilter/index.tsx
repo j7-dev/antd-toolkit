@@ -8,6 +8,7 @@ import { TTerm } from '@/wp'
 export type TProductFilterOptions = {
 	product_cats: TTerm[]
 	product_tags: TTerm[]
+	product_shipping_classes: TTerm[]
 	product_brands: (TTerm & {
 		logo: string
 	})[]
@@ -22,6 +23,7 @@ export type TProductFilterOptions = {
 export const defaulTProductFilterOptions: TProductFilterOptions = {
 	product_cats: [],
 	product_tags: [],
+	product_shipping_classes: [],
 	product_brands: [],
 	top_sales_products: [],
 	max_price: 0,
