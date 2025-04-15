@@ -44,8 +44,8 @@ export type TProductBaseRecord = {
 	sale_price: string
 	on_sale: boolean
 	sale_date_range: [number, number]
-	date_on_sale_from: number
-	date_on_sale_to: number
+	date_on_sale_from?: number
+	date_on_sale_to?: number
 	total_sales: number
 
 	// 商品庫存
