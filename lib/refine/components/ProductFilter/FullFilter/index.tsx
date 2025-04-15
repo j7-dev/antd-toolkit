@@ -11,7 +11,7 @@ import {
 	Spin,
 } from 'antd'
 import { useSelect } from '@refinedev/antd'
-import { BooleanRadioButton, termToOptions, defaultSelectProps } from '@/main'
+import { BooleanRadioButton, defaultSelectProps } from '@/main'
 import { TProductFilterProps } from '@/refine'
 import {
 	productKeyLabelMapper,
@@ -98,7 +98,7 @@ const FullFilter: FC<{
 					>
 						<Select
 							{...defaultSelectProps}
-							options={termToOptions(product_cats)}
+							options={product_cats}
 							placeholder="可多選"
 						/>
 					</Item>
@@ -147,7 +147,7 @@ const FullFilter: FC<{
 					>
 						<Select
 							{...defaultSelectProps}
-							options={termToOptions(product_tags)}
+							options={product_tags}
 							placeholder="可多選"
 						/>
 					</Item>

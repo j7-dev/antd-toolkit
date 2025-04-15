@@ -66,8 +66,8 @@ export type TProductBaseRecord = {
 	attributes: TProductAttribute[]
 
 	// 商品分類
-	categories: TTerm[]
-	tags: TTerm[]
+	category_ids: string[]
+	tag_ids: string[]
 
 	// 圖片
 	images: TImage[]

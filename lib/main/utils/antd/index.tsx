@@ -1,6 +1,5 @@
 import { TGetColumnFilterProps } from '@/main/types'
 import { PaginationProps } from 'antd'
-import { TTerm } from '@/wp/types'
 
 export * from './constants'
 
@@ -72,10 +71,3 @@ export const getDefaultPaginationProps = ({
 	showTotal: (total: number, range: [number, number]) =>
 		`目前顯示第 ${range?.[0]} ~ ${range?.[1]} 個 ${label}，總共有 ${total} 個 ${label}`,
 })
-
-export const termToOptions = (terms: TTerm[]) => {
-	return terms?.map((term) => ({
-		value: term.id,
-		label: term.name,
-	}))
-}

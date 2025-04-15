@@ -19,27 +19,27 @@ const ProductCatComponent = <T extends TBaseRecord>({
 	return (
 		<>
 			<div>
-				{(categories as TTerm[])?.map(({ id, name }) => {
+				{(categories as TTerm[])?.map(({ value, label }) => {
 					return (
 						<Tag
-							key={id}
+							key={value}
 							color="blue"
 							bordered={false}
 							className="at-mb-1 at-mr-1"
 						>
-							{name}
+							{label}
 						</Tag>
 					)
 				})}
 			</div>
 			<div>
-				{(tags as TTerm[])?.map(({ id, name }) => {
+				{(tags as TTerm[])?.map(({ value, label }) => {
 					return (
 						<span
-							key={id}
+							key={value}
 							className="at-text-gray-400 at-text-xs at-mr-1 at-mb-1"
 						>
-							#{name}
+							#{label}
 						</span>
 					)
 				})}

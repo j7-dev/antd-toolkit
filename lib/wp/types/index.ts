@@ -5,8 +5,8 @@ import {
 
 // Term
 export type TTerm = {
-	id: string
-	name: string
+	value: string
+	label: string
 }
 
 // 圖片
