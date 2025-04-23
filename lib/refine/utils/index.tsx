@@ -118,10 +118,14 @@ export const notificationProps: {
 	successNotification?: any
 	errorNotification?: any
 } = {
-	successNotification: (data: any, values: any, resource: string) => {
-		return {
-			message: data?.data?.message,
-			type: 'success',
-		}
-	},
+	successNotification: (data: any, values: any, resource: string) => ({
+		// @ts-ignore
+		message: data?.data?.message || '成功',
+		type: 'success',
+	}),
+	errorNotification: (data: any, values: any, resource: string) => ({
+		// @ts-ignore
+		message: data?.message || '失敗',
+		type: 'error',
+	}),
 }
