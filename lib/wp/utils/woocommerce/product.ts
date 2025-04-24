@@ -49,6 +49,7 @@ export const PRODUCT_DATE_FIELDS = [
 /**
  * 商品類型
  * @see https://github.com/woocommerce/woocommerce/blob/trunk/plugins/woocommerce/src/Enums/ProductType.php
+ * @deprecated 由後端提供
  * */
 export const PRODUCT_TYPES = [
   {
@@ -163,10 +164,13 @@ export const getIsVariation = (productType: TProductType) => {
 }
 
 
-/**
- * 判斷是否為商品變體
- */
+/** 判斷是否為商品變體 */
 export const isVariation = (type: string) => {
 	return type.includes('variation')
+}
+
+/** 判斷是否為商品變體 */
+export const isSubscription = (type: string) => {
+	return type.includes('subscription')
 }
 

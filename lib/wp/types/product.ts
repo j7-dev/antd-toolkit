@@ -37,6 +37,12 @@ export type TProductBaseRecord = {
 	virtual: boolean
 	downloadable: boolean
 	permalink: string
+	edit_url:string
+	parent_id: string
+
+	// 商品描述
+	description?: string
+	short_description?: string
 
 	// 商品價格
 	price_html: string
@@ -72,12 +78,7 @@ export type TProductBaseRecord = {
 	// 圖片
 	images: TImage[]
 
-	// 父商品ID
-	parent_id: string
 
-	// 商品描述
-	description?: string
-	short_description?: string
 
 	// 訂閱商品資料
 	_subscription_price?: string
