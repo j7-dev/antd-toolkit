@@ -10,7 +10,6 @@ const SwitchComponent: FC<{
 }> = ({ formItemProps, switchProps }) => {
 	return (
 		<Item
-			initialValue={false}
 			getValueProps={(value) => (stringToBool(value) ? { checked: true } : {})}
 			normalize={(value) => (stringToBool(value) ? 'yes' : 'no')}
 			{...formItemProps}
