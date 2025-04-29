@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { isNumber, isString, isNull, isUndefined, isBoolean } from 'lodash-es'
 import { keyToWord } from '@/main/utils'
+import { cn } from '@/main/utils'
 import { Empty, Form, Input } from 'antd'
 import { ButtonProps } from 'antd/lib'
 import { ActionButton } from '@/main/components/ActionButton'
@@ -24,7 +25,8 @@ export const ObjectTable: React.FC<{
 	editable?: boolean
 	columns?: TColumn[]
 	buttonProps?: ButtonProps
-}> = ({ record, columns, editable = false, buttonProps }) => {
+	className?: string
+}> = ({ record, columns, editable = false, buttonProps, className }) => {
 	const [isEditing, setIsEditing] = useState(false)
 
 	if (!record) return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
@@ -121,7 +123,7 @@ export const ObjectTable: React.FC<{
 				</div>
 			)}
 
-			<table className="table table-vertical at-mb-4">
+			<table className={cn('table table-vertical at-mb-4', className)}>
 				<tbody>
 					{(columns ? columns : defaultColumns).map((column, i) => {
 						return (

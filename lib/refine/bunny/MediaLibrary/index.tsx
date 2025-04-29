@@ -1,5 +1,5 @@
 import { FC, memo, useRef, useEffect, useState } from 'react'
-import { Tabs, TabsProps, Upload, UploadProps, UploadFile } from 'antd'
+import { Tabs, TabsProps, Upload, UploadProps } from 'antd'
 import { FaPhotoVideo } from 'react-icons/fa'
 import { CloudUploadOutlined, SettingOutlined } from '@ant-design/icons'
 import VideoList from './VideoList'

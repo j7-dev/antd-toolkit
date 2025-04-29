@@ -18,6 +18,11 @@ const plugins = isBuildForStoryBook
 
 const config: UserConfig = {
   plugins,
+	server: {
+    cors: {
+      origin: '*',
+    },
+  },
   resolve: {
     alias: {
       '@': resolve(__dirname, 'lib'),
