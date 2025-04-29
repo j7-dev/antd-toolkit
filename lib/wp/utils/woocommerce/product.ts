@@ -166,11 +166,11 @@ export const getIsVariation = (productType: TProductType) => {
 
 /** 判斷是否為商品變體 */
 export const isVariation = (type: string) => {
-	return type.includes('variation')
+	return !!type?.includes('variation')
 }
 
 /** 判斷是否為商品變體 */
 export const isSubscription = (type: string) => {
-	return type.includes('subscription')
+	return !!type?.includes('subscription')
 }
 
