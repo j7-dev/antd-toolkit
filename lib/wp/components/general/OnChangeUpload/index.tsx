@@ -1,52 +1,18 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, memo } from 'react'
 import ImgCrop from 'antd-img-crop'
-import { Upload, UploadProps, Form, Input, UploadFile } from 'antd'
-import { useApiUrl } from '@refinedev/core'
+import { Upload, UploadProps, Form, Input } from 'antd'
 import { InboxOutlined, DeleteOutlined } from '@ant-design/icons'
-import { useEnv } from '@/main/components/EnvProvider'
+import { useOnChangeUpload } from './useOnChangeUpload'
 
 const { Item } = Form
 
 const { Dragger } = Upload
 
-/**
- * 這種 UPLOAD 會在 onChange 時，將圖片上傳到媒體庫，並回傳 attachmentId, url 等資訊
- */
+export const OnChangeUploadComponent = () => {
+	const { uploadProps, fileList, setFileList } = useOnChangeUpload()
 
-export const OnChangeUpload = () => {
-	const { NONCE } = useEnv()
-	const [fileList, setFileList] = useState<UploadFile[]>([])
 	const form = Form.useFormInstance()
 	const watchId = Form.useWatch(['id'], form)
-
-	const apiUrl = useApiUrl()
-
-	const onChange: UploadProps['onChange'] = ({ file }) => {
-		const { status } = file
-		setFileList([file])
-
-		if ('done' !== status) return
-
-		const url = file?.response?.data?.url
-		const attachmentId = file?.response?.data?.id
-
-		setFileList([
-			{
-				...file,
-				url,
-			},
-		])
-
-		form.setFieldValue('files', attachmentId)
-	}
-
-	// const beforeUpload = (file: FileType) => {
-	//   const isLt2M = file.size / 1024 / 1024 < 2
-	//   if (!isLt2M) {
-	//     message.error('圖片大小必須小於 2MB!')
-	//   }
-	//   return false
-	// }
 
 	useEffect(() => {
 		if (watchId) {
@@ -83,20 +49,7 @@ export const OnChangeUpload = () => {
 					zIndex: 999999,
 				}}
 			>
-				<Dragger
-					name="files"
-					accept="image/*"
-					action={`${apiUrl}/upload`}
-					headers={{
-						'X-WP-Nonce': NONCE,
-					}}
-					maxCount={1}
-					withCredentials
-					fileList={fileList}
-					onChange={onChange}
-					className="at-w-full at-aspect-video"
-					showUploadList={false}
-				>
+				<Dragger {...uploadProps}>
 					<p className="ant-upload-drag-icon">
 						<InboxOutlined />
 					</p>
@@ -126,3 +79,8 @@ export const OnChangeUpload = () => {
 		</div>
 	)
 }
+
+/**
+ * 這種 UPLOAD 會在 onChange 時，將圖片上傳到媒體庫，並回傳 attachmentId, url 等資訊
+ */
+export const OnChangeUpload = memo(OnChangeUploadComponent)
