@@ -43,6 +43,11 @@ export type TProductBaseRecord = {
 	// 商品描述
 	description?: string
 	short_description?: string
+	page_template?: string
+	page_template_options?: {
+		value: string
+		label: string
+	}[]
 
 	// 商品價格
 	price_html: string
