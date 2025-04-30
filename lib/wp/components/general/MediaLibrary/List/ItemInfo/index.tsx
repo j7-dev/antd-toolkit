@@ -1,12 +1,36 @@
+import { useEffect } from 'react'
 import { SimpleImage } from '@/main/components'
-import { ObjectTable, CopyText } from '@/main/components'
-import { Button, Tooltip } from 'antd'
+import { CopyText } from '@/main/components'
+import { Button, Tooltip, Form, Input } from 'antd'
 import { CopyOutlined, ExportOutlined } from '@ant-design/icons'
 import { DeleteButton } from '@refinedev/antd'
 import { TAttachment } from '@/wp/components/general/MediaLibrary/types'
+import { keyToWord } from '@/main/utils'
+import { useUpdate } from '@refinedev/core'
+import { notificationProps } from '@/refine'
+
+const { Item } = Form
 
 const ItemInfo = ({ item }: { item: TAttachment }) => {
-	const { id, url, img_url } = item
+	const [form] = Form.useForm()
+	const { id, url, img_url, type } = item
+	const { _wp_attachment_image_alt, ...rest } = item
+	const { mutate: update, isLoading } = useUpdate({
+		resource: 'posts',
+	})
+
+	const handleSave = () => {
+		const values = form.getFieldsValue()
+		update({
+			id,
+			values,
+			...notificationProps,
+		})
+	}
+
+	useEffect(() => {
+		form.setFieldsValue(item)
+	}, [item])
 
 	return (
 		<>
@@ -36,9 +60,91 @@ const ItemInfo = ({ item }: { item: TAttachment }) => {
 					/>
 				</Tooltip>
 			</div>
-			<ObjectTable className="[&_th]:at-text-left" record={item} />
+
+			<Form form={form}>
+				<table className="table table-vertical at-mb-4 [&_th]:at-text-left at-w-full">
+					<tbody>
+						{Object.entries(type === 'image' ? item : rest).map(
+							([key, value], i) => {
+								const keyMapper = {
+									_wp_attachment_image_alt: 'alt',
+									short_description: 'caption',
+								}
+
+								return (
+									<tr key={key}>
+										<th>
+											<div>
+												{
+													// @ts-ignore
+													keyToWord(keyMapper?.[key] || key)
+												}
+											</div>
+										</th>
+										<td>{displayValue(key, value, i)}</td>
+									</tr>
+								)
+							},
+						)}
+					</tbody>
+				</table>
+				<div className="at-flex at-justify-end">
+					<Button
+						variant="filled"
+						color="primary"
+						onClick={handleSave}
+						loading={isLoading}
+					>
+						儲存
+					</Button>
+				</div>
+			</Form>
 		</>
 	)
+}
+
+function displayValue(key: string, value: any, i: number) {
+	if ('author' === key) {
+		return <>由 {value?.name} 上傳</>
+	}
+
+	if (
+		['_wp_attachment_image_alt', 'short_description', 'description'].includes(
+			key,
+		)
+	) {
+		return (
+			<Item name={key} noStyle>
+				<Input size="small" />
+			</Item>
+		)
+	}
+	return <>{valueStringify(value)}</>
+}
+
+function valueStringify(value: any) {
+	if (value === null) {
+		return 'null'
+	}
+	if (value === undefined) {
+		return 'undefined'
+	}
+	if (typeof value === 'string') {
+		return value
+	}
+	if (typeof value === 'number') {
+		return value.toString()
+	}
+	if (Array.isArray(value)) {
+		return value.join(', ')
+	}
+	if (typeof value === 'boolean') {
+		return value ? 'true' : 'false'
+	}
+	if (typeof value === 'object') {
+		return JSON.stringify(value)
+	}
+	return value?.toString()
 }
 
 export default ItemInfo

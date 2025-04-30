@@ -7,9 +7,9 @@ export type TAttachment = {
 	filename: string
 	url: string
 	img_url: string
-	alt: string
+	_wp_attachment_image_alt: string
 	description: string
-	caption: string
+	short_description: string
 	type: string
 	mime: string
 	subtype: string
