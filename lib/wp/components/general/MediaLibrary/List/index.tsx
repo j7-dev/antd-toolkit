@@ -176,7 +176,6 @@ const List = () => {
 					setSearch={setSearch}
 					disabled={isFetching}
 					loading={isSearchFetching}
-					selectButtonProps={selectButtonProps}
 				/>
 				<div className="at-flex">
 					<div className="at-flex-1">

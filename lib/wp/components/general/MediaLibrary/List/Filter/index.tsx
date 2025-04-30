@@ -1,23 +1,20 @@
 import React from 'react'
-import { Input, InputProps, Button, Popconfirm, ButtonProps } from 'antd'
+import { Input, InputProps, Button, Popconfirm } from 'antd'
 import { useDeleteMany } from '@refinedev/core'
 import { notificationProps } from '@/refine'
 import { useProps } from '@/wp/components/general/MediaLibrary/hooks'
-import { TAttachment } from '@/wp/components/general/MediaLibrary/types'
 
 const { Search } = Input
 
 const Filter = ({
 	setSearch,
 	loading,
-	selectButtonProps,
 	...inputProps
 }: {
 	setSearch: React.Dispatch<React.SetStateAction<string>>
 	loading?: boolean
-	selectButtonProps?: ButtonProps
 } & InputProps) => {
-	const { selectedItems, setSelectedItems } = useProps()
+	const { selectedItems, setSelectedItems, selectButtonProps } = useProps()
 	const { mutate: deleteMany, isLoading } = useDeleteMany()
 
 	const handleBulkDelete = () => {
