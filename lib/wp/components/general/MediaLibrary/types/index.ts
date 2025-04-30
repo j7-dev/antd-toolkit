@@ -1,4 +1,4 @@
-import { ButtonProps, UploadProps } from 'antd'
+import { ButtonProps, UploadProps, UploadFile } from 'antd'
 export type TAttachment = {
 	id: string
 	status: string
@@ -38,6 +38,6 @@ export type TMediaLibraryProps = {
 	limit?: number // 能選擇的影片數量
 	selectButtonProps?: ButtonProps // "選取影片"按鈕的屬性，可以設定 onClick 後的動作
 	uploadProps?: UploadProps // 上傳影片的屬性
-	filesInQueue?: any[]
-	setFilesInQueue?:any
+	filesInQueue?: UploadFile[]
+	setFilesInQueue?:React.Dispatch<React.SetStateAction<UploadFile[]>>
 }

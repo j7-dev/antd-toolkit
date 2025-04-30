@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import { CloudUploadOutlined } from '@ant-design/icons'
 import Filter from './Filter'
 import { useInfiniteList } from '@refinedev/core'
-import { Button, Empty, Result, Alert, Upload } from 'antd'
+import { Button, Empty, Result, Alert, Upload, notification } from 'antd'
 import { LoadingCard } from '@/main/components'
 import FileUploadProgress from './FileUploadProgress'
 import { cn } from '@/main/utils'
@@ -16,10 +16,29 @@ import UploadFile from '@/wp/components/general/MediaLibrary/List/UploadFile'
 const PAGE_SIZE = 50
 
 const List = () => {
-	const { uploadProps, selectedItems, selectButtonProps, filesInQueue } =
-		useProps()
+	const {
+		uploadProps,
+		selectedItems,
+		selectButtonProps,
+		filesInQueue,
+		setFilesInQueue,
+	} = useProps()
+
+	// 上傳檔案
 	const { uploadProps: wpUploadProps } = useOnChangeUpload({
 		uploadProps,
+		onUploading: (_file) => {
+			if (!setFilesInQueue) return
+			setFilesInQueue((prev) => [...prev, _file])
+		},
+		onDone: (_file, _attachment) => {
+			if (!setFilesInQueue) return
+			setFilesInQueue((prev) => prev.filter((file) => file.uid !== _file.uid))
+		},
+		onRemoved: (_file) => {
+			if (!setFilesInQueue) return
+			setFilesInQueue((prev) => prev.filter((file) => file.uid !== _file.uid))
+		},
 	})
 
 	// Drag and Drop Upload
@@ -62,6 +81,30 @@ const List = () => {
 		}
 	}, [])
 	// End Drag and Drop Upload
+
+	// upload indicator
+	useEffect(() => {
+		if (filesInQueue?.length) {
+			notification.open({
+				key: 'files-uploading',
+				icon: <CloudUploadOutlined style={{ color: '#1677ff' }} />,
+				message: '檔案上傳中',
+				description: filesInQueue?.map((fileInQueue) => (
+					<FileUploadProgress
+						key={`${fileInQueue?.uid}-${new Date().getTime()}`}
+						fileInQueue={fileInQueue}
+					/>
+				)),
+				duration: null,
+				onClose: () => {
+					if (!setFilesInQueue) return
+					setFilesInQueue([])
+				},
+			})
+		} else {
+			notification.destroy('files-uploading')
+		}
+	}, [filesInQueue?.length])
 
 	const [search, setSearch] = useState('')
 	const {
@@ -138,18 +181,6 @@ const List = () => {
 				<div className="at-flex">
 					<div className="at-flex-1">
 						<div className="at-flex at-flex-wrap at-gap-4">
-							{filesInQueue?.map((fileInQueue) => (
-								<div
-									key={fileInQueue?.key}
-									className="at-w-36 at-aspect-video at-bg-gray-200 at-rounded-md at-px-4 at-py-2 at-flex at-flex-col at-items-center at-justify-center"
-								>
-									<FileUploadProgress
-										key={fileInQueue?.key}
-										fileInQueue={fileInQueue}
-									/>
-								</div>
-							))}
-
 							{!isSearchFetching &&
 								allItems.map((item, index) => (
 									<Item

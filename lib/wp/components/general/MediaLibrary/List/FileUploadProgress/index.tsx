@@ -1,31 +1,44 @@
 import React, { FC } from 'react'
-import { Progress } from 'antd'
-import { TFileInQueue } from '@/refine'
+import { Progress, UploadFile } from 'antd'
 
 /**
-  ⭐  file:
-  uid: "rc-upload-1719294531448-7",
-  name: "chrome_mhvwHxR3VI.mp4",
-  lastModified: 1717750071360,
-  webkitRelativePath: "",
-  size: 3284342,
-  type: "video/mp4"
+ * @example
+ * {
+ * 	uid: 'rc-upload-1745987120068-9',
+ * 	lastModified: 1745320457007,
+ * 	lastModifiedDate: new Date('2025-04-22T11:14:17.007Z'),
+ * 	name: 'parrot6.gif',
+ * 	size: 2375442,
+ * 	type: 'image/gif',
+ * 	percent: 0,
+ * 	originFileObj: {
+ * 		uid: 'rc-upload-1745987120068-9',
+ * 	},
+ * 	status: 'uploading', // error | done | uploading | removed
+ * } fileInQueue
  */
 
 const FileUploadProgress: FC<{
-	fileInQueue: TFileInQueue
+	fileInQueue: UploadFile
 }> = ({ fileInQueue }) => {
-	const { status = 'active', uploadProgress, file } = fileInQueue
-
+	const { status, percent, name } = fileInQueue
+	console.log('⭐ percent:', percent)
+	const statusMapper = {
+		uploading: 'active',
+		done: 'success',
+		error: 'exception',
+		removed: 'normal',
+	}
 	return (
-		<>
-			<p className="at-m-2 at-text-xs">{file?.name} 影片上傳中</p>
+		<div className="at-grid at-grid-cols-2 at-place-content-center at-mb-2">
+			<p className="at-m-0 at-text-xs">{name}</p>
 			<Progress
-				percent={uploadProgress}
-				percentPosition={{ align: 'center', type: 'outer' }}
-				status={status}
+				size="small"
+				percent={38}
+				// @ts-ignore
+				status={statusMapper[status] || 'active'}
 			/>
-		</>
+		</div>
 	)
 }
 
