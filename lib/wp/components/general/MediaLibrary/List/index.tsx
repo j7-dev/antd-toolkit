@@ -27,13 +27,40 @@ const List = () => {
 		onUploading: (file) => {
 			if (!setFilesInQueue) return
 			setFilesInQueue((prev) => {
-				// 如果已經存在，則更新， 否則新增
+				// 如果已經存在什麼也不做，不存在就新增
 				const index = prev.findIndex((f) => f.uid === file.uid)
-				if (index === -1) return [...prev, file]
-				return prev.map((f, i) => {
-					if (i === index) return file
-					return f
-				})
+				if (index === -1) {
+					return [...prev, file]
+				}
+				return prev
+			})
+		},
+		onDone: (file, attachment) => {
+			if (!setFilesInQueue) return
+			setFilesInQueue((prev) => {
+				const index = prev.findIndex((f) => f.uid === file.uid)
+				// 存在，則更新，不存在，什麼也不做
+				if (index !== -1) {
+					return prev.map((f, i) => {
+						if (i === index) return file
+						return f
+					})
+				}
+				return prev
+			})
+		},
+		onError: (file) => {
+			if (!setFilesInQueue) return
+			setFilesInQueue((prev) => {
+				const index = prev.findIndex((f) => f.uid === file.uid)
+				// 存在，則更新，不存在，什麼也不做
+				if (index !== -1) {
+					return prev.map((f, i) => {
+						if (i === index) return file
+						return f
+					})
+				}
+				return prev
 			})
 		},
 	})

@@ -31,7 +31,7 @@ const FileUploadProgress: FC<{
 	}
 	return (
 		<div className="at-grid at-grid-cols-2 at-place-content-center at-mb-2">
-			<p className="at-m-0 at-text-xs">{name}</p>
+			<p className="at-m-0 at-text-xs at-truncate">{name}</p>
 			<Progress
 				size="small"
 				percent={percent}
