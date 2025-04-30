@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, memo } from 'react'
 import { Upload, UploadProps } from 'antd'
 import { InboxOutlined } from '@ant-design/icons'
 
@@ -32,4 +32,4 @@ const UploadFile: FC<{
 	)
 }
 
-export default UploadFile
+export default memo(UploadFile)

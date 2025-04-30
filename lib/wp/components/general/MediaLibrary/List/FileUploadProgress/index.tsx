@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, memo } from 'react'
 import { Progress, UploadFile } from 'antd'
 
 /**
@@ -42,4 +42,4 @@ const FileUploadProgress: FC<{
 	)
 }
 
-export default FileUploadProgress
+export default memo(FileUploadProgress)
