@@ -150,7 +150,7 @@ const List = () => {
 		hasNextPage,
 		fetchNextPage,
 		isFetchingNextPage,
-		isFetching,
+		isLoading,
 	} = useInfiniteList<TAttachment>({
 		resource: 'posts',
 		pagination: {
@@ -179,7 +179,7 @@ const List = () => {
 		...(data?.pages ?? []).map((page) => page?.data || []),
 	)
 
-	const isSearchFetching = isFetching && !isFetchingNextPage
+	const isSearchFetching = isLoading && !isFetchingNextPage
 
 	if (isError) {
 		return (
@@ -214,7 +214,7 @@ const List = () => {
 				</div>
 				<Filter
 					setSearch={setSearch}
-					disabled={isFetching}
+					disabled={isLoading}
 					loading={isSearchFetching}
 				/>
 				<div className="at-flex at-flex-col xl:at-flex-row">
@@ -235,7 +235,7 @@ const List = () => {
 									/>
 								))}
 
-							{isFetching &&
+							{isLoading &&
 								new Array(PAGE_SIZE).fill(0).map((_, index) => (
 									<div key={index} className="at-w-full xl:at-w-36">
 										<LoadingCard className="at-aspect-square" />
@@ -246,7 +246,7 @@ const List = () => {
 								))}
 						</div>
 
-						{!allItems?.length && !isFetching && (
+						{!allItems?.length && !isLoading && (
 							<Empty className="at-my-24" description="找不到檔案資料" />
 						)}
 
@@ -255,7 +255,7 @@ const List = () => {
 								<Button
 									type="link"
 									onClick={() => fetchNextPage()}
-									disabled={isFetching}
+									disabled={isLoading}
 								>
 									顯示更多
 								</Button>
