@@ -13,7 +13,7 @@ const { Item } = Form
 const ItemInfo = ({ item }: { item: TAttachment }) => {
 	const [form] = Form.useForm()
 	const { id, url, img_url, type } = item
-	const { _wp_attachment_image_alt, ...rest } = item
+	const isImage = type === 'image'
 	const { mutate: update, isLoading } = useUpdate({
 		resource: 'posts',
 	})
@@ -61,28 +61,33 @@ const ItemInfo = ({ item }: { item: TAttachment }) => {
 			<Form form={form}>
 				<table className="table table-vertical at-mb-4 [&_th]:at-text-left at-w-full">
 					<tbody>
-						{Object.entries(type === 'image' ? item : rest).map(
-							([key, value], i) => {
-								const keyMapper = {
-									_wp_attachment_image_alt: 'alt',
-									short_description: 'caption',
-								}
+						{Object.entries(item).map(([key, value], i) => {
+							if ('img_url' === key) {
+								return null
+							}
+							if ('_wp_attachment_image_alt' === key && isImage) {
+								return null
+							}
 
-								return (
-									<tr key={key}>
-										<th>
-											<div>
-												{
-													// @ts-ignore
-													keyToWord(keyMapper?.[key] || key)
-												}
-											</div>
-										</th>
-										<td>{displayValue(key, value, i)}</td>
-									</tr>
-								)
-							},
-						)}
+							const keyMapper = {
+								_wp_attachment_image_alt: 'alt',
+								short_description: 'caption',
+							}
+
+							return (
+								<tr key={key}>
+									<th>
+										<div>
+											{
+												// @ts-ignore
+												keyToWord(keyMapper?.[key] || key)
+											}
+										</div>
+									</th>
+									<td>{displayValue(key, value, i)}</td>
+								</tr>
+							)
+						})}
 					</tbody>
 				</table>
 				<div className="at-flex at-justify-end">
