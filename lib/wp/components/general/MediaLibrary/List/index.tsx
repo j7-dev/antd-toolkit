@@ -3,6 +3,7 @@ import { CloudUploadOutlined } from '@ant-design/icons'
 import Filter from './Filter'
 import { useInfiniteList } from '@refinedev/core'
 import { Button, Empty, Result, Alert, Upload, notification } from 'antd'
+import { useEnv } from '@/main'
 import { LoadingCard } from '@/main/components'
 import FileUploadProgress from './FileUploadProgress'
 import { cn } from '@/main/utils'
@@ -16,6 +17,7 @@ import UploadFile from '@/wp/components/general/MediaLibrary/List/UploadFile'
 const PAGE_SIZE = 50
 
 const List = () => {
+	const { SITE_URL } = useEnv()
 	const { uploadProps, selectedItems, filesInQueue, setFilesInQueue } =
 		useProps()
 
@@ -166,7 +168,10 @@ const List = () => {
 				<UploadFile uploadProps={wpUploadProps} />
 			</div>
 			<div className={cn(isDragging ? 'at-opacity-0' : 'at-opacity-100')}>
-				<div className="at-flex at-justify-end at-mb-8">
+				<div className="at-flex at-justify-end at-mb-8 at-gap-x-2">
+					<Button href={`${SITE_URL}/wp-admin/upload.php`} target="_blank">
+						前往傳統媒體庫介面
+					</Button>
 					<Upload {...wpUploadProps}>
 						<Button icon={<CloudUploadOutlined />}>上傳檔案</Button>
 					</Upload>
