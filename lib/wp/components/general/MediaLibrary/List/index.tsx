@@ -27,12 +27,16 @@ const List = () => {
 		onUploading: (file) => {
 			if (!setFilesInQueue) return
 			setFilesInQueue((prev) => {
-				// 如果已經存在什麼也不做，不存在就新增
+				// 如果已經存在就更新，不存在就新增
 				const index = prev.findIndex((f) => f.uid === file.uid)
 				if (index === -1) {
 					return [...prev, file]
+				} else {
+					return prev.map((f, i) => {
+						if (i === index) return file
+						return f
+					})
 				}
-				return prev
 			})
 		},
 		onDone: (file, attachment) => {
@@ -132,7 +136,7 @@ const List = () => {
 		} else {
 			notification.destroy('files-uploading')
 		}
-	}, [filesInQueue?.length])
+	}, [filesInQueue])
 
 	const [search, setSearch] = useState('')
 	const {
