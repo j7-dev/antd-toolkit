@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { CloudUploadOutlined } from '@ant-design/icons'
 import Filter from './Filter'
-import { useInfiniteList } from '@refinedev/core'
+import { useInfiniteList, useInvalidate } from '@refinedev/core'
 import { Button, Empty, Result, Alert, Upload, notification } from 'antd'
 import { useEnv } from '@/main'
 import { LoadingCard } from '@/main/components'
@@ -18,6 +18,7 @@ const PAGE_SIZE = 50
 
 const List = () => {
 	const { SITE_URL } = useEnv()
+	const invalidate = useInvalidate()
 	const { uploadProps, selectedItems, filesInQueue, setFilesInQueue } =
 		useProps()
 
@@ -40,6 +41,10 @@ const List = () => {
 			})
 		},
 		onDone: (file, attachment) => {
+			invalidate({
+				resource: 'posts',
+				invalidates: ['list'],
+			})
 			if (!setFilesInQueue) return
 			setFilesInQueue((prev) => {
 				const index = prev.findIndex((f) => f.uid === file.uid)
