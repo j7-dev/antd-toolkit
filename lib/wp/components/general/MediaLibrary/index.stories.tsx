@@ -4,6 +4,7 @@ import { MediaLibrary } from './index'
 import { refineDecorator } from '../../../../stories'
 import { TAttachment } from './types'
 import { UploadFile } from 'antd'
+import { useEnv } from '../../../../main'
 
 const meta: Meta<typeof MediaLibrary> & {
 	argTypes: any
@@ -34,6 +35,7 @@ type Story = StoryObj<typeof MediaLibrary>
 export const General: Story = {
 	name: '一般用法',
 	render: () => {
+		const { NONCE, USERNAME, PASSWORD } = useEnv()
 		const [selectedItems, setSelectedItems] = useState<TAttachment[]>([])
 		const [filesInQueue, setFilesInQueue] = useState<UploadFile[]>([
 			// DELETE
@@ -58,6 +60,12 @@ export const General: Story = {
 					setSelectedItems={setSelectedItems}
 					filesInQueue={filesInQueue}
 					setFilesInQueue={setFilesInQueue}
+					uploadProps={{
+						headers: {
+							'X-WP-Nonce': NONCE, // 需要帶當下的 NONCE
+							Authorization: `Basic ${btoa(USERNAME + ':' + PASSWORD)}`,
+						},
+					}}
 				/>
 			</>
 		)

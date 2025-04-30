@@ -34,7 +34,7 @@ const FileUploadProgress: FC<{
 			<p className="at-m-0 at-text-xs">{name}</p>
 			<Progress
 				size="small"
-				percent={38}
+				percent={percent}
 				// @ts-ignore
 				status={statusMapper[status] || 'active'}
 			/>

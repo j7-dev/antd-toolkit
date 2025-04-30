@@ -45,7 +45,7 @@ export const useOnChangeUpload = (props?: {
 	onRemoved?: (_file: UploadFile<any>) => void
 }) => {
 	const { uploadProps, onDone, onError, onRemoved, onUploading } = props || {}
-	const { USERNAME, PASSWORD, NONCE } = useEnv()
+	const { NONCE } = useEnv()
 	const [fileList, setFileList] = useState<UploadFile[]>([])
 	const [attachmentId, setAttachmentId] = useState<number | undefined>(
 		undefined,
