@@ -100,8 +100,8 @@ export const useOnChangeUpload = (props?: {
 		accept: 'image/*',
 		action: `${apiUrl}/upload`,
 		headers: {
-			'Content-Type': 'multipart/form-data',
-			Authorization: `Basic ${btoa(USERNAME + ':' + PASSWORD)}`,
+			// 'Content-Type': 'multipart/form-data', // 不需要手動設置 multipart/form-data 不然會得到 "Missing boundary in multipart/form-data POST data" 錯誤
+			// Authorization: `Basic ${btoa(USERNAME + ':' + PASSWORD)}`, // WP 網站的話用 cookie 驗證就OK
 			'X-WP-Nonce': NONCE,
 		},
 		maxCount: 1,
