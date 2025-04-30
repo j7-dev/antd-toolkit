@@ -22,17 +22,17 @@ const List = () => {
 	// 上傳檔案
 	const { uploadProps: wpUploadProps } = useOnChangeUpload({
 		uploadProps,
-		onUploading: (_file) => {
+		onUploading: (file) => {
 			if (!setFilesInQueue) return
-			setFilesInQueue((prev) => [...prev, _file])
-		},
-		onDone: (_file, _attachment) => {
-			if (!setFilesInQueue) return
-			setFilesInQueue((prev) => prev.filter((file) => file.uid !== _file.uid))
-		},
-		onRemoved: (_file) => {
-			if (!setFilesInQueue) return
-			setFilesInQueue((prev) => prev.filter((file) => file.uid !== _file.uid))
+			setFilesInQueue((prev) => {
+				// 如果已經存在，則更新， 否則新增
+				const index = prev.findIndex((f) => f.uid === file.uid)
+				if (index === -1) return [...prev, file]
+				return prev.map((f, i) => {
+					if (i === index) return file
+					return f
+				})
+			})
 		},
 	})
 
@@ -84,12 +84,16 @@ const List = () => {
 				key: 'files-uploading',
 				icon: <CloudUploadOutlined style={{ color: '#1677ff' }} />,
 				message: '檔案上傳中',
-				description: filesInQueue?.map((fileInQueue) => (
-					<FileUploadProgress
-						key={`${fileInQueue?.uid}-${new Date().getTime()}`}
-						fileInQueue={fileInQueue}
-					/>
-				)),
+				description: (
+					<>
+						{filesInQueue?.map((fileInQueue) => (
+							<FileUploadProgress
+								key={`${fileInQueue?.uid}-${new Date().getTime()}`}
+								fileInQueue={fileInQueue}
+							/>
+						))}
+					</>
+				),
 				duration: null,
 				onClose: () => {
 					if (!setFilesInQueue) return
