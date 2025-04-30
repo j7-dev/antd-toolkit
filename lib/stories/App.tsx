@@ -18,7 +18,7 @@ export const App = ({ story }: { story: any }) => {
 			}}
 			notificationProvider={notificationProvider}
 		>
-			<div className="at-w-[900px]">
+			<div className="at-w-full xl:at-w-[900px]">
 				<Form layout="vertical">
 					{story()}
 					<Item name={['id']} initialValue={1} />

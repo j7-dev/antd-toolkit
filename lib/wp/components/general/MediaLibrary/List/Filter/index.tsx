@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { Input, InputProps, Button, Popconfirm } from 'antd'
 import { useDeleteMany } from '@refinedev/core'
 import { notificationProps } from '@/refine'
@@ -36,10 +36,10 @@ const Filter = ({
 	}
 
 	return (
-		<div className="pc-media-library__tabs__filter at-flex at-items-center at-justify-between at-sticky at-backdrop-blur-sm at-z-50 at-top-0 at--mx-6 at-px-6 at-pb-4 at-mb-4">
+		<div className="pc-media-library__tabs__filter at-flex at-flex-col xl:at-flex-row at-items-center xl:at-justify-between at-sticky at-backdrop-blur-sm at-z-[18] at-top-0 at--mx-6 at-px-6 at-pb-4 at-mb-4 at-gap-y-2 xl:at-gap-y-0">
 			<Search
 				placeholder="搜尋關鍵字，按 ENTER 也能搜"
-				className="at-w-[20rem]"
+				className="at-w-full xl:at-w-[20rem]"
 				allowClear
 				onSearch={(searchValue) => setSearch(searchValue)}
 				enterButton
@@ -48,7 +48,7 @@ const Filter = ({
 			/>
 
 			<div className="at-flex at-items-center at-gap-2">
-				<p className="at-text-sm at-m-0 at-text-gray-500">
+				<p className="at-hidden xl:at-block at-text-sm at-m-0 at-text-gray-500">
 					已經選取 {selectedItems?.length ?? 0} 個檔案
 				</p>
 				<Popconfirm
@@ -78,4 +78,4 @@ const Filter = ({
 	)
 }
 
-export default Filter
+export default memo(Filter)

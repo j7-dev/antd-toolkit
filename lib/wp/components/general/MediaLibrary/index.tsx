@@ -3,6 +3,8 @@ import List from '@/wp/components/general/MediaLibrary/List'
 import { TMediaLibraryProps } from '@/wp/components/general/MediaLibrary/types'
 import { MediaLibraryContext } from '@/wp/components/general/MediaLibrary/hooks/useProps'
 
+export * from '@/wp/components/general/MediaLibrary/types'
+
 const MediaLibraryComponent: FC<TMediaLibraryProps> = (props) => {
 	return (
 		<MediaLibraryContext.Provider value={props}>

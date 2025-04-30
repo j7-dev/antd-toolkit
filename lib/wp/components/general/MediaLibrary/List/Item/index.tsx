@@ -1,5 +1,4 @@
-import React, { FC, HTMLAttributes } from 'react'
-import { SimpleImage } from '@/main/components'
+import React, { FC, HTMLAttributes, memo } from 'react'
 import { Typography, message } from 'antd'
 import { uniqBy } from 'lodash-es'
 import { TAttachment } from '@/wp/components/general/MediaLibrary/types'
@@ -30,12 +29,10 @@ const CheckIcon: FC<HTMLAttributes<SVGElement>> = (props) => {
 }
 
 const Item = ({
-	children,
 	item,
 	allItems,
 	index,
 }: {
-	children?: React.ReactNode
 	item: TAttachment
 	allItems: TAttachment[]
 	index: number
@@ -85,25 +82,21 @@ const Item = ({
 	}
 
 	return (
-		<div className="at-w-36 at-relative">
-			<SimpleImage
+		<div className="at-w-full xl:at-w-36 at-relative">
+			<img
 				onClick={handleClick}
-				className={`at-rounded-md at-overflow-hidden at-cursor-pointer ${
+				className={`at-rounded-md at-w-full at-object-contain at-cursor-pointer at-aspect-square ${
 					isSelected
 						? 'at-outline at-outline-4 at-outline-yellow-300 at-outline-offset-1'
 						: ''
 				}`}
-				ratio="at-aspect-square"
-				loadingClassName="at-text-sm at-text-gray-500 at-font-bold"
 				src={item.img_url}
-			>
-				{children}
-			</SimpleImage>
+			/>
 			<Text className="at-text-xs at-text-gray-800" ellipsis>
 				{item.title}
 			</Text>
 			{isSelected && (
-				<div className="at-bg-white at-absolute at--top-2 at--right-2 at-z-30 at-size-6 at-rounded-full at-flex at-items-center at-justify-center">
+				<div className="at-bg-white at-absolute -at-top-2 -at-right-2 at-z-[15] at-size-6 at-rounded-full at-flex at-items-center at-justify-center">
 					<CheckIcon className="at-size-5 [&_path]:at-fill-yellow-300" />
 				</div>
 			)}
@@ -111,4 +104,4 @@ const Item = ({
 	)
 }
 
-export default Item
+export default memo(Item)

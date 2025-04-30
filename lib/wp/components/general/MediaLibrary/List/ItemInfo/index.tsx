@@ -1,5 +1,4 @@
-import { useEffect } from 'react'
-import { SimpleImage } from '@/main/components'
+import { useEffect, memo } from 'react'
 import { CopyText } from '@/main/components'
 import { Button, Tooltip, Form, Input } from 'antd'
 import { CopyOutlined, ExportOutlined } from '@ant-design/icons'
@@ -34,10 +33,8 @@ const ItemInfo = ({ item }: { item: TAttachment }) => {
 
 	return (
 		<>
-			<SimpleImage
-				className="at-w-full at-rounded-md at-overflow-hidden"
-				loadingClassName="at-text-sm at-text-gray-500 at-font-bold"
-				ratio="at-aspect-square"
+			<img
+				className="at-w-full at-rounded-md at-aspect-square at-object-contain"
 				src={img_url}
 			/>
 			<div className="at-flex at-gap-4 at-my-4">
@@ -90,7 +87,7 @@ const ItemInfo = ({ item }: { item: TAttachment }) => {
 				</table>
 				<div className="at-flex at-justify-end">
 					<Button
-						variant="filled"
+						variant="solid"
 						color="primary"
 						onClick={handleSave}
 						loading={isLoading}
@@ -147,4 +144,4 @@ function valueStringify(value: any) {
 	return value?.toString()
 }
 
-export default ItemInfo
+export default memo(ItemInfo)

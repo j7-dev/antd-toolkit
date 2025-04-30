@@ -16,13 +16,8 @@ import UploadFile from '@/wp/components/general/MediaLibrary/List/UploadFile'
 const PAGE_SIZE = 50
 
 const List = () => {
-	const {
-		uploadProps,
-		selectedItems,
-		selectButtonProps,
-		filesInQueue,
-		setFilesInQueue,
-	} = useProps()
+	const { uploadProps, selectedItems, filesInQueue, setFilesInQueue } =
+		useProps()
 
 	// 上傳檔案
 	const { uploadProps: wpUploadProps } = useOnChangeUpload({
@@ -162,12 +157,12 @@ const List = () => {
 				className="at-mb-8"
 			/>
 			<div
-				className={`at-absolute at-top-0 at-left-0 at-size-full ${isDragging ? 'at-opacity-100 at-z-50' : 'at-opacity-0 -at-z-50'}`}
+				className={`at-absolute at-top-0 at-left-0 at-size-full ${isDragging ? 'at-opacity-100 at-z-10' : 'at-opacity-0 -at-z-50'}`}
 			>
 				<UploadFile uploadProps={wpUploadProps} />
 			</div>
 			<div className={cn(isDragging ? 'at-opacity-0' : 'at-opacity-100')}>
-				<div className="at-flex at-justify-end at-mb-4">
+				<div className="at-flex at-justify-end at-mb-8">
 					<Upload {...wpUploadProps}>
 						<Button icon={<CloudUploadOutlined />}>上傳檔案</Button>
 					</Upload>
@@ -177,9 +172,14 @@ const List = () => {
 					disabled={isFetching}
 					loading={isSearchFetching}
 				/>
-				<div className="at-flex">
-					<div className="at-flex-1">
-						<div className="at-flex at-flex-wrap at-gap-4">
+				<div className="at-flex at-flex-col xl:at-flex-row">
+					<div className="at-w-full xl:at-w-[28rem] xl:at-order-2 at-mb-8 xl:at-mb-0">
+						{selectedItems?.length > 0 && (
+							<ItemInfo item={selectedItems.slice(-1)[0]} />
+						)}
+					</div>
+					<div className="at-flex-1 xl:at-order-1">
+						<div className="at-grid at-grid-cols-3 md:at-grid-cols-4 xl:at-flex xl:at-flex-wrap at-gap-4">
 							{!isSearchFetching &&
 								allItems.map((item, index) => (
 									<Item
@@ -192,8 +192,8 @@ const List = () => {
 
 							{isFetching &&
 								new Array(PAGE_SIZE).fill(0).map((_, index) => (
-									<div key={index} className="at-w-36">
-										<LoadingCard />
+									<div key={index} className="at-w-full xl:at-w-36">
+										<LoadingCard className="at-aspect-square" />
 										<LoadingCard className="at-h-3 !at-p-0 at-rounded-sm">
 											&nbsp;
 										</LoadingCard>
@@ -215,11 +215,6 @@ const List = () => {
 									顯示更多
 								</Button>
 							</div>
-						)}
-					</div>
-					<div className="at-w-[28rem]">
-						{selectedItems?.length > 0 && (
-							<ItemInfo item={selectedItems.slice(-1)[0]} />
 						)}
 					</div>
 				</div>

@@ -25,11 +25,11 @@ const SimpleImageComponent: FC<SimpleImageProps> = ({
 				<img
 					src={src}
 					loading="lazy"
-					className={`at-relative at-z-20 at-w-full ${ratio} at-object-cover`}
+					className={`at-relative at-z-10 at-w-full ${ratio} at-object-cover`}
 				/>
 			)}
 			<div
-				className={`at-absolute at-z-10 at-top-0 at-left-0 at-w-full ${ratio} at-bg-gray-200 at-animate-pulse at-flex at-items-center at-justify-center ${loadingClassName}`}
+				className={`at-absolute at-z-[5] at-top-0 at-left-0 at-w-full ${ratio} at-bg-gray-200 at-animate-pulse at-flex at-items-center at-justify-center ${loadingClassName}`}
 			>
 				LOADING...
 			</div>

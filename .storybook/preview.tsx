@@ -8,11 +8,15 @@ import {
 	Primary,
 	Controls,
 } from '@storybook/blocks'
+import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import '../lib/main/assets/scss/index.scss'
 import './preview.scss'
 
 const preview: Preview = {
 	parameters: {
+		// viewport: {
+		// 	viewports: INITIAL_VIEWPORTS,
+		// },
 		actions: { argTypesRegex: '^on[A-Z].*' },
 
 		docs: {
