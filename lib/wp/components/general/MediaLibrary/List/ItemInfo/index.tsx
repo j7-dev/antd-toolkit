@@ -59,7 +59,7 @@ const ItemInfo = ({ item }: { item: TAttachment }) => {
 			</div>
 
 			<Form form={form}>
-				<table className="table table-vertical at-mb-4 [&_th]:at-text-left at-w-full">
+				<table className="table table-xs table-vertical at-mb-4 [&_th]:at-text-left at-w-full">
 					<tbody>
 						{Object.entries(item).map(([key, value], i) => {
 							if ('img_url' === key) {
