@@ -11,7 +11,7 @@ export type TTerm = {
 
 // 圖片
 export type TImage = {
-	id: number
+	id: string
 	url: string
 }
 

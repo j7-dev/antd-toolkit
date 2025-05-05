@@ -3,7 +3,7 @@ import {
 	PRODUCT_STOCK_STATUS,
 	BACKORDERS,
 } from '@/wp/utils'
-import { TTerm, TImage } from '@/wp/types'
+import { TImage } from '@/wp/types'
 
 // 商品類型
 export type TProductType = (typeof PRODUCT_TYPES)[number]['value']

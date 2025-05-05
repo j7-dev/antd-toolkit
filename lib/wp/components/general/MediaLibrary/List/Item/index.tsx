@@ -72,7 +72,7 @@ const Item = ({
 			if (limit && selectedItems.length >= limit) {
 				message.warning({
 					key: 'limit',
-					content: `最多只能選取${limit}個影片`,
+					content: `最多只能選取${limit}個檔案`,
 				})
 				setSelectedItems((prev) => [...prev.slice(1), item])
 				return
