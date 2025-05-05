@@ -73,21 +73,29 @@ export function formatDatePickerValue(
 }
 
 /*
- * 將可能是 timestamp 的值傳入，回傳解析後的 Dayjs
- * 沒有的話就回傳 undefined
+ * 將可能是 unknown 的值傳入，回傳解析後的 Dayjs
+ * 失敗就回傳 undefined
+ *
+ * @param {unknown} value - 要解析的值
+ * @return {(Dayjs | undefined)} 格式化後的日期或未定義
  */
 export function parseDatePickerValue(value: unknown) {
-  if (value instanceof dayjs) {
-    return value
-  }
+	try{
+		if (value instanceof dayjs) {
+			return value
+		}
 
-  if (typeof value === 'number') {
-    if (value.toString().length === 13) {
-      return dayjs(value)
-    }
-    if (value.toString().length === 10) {
-      return dayjs(value * 1000)
-    }
-  }
-  return undefined
+		if (typeof value === 'number') {
+			if (value.toString().length === 13) {
+				return dayjs(value)
+			}
+			if (value.toString().length === 10) {
+				return dayjs(value * 1000)
+			}
+		}
+		// @ts-ignore
+		return dayjs(value)
+	} catch {
+		return undefined
+	}
 }
