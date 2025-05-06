@@ -10,9 +10,19 @@ import { notificationProps } from '@/refine'
 
 const { Item } = Form
 
-const ItemInfo = ({ item }: { item: TAttachment }) => {
+const ItemInfo = <
+	T extends {
+		id: string
+		url: string
+	} = TAttachment,
+>({
+	item,
+}: {
+	item: T
+}) => {
 	const [form] = Form.useForm()
-	const { id, url, img_url, type } = item
+	// @ts-ignore
+	const { id, url, img_url = '', type = '' } = item
 	const isImage = type === 'image'
 	const { mutate: update, isLoading } = useUpdate({
 		resource: 'posts',

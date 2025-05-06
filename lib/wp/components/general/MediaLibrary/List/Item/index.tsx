@@ -28,13 +28,18 @@ const CheckIcon: FC<HTMLAttributes<SVGElement>> = (props) => {
 	)
 }
 
-const Item = ({
+const Item = <
+	T extends {
+		id: string
+		url: string
+	} = TAttachment,
+>({
 	item,
 	allItems,
 	index,
 }: {
-	item: TAttachment
-	allItems: TAttachment[]
+	item: T
+	allItems: T[]
 	index: number
 }) => {
 	const { selectedItems, setSelectedItems, limit } = useProps()
@@ -57,6 +62,7 @@ const Item = ({
 
 		if (e.shiftKey && formattedPrevSelectedIndex !== index) {
 			// 從上一個選中的 item 開始選擇到 這個 item
+			// @ts-ignore
 			setSelectedItems((prev) => {
 				// 确定开始和结束的索引
 				const start = Math.min(formattedPrevSelectedIndex, index)
@@ -67,6 +73,7 @@ const Item = ({
 			return
 		}
 		if (isSelected) {
+			// @ts-ignore
 			setSelectedItems((prev) => prev.filter((v) => v.id !== item.id))
 		} else {
 			if (limit && selectedItems.length >= limit) {
@@ -74,9 +81,11 @@ const Item = ({
 					key: 'limit',
 					content: `最多只能選取${limit}個檔案`,
 				})
+				// @ts-ignore
 				setSelectedItems((prev) => [...prev.slice(1), item])
 				return
 			}
+			// @ts-ignore
 			setSelectedItems((prev) => [...prev, item])
 		}
 	}
@@ -90,10 +99,12 @@ const Item = ({
 						? 'at-outline at-outline-4 at-outline-yellow-300 at-outline-offset-1'
 						: ''
 				}`}
-				src={item.img_url}
+				// @ts-ignore
+				src={item?.img_url}
 			/>
 			<Text className="at-text-xs at-text-gray-800" ellipsis>
-				{item.title}
+				{/* @ts-ignore */}
+				{item?.title}
 			</Text>
 			{isSelected && (
 				<div className="at-bg-white at-absolute -at-top-2 -at-right-2 at-z-[15] at-size-6 at-rounded-full at-flex at-items-center at-justify-center">

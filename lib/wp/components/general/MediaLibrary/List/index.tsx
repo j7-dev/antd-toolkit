@@ -27,6 +27,7 @@ const List = () => {
 		uploadProps,
 		onUploading: (file) => {
 			if (!setFilesInQueue) return
+			// @ts-ignore
 			setFilesInQueue((prev) => {
 				// 如果已經存在就更新，不存在就新增
 				const index = prev.findIndex((f) => f.uid === file.uid)
@@ -46,6 +47,7 @@ const List = () => {
 				invalidates: ['list'],
 			})
 			if (!setFilesInQueue) return
+			// @ts-ignore
 			setFilesInQueue((prev) => {
 				const index = prev.findIndex((f) => f.uid === file.uid)
 				// 存在，則更新，不存在，什麼也不做
@@ -60,6 +62,7 @@ const List = () => {
 		},
 		onError: (file) => {
 			if (!setFilesInQueue) return
+			// @ts-ignore
 			setFilesInQueue((prev) => {
 				const index = prev.findIndex((f) => f.uid === file.uid)
 				// 存在，則更新，不存在，什麼也不做
@@ -135,6 +138,7 @@ const List = () => {
 				duration: null,
 				onClose: () => {
 					if (!setFilesInQueue) return
+					// @ts-ignore
 					setFilesInQueue([])
 				},
 			})
