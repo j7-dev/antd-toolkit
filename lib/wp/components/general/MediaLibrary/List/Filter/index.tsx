@@ -14,7 +14,7 @@ const Filter = ({
 	setSearch: React.Dispatch<React.SetStateAction<string>>
 	loading?: boolean
 } & InputProps) => {
-	const { selectedItems, setSelectedItems, selectButtonProps } = useProps()
+	const { selectedItems, setSelectedItems } = useProps()
 	const { mutate: deleteMany, isLoading } = useDeleteMany()
 
 	const handleBulkDelete = () => {
@@ -66,13 +66,6 @@ const Filter = ({
 						批量刪除 {selectedItems?.length ? `(${selectedItems?.length})` : ''}
 					</Button>
 				</Popconfirm>
-				<Button
-					type="primary"
-					{...selectButtonProps}
-					disabled={!selectedItems?.length}
-				>
-					選取檔案 {selectedItems?.length ? `(${selectedItems?.length})` : ''}
-				</Button>
 			</div>
 		</div>
 	)

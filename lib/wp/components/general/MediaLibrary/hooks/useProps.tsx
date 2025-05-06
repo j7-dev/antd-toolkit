@@ -12,10 +12,7 @@ export const useProps = (): TMediaLibraryProps => {
 			selectedItems: [], // 已選擇的影片
 			setSelectedItems: (_prev) => {}, // 已選擇的影片 setter
 			limit: 1, // 能選擇的影片數量
-			selectButtonProps: {}, // "選取影片"按鈕的屬性，可以設定 onClick 後的動作
 			uploadProps: {}, // 上傳影片的屬性
-			filesInQueue: [],
-			setFilesInQueue: (_prev) => {},
 		}
 	)
 }

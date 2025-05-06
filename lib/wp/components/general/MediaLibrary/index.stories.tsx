@@ -1,10 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
 import { MediaLibrary } from './index'
 import { refineDecorator } from '../../../../stories'
 import { TAttachment } from './types'
-import { UploadFile } from 'antd'
-import { useEnv } from '../../../../main'
+import { useEnv } from '../../../../main/'
+import {
+	MediaLibraryNotification,
+	filesInQueueAtom,
+} from '../MediaLibraryNotification'
+import { useSetAtom } from 'jotai'
 
 const meta: Meta<typeof MediaLibrary> & {
 	argTypes: any
@@ -37,29 +41,32 @@ export const General: Story = {
 	render: () => {
 		const { NONCE, USERNAME, PASSWORD } = useEnv()
 		const [selectedItems, setSelectedItems] = useState<TAttachment[]>([])
-		const [filesInQueue, setFilesInQueue] = useState<UploadFile[]>([
-			// DELETE
-			{
-				uid: 'rc-upload-1745987120068-9',
-				lastModified: 1745320457007,
-				lastModifiedDate: new Date('2025-04-22T11:14:17.007Z'),
-				name: 'parrot6.gif',
-				size: 2375442,
-				type: 'image/gif',
-				percent: 0,
-				originFileObj: {
+		const setFilesInQueue = useSetAtom(filesInQueueAtom)
+
+		useEffect(() => {
+			setFilesInQueue([
+				// DELETE
+				{
 					uid: 'rc-upload-1745987120068-9',
+					lastModified: 1745320457007,
+					lastModifiedDate: new Date('2025-04-22T11:14:17.007Z'),
+					name: 'parrot6.gif',
+					size: 2375442,
+					type: 'image/gif',
+					percent: 0,
+					originFileObj: {
+						uid: 'rc-upload-1745987120068-9',
+					},
+					status: 'uploading',
 				},
-				status: 'uploading',
-			},
-		])
+			])
+		}, [])
+
 		return (
 			<>
 				<MediaLibrary
 					selectedItems={selectedItems}
 					setSelectedItems={setSelectedItems}
-					filesInQueue={filesInQueue}
-					setFilesInQueue={setFilesInQueue}
 					uploadProps={{
 						headers: {
 							'X-WP-Nonce': NONCE, // 需要帶當下的 NONCE
@@ -67,6 +74,7 @@ export const General: Story = {
 						},
 					}}
 				/>
+				<MediaLibraryNotification />
 			</>
 		)
 	},

@@ -2,10 +2,9 @@ import { useState, useRef, useEffect } from 'react'
 import { CloudUploadOutlined } from '@ant-design/icons'
 import Filter from './Filter'
 import { useInfiniteList, useInvalidate } from '@refinedev/core'
-import { Button, Empty, Result, Alert, Upload, notification } from 'antd'
+import { Button, Empty, Result, Alert, Upload } from 'antd'
 import { useEnv } from '@/main'
 import { LoadingCard } from '@/main/components'
-import FileUploadProgress from './FileUploadProgress'
 import { cn } from '@/main/utils'
 import { useOnChangeUpload } from '@/wp/components/general/OnChangeUpload/useOnChangeUpload'
 import { useProps } from '@/wp/components/general/MediaLibrary/hooks'
@@ -13,14 +12,16 @@ import { TAttachment } from '@/wp/components/general/MediaLibrary/types'
 import ItemInfo from '@/wp/components/general/MediaLibrary/List/ItemInfo'
 import Item from '@/wp/components/general/MediaLibrary/List/Item'
 import UploadFile from '@/wp/components/general/MediaLibrary/List/UploadFile'
+import { filesInQueueAtom } from '@/wp/components/general/MediaLibraryNotification'
+import { useSetAtom } from 'jotai'
 
 const PAGE_SIZE = 50
 
 const List = () => {
 	const { SITE_URL } = useEnv()
 	const invalidate = useInvalidate()
-	const { uploadProps, selectedItems, filesInQueue, setFilesInQueue } =
-		useProps()
+	const setFilesInQueue = useSetAtom(filesInQueueAtom)
+	const { uploadProps, selectedItems } = useProps()
 
 	// 上傳檔案
 	const { uploadProps: wpUploadProps } = useOnChangeUpload({
@@ -117,35 +118,6 @@ const List = () => {
 		}
 	}, [])
 	// End Drag and Drop Upload
-
-	// upload indicator
-	useEffect(() => {
-		if (filesInQueue?.length) {
-			notification.open({
-				key: 'files-uploading',
-				icon: <CloudUploadOutlined style={{ color: '#1677ff' }} />,
-				message: '檔案上傳中',
-				description: (
-					<>
-						{filesInQueue?.map((fileInQueue) => (
-							<FileUploadProgress
-								key={`${fileInQueue?.uid}-${new Date().getTime()}`}
-								fileInQueue={fileInQueue}
-							/>
-						))}
-					</>
-				),
-				duration: null,
-				onClose: () => {
-					if (!setFilesInQueue) return
-					// @ts-ignore
-					setFilesInQueue([])
-				},
-			})
-		} else {
-			notification.destroy('files-uploading')
-		}
-	}, [filesInQueue])
 
 	const [search, setSearch] = useState('')
 	const {
