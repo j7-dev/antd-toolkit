@@ -163,10 +163,13 @@ const List = () => {
 	const isSearchFetching = isLoading && !isFetchingNextPage
 
 	useEffect(() => {
+		if (!allItems?.length) {
+			return
+		}
 		;(setSelectedItems as React.Dispatch<React.SetStateAction<TAttachment[]>>)(
 			allItems?.filter((item) => initialIds?.includes(item.id)),
 		)
-	}, [JSON.stringify(initialIds)])
+	}, [JSON.stringify(initialIds), allItems])
 
 	if (isError) {
 		return (
