@@ -21,12 +21,8 @@ const List = () => {
 	const { SITE_URL } = useEnv()
 	const invalidate = useInvalidate()
 	const setFilesInQueue = useSetAtom(filesInQueueAtom)
-	const {
-		initialIds = [],
-		uploadProps,
-		selectedItems,
-		setSelectedItems,
-	} = useProps()
+	const { uploadProps, selectedItems, setSelectedItems, initialIds } =
+		useProps()
 
 	// 上傳檔案
 	const { uploadProps: wpUploadProps } = useOnChangeUpload({
@@ -128,6 +124,7 @@ const List = () => {
 	const {
 		data,
 		isError,
+		isSuccess,
 		hasNextPage,
 		fetchNextPage,
 		isFetchingNextPage,
@@ -169,7 +166,7 @@ const List = () => {
 		;(setSelectedItems as React.Dispatch<React.SetStateAction<TAttachment[]>>)(
 			allItems?.filter((item) => initialIds?.includes(item.id)),
 		)
-	}, [JSON.stringify(initialIds), allItems])
+	}, [isSuccess, allItems?.length])
 
 	if (isError) {
 		return (
