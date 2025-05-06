@@ -23,8 +23,7 @@ const ItemInfo = <
 	item: T
 }) => {
 	const [form] = Form.useForm()
-	const { id: targetId } = item
-	const findItem = allItems.find((i) => i.id === targetId)
+	const findItem = allItems?.find((i) => i.id === item?.id)
 
 	useEffect(() => {
 		if (!findItem) return
