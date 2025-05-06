@@ -196,7 +196,7 @@ const List = () => {
 				<div className="at-flex at-flex-col xl:at-flex-row">
 					<div className="at-w-full xl:at-w-[28rem] xl:at-order-2 at-mb-8 xl:at-mb-0">
 						{selectedItems?.length > 0 && (
-							<ItemInfo item={selectedItems.slice(-1)[0]} />
+							<ItemInfo allItems={allItems} item={selectedItems.slice(-1)[0]} />
 						)}
 					</div>
 					<div className="at-flex-1 xl:at-order-1">

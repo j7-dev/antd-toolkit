@@ -29,6 +29,7 @@ const Filter = ({
 			},
 			{
 				onSuccess: () => {
+					// @ts-ignore
 					setSelectedItems([])
 				},
 			},

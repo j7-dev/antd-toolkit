@@ -16,13 +16,27 @@ const ItemInfo = <
 		url: string
 	} = TAttachment,
 >({
+	allItems,
 	item,
 }: {
+	allItems: TAttachment[]
 	item: T
 }) => {
 	const [form] = Form.useForm()
+	const { id: targetId } = item
+	const findItem = allItems.find((i) => i.id === targetId)
+
+	useEffect(() => {
+		if (!findItem) return
+		form.setFieldsValue(findItem)
+	}, [findItem])
+
+	if (!findItem) {
+		return null
+	}
+
 	// @ts-ignore
-	const { id, url, img_url = '', type = '' } = item
+	const { id, url, img_url = '', type = '' } = findItem
 	const isImage = type === 'image'
 	const { mutate: update, isLoading } = useUpdate({
 		resource: 'posts',
@@ -36,10 +50,6 @@ const ItemInfo = <
 			...notificationProps,
 		})
 	}
-
-	useEffect(() => {
-		form.setFieldsValue(item)
-	}, [item])
 
 	return (
 		<>
