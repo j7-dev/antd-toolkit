@@ -21,7 +21,12 @@ const List = () => {
 	const { SITE_URL } = useEnv()
 	const invalidate = useInvalidate()
 	const setFilesInQueue = useSetAtom(filesInQueueAtom)
-	const { uploadProps, selectedItems } = useProps()
+	const {
+		initialIds = [],
+		uploadProps,
+		selectedItems,
+		setSelectedItems,
+	} = useProps()
 
 	// 上傳檔案
 	const { uploadProps: wpUploadProps } = useOnChangeUpload({
@@ -157,6 +162,12 @@ const List = () => {
 
 	const isSearchFetching = isLoading && !isFetchingNextPage
 
+	useEffect(() => {
+		;(setSelectedItems as React.Dispatch<React.SetStateAction<TAttachment[]>>)(
+			allItems?.filter((item) => initialIds?.includes(item.id)),
+		)
+	}, [JSON.stringify(initialIds)])
+
 	if (isError) {
 		return (
 			<Result
@@ -196,7 +207,7 @@ const List = () => {
 				<div className="at-flex at-flex-col xl:at-flex-row">
 					<div className="at-w-full xl:at-w-[28rem] xl:at-order-2 at-mb-8 xl:at-mb-0">
 						{selectedItems?.length > 0 && (
-							<ItemInfo allItems={allItems} item={selectedItems.slice(-1)[0]} />
+							<ItemInfo item={selectedItems.slice(-1)[0]} />
 						)}
 					</div>
 					<div className="at-flex-1 xl:at-order-1">

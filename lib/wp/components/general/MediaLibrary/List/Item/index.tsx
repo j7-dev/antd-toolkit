@@ -28,18 +28,13 @@ const CheckIcon: FC<HTMLAttributes<SVGElement>> = (props) => {
 	)
 }
 
-const Item = <
-	T extends {
-		id: string
-		url: string
-	} = TAttachment,
->({
+const Item = ({
 	item,
 	allItems,
 	index,
 }: {
-	item: T
-	allItems: T[]
+	item: TAttachment
+	allItems: TAttachment[]
 	index: number
 }) => {
 	const { selectedItems, setSelectedItems, limit } = useProps()

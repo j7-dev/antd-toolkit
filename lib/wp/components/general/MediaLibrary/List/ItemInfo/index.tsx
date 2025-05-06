@@ -1,4 +1,4 @@
-import { useEffect, memo } from 'react'
+import { memo } from 'react'
 import { CopyText } from '@/main/components'
 import { Button, Tooltip, Form, Input } from 'antd'
 import { CopyOutlined, ExportOutlined } from '@ant-design/icons'
@@ -10,32 +10,11 @@ import { notificationProps } from '@/refine'
 
 const { Item } = Form
 
-const ItemInfo = <
-	T extends {
-		id: string
-		url: string
-	} = TAttachment,
->({
-	allItems,
-	item,
-}: {
-	allItems: TAttachment[]
-	item: T
-}) => {
+const ItemInfo = ({ item }: { item: TAttachment }) => {
 	const [form] = Form.useForm()
-	const findItem = allItems?.find((i) => i.id === item?.id)
-
-	useEffect(() => {
-		if (!findItem) return
-		form.setFieldsValue(findItem)
-	}, [findItem])
-
-	if (!findItem) {
-		return null
-	}
 
 	// @ts-ignore
-	const { id, url, img_url = '', type = '' } = findItem
+	const { id, url, img_url = '', type = '' } = item
 	const isImage = type === 'image'
 	const { mutate: update, isLoading } = useUpdate({
 		resource: 'posts',
