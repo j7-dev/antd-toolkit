@@ -3,6 +3,8 @@ export const BOOLEAN_OPTIONS = [
 	{ label: '否', value: 'no' },
 ]
 
+export const BOOLEAN_OPTIONS_REVERSE = BOOLEAN_OPTIONS.reverse()
+
 export const POST_STATUS = [
   {
     label: '已發佈',

@@ -5,7 +5,7 @@ import {
 	FormItemProps,
 	SegmentedProps,
 } from 'antd'
-import { BOOLEAN_OPTIONS } from '@/wp'
+import { BOOLEAN_OPTIONS_REVERSE } from '@/wp'
 
 const { Item } = Form
 
@@ -19,7 +19,7 @@ const SegmentedComponent: FC<{
 			<AntdSegmented
 				block
 				className="at-w-full"
-				options={BOOLEAN_OPTIONS.reverse()}
+				options={BOOLEAN_OPTIONS_REVERSE}
 				{...segmentedProps}
 			/>
 		</Item>
