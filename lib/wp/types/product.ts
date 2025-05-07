@@ -16,8 +16,11 @@ export type TBackorders = (typeof BACKORDERS)[number]['value']
 
 
 export type TProductAttribute = {
+	id:string
 	name: string
-	options: string[]
+	variation: boolean
+	visible: boolean
+	options: {value:string,label:string}[]
 	position: number
 }
 
@@ -75,6 +78,7 @@ export type TProductBaseRecord = {
 
 	// 商品屬性
 	attributes: TProductAttribute[]
+	attribute_summary: string
 
 	// 商品分類
 	category_ids: string[]
