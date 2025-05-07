@@ -1,4 +1,5 @@
 export * from './Switch'
+export * from './Segmented'
 export * from './VideoInput'
 export * from './DatePicker'
 export * from './RangePicker'
