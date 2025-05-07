@@ -18,6 +18,7 @@ export type TBackorders = (typeof BACKORDERS)[number]['value']
 export type TProductAttribute = {
 	id:string
 	name: string
+	taxonomy: string
 	variation: boolean
 	visible: boolean
 	options: {value:string,label:string}[]
