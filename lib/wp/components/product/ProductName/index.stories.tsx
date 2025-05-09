@@ -155,3 +155,27 @@ export const LongTitle: Story = {
 		),
 	],
 }
+
+export const Variation: Story = {
+	name: '商品變體',
+	args: {
+		record: {
+			id: '28',
+			name: '峰值體驗：洞察隱而未知的需求，掌握關鍵時刻影響顧客決策',
+			sku: '19880810',
+			attribute_summary: '顏色: 紅色, 尺寸: 大',
+			images: [
+				{
+					url: fakeImage,
+				},
+			],
+		},
+	},
+	decorators: [
+		(Story) => (
+			<div className="at-w-[300px]">
+				<Story />
+			</div>
+		),
+	],
+}

@@ -1,7 +1,7 @@
 import { memo } from 'react'
 import { Image, ImageProps } from 'antd'
 import { EyeOutlined } from '@ant-design/icons'
-import { TImage, TProductType, isVariation as checkVariation } from '@/wp'
+import { TImage, TProductType } from '@/wp'
 import { defaultImage, cn, NameId } from '@/main'
 
 type TBaseRecord = {
@@ -37,12 +37,12 @@ const ProductNameComponent = <T extends TBaseRecord>({
 		sku = '',
 		name = '',
 		images = [],
-		type = '',
 		attribute_summary = '',
 	} = record
 	const image_url = hideImage ? undefined : images?.[0]?.url || defaultImage
-	const isVariation = checkVariation(type)
-	const productName = isVariation ? `${name} - ${attribute_summary}` : name
+	const sku_text = sku ? `SKU: ${sku}` : ''
+	const meta_arr = [sku_text, attribute_summary]?.filter((s) => !!s)
+	const meta_text = meta_arr.join(', ')
 
 	return (
 		<>
@@ -72,7 +72,7 @@ const ProductNameComponent = <T extends TBaseRecord>({
 					) : (
 						<NameId
 							className="at-text-primary at-text-base"
-							name={productName}
+							name={name}
 							id={id}
 						/>
 					)}
@@ -80,7 +80,7 @@ const ProductNameComponent = <T extends TBaseRecord>({
 						renderBelowTitle
 					) : (
 						<div className="product-meta at-flex at-text-[0.625rem] at-text-gray-500">
-							{sku && <span className="at-pr-3">{`SKU: ${sku}`}</span>}
+							{meta_text}
 						</div>
 					)}
 				</div>
