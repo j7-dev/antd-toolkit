@@ -19,8 +19,8 @@ export type TProductAttribute = {
 	id:string
 	name: string
 	taxonomy: string
-	variation: boolean
-	visible: boolean
+	variation: 'yes' | 'no'
+	visible: 'yes' | 'no'
 	options: {value:string,label:string}[]
 	position: number
 }
