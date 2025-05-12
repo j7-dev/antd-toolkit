@@ -151,8 +151,8 @@ export const productKeyLabelMapper = (key: keyof TProductFilterProps, label = '�
 /**
  * 判斷是否為可變商品
  */
-export const isVariable = (type: string) => {
-	return type.startsWith('variable')
+export const isVariable = (type: string | undefined) => {
+	return type?.startsWith('variable')
 }
 
 /**
@@ -165,7 +165,7 @@ export const getIsVariation = (productType: TProductType) => {
 
 
 /** 判斷是否為商品變體 */
-export const isVariation = (type: string) => {
+export const isVariation = (type: string | undefined) => {
 	return !!type?.includes('variation')
 }
 
