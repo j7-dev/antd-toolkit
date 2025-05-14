@@ -138,16 +138,12 @@ export const useBlockNote = ({
 					}
 				})
 
-			// 將音檔的 data-url 轉換成 下載連結
+			// 將自訂 HTML
 			doc.body
-				.querySelectorAll('[data-content-type="audio"]')
+				.querySelectorAll('[data-content-type="customHTML"]')
 				.forEach((node) => {
-					const src = node.getAttribute('data-url')
-					const audioNode = node.querySelector('.bn-audio')
-
-					if (audioNode) {
-						audioNode.setAttribute('src', src || '')
-					}
+					const html = node.getAttribute('data-html')
+					node.innerHTML = html || ''
 				})
 
 			setHTML(doc.body.innerHTML)
