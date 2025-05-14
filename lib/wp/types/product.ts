@@ -79,6 +79,9 @@ export type TProductBaseRecord = {
 
 	// 商品屬性
 	attributes: TProductAttribute[]
+	default_attributes: {
+		[key: string]: string
+	}
 	attribute_summary: string
 
 	// 商品分類

@@ -1,9 +1,4 @@
-import {
-	BaseRecord,
-	CrudFilters,
-	NotificationProvider,
-	UseCreateProps,
-} from '@refinedev/core'
+import { BaseRecord, CrudFilters, NotificationProvider } from '@refinedev/core'
 import { DeleteButtonProps } from '@refinedev/antd'
 import { notification } from 'antd'
 import {
