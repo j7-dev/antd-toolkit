@@ -36,7 +36,7 @@ import {
 	BunnyAudio,
 	bunnyAudioMenuItem,
 } from './CustomBlocks'
-import { uploadWP, getIconHTML, convertDivToATag } from './utils'
+import { uploadWP, getIconHTML, convertDivToATag, hasScriptTag } from './utils'
 import { getFileExtension } from '@/main/utils'
 
 // Our schema with block specs, which contain the configs and implementations for blocks
@@ -143,7 +143,33 @@ export const useBlockNote = ({
 				.querySelectorAll('[data-content-type="customHTML"]')
 				.forEach((node) => {
 					const html = node.getAttribute('data-html')
-					node.innerHTML = html || ''
+					const hasScript = hasScriptTag(html || '')
+
+					if (!hasScript) {
+						node.innerHTML = html || ''
+					} else {
+						const tempDiv = document.createElement('div')
+						tempDiv.innerHTML = html || ''
+
+						const scripts = tempDiv.getElementsByTagName('script')
+						const scriptContents = Array.from(scripts).map(
+							(script) => script.textContent || '',
+						)
+
+						// 移除所有 script 標籤
+						Array.from(scripts).forEach((script) => script.remove())
+
+						// 將剩餘的 HTML 內容放回
+						node.innerHTML = tempDiv.innerHTML
+
+						// 執行所有 script
+						scriptContents.forEach((content) => {
+							const scriptElement = document.createElement('script')
+							scriptElement.textContent = content
+							document.body.appendChild(scriptElement)
+							scriptElement.remove()
+						})
+					}
 				})
 
 			setHTML(doc.body.innerHTML)

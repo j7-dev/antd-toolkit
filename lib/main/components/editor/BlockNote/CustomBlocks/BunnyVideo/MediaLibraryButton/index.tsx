@@ -78,47 +78,49 @@ const MediaLibraryButton = (props: TMediaLibraryButton) => {
 	}
 
 	return (
-		<div
-			className={'bn-file-block-content-wrapper at-w-full'}
-			data-editable="1"
-			ref={props.contentRef}
-		>
-			{!vId && (
-				<Button size="small" type="primary" onClick={handleOpenMediaLibrary}>
-					開啟 Bunny 媒體庫
-				</Button>
-			)}
-			{!!vId && (
-				<div className="at-relative at-aspect-video at-rounded-lg at-border at-border-dashed at-border-gray-300">
-					<div className="at-absolute at-size-full at-top-0 at-left-0 at-p-2">
-						<div className="at-size-full at-rounded-xl at-overflow-hidden">
-							<div
-								className="at-rounded-xl at-bg-gray-200 at-tw-block"
-								style={{
-									position: 'relative',
-									paddingTop: '56.25%',
-								}}
-							>
-								<iframe
-									className="at-border-0 at-absolute at-top-0 at-left-0 at-size-full at-rounded-xl"
-									src={videoUrl}
-									loading="lazy"
-									allow="encrypted-media;picture-in-picture;"
-									allowFullScreen={true}
-								></iframe>
-
+		<>
+			<div
+				className={'bn-file-block-content-wrapper at-w-full'}
+				data-editable="1"
+				ref={props.contentRef}
+			>
+				{!vId && (
+					<Button size="small" type="primary" onClick={handleOpenMediaLibrary}>
+						開啟 Bunny 媒體庫
+					</Button>
+				)}
+				{!!vId && (
+					<div className="at-relative at-aspect-video at-rounded-lg at-border at-border-dashed at-border-gray-300">
+						<div className="at-absolute at-size-full at-top-0 at-left-0 at-p-2">
+							<div className="at-size-full at-rounded-xl at-overflow-hidden">
 								<div
-									onClick={handleSwitch}
-									className="at-group at-absolute at-top-4 at-right-4 at-rounded-md at-size-12 at-bg-white at-shadow-lg at-flex at-justify-center at-items-center at-transition at-duration-300 hover:at-bg-primary at-cursor-pointer"
+									className="at-rounded-xl at-bg-gray-200 at-tw-block"
+									style={{
+										position: 'relative',
+										paddingTop: '56.25%',
+									}}
 								>
-									<TbSwitchHorizontal className="at-text-primary group-hover:at-text-white" />
+									<iframe
+										className="at-border-0 at-absolute at-top-0 at-left-0 at-size-full at-rounded-xl"
+										src={videoUrl}
+										loading="lazy"
+										allow="encrypted-media;picture-in-picture;"
+										allowFullScreen={true}
+									></iframe>
+
+									<div
+										onClick={handleSwitch}
+										className="at-group at-absolute at-top-4 at-right-4 at-rounded-md at-size-12 at-bg-white at-shadow-lg at-flex at-justify-center at-items-center at-transition at-duration-300 hover:at-bg-primary at-cursor-pointer"
+									>
+										<TbSwitchHorizontal className="at-text-primary group-hover:at-text-white" />
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-			)}
-		</div>
+				)}
+			</div>
+		</>
 	)
 }
 

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
 import { BlockNote, useBlockNote } from './index'
 import { refineDecorator, ENV } from '../../../../stories'
+import { MediaLibrary } from '../../../../refine/bunny'
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 
@@ -191,28 +192,30 @@ const BlockNoteWithHooks = () => {
 	}, [html])
 
 	return (
-		<div className="at-w-full at-max-w-[50rem]">
-			<BlockNote {...blockNoteViewProps} />
+		<>
+			<div className="at-w-full at-max-w-[50rem]">
+				<BlockNote {...blockNoteViewProps} />
 
-			<hr className="at-bg-gray-200 at-w-full at-h-[1px] at-mb-6" />
-			<p>數據結構</p>
-			<pre className="at-my-4 at-prismjs at-bg-gray-100 at-p-4 at-rounded-md">
-				{JSON.stringify(blocks, null, 2)}
-			</pre>
-			<p>serialize HTML</p>
-			<pre className="at-my-4 prismjs at-bg-gray-100 at-p-4 at-rounded-md at-whitespace-normal">
-				{html}
-			</pre>
-			<p>
-				render HTML (需用 <code>.bn-container</code> 包住)
-			</p>
-			<div
-				className="bn-editor bn-default-styles bn-container at-border at-border-solid at-border-gray-400"
-				dangerouslySetInnerHTML={{ __html: html }}
-			/>
-			<p>unserialize 上方的HTML</p>
-			<BlockNote {...blockNoteViewProps2} />
-		</div>
+				<hr className="at-bg-gray-200 at-w-full at-h-[1px] at-mb-6" />
+				<p>數據結構</p>
+				<pre className="at-my-4 at-prismjs at-bg-gray-100 at-p-4 at-rounded-md">
+					{JSON.stringify(blocks, null, 2)}
+				</pre>
+				<p>serialize HTML</p>
+				<pre className="at-my-4 prismjs at-bg-gray-100 at-p-4 at-rounded-md at-whitespace-normal">
+					{html}
+				</pre>
+				<p>
+					render HTML (需用 <code>.bn-container</code> 包住)
+				</p>
+				<div
+					className="bn-editor bn-default-styles bn-container at-border at-border-solid at-border-gray-400"
+					dangerouslySetInnerHTML={{ __html: html }}
+				/>
+				<p>unserialize 上方的HTML</p>
+				<BlockNote {...blockNoteViewProps2} />
+			</div>
+		</>
 	)
 }
 
@@ -224,6 +227,10 @@ type Story = StoryObj<typeof BlockNote>
 export const General: Story = {
 	name: '一般用法',
 	args: {},
-	render: () => <BlockNoteWithHooks />,
+	render: () => (
+		<>
+			<BlockNoteWithHooks />
+		</>
+	),
 	decorators: [refineDecorator],
 }

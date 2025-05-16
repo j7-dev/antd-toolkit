@@ -93,3 +93,31 @@ export function convertDivToATag(divElement: HTMLDivElement) {
 
 	return aTag // 返回新創建的 <a> 元素
 }
+
+/**
+ * 檢查 HTML 是否包含 script 標籤或事件屬性
+ * @param {string} html - 要檢查的 HTML 字串
+ * @return {boolean} 如果包含 script 標籤或事件屬性則返回 true，否則返回 false
+ */
+export function hasScriptTag(html: string) {
+	const parser = new DOMParser()
+	const doc = parser.parseFromString(html, 'text/html')
+
+	// 檢查 script 標籤
+	const scripts = doc.getElementsByTagName('script')
+
+	// 檢查所有元素的事件屬性
+	const allElements = doc.getElementsByTagName('*')
+	let hasEventHandlers = false
+
+	for (let elem of allElements) {
+		for (let attr of elem.attributes) {
+			if (attr.name.startsWith('on')) {
+				hasEventHandlers = true
+				break
+			}
+		}
+	}
+
+	return scripts.length > 0 || hasEventHandlers
+}

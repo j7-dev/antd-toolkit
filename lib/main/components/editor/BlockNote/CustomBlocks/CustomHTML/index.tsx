@@ -38,6 +38,11 @@ export const CustomHTML = createReactBlockSpec(customHTMLBlockConfig, {
 
 		// ❗contentRef 有個屬性 name ，如果不能編輯是 ""，可以編輯是 "nodeViewContentRef"
 		const editable = !(props.contentRef.name === '')
+		console.log('⭐ editable:', {
+			contentRef: props.contentRef,
+			editable,
+			props,
+		})
 
 		if (!editable) {
 			return <>{renderHTML(value)}</>
