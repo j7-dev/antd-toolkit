@@ -11,19 +11,6 @@ import { useMediaUpload } from '@/refine/bunny/MediaLibrary/hooks'
 import UploadVideo from './UploadVideo'
 
 /**
- * MediaLibrary 元件的屬性介面
- * @interface TMediaLibraryCompoundProps
- * @property {TMediaLibraryProps} mediaLibraryProps - 媒體庫的基本屬性
- * @property {UploadProps} [uploadProps] - 可選的上傳元件屬性
- * @property {TabsProps} [tabsProps] - 可選的標籤頁元件屬性
- */
-type TMediaLibraryCompoundProps = {
-	mediaLibraryProps: TMediaLibraryProps
-	uploadProps?: UploadProps
-	tabsProps?: TabsProps
-}
-
-/**
  * 檔案上傳佇列中的檔案狀態
  * @interface TFileStatus
  * @property {string} key - 檔案唯一識別碼
@@ -46,13 +33,6 @@ export type TFileStatus = {
 	preview: string
 }
 
-/**
- * Bunny Stream 媒體庫元件
- * 提供影片上傳、管理和設定功能
- * @component
- * @param {TMediaLibraryCompoundProps} props - 元件屬性
- * @returns {JSX.Element} MediaLibrary 元件
- */
 const MediaLibraryComponent: FC<TMediaLibraryCompoundProps> = ({
 	mediaLibraryProps,
 	uploadProps,
@@ -150,7 +130,21 @@ const MediaLibraryComponent: FC<TMediaLibraryCompoundProps> = ({
 	)
 }
 
-export const MediaLibrary = memo(MediaLibraryComponent)
+/**
+ * MediaLibrary 元件的屬性介面
+ * @interface TMediaLibraryCompoundProps
+ * @property {TMediaLibraryProps} mediaLibraryProps - 媒體庫的基本屬性
+ * @property {UploadProps} [uploadProps] - 可選的上傳元件屬性
+ * @property {TabsProps} [tabsProps] - 可選的標籤頁元件屬性
+ */
+type TMediaLibraryCompoundProps = {
+	mediaLibraryProps: TMediaLibraryProps
+	uploadProps?: UploadProps
+	tabsProps?: TabsProps
+}
+export const MediaLibrary = memo(
+	MediaLibraryComponent,
+) as typeof MediaLibraryComponent
 
 /**
  * 上傳佇列的全域狀態
