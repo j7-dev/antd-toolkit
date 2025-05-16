@@ -187,3 +187,12 @@ export function simpleDecrypt(str: string): any {
 		return null
 	}
 }
+
+/**
+ * 取得 HTML 的純文字內容
+ */
+export function getTextContent(html: string) {
+	const parser = new DOMParser()
+	const doc = parser.parseFromString(html, 'text/html')
+	return doc.body.textContent || ''
+}

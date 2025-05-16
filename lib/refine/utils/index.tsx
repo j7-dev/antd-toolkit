@@ -6,7 +6,7 @@ import {
 	CheckCircleTwoTone,
 	CloseCircleTwoTone,
 } from '@ant-design/icons'
-
+import { getTextContent } from '@/main'
 export * from './woocommerce'
 
 /**
@@ -120,7 +120,7 @@ export const notificationProps: {
 	}),
 	errorNotification: (data: any, values: any, resource: string) => ({
 		// @ts-ignore
-		message: data?.message || '失敗',
+		message: getTextContent(data?.message || '失敗'),
 		type: 'error',
 	}),
 }
