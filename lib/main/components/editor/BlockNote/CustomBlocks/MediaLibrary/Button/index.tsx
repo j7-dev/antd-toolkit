@@ -1,4 +1,4 @@
-import { useState, useEffect, memo } from 'react'
+import { memo } from 'react'
 import { Button, Modal, Select, Space, InputNumber } from 'antd'
 import {
 	AlignLeftOutlined,
@@ -11,11 +11,10 @@ import {
 	DefaultInlineContentSchema,
 	DefaultStyleSchema,
 } from '@blocknote/core'
-import { nanoid } from 'nanoid'
+import { debounce } from 'lodash-es'
 import { useApiUrlMediaLibraryModal, useProps } from '../hooks'
 import { MediaLibrary } from '@/wp'
 import { TbSwitchHorizontal } from 'react-icons/tb'
-
 export type TMediaLibraryButton = ReactCustomBlockRenderProps<
 	CustomBlockConfig,
 	DefaultInlineContentSchema,
@@ -25,66 +24,47 @@ export type TMediaLibraryButton = ReactCustomBlockRenderProps<
 const MediaLibraryButton = () => {
 	const { show, close, modalProps, ...mediaLibraryProps } =
 		useApiUrlMediaLibraryModal({
-			onConfirm: () => {},
+			onConfirm: (items) => {
+				if (items.length) {
+					const item = items[0]
+					props.editor.updateBlock(props.block, {
+						type: 'mediaLibrary',
+						props: {
+							...currentBlockProps,
+							url: item.url,
+						} as any,
+					})
+				}
+			},
 		})
 
 	const props = useProps()
 	const currentBlock = props.editor.getBlock(props.block)
 
-	const [width, setWidth] = useState({
-		value: currentBlock?.props?.widthValue || 100,
-		unit: currentBlock?.props?.widthUnit || '%',
-	})
-	const [align, setAlign] = useState(currentBlock?.props?.align || 'start')
 	const currentBlockWidth = `${currentBlock?.props?.widthValue}${currentBlock?.props?.widthUnit}`
-	const blockId = currentBlock?.id || ''
+	const currentBlockProps = currentBlock?.props
 
-	// const { selectedItems } = mediaLibraryProps
-	const selectedItems = [
-		{
-			id: '1',
-			url: 'http://test.local/wp-content/uploads/2025/05/了解.jpg',
-		},
-	]
-
-	useEffect(() => {
-		const timer = setTimeout(() => {
-			if (width.value) {
-				props.editor.updateBlock(props.block, {
-					type: 'mediaLibrary',
-					props: {
-						widthValue: width.value as any,
-						widthUnit: width.unit as any,
-						align: align as any,
-					},
-				})
-			}
-		}, 300)
-
-		return () => clearTimeout(timer)
-	}, [JSON.stringify(width), align])
 	return (
 		<>
 			<div className={'bn-file-block-content-wrapper at-w-full'}>
-				{!selectedItems.length && (
+				{!currentBlockProps?.url && (
 					<Button size="small" type="primary" onClick={show}>
 						開啟媒體庫
 					</Button>
 				)}
 
-				{selectedItems.map(({ id, url }) => (
+				{currentBlockProps?.url && (
 					<>
 						<div
 							className="at-flex at-items-center at-w-full"
 							style={{
-								justifyContent: align,
+								justifyContent: currentBlockProps.align,
 							}}
 						>
 							<img
 								className="at-max-w-full"
 								style={{ width: currentBlockWidth }}
-								key={`${id}-${nanoid(4)}`}
-								src={url}
+								src={currentBlockProps.url}
 							/>
 						</div>
 
@@ -92,57 +72,65 @@ const MediaLibraryButton = () => {
 							<Space.Compact>
 								<InputNumber
 									size="small"
-									value={width.value}
-									onChange={(value) =>
-										setWidth({
-											...width,
-											value: value || 100,
+									defaultValue={currentBlockProps.widthValue}
+									onChange={debounce((value) => {
+										props.editor.updateBlock(props.block, {
+											type: 'mediaLibrary',
+											props: {
+												...currentBlockProps,
+												widthValue: value as any,
+											} as any,
 										})
-									}
+									}, 500)}
 								/>
 								<Select
 									size="small"
-									value={width.unit}
-									onChange={(value) =>
-										setWidth({
-											...width,
-											unit: value || '%',
+									defaultValue={currentBlockProps.widthUnit}
+									onChange={debounce((value) => {
+										props.editor.updateBlock(props.block, {
+											type: 'mediaLibrary',
+											props: {
+												...currentBlockProps,
+												widthUnit: value as any,
+											} as any,
 										})
-									}
+									}, 500)}
 									className="at-w-16"
-									options={[
-										{
-											label: 'px',
-											value: 'px',
-										},
-										{
-											label: '%',
-											value: '%',
-										},
-									]}
+									options={['px', '%'].map((unit) => ({
+										label: unit,
+										value: unit,
+									}))}
 								/>
 							</Space.Compact>
 
 							<Space.Compact>
-								<Button
-									size="small"
-									icon={<AlignLeftOutlined />}
-									onClick={() => setAlign('start')}
-								/>
-								<Button
-									size="small"
-									icon={<AlignCenterOutlined />}
-									onClick={() => setAlign('center')}
-								/>
-								<Button
-									size="small"
-									icon={<AlignRightOutlined />}
-									onClick={() => setAlign('end')}
-								/>
+								{Object.entries({
+									start: <AlignLeftOutlined />,
+									center: <AlignCenterOutlined />,
+									end: <AlignRightOutlined />,
+								}).map(([key, icon]) => (
+									<Button
+										key={key}
+										type={
+											currentBlockProps.align === key ? 'primary' : 'default'
+										}
+										size="small"
+										icon={icon}
+										onClick={debounce(() => {
+											props.editor.updateBlock(props.block, {
+												type: 'mediaLibrary',
+												props: {
+													...currentBlockProps,
+													align: key as any,
+												} as any,
+											})
+										}, 500)}
+									/>
+								))}
 							</Space.Compact>
 						</div>
 					</>
-				))}
+				)}
 
 				<Modal centered {...modalProps}>
 					<div className="at-max-h-[75vh] at-overflow-x-hidden at-overflow-y-auto at-pr-4">
