@@ -59,7 +59,7 @@ export const schema = BlockNoteSchema.create({
 })
 
 /* 要隱藏的選單 */
-const HIDDEN_MENU_ITEMS = ['emoji']
+const HIDDEN_MENU_ITEMS: string[] = []
 
 /* 自訂選單順序 */
 const CUSTOM_MENU_ORDER = [
@@ -107,23 +107,33 @@ export const useBlockNote = ({
 		DefaultStyleSchema
 	> = {
 		editor,
-		onChange: async () => {
-			// Saves the document JSON to state.
-			setBlocks(editor.document as Block[])
+		onChange: async (theEditor) => {
+			try {
+				// Saves the document JSON to state.
+				setBlocks(theEditor.document as Block[])
 
-			// 如果沒有內容就 setHTML 為空字串
-			if (editor.document.length === 1) {
-				if (
-					'paragraph' === editor.document[0]?.type &&
-					!(editor.document[0]?.content as Array<any>)?.length
-				) {
-					setHTML('')
-					return
+				// 如果沒有內容就 setHTML 為空字串
+				if (theEditor.document.length === 1) {
+					if (
+						'paragraph' === theEditor.document[0]?.type &&
+						!(theEditor.document[0]?.content as Array<any>)?.length
+					) {
+						console.error('⭐ 沒有內容')
+						setHTML('')
+						return
+					}
 				}
-			}
 
-			// 另一種輸出方式 const newHtml = await editor.blocksToHTMLLossy(editor.document)
-			const newHtml = await editor.blocksToFullHTML(editor.document)
+				const newHtml = await theEditor?.blocksToHTMLLossy(
+					theEditor?.document || [],
+				)
+				setHTML(newHtml)
+			} catch (error) {
+				console.error('BlockNote onChange error:', error)
+			}
+			return
+			//另一種輸出方式
+			// const newHtml = await editor.blocksToFullHTML(editor.document)
 			const parser = new DOMParser()
 			const doc = parser.parseFromString(newHtml, 'text/html')
 
@@ -204,7 +214,7 @@ export const useBlockNote = ({
 		linkToolbar: true,
 		sideMenu: true,
 		slashMenu: false, // 自訂選單
-		emojiPicker: false, // 關閉 Emoji
+		emojiPicker: true, // 啟用 Emoji
 		filePanel: true,
 		tableHandles: true,
 		children: (
