@@ -26,22 +26,22 @@ const meta: Meta<typeof BlockNote> & {
 }
 
 const INIT: any = [
+	// {
+	// 	id: 'cf94c4d9-ce47-4b4a-bfeb-440b599e3d4e',
+	// 	type: 'mediaLibrary',
+	// 	props: {
+	// 		vId: '',
+	// 	},
+	// 	children: [],
+	// },
 	{
-		id: 'cf94c4d9-ce47-4b4a-bfeb-440b599e3d4e',
-		type: 'mediaLibrary',
-		props: {
-			vId: '',
-		},
-		children: [],
+		type: 'paragraph',
+		content: 'Welcome to this demo!',
 	},
-	// {
-	// 	type: 'paragraph',
-	// 	content: 'Welcome to this demo!',
-	// },
-	// {
-	// 	type: 'alert',
-	// 	content: 'Welcome to this demo!',
-	// },
+	{
+		type: 'alert',
+		content: 'Welcome to this demo!',
+	},
 
 	// {
 	//   type: 'paragraph',
@@ -179,23 +179,37 @@ const BlockNoteWithHooks = () => {
 		},
 	})
 
-	const { blockNoteViewProps: blockNoteViewProps2 } = useBlockNote({
-		options: {} as any,
-		apiConfig: {
-			apiEndpoint: ENV.UPLOAD_API,
-			headers: new Headers({
-				Authorization: 'Basic ' + btoa(ENV.USERNAME + ':' + ENV.PASSWORD),
-			}),
-		},
-	})
+	const { blockNoteViewProps: blockNoteViewProps2, blocks: blocks2 } =
+		useBlockNote({
+			options: {} as any,
+			apiConfig: {
+				apiEndpoint: ENV.UPLOAD_API,
+				headers: new Headers({
+					Authorization: 'Basic ' + btoa(ENV.USERNAME + ':' + ENV.PASSWORD),
+				}),
+			},
+		})
+	const editor2 = blockNoteViewProps2.editor
 
 	useEffect(() => {
-		const editor2 = blockNoteViewProps2.editor
+		let isMounted = true
+
 		async function loadInitialHTML() {
-			const blocksFromHTML = await editor2.tryParseHTMLToBlocks(html)
-			editor2.replaceBlocks(editor2.document, blocksFromHTML)
+			try {
+				const blocksFromHTML = await editor2.tryParseHTMLToBlocks(html)
+				if (isMounted) {
+					editor2.replaceBlocks(editor2.document, blocksFromHTML)
+				}
+			} catch (error) {
+				console.error('Failed to parse HTML to blocks:', error)
+			}
 		}
+
 		loadInitialHTML()
+
+		return () => {
+			isMounted = false
+		}
 	}, [html])
 
 	return (
@@ -221,6 +235,10 @@ const BlockNoteWithHooks = () => {
 				/>
 				<p>unserialize 上方的HTML</p>
 				<BlockNote {...blockNoteViewProps2} />
+
+				<pre className="at-my-4 at-prismjs at-bg-gray-100 at-p-4 at-rounded-md">
+					{JSON.stringify(blocks2, null, 2)}
+				</pre>
 			</div>
 		</>
 	)
