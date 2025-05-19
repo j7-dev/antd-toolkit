@@ -314,36 +314,3 @@ export const useBlockNote = ({
 		setHTML,
 	}
 }
-
-/**
- * 將新物件插入到陣列中指定 group 的物件之後
- *
- * @param {DefaultReactSuggestionItem[]} arr
- * @param {DefaultReactSuggestionItem}   newObj
- * @param {string}                       group
- * @return {{}}
- */
-function insertAfter(
-	arr: DefaultReactSuggestionItem[],
-	newObj: DefaultReactSuggestionItem,
-	group: string,
-) {
-	// 從後往前找到最後一個 group 為 'advanced' 的物件
-	const lastAdvancedIndex = arr
-		.slice()
-		.reverse()
-		.findIndex((obj) => obj.group === group)
-
-	// 如果找不到，則將新物件插入到陣列的最後面
-	const insertIndex =
-		lastAdvancedIndex === -1 ? arr.length : arr.length - lastAdvancedIndex
-
-	// 創建新陣列並插入新物件
-	const newArr = [
-		...arr.slice(0, insertIndex),
-		newObj,
-		...arr.slice(insertIndex),
-	]
-
-	return newArr
-}

@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
 import { BlockNote, useBlockNote } from './index'
 import { refineDecorator, ENV } from '../../../../stories'
-import { MediaLibrary } from '../../../../refine/bunny'
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 
@@ -28,13 +27,21 @@ const meta: Meta<typeof BlockNote> & {
 
 const INIT: any = [
 	{
-		type: 'paragraph',
-		content: 'Welcome to this demo!',
+		id: 'cf94c4d9-ce47-4b4a-bfeb-440b599e3d4e',
+		type: 'mediaLibrary',
+		props: {
+			vId: '',
+		},
+		children: [],
 	},
-	{
-		type: 'alert',
-		content: 'Welcome to this demo!',
-	},
+	// {
+	// 	type: 'paragraph',
+	// 	content: 'Welcome to this demo!',
+	// },
+	// {
+	// 	type: 'alert',
+	// 	content: 'Welcome to this demo!',
+	// },
 
 	// {
 	//   type: 'paragraph',
@@ -193,7 +200,7 @@ const BlockNoteWithHooks = () => {
 
 	return (
 		<>
-			<div className="at-w-full at-max-w-[50rem]">
+			<div className="at-w-full at-max-w-[50rem] at-max-h-[75vh] at-overflow-x-hidden at-overflow-y-auto">
 				<BlockNote {...blockNoteViewProps} />
 
 				<hr className="at-bg-gray-200 at-w-full at-h-[1px] at-mb-6" />
