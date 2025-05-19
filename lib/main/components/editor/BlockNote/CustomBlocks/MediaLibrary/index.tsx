@@ -31,6 +31,7 @@ const mediaLibraryBlockConfig: CustomBlockConfig = {
 			default: '%',
 		},
 		align: {
+			values: ['start', 'center', 'end'],
 			default: 'start',
 		},
 		url: {
@@ -42,15 +43,8 @@ const mediaLibraryBlockConfig: CustomBlockConfig = {
 
 export const MediaLibrary = createReactBlockSpec(mediaLibraryBlockConfig, {
 	render: (props) => {
-		// ❗contentRef 有個屬性 name ，如果不能編輯是 ""，可以編輯是 "nodeViewContentRef"
-		const editable = !(props.contentRef.name === '')
-		console.log('⭐ props:', props)
-
-		if (!editable) {
-			return <>456</>
-		}
-
 		return (
+			// @ts-ignore
 			<PropsContext.Provider value={props}>
 				<Button />
 			</PropsContext.Provider>
@@ -58,5 +52,45 @@ export const MediaLibrary = createReactBlockSpec(mediaLibraryBlockConfig, {
 	},
 
 	// ❗parse 是例如，將剪貼簿複製到編輯器時，要怎麼解析 HTML 轉換為 BLOCK
-	parse: undefined,
+	parse: (element: HTMLElement) => {
+		// 取得節點上的 data-block-key
+		const blockKey = element.getAttribute('data-block-key')
+		if ('mediaLibrary' !== blockKey) return
+
+		return {
+			widthValue: element.getAttribute('data-width-value') || 100,
+			widthUnit: element.getAttribute('data-width-unit') || '%',
+			align: element.getAttribute('data-align') || 'start',
+			url: element.getAttribute('data-url') || '',
+		}
+	},
+	toExternalHTML: ({ block, editor, contentRef }) => {
+		const url = block?.props?.url
+		if (!url) return null
+
+		const type = block?.type
+		const widthValue = block?.props?.widthValue
+		const widthUnit = block?.props?.widthUnit
+		const align = block?.props?.align || 'start'
+		return (
+			<div
+				data-block-key={type}
+				data-url={url}
+				data-width-value={widthValue}
+				data-align={align}
+				data-width-unit={widthUnit}
+				className="at-flex at-w-full"
+				style={{
+					justifyContent: align,
+				}}
+			>
+				<img
+					style={{
+						width: `${widthValue}${widthUnit}`,
+					}}
+					src={url}
+				/>
+			</div>
+		)
+	},
 })

@@ -35,6 +35,7 @@ export const BlockNote: FC<
 				</Button>
 			}
 		>
+			{/* @ts-ignore */}
 			<BlockNoteView {...blockNoteViewProps} />
 		</Suspense>
 	)
