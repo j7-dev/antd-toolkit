@@ -35,6 +35,8 @@ import {
 	bunnyVideoMenuItem,
 	BunnyAudio,
 	bunnyAudioMenuItem,
+	MediaLibrary,
+	mediaLibraryMenuItem,
 } from './CustomBlocks'
 import { uploadWP, getIconHTML, convertDivToATag, hasScriptTag } from './utils'
 import { getFileExtension } from '@/main/utils'
@@ -52,8 +54,31 @@ export const schema = BlockNoteSchema.create({
 		checkListItem: undefined as any,
 		video: undefined as any,
 		audio: undefined as any,
+		mediaLibrary: MediaLibrary,
 	},
 })
+
+/* 要隱藏的選單 */
+const HIDDEN_MENU_ITEMS = ['emoji']
+
+/* 自訂選單順序 */
+const CUSTOM_MENU_ORDER = [
+	'heading',
+	'heading_2',
+	'heading_3',
+	'paragraph',
+	'quote',
+	'bullet_list',
+	'code_block',
+	'mediaLibrary',
+	'file',
+	'image',
+	'alert',
+	'table',
+	'customHTML',
+	'bunnyVideo',
+	'bunnyAudio',
+]
 
 export const useBlockNote = ({
 	editor: overrideEditor,
@@ -187,39 +212,40 @@ export const useBlockNote = ({
 				<SuggestionMenuController
 					triggerCharacter={'/'}
 					getItems={async (query) => {
-						const menuItems = getDefaultReactSlashMenuItems(editor).filter(
-							(menuItem) =>
-								(menuItem as DefaultReactSuggestionItem & { key: string })
-									?.key !== 'emoji', // 隱藏 Emoji
+						const menuItems = (
+							getDefaultReactSlashMenuItems(
+								editor,
+							) as (DefaultReactSuggestionItem & { key: string })[]
+						).filter(
+							({ key }) => !HIDDEN_MENU_ITEMS.includes(key), // 隱藏 Emoji
 						)
 
-						const menuItemsAfterAlertInserted = insertAfter(
-							menuItems,
+						const customMenuItems = [
+							...menuItems,
 							alertMenuItem(editor),
-							'Others',
-						)
-						const menuItemsAfterCustomHTMLInserted = insertAfter(
-							menuItemsAfterAlertInserted,
 							customHTMLMenuItem(editor),
-							'Advanced',
-						)
-
-						const menuItemsAfterBunnyVideoInserted = insertAfter(
-							menuItemsAfterCustomHTMLInserted,
 							bunnyVideoMenuItem(editor),
-							'Bunny',
-						)
-
-						const menuItemsAfterBunnyAudioInserted = insertAfter(
-							menuItemsAfterBunnyVideoInserted,
 							bunnyAudioMenuItem(editor),
-							'Bunny',
-						)
+							mediaLibraryMenuItem(editor),
+						]
+
+						const sortedMenuItems = customMenuItems.sort((a, b) => {
+							// 更簡潔的寫法
+							const getIndex = (key: string) => {
+								const index = CUSTOM_MENU_ORDER.indexOf(key)
+								return index === -1 ? Infinity : index
+							}
+
+							const result = getIndex(a.key) - getIndex(b.key)
+
+							// 如果兩個都不在優先清單中 (Infinity - Infinity = NaN)
+							return isNaN(result) ? a.key.localeCompare(b.key) : result
+						})
 
 						return filterSuggestionItems(
 							// eslint-disable-next-line lines-around-comment
 							// Gets all default slash menu items and `insertAlert` item.
-							menuItemsAfterBunnyAudioInserted,
+							sortedMenuItems,
 							query,
 						)
 					}}
