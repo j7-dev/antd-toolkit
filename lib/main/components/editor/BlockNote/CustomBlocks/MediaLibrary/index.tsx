@@ -79,8 +79,10 @@ export const MediaLibrary = createReactBlockSpec(mediaLibraryBlockConfig, {
 			align: element.getAttribute('data-align') || 'start',
 			url: element.getAttribute('data-url') || '',
 			link: element.getAttribute('data-link') || '',
-			openLinkInNewTab:
-				element.getAttribute('data-open-link-in-new-tab') || '0',
+			target: element.getAttribute('data-target') || '_self',
+			alt: element.getAttribute('data-alt') || '',
+			title: element.getAttribute('data-title') || '',
+			caption: element.getAttribute('data-caption') || '',
 		}
 	},
 	toExternalHTML: ({ block, editor, contentRef }) => {

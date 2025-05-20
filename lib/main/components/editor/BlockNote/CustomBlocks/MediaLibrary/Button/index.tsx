@@ -48,12 +48,29 @@ const MediaLibraryButton = () => {
 		})
 	}, 500)
 
+	// 要顯示的副工具列
+	const [tool, setTool] = useState<string | null>(null)
+	// 為了讓 input 的 defaultValue 的整個組件可以重新 render 重新設置 defaultValue，透過 key 來強制重新 render
+	const [key, setKey] = useState<number>(0)
+
 	const { show, close, modalProps, ...mediaLibraryProps } =
 		useApiUrlMediaLibraryModal({
 			onConfirm: (items) => {
 				if (items.length) {
 					const item = items[0]
-					update('url', item.url)
+					props.editor.updateBlock(props.block, {
+						type: 'mediaLibrary',
+						props: {
+							...currentBlockProps,
+							url: item.url,
+							title: item.title,
+							widthValue: item.width,
+							widthUnit: 'px',
+							alt: item._wp_attachment_image_alt,
+						} as any,
+					})
+
+					setKey((prev) => prev + 1)
 				}
 			},
 		})
@@ -69,166 +86,154 @@ const MediaLibraryButton = () => {
 		}
 	}, [currentBlockProps?.url])
 
-	// 要顯示的副工具列
-	const [tool, setTool] = useState<string | null>(null)
+	if (!currentBlockProps?.url) {
+		return null
+	}
 
 	return (
 		<>
-			<div className={'bn-file-block-content-wrapper at-w-full'}>
-				{/* {!currentBlockProps?.url && (
-					<Button size="small" type="primary" onClick={show}>
-						開啟媒體庫
-					</Button>
-				)} */}
+			<div className="at-w-full">
+				<div
+					className="at-flex at-items-center at-w-full at-cursor-pointer"
+					onClick={show}
+					style={{
+						justifyContent: currentBlockProps.align,
+					}}
+				>
+					<img
+						className="at-max-w-full"
+						style={{ width: currentBlockWidth }}
+						src={currentBlockProps.url}
+					/>
+				</div>
 
-				{currentBlockProps?.url && (
-					<>
+				<div className="at-py-1 at-px-2 at-bg-gray-100 at-rounded-md" key={key}>
+					<div className="at-flex at-items-center at-justify-center at-gap-x-2">
+						<Space.Compact>
+							<InputNumber
+								size="small"
+								defaultValue={currentBlockProps.widthValue}
+								onChange={(value) => update('widthValue', value)}
+							/>
+							<Select
+								size="small"
+								defaultValue={currentBlockProps.widthUnit}
+								onChange={(value) => update('widthUnit', value)}
+								className="at-w-16"
+								options={['px', '%'].map((unit) => ({
+									label: unit,
+									value: unit,
+								}))}
+							/>
+						</Space.Compact>
+
+						<Space.Compact>
+							{Object.entries({
+								start: <AlignLeftOutlined />,
+								center: <AlignCenterOutlined />,
+								end: <AlignRightOutlined />,
+							}).map(([key, icon]) => (
+								<Button
+									key={key}
+									type={currentBlockProps.align === key ? 'primary' : 'default'}
+									size="small"
+									icon={icon}
+									onClick={() => update('align', key)}
+								/>
+							))}
+
+							<Tooltip title="設定圖片連結">
+								<Button
+									type={tool === 'link' ? 'primary' : 'default'}
+									size="small"
+									icon={<LinkOutlined />}
+									onClick={() => setTool(tool === 'link' ? null : 'link')}
+								/>
+							</Tooltip>
+							<Tooltip title="設定圖片 alt 文字">
+								<Button
+									type={tool === 'alt' ? 'primary' : 'default'}
+									size="small"
+									icon={<Alt color={tool === 'alt' ? '#fff' : '#444'} />}
+									onClick={() => setTool(tool === 'alt' ? null : 'alt')}
+								/>
+							</Tooltip>
+
+							<Tooltip title="換另一張圖片">
+								<Button
+									size="small"
+									icon={<TbSwitchHorizontal />}
+									onClick={show}
+								/>
+							</Tooltip>
+							<Tooltip title="刪除">
+								<Button
+									danger
+									type="primary"
+									size="small"
+									icon={<DeleteOutlined />}
+									onClick={() => {
+										props.editor.removeBlocks([props.block])
+									}}
+								/>
+							</Tooltip>
+						</Space.Compact>
+					</div>
+
+					<div className={cn('at-mt-1', tool ? 'at-block' : 'at-hidden')}>
 						<div
-							className="at-flex at-items-center at-w-full at-cursor-pointer"
-							onClick={show}
-							style={{
-								justifyContent: currentBlockProps.align,
-							}}
+							className={cn(
+								'at-flex at-items-center at-gap-x-2',
+								'link' === tool ? 'at-block' : 'at-hidden',
+							)}
 						>
-							<img
-								className="at-max-w-full"
-								style={{ width: currentBlockWidth }}
-								src={currentBlockProps.url}
+							<Input
+								defaultValue={currentBlockProps.link}
+								placeholder="請輸入包含 https:// 的連結，例如  https://www.google.com"
+								size="small"
+								onChange={(e) => update('link', e.target.value)}
+								allowClear
+							/>
+							<Checkbox
+								defaultChecked={currentBlockProps.target === '_blank'}
+								onChange={(e) =>
+									update('target', e.target.checked ? '_blank' : '_self')
+								}
+								className="at-text-xs at-text-nowrap"
+							>
+								新視窗開啟
+							</Checkbox>
+						</div>
+						<div
+							className={cn(
+								'at-flex at-flex-col at-gap-1',
+								'alt' === tool ? 'at-block' : 'at-hidden',
+							)}
+						>
+							<Input
+								defaultValue={currentBlockProps.alt}
+								placeholder="請輸入圖片 alt 替代文字"
+								size="small"
+								onChange={(e) => update('alt', e.target.value)}
+								allowClear
+							/>
+							<Input
+								defaultValue={currentBlockProps.title}
+								placeholder="請輸入圖片 title 文字"
+								size="small"
+								onChange={(e) => update('title', e.target.value)}
+								allowClear
+							/>
+							<Input
+								defaultValue={currentBlockProps.caption}
+								placeholder="請輸入圖片 caption 文字"
+								size="small"
+								onChange={(e) => update('caption', e.target.value)}
+								allowClear
 							/>
 						</div>
-
-						<div className="at-py-1 at-px-2 at-bg-gray-100 at-rounded-md">
-							<div className="at-flex at-items-center at-justify-center at-gap-x-2">
-								<Space.Compact>
-									<InputNumber
-										size="small"
-										defaultValue={currentBlockProps.widthValue}
-										onChange={(value) => update('widthValue', value)}
-									/>
-									<Select
-										size="small"
-										defaultValue={currentBlockProps.widthUnit}
-										onChange={(value) => update('widthUnit', value)}
-										className="at-w-16"
-										options={['px', '%'].map((unit) => ({
-											label: unit,
-											value: unit,
-										}))}
-									/>
-								</Space.Compact>
-
-								<Space.Compact>
-									{Object.entries({
-										start: <AlignLeftOutlined />,
-										center: <AlignCenterOutlined />,
-										end: <AlignRightOutlined />,
-									}).map(([key, icon]) => (
-										<Button
-											key={key}
-											type={
-												currentBlockProps.align === key ? 'primary' : 'default'
-											}
-											size="small"
-											icon={icon}
-											onClick={() => update('align', key)}
-										/>
-									))}
-
-									<Tooltip title="設定圖片連結">
-										<Button
-											type={tool === 'link' ? 'primary' : 'default'}
-											size="small"
-											icon={<LinkOutlined />}
-											onClick={() => setTool(tool === 'link' ? null : 'link')}
-										/>
-									</Tooltip>
-									<Tooltip title="設定圖片 alt 文字">
-										<Button
-											type={tool === 'alt' ? 'primary' : 'default'}
-											size="small"
-											icon={<Alt color={tool === 'alt' ? '#fff' : '#444'} />}
-											onClick={() => setTool(tool === 'alt' ? null : 'alt')}
-										/>
-									</Tooltip>
-
-									<Tooltip title="換另一張圖片">
-										<Button
-											size="small"
-											icon={<TbSwitchHorizontal />}
-											onClick={show}
-										/>
-									</Tooltip>
-									<Tooltip title="刪除">
-										<Button
-											danger
-											type="primary"
-											size="small"
-											icon={<DeleteOutlined />}
-											onClick={() => {
-												props.editor.removeBlocks([props.block])
-											}}
-										/>
-									</Tooltip>
-								</Space.Compact>
-							</div>
-
-							<div className={cn('at-mt-1', tool ? 'at-block' : 'at-hidden')}>
-								<div
-									className={cn(
-										'at-flex at-items-center at-gap-x-2',
-										'link' === tool ? 'at-block' : 'at-hidden',
-									)}
-								>
-									<Input
-										defaultValue={currentBlockProps.link}
-										placeholder="請輸入包含 https:// 的連結，例如  https://www.google.com"
-										size="small"
-										onChange={(e) => update('link', e.target.value)}
-										allowClear
-									/>
-									<Checkbox
-										defaultChecked={currentBlockProps.target === '_blank'}
-										onChange={(e) =>
-											update('target', e.target.checked ? '_blank' : '_self')
-										}
-										className="at-text-xs at-text-nowrap"
-									>
-										新視窗開啟
-									</Checkbox>
-								</div>
-								<div
-									className={cn(
-										'at-flex at-flex-col at-gap-1',
-										'alt' === tool ? 'at-block' : 'at-hidden',
-									)}
-								>
-									<Input
-										defaultValue={currentBlockProps.alt}
-										placeholder="請輸入圖片 alt 替代文字"
-										size="small"
-										onChange={(e) => update('alt', e.target.value)}
-										allowClear
-									/>
-									<Input
-										defaultValue={currentBlockProps.title}
-										placeholder="請輸入圖片 title 文字"
-										size="small"
-										onChange={(e) => update('title', e.target.value)}
-										allowClear
-									/>
-									<Input
-										defaultValue={currentBlockProps.caption}
-										placeholder="請輸入圖片 caption 文字"
-										size="small"
-										onChange={(e) => update('caption', e.target.value)}
-										allowClear
-									/>
-								</div>
-							</div>
-						</div>
-					</>
-				)}
-
+					</div>
+				</div>
 				<Modal {...modalProps}>
 					<div className="at-max-h-[75vh] at-overflow-x-hidden at-overflow-y-auto at-pr-4">
 						<MediaLibrary {...mediaLibraryProps} />
