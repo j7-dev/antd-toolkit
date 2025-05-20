@@ -41,8 +41,7 @@ import {
 import { uploadWP, getIconHTML, convertDivToATag, hasScriptTag } from './utils'
 import { getFileExtension } from '@/main/utils'
 
-// Our schema with block specs, which contain the configs and implementations for blocks
-// that we want our editor to use.
+// undefined = 禁用選單
 export const schema = BlockNoteSchema.create({
 	blockSpecs: {
 		...defaultBlockSpecs, // Adds all default blocks.
@@ -51,10 +50,11 @@ export const schema = BlockNoteSchema.create({
 		bunnyVideo: BunnyVideo,
 		bunnyAudio: BunnyAudio,
 		// numberedListItem: undefined as any, // undefined = 禁用選單
-		checkListItem: undefined as any, // undefined = 禁用選單
-		file: undefined as any, // undefined = 禁用選單
-		video: undefined as any, // undefined = 禁用選單
-		audio: undefined as any, // undefined = 禁用選單
+		checkListItem: undefined as any, // 樣式有問題，禁用
+		file: undefined as any, // 用媒體庫就好，禁用
+		video: undefined as any, // 用媒體庫就好，禁用
+		audio: undefined as any, // 用媒體庫就好，禁用
+		image: undefined as any, // 用媒體庫就好，禁用
 		mediaLibrary: MediaLibrary,
 	},
 })
@@ -69,6 +69,7 @@ const CUSTOM_MENU_ORDER = [
 	'heading_3',
 	'paragraph',
 	'quote',
+	'numbered_list',
 	'bullet_list',
 	'code_block',
 	'mediaLibrary',
