@@ -1,5 +1,14 @@
 import { memo, useEffect, useState } from 'react'
-import { Button, Modal, Select, Space, InputNumber, Input } from 'antd'
+import {
+	Button,
+	Modal,
+	Select,
+	Space,
+	InputNumber,
+	Input,
+	Checkbox,
+	Tooltip,
+} from 'antd'
 import {
 	AlignLeftOutlined,
 	AlignCenterOutlined,
@@ -15,8 +24,10 @@ import {
 } from '@blocknote/core'
 import { debounce } from 'lodash-es'
 import { useApiUrlMediaLibraryModal, useProps } from '../hooks'
+import Alt from './Alt'
 import { MediaLibrary } from '@/wp'
 import { TbSwitchHorizontal } from 'react-icons/tb'
+import { cn } from '@/main/utils'
 export type TMediaLibraryButton = ReactCustomBlockRenderProps<
 	CustomBlockConfig,
 	DefaultInlineContentSchema,
@@ -122,31 +133,98 @@ const MediaLibraryButton = () => {
 											onClick={() => update('align', key)}
 										/>
 									))}
-									<Button
-										size="small"
-										icon={<TbSwitchHorizontal />}
-										onClick={show}
-									/>
-									<Button
-										size="small"
-										icon={<LinkOutlined />}
-										onClick={() => setTool('link')}
-									/>
-									<Button danger size="small" icon={<DeleteOutlined />} />
+
+									<Tooltip title="設定圖片連結">
+										<Button
+											type={tool === 'link' ? 'primary' : 'default'}
+											size="small"
+											icon={<LinkOutlined />}
+											onClick={() => setTool(tool === 'link' ? null : 'link')}
+										/>
+									</Tooltip>
+									<Tooltip title="設定圖片 alt 文字">
+										<Button
+											type={tool === 'alt' ? 'primary' : 'default'}
+											size="small"
+											icon={<Alt color={tool === 'alt' ? '#fff' : '#444'} />}
+											onClick={() => setTool(tool === 'alt' ? null : 'alt')}
+										/>
+									</Tooltip>
+
+									<Tooltip title="換另一張圖片">
+										<Button
+											size="small"
+											icon={<TbSwitchHorizontal />}
+											onClick={show}
+										/>
+									</Tooltip>
+									<Tooltip title="刪除">
+										<Button
+											danger
+											type="primary"
+											size="small"
+											icon={<DeleteOutlined />}
+											onClick={() => {
+												props.editor.removeBlocks([props.block])
+											}}
+										/>
+									</Tooltip>
 								</Space.Compact>
 							</div>
-							{tool && (
-								<div className="at-mt-1">
-									<div className={tool === 'link' ? 'at-block' : 'at-hidden'}>
-										<Input
-											placeholder="請輸入連結"
-											size="small"
-											onChange={(e) => update('link', e.target.value)}
-											allowClear
-										/>
-									</div>
+
+							<div className={cn('at-mt-1', tool ? 'at-block' : 'at-hidden')}>
+								<div
+									className={cn(
+										'at-flex at-items-center at-gap-x-2',
+										'link' === tool ? 'at-block' : 'at-hidden',
+									)}
+								>
+									<Input
+										defaultValue={currentBlockProps.link}
+										placeholder="請輸入包含 https:// 的連結，例如  https://www.google.com"
+										size="small"
+										onChange={(e) => update('link', e.target.value)}
+										allowClear
+									/>
+									<Checkbox
+										defaultChecked={currentBlockProps.target === '_blank'}
+										onChange={(e) =>
+											update('target', e.target.checked ? '_blank' : '_self')
+										}
+										className="at-text-xs at-text-nowrap"
+									>
+										新視窗開啟
+									</Checkbox>
 								</div>
-							)}
+								<div
+									className={cn(
+										'at-flex at-flex-col at-gap-1',
+										'alt' === tool ? 'at-block' : 'at-hidden',
+									)}
+								>
+									<Input
+										defaultValue={currentBlockProps.alt}
+										placeholder="請輸入圖片 alt 替代文字"
+										size="small"
+										onChange={(e) => update('alt', e.target.value)}
+										allowClear
+									/>
+									<Input
+										defaultValue={currentBlockProps.title}
+										placeholder="請輸入圖片 title 文字"
+										size="small"
+										onChange={(e) => update('title', e.target.value)}
+										allowClear
+									/>
+									<Input
+										defaultValue={currentBlockProps.caption}
+										placeholder="請輸入圖片 caption 文字"
+										size="small"
+										onChange={(e) => update('caption', e.target.value)}
+										allowClear
+									/>
+								</div>
+							</div>
 						</div>
 					</>
 				)}

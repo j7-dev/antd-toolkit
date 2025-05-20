@@ -40,6 +40,19 @@ const mediaLibraryBlockConfig: CustomBlockConfig = {
 		link: {
 			default: '',
 		},
+		target: {
+			values: ['_blank', '_self'],
+			default: '_self',
+		},
+		alt: {
+			default: '',
+		},
+		title: {
+			default: '',
+		},
+		caption: {
+			default: '',
+		},
 	},
 	content: 'none',
 }
@@ -66,6 +79,8 @@ export const MediaLibrary = createReactBlockSpec(mediaLibraryBlockConfig, {
 			align: element.getAttribute('data-align') || 'start',
 			url: element.getAttribute('data-url') || '',
 			link: element.getAttribute('data-link') || '',
+			openLinkInNewTab:
+				element.getAttribute('data-open-link-in-new-tab') || '0',
 		}
 	},
 	toExternalHTML: ({ block, editor, contentRef }) => {
@@ -77,7 +92,10 @@ export const MediaLibrary = createReactBlockSpec(mediaLibraryBlockConfig, {
 		const widthUnit = block?.props?.widthUnit
 		const align = block?.props?.align || 'start'
 		const link = block?.props?.link || ''
-		console.log('⭐ block:', block)
+		const target = block?.props?.target || '_self'
+		const alt = block?.props?.alt || ''
+		const title = block?.props?.title || ''
+		const caption = block?.props?.caption || ''
 		return (
 			<div
 				data-block-key={type}
@@ -86,14 +104,25 @@ export const MediaLibrary = createReactBlockSpec(mediaLibraryBlockConfig, {
 				data-align={align}
 				data-width-unit={widthUnit}
 				data-link={link}
-				className="at-flex at-w-full"
+				data-target={target}
+				data-alt={alt}
+				data-title={title}
+				data-caption={caption}
+				className="at-flex at-w-full at-flex-col at-justify-center"
 				style={{
-					justifyContent: align,
+					alignItems: align,
 				}}
 			>
 				{link ? (
-					<a href={link} rel="noopener noreferrer" className="at-contents">
+					<a
+						href={link}
+						target={target}
+						rel="noopener noreferrer"
+						className="at-contents"
+					>
 						<img
+							alt={alt}
+							title={title}
 							style={{
 								width: `${widthValue}${widthUnit}`,
 							}}
@@ -102,11 +131,17 @@ export const MediaLibrary = createReactBlockSpec(mediaLibraryBlockConfig, {
 					</a>
 				) : (
 					<img
+						alt={alt}
+						title={title}
 						style={{
 							width: `${widthValue}${widthUnit}`,
 						}}
 						src={url}
 					/>
+				)}
+
+				{caption && (
+					<div className="at-mt-1 at-text-xs at-text-gray-400">▲ {caption}</div>
 				)}
 			</div>
 		)
