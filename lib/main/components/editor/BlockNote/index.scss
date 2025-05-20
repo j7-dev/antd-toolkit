@@ -113,4 +113,18 @@
 	.inline-content {
 		flex-grow: 1;
 	}
+
+	//table
+	table {
+		table-layout: auto;
+		width: 100%;
+		border-collapse: collapse;
+		border-spacing: 0;
+		empty-cells: show;
+		border: 1px solid #e0e0e0;
+		td {
+			border: 1px solid #e0e0e0;
+			padding: 0.25rem 0.5rem;
+		}
+	}
 }
