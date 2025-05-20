@@ -36,18 +36,6 @@ export const CustomHTML = createReactBlockSpec(customHTMLBlockConfig, {
 	render: (props) => {
 		const value = props.block.props.html
 
-		// ❗contentRef 有個屬性 name ，如果不能編輯是 ""，可以編輯是 "nodeViewContentRef"
-		const editable = !(props.contentRef.name === '')
-		console.log('⭐ editable:', {
-			contentRef: props.contentRef,
-			editable,
-			props,
-		})
-
-		if (!editable) {
-			return <>{renderHTML(value)}</>
-		}
-
 		return (
 			<div
 				className={'bn-file-block-content-wrapper at-w-full'}
@@ -55,7 +43,7 @@ export const CustomHTML = createReactBlockSpec(customHTMLBlockConfig, {
 				ref={props.contentRef}
 			>
 				<textarea
-					className="at-w-full at-rounded-md at-border-2 at-border-solid at-border-gray-200 at-p-2 at-whitespace-pre-wrap"
+					className="at-w-full at-rounded-sm at-outline-none at-border-2 at-border-solid at-border-gray-100 at-bg-gray-100 at-p-2 at-whitespace-pre-wrap"
 					rows={10}
 					onChange={(e) => {
 						props.editor.updateBlock(props.block, {
@@ -75,6 +63,6 @@ export const CustomHTML = createReactBlockSpec(customHTMLBlockConfig, {
 	// ❗toExternalHTML 是例如，將區塊複製到剪貼簿到外部時，會複製的 內容，如果沒有定義就使用 render
 	toExternalHTML: (props) => {
 		const value = props.block.props.html
-		return <div>{value}</div>
+		return <>{renderHTML(value, true)}</>
 	},
 })
