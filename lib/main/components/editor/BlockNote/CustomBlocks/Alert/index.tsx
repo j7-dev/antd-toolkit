@@ -95,7 +95,11 @@ export const Alert = createReactBlockSpec(
 			)!
 			const Icon = alertType.icon
 			return (
-				<div className={'alert'} data-alert-type={props.block.props?.type}>
+				<div
+					className={'alert'}
+					data-block-key={props.block?.type}
+					data-alert-type={props.block.props?.type}
+				>
 					{/*Icon which opens a menu to choose the Alert type*/}
 					<Menu withinPortal={false} zIndex={999999}>
 						<Menu.Target>
@@ -140,6 +144,18 @@ export const Alert = createReactBlockSpec(
 					<div className={'inline-content'} ref={props.contentRef} />
 				</div>
 			)
+		},
+
+		parse: (element: HTMLElement) => {
+			// 取得節點上的 data-block-key
+			const blockKey = element.getAttribute('data-block-key')
+			if ('alert' !== blockKey) return
+
+			const type = element.getAttribute('data-alert-type')
+
+			return {
+				type: type || 'warning',
+			}
 		},
 	},
 )
