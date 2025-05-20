@@ -26,6 +26,36 @@ const meta: Meta<typeof BlockNote> & {
 }
 
 const INIT: any = [
+	{
+		type: 'heading',
+		props: {
+			textColor: 'default',
+			backgroundColor: 'default',
+			textAlignment: 'left',
+			level: 1,
+		},
+		content: '標題1 Heading1',
+	},
+	{
+		type: 'heading',
+		props: {
+			textColor: 'default',
+			backgroundColor: 'default',
+			textAlignment: 'left',
+			level: 2,
+		},
+		content: '標題2 Heading2',
+	},
+	{
+		type: 'heading',
+		props: {
+			textColor: 'default',
+			backgroundColor: 'default',
+			textAlignment: 'left',
+			level: 3,
+		},
+		content: '標題3 Heading3',
+	},
 	// {
 	// 	id: 'cf94c4d9-ce47-4b4a-bfeb-440b599e3d4e',
 	// 	type: 'mediaLibrary',
@@ -36,37 +66,100 @@ const INIT: any = [
 	// },
 	{
 		type: 'paragraph',
-		content: '一般文字',
-	},
-	{
-		type: 'alert',
-		content: 'Welcome to this demo!',
+		content: '段落 Paragraph',
 	},
 	{
 		type: 'paragraph',
+		props: {
+			textColor: 'default',
+			backgroundColor: 'default',
+			textAlignment: 'left',
+		},
 		content: [
 			{
 				type: 'text',
-				text: 'Blocks:',
-				styles: { bold: true },
+				text: '💯 ✅ ',
+				styles: {},
 			},
 		],
 	},
 	{
-		type: 'paragraph',
-		content: 'Paragraph',
+		type: 'quote',
+		props: {
+			textColor: 'default',
+			backgroundColor: 'default',
+		},
+		content: [
+			{
+				type: 'text',
+				text: '引用 Quote',
+				styles: {},
+			},
+		],
 	},
 	{
-		type: 'heading',
-		content: 'Heading',
+		type: 'alert',
+		content: '警報 Alert',
 	},
 	{
 		type: 'bulletListItem',
-		content: 'Bullet List Item',
+		props: {
+			textColor: 'default',
+			backgroundColor: 'default',
+			textAlignment: 'left',
+		},
+		content: [
+			{
+				type: 'text',
+				text: '無序列表 bulletListItem',
+				styles: {},
+			},
+		],
+	},
+	{
+		type: 'bulletListItem',
+		props: {
+			textColor: 'default',
+			backgroundColor: 'default',
+			textAlignment: 'left',
+		},
+		content: [
+			{
+				type: 'text',
+				text: '無序列表 bulletListItem',
+				styles: {},
+			},
+		],
 	},
 	{
 		type: 'numberedListItem',
-		content: 'Numbered List Item',
+		props: {
+			textColor: 'default',
+			backgroundColor: 'default',
+			textAlignment: 'left',
+		},
+		content: [
+			{
+				type: 'text',
+				text: '有序列表 numberedListItem',
+				styles: {},
+			},
+		],
+	},
+	{
+		type: 'numberedListItem',
+		props: {
+			textColor: 'default',
+			backgroundColor: 'default',
+			textAlignment: 'left',
+		},
+		content: [
+			{
+				type: 'text',
+				text: '有序列表 numberedListItem',
+				styles: {},
+			},
+		],
 	},
 	// {
 	// 	type: 'checkListItem',
@@ -87,6 +180,28 @@ const INIT: any = [
 					cells: ['Table Cell', 'Table Cell', 'Table Cell'],
 				},
 			],
+		},
+	},
+	{
+		type: 'codeBlock',
+		props: {
+			language: 'text',
+		},
+		content: [
+			{
+				type: 'text',
+				text: '<div>程式碼區塊 CodeBlock</div>',
+				styles: {},
+			},
+		],
+	},
+	{
+		type: 'mediaLibrary',
+		props: {
+			widthValue: 30,
+			widthUnit: '%',
+			align: 'center',
+			url: 'http://test.local/wp-content/uploads/2025/05/了解.jpg',
 		},
 	},
 
