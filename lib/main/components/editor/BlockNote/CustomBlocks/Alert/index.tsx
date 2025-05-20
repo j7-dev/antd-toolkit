@@ -151,7 +151,11 @@ export const Alert = createReactBlockSpec(
 			const blockKey = element.getAttribute('data-block-key')
 			if ('alert' !== blockKey) return
 
-			const type = element.getAttribute('data-alert-type')
+			const type = (element.getAttribute('data-alert-type') || 'warning') as
+				| 'warning'
+				| 'error'
+				| 'info'
+				| 'success'
 
 			return {
 				type: type || 'warning',
