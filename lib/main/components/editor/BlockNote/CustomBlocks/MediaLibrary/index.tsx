@@ -37,6 +37,9 @@ const mediaLibraryBlockConfig: CustomBlockConfig = {
 		url: {
 			default: '',
 		},
+		link: {
+			default: '',
+		},
 	},
 	content: 'none',
 }
@@ -62,6 +65,7 @@ export const MediaLibrary = createReactBlockSpec(mediaLibraryBlockConfig, {
 			widthUnit: element.getAttribute('data-width-unit') || '%',
 			align: element.getAttribute('data-align') || 'start',
 			url: element.getAttribute('data-url') || '',
+			link: element.getAttribute('data-link') || '',
 		}
 	},
 	toExternalHTML: ({ block, editor, contentRef }) => {
@@ -72,6 +76,8 @@ export const MediaLibrary = createReactBlockSpec(mediaLibraryBlockConfig, {
 		const widthValue = block?.props?.widthValue
 		const widthUnit = block?.props?.widthUnit
 		const align = block?.props?.align || 'start'
+		const link = block?.props?.link || ''
+		console.log('⭐ block:', block)
 		return (
 			<div
 				data-block-key={type}
@@ -79,17 +85,29 @@ export const MediaLibrary = createReactBlockSpec(mediaLibraryBlockConfig, {
 				data-width-value={widthValue}
 				data-align={align}
 				data-width-unit={widthUnit}
+				data-link={link}
 				className="at-flex at-w-full"
 				style={{
 					justifyContent: align,
 				}}
 			>
-				<img
-					style={{
-						width: `${widthValue}${widthUnit}`,
-					}}
-					src={url}
-				/>
+				{link ? (
+					<a href={link} rel="noopener noreferrer" className="at-contents">
+						<img
+							style={{
+								width: `${widthValue}${widthUnit}`,
+							}}
+							src={url}
+						/>
+					</a>
+				) : (
+					<img
+						style={{
+							width: `${widthValue}${widthUnit}`,
+						}}
+						src={url}
+					/>
+				)}
 			</div>
 		)
 	},

@@ -1,9 +1,11 @@
-import { memo } from 'react'
-import { Button, Modal, Select, Space, InputNumber } from 'antd'
+import { memo, useEffect, useState } from 'react'
+import { Button, Modal, Select, Space, InputNumber, Input } from 'antd'
 import {
 	AlignLeftOutlined,
 	AlignCenterOutlined,
 	AlignRightOutlined,
+	DeleteOutlined,
+	LinkOutlined,
 } from '@ant-design/icons'
 import { ReactCustomBlockRenderProps } from '@blocknote/react'
 import {
@@ -22,41 +24,57 @@ export type TMediaLibraryButton = ReactCustomBlockRenderProps<
 >
 
 const MediaLibraryButton = () => {
+	const props = useProps()
+
+	// 封裝一個簡單的 editor 更新函數，包含 debounce
+	const update = debounce((key: string, value: any) => {
+		props.editor.updateBlock(props.block, {
+			type: 'mediaLibrary',
+			props: {
+				...currentBlockProps,
+				[key]: value,
+			} as any,
+		})
+	}, 500)
+
 	const { show, close, modalProps, ...mediaLibraryProps } =
 		useApiUrlMediaLibraryModal({
 			onConfirm: (items) => {
 				if (items.length) {
 					const item = items[0]
-					props.editor.updateBlock(props.block, {
-						type: 'mediaLibrary',
-						props: {
-							...currentBlockProps,
-							url: item.url,
-						} as any,
-					})
+					update('url', item.url)
 				}
 			},
 		})
 
-	const props = useProps()
 	const currentBlock = props.editor.getBlock(props.block)
 
 	const currentBlockWidth = `${currentBlock?.props?.widthValue}${currentBlock?.props?.widthUnit}`
 	const currentBlockProps = currentBlock?.props
 
+	useEffect(() => {
+		if (!currentBlockProps?.url) {
+			show()
+		}
+	}, [currentBlockProps?.url])
+
+	// 要顯示的副工具列
+	const [tool, setTool] = useState<string | null>(null)
+
 	return (
 		<>
 			<div className={'bn-file-block-content-wrapper at-w-full'}>
-				{!currentBlockProps?.url && (
+				{/* {!currentBlockProps?.url && (
 					<Button size="small" type="primary" onClick={show}>
 						開啟媒體庫
 					</Button>
-				)}
+				)} */}
 
 				{currentBlockProps?.url && (
 					<>
 						<div
-							className="at-flex at-items-center at-w-full"
+							className="at-flex at-items-center at-w-full at-cursor-pointer"
+							onClick={show}
 							style={{
 								justifyContent: currentBlockProps.align,
 							}}
@@ -68,71 +86,72 @@ const MediaLibraryButton = () => {
 							/>
 						</div>
 
-						<div className="at-flex at-items-center at-justify-center at-gap-x-2 at-py-1 at-px-2 at-bg-gray-100 at-rounded-md">
-							<Space.Compact>
-								<InputNumber
-									size="small"
-									defaultValue={currentBlockProps.widthValue}
-									onChange={debounce((value) => {
-										props.editor.updateBlock(props.block, {
-											type: 'mediaLibrary',
-											props: {
-												...currentBlockProps,
-												widthValue: value as any,
-											} as any,
-										})
-									}, 500)}
-								/>
-								<Select
-									size="small"
-									defaultValue={currentBlockProps.widthUnit}
-									onChange={debounce((value) => {
-										props.editor.updateBlock(props.block, {
-											type: 'mediaLibrary',
-											props: {
-												...currentBlockProps,
-												widthUnit: value as any,
-											} as any,
-										})
-									}, 500)}
-									className="at-w-16"
-									options={['px', '%'].map((unit) => ({
-										label: unit,
-										value: unit,
-									}))}
-								/>
-							</Space.Compact>
-
-							<Space.Compact>
-								{Object.entries({
-									start: <AlignLeftOutlined />,
-									center: <AlignCenterOutlined />,
-									end: <AlignRightOutlined />,
-								}).map(([key, icon]) => (
-									<Button
-										key={key}
-										type={
-											currentBlockProps.align === key ? 'primary' : 'default'
-										}
+						<div className="at-py-1 at-px-2 at-bg-gray-100 at-rounded-md">
+							<div className="at-flex at-items-center at-justify-center at-gap-x-2">
+								<Space.Compact>
+									<InputNumber
 										size="small"
-										icon={icon}
-										onClick={debounce(() => {
-											props.editor.updateBlock(props.block, {
-												type: 'mediaLibrary',
-												props: {
-													...currentBlockProps,
-													align: key as any,
-												} as any,
-											})
-										}, 500)}
+										defaultValue={currentBlockProps.widthValue}
+										onChange={(value) => update('widthValue', value)}
 									/>
-								))}
-							</Space.Compact>
+									<Select
+										size="small"
+										defaultValue={currentBlockProps.widthUnit}
+										onChange={(value) => update('widthUnit', value)}
+										className="at-w-16"
+										options={['px', '%'].map((unit) => ({
+											label: unit,
+											value: unit,
+										}))}
+									/>
+								</Space.Compact>
+
+								<Space.Compact>
+									{Object.entries({
+										start: <AlignLeftOutlined />,
+										center: <AlignCenterOutlined />,
+										end: <AlignRightOutlined />,
+									}).map(([key, icon]) => (
+										<Button
+											key={key}
+											type={
+												currentBlockProps.align === key ? 'primary' : 'default'
+											}
+											size="small"
+											icon={icon}
+											onClick={() => update('align', key)}
+										/>
+									))}
+									<Button
+										size="small"
+										icon={<TbSwitchHorizontal />}
+										onClick={show}
+									/>
+									<Button
+										size="small"
+										icon={<LinkOutlined />}
+										onClick={() => setTool('link')}
+									/>
+									<Button danger size="small" icon={<DeleteOutlined />} />
+								</Space.Compact>
+							</div>
+							{tool && (
+								<div className="at-mt-1">
+									<div className={tool === 'link' ? 'at-block' : 'at-hidden'}>
+										<Input
+											placeholder="請輸入連結"
+											size="small"
+											onChange={(e) => update('link', e.target.value)}
+											allowClear
+										/>
+									</div>
+								</div>
+							)}
 						</div>
 					</>
 				)}
 
-				<Modal centered {...modalProps}>
+				<Modal {...modalProps}>
 					<div className="at-max-h-[75vh] at-overflow-x-hidden at-overflow-y-auto at-pr-4">
 						<MediaLibrary {...mediaLibraryProps} />
 					</div>

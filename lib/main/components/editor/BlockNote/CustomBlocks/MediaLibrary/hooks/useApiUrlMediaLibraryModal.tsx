@@ -30,6 +30,7 @@ export const useApiUrlMediaLibraryModal = ({
 	}
 
 	const formattedModalProps = {
+		centered: true,
 		footer: (
 			<>
 				<Button type="primary" onClick={handleConfirm}>
