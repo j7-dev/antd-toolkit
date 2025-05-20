@@ -15,10 +15,48 @@ export const isIphone = /iPhone/.test(navigator.userAgent)
 /**
  * 渲染 HTML 字串
  */
-export const renderHTML = (HTMLstring: string) =>
-	React.createElement('div', {
+export const renderHTML = (HTMLstring: string, allowJS: boolean = false) => {
+	if (allowJS) {
+		// 當 HTMLstring 裡面包含 script 標籤時 就執行裡面的 js代碼
+		setTimeout(() => {
+			const parser = new DOMParser()
+			const doc = parser.parseFromString(HTMLstring, 'text/html')
+			const scripts = doc.querySelectorAll('script')
+
+			scripts.forEach((script) => {
+				try {
+					// 創建一個新的 script 元素
+					const newScript = document.createElement('script')
+					// 如果有 src 屬性，則複製
+					if (script.src) {
+						newScript.src = script.src
+					}
+					// 複製其他屬性
+					Array.from(script.attributes).forEach((attr) => {
+						if (attr.name !== 'src') {
+							newScript.setAttribute(attr.name, attr.value)
+						}
+					})
+					// 複製腳本內容
+					newScript.textContent = script.textContent
+					// 將新建的腳本添加到文檔中執行
+					document.head.appendChild(newScript)
+
+					// 執行後移除腳本，保持文檔整潔
+					setTimeout(() => {
+						document.head.removeChild(newScript)
+					}, 0)
+				} catch (error) {
+					console.error('執行腳本時發生錯誤:', error)
+				}
+			})
+		}, 0)
+	}
+
+	return React.createElement('div', {
 		dangerouslySetInnerHTML: { __html: HTMLstring },
 	})
+}
 
 /**
  * 取得可複製的 JSON 字串
