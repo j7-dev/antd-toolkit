@@ -2,8 +2,6 @@ import {
 	DefaultStyleSchema,
 	DefaultInlineContentSchema,
 	BlockNoteEditorOptions,
-	BlockNoteEditor,
-	BlockSchemaFromSpecs,
 } from '@blocknote/core'
 import { DefaultReactSuggestionItem } from '@blocknote/react'
 import { schema } from '../useBlockNote'
@@ -14,7 +12,6 @@ export type TApiConfig = {
 }
 
 export type TUseBlockNoteParams = {
-	editor?: BlockNoteEditor<BlockSchemaFromSpecs<any>>
 	options?: BlockNoteEditorOptions<
 		typeof schema.blockSchema,
 		DefaultInlineContentSchema,

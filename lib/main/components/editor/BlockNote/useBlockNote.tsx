@@ -50,10 +50,11 @@ export const schema = BlockNoteSchema.create({
 		customHTML: CustomHTML,
 		bunnyVideo: BunnyVideo,
 		bunnyAudio: BunnyAudio,
-		numberedListItem: undefined as any,
-		checkListItem: undefined as any,
-		video: undefined as any,
-		audio: undefined as any,
+		// numberedListItem: undefined as any, // undefined = 禁用選單
+		checkListItem: undefined as any, // undefined = 禁用選單
+		file: undefined as any, // undefined = 禁用選單
+		video: undefined as any, // undefined = 禁用選單
+		audio: undefined as any, // undefined = 禁用選單
 		mediaLibrary: MediaLibrary,
 	},
 })
@@ -81,13 +82,12 @@ const CUSTOM_MENU_ORDER = [
 ]
 
 export const useBlockNote = ({
-	editor: overrideEditor,
-	options,
+	options = undefined,
 	deps = [],
 	apiConfig,
 }: TUseBlockNoteParams) => {
 	/** @see https://www.blocknotejs.org/docs/editor-basics/setup */
-	const defaultEditor = useCreateBlockNote(
+	const editor = useCreateBlockNote(
 		{
 			schema,
 			uploadFile: uploadWP(apiConfig),
@@ -95,8 +95,6 @@ export const useBlockNote = ({
 		},
 		deps,
 	)
-
-	const editor = overrideEditor ? overrideEditor : defaultEditor
 
 	const [blocks, setBlocks] = useState<Block[]>([])
 	const [html, setHTML] = useState<string>('')
@@ -227,7 +225,7 @@ export const useBlockNote = ({
 								editor,
 							) as (DefaultReactSuggestionItem & { key: string })[]
 						).filter(
-							({ key }) => !HIDDEN_MENU_ITEMS.includes(key), // 隱藏 Emoji
+							({ key }) => !HIDDEN_MENU_ITEMS.includes(key), // 隱藏指定選單
 						)
 
 						const customMenuItems = [

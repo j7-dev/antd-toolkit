@@ -36,64 +36,59 @@ const INIT: any = [
 	// },
 	{
 		type: 'paragraph',
-		content: 'Welcome to this demo!',
+		content: '一般文字',
 	},
 	{
 		type: 'alert',
 		content: 'Welcome to this demo!',
 	},
-
+	{
+		type: 'paragraph',
+		content: [
+			{
+				type: 'text',
+				text: 'Blocks:',
+				styles: { bold: true },
+			},
+		],
+	},
+	{
+		type: 'paragraph',
+		content: 'Paragraph',
+	},
+	{
+		type: 'heading',
+		content: 'Heading',
+	},
+	{
+		type: 'bulletListItem',
+		content: 'Bullet List Item',
+	},
+	{
+		type: 'numberedListItem',
+		content: 'Numbered List Item',
+	},
 	// {
-	//   type: 'paragraph',
+	// 	type: 'checkListItem',
+	// 	content: 'Check List Item',
 	// },
-	// {
-	//   type: 'paragraph',
-	//   content: [
-	//     {
-	//       type: 'text',
-	//       text: 'Blocks:',
-	//       styles: { bold: true },
-	//     },
-	//   ],
-	// },
-	// {
-	//   type: 'paragraph',
-	//   content: 'Paragraph',
-	// },
-	// {
-	//   type: 'heading',
-	//   content: 'Heading',
-	// },
-	// {
-	//   type: 'bulletListItem',
-	//   content: 'Bullet List Item',
-	// },
-	// {
-	//   type: 'numberedListItem',
-	//   content: 'Numbered List Item',
-	// },
-
-	// {
-	//   type: 'checkListItem',
-	//   content: 'Check List Item',
-	// },
-	// {
-	//   type: 'table',
-	//   content: {
-	//     type: 'tableContent',
-	//     rows: [
-	//       {
-	//         cells: ['Table Cell', 'Table Cell', 'Table Cell'],
-	//       },
-	//       {
-	//         cells: ['Table Cell', 'Table Cell', 'Table Cell'],
-	//       },
-	//       {
-	//         cells: ['Table Cell', 'Table Cell', 'Table Cell'],
-	//       },
-	//     ],
-	//   },
-	// },
+	{
+		type: 'table',
+		content: {
+			type: 'tableContent',
+			rows: [
+				{
+					cells: ['Table Cell', 'Table Cell', 'Table Cell'],
+				},
+				{
+					cells: ['Table Cell', 'Table Cell', 'Table Cell'],
+				},
+				{
+					cells: ['Table Cell', 'Table Cell', 'Table Cell'],
+				},
+			],
+		},
+	},
 
 	// {
 	//   type: 'file',
@@ -219,7 +214,7 @@ const BlockNoteWithHooks = () => {
 
 				<hr className="at-bg-gray-200 at-w-full at-h-[1px] at-mb-6" />
 				<p>數據結構</p>
-				<pre className="at-my-4 at-prismjs at-bg-gray-100 at-p-4 at-rounded-md">
+				<pre className="at-my-4 at-prismjs at-bg-gray-100 at-p-4 at-rounded-md at-h-[20rem] at-overflow-y-auto">
 					{JSON.stringify(blocks, null, 2)}
 				</pre>
 				<p>serialize HTML</p>
@@ -236,9 +231,9 @@ const BlockNoteWithHooks = () => {
 				<p>unserialize 上方的HTML</p>
 				<BlockNote {...blockNoteViewProps2} />
 
-				<pre className="at-my-4 at-prismjs at-bg-gray-100 at-p-4 at-rounded-md">
+				{/* <pre className="at-my-4 at-prismjs at-bg-gray-100 at-p-4 at-rounded-md">
 					{JSON.stringify(blocks2, null, 2)}
-				</pre>
+				</pre> */}
 			</div>
 		</>
 	)
