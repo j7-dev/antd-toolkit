@@ -207,6 +207,42 @@ export function getFileExtension(url: string) {
 }
 
 /**
+ * 判斷是否為圖片檔案
+ */
+export function isImageFile(url: string) {
+	const imageExtensions = [
+		'jpg',
+		'jpeg',
+		'png',
+		'gif',
+		'webp',
+	]
+	return imageExtensions.includes(getFileExtension(url))
+}
+
+/**
+ * 判斷是否為音訊檔案
+ */
+export function isAudioFile(url: string) {
+	const audioExtensions = [
+		'mp3',
+		'wav',
+		'm4a',
+		'aac',
+		'flac',
+	]
+	return audioExtensions.includes(getFileExtension(url))
+}
+
+/**
+ * 判斷是否為影片檔案
+ */
+export function isVideoFile(url: string) {
+	const videoExtensions = ['mp4', 'webm']
+	return videoExtensions.includes(getFileExtension(url))
+}
+
+/**
  * 簡單解密
  */
 export function simpleDecrypt(str: string): any {
