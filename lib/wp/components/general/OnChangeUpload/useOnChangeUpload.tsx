@@ -97,7 +97,7 @@ export const useOnChangeUpload = (props?: {
 
 	const mergedUploadProps: UploadProps = {
 		name: 'files',
-		accept: 'image/*',
+		// accept: 'image/*',
 		action: `${apiUrl}/upload`,
 		headers: {
 			// 'Content-Type': 'multipart/form-data', // 不需要手動設置 multipart/form-data 不然會得到 "Missing boundary in multipart/form-data POST data" 錯誤

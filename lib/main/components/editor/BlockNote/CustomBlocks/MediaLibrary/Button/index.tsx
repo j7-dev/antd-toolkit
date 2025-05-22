@@ -73,16 +73,17 @@ const MediaLibraryButton = () => {
 			onConfirm: (items) => {
 				if (items?.length) {
 					const item = items?.[0]
+					const fileType = getFileType(item?.url)
 					props.editor.updateBlock(props?.block, {
 						type: 'mediaLibrary',
 						props: {
 							...currentBlockProps,
 							url: item?.url,
 							title: item?.title,
-							widthValue: item?.width,
-							widthUnit: 'px',
+							widthValue: 'image' === fileType ? item?.width : 100,
+							widthUnit: 'image' === fileType ? 'px' : '%',
 							alt: item?._wp_attachment_image_alt || item?.title,
-							fileType: getFileType(item?.url),
+							fileType,
 						} as any,
 					})
 
@@ -122,7 +123,7 @@ const MediaLibraryButton = () => {
 				</div>
 				<div className="at-py-1 at-px-2 at-bg-gray-100 at-rounded-md" key={key}>
 					<div className="at-flex at-items-center at-justify-center at-gap-x-2">
-						{'image' === fileType && (
+						{'other' !== fileType && (
 							<Space.Compact>
 								<InputNumber
 									size="small"

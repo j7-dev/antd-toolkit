@@ -3,6 +3,8 @@ import { Typography, message } from 'antd'
 import { uniqBy } from 'lodash-es'
 import { TAttachment } from '@/wp/components/general/MediaLibrary/types'
 import { useProps } from '@/wp/components/general/MediaLibrary/hooks'
+import { isImageFile, getFileExtension } from '@/main/utils'
+import { ExtIcon } from '@/main/components'
 
 const { Text } = Typography
 
@@ -85,18 +87,39 @@ const Item = ({
 		}
 	}
 
+	const isImage = isImageFile(item?.url)
+	const ext = getFileExtension(item?.url)
+
 	return (
 		<div className="at-w-full xl:at-w-36 at-relative">
-			<img
-				onClick={handleClick}
-				className={`at-rounded-md at-w-full at-object-contain at-cursor-pointer at-aspect-square ${
-					isSelected
-						? 'at-outline at-outline-4 at-outline-yellow-300 at-outline-offset-1'
-						: ''
-				}`}
-				// @ts-ignore
-				src={item?.img_url}
-			/>
+			{isImage && (
+				<img
+					onClick={handleClick}
+					className={`at-rounded-md at-w-full at-object-contain at-cursor-pointer at-aspect-square ${
+						isSelected
+							? 'at-outline at-outline-4 at-outline-yellow-300 at-outline-offset-1'
+							: ''
+					}`}
+					// @ts-ignore
+					src={item?.img_url}
+				/>
+			)}
+			{!isImage && (
+				<div
+					onClick={handleClick}
+					className={`at-cursor-pointer ${
+						isSelected
+							? 'at-outline at-outline-4 at-outline-yellow-300 at-outline-offset-1'
+							: ''
+					}`}
+				>
+					<ExtIcon
+						ext={ext}
+						className={`at-rounded-md at-w-full at-object-contain at-aspect-square`}
+					/>
+				</div>
+			)}
+
 			<Text className="at-text-xs at-text-gray-800" ellipsis>
 				{/* @ts-ignore */}
 				{item?.title}

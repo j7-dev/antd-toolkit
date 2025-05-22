@@ -5,6 +5,7 @@ import {
 	InlineContentSchema,
 	StyleSchema,
 } from '@blocknote/core'
+import { getFileExtension } from '@/main/utils'
 
 export const Video: FC<
 	ReactCustomBlockRenderProps<
@@ -13,48 +14,26 @@ export const Video: FC<
 		StyleSchema
 	>
 > = ({ block, editor, contentRef }) => {
-	const url = block?.props?.url
-	const widthValue = block?.props?.widthValue
-	const widthUnit = block?.props?.widthUnit
-	const link = block?.props?.link || ''
-	const target = block?.props?.target || '_self'
-	const alt = block?.props?.alt || ''
+	const url = block?.props?.url || ''
+	const ext = getFileExtension(url)
+	const widthValue = block?.props?.widthValue || 100
+	const widthUnit = block?.props?.widthUnit || '%'
 	const title = block?.props?.title || ''
-	const caption = block?.props?.caption || ''
 
 	return (
 		<>
-			{!!link && (
-				<a
-					href={link}
-					target={target}
-					rel="noopener noreferrer"
-					className="at-contents"
-				>
-					<img
-						alt={alt}
-						title={title}
-						style={{
-							width: `${widthValue}${widthUnit}`,
-						}}
-						src={url}
-					/>
-				</a>
+			{!!title && (
+				<p className="at-text-sm at-text-gray-400 !at-mb-2">{title}</p>
 			)}
-			{!link && (
-				<img
-					alt={alt}
-					title={title}
-					style={{
-						width: `${widthValue}${widthUnit}`,
-					}}
-					src={url}
-				/>
-			)}
-
-			{caption && (
-				<div className="at-mt-1 at-text-xs at-text-gray-400">▲ {caption}</div>
-			)}
+			<video
+				controls
+				preload="metadata"
+				style={{ width: `${widthValue}${widthUnit}`, maxWidth: '100%' }}
+				playsInline
+			>
+				<source src={url} type={`video/${ext}`} />
+				您的瀏覽器不支援影片播放。
+			</video>
 		</>
 	)
 }

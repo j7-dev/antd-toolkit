@@ -82,7 +82,9 @@ const ItemInfo = ({ item }: { item: TAttachment }) => {
 											}
 										</div>
 									</th>
-									<td>{displayValue(key, value, i)}</td>
+									<td className="at-break-all">
+										{displayValue(key, value, i)}
+									</td>
 								</tr>
 							)
 						})}
