@@ -4,6 +4,7 @@ import { schema } from '../../useBlockNote'
 import Button from './Button'
 import { FaPhotoVideo } from 'react-icons/fa'
 import { PropsContext } from './hooks'
+import Render from './Render'
 
 export const mediaLibraryMenuItem = (
 	editor: typeof schema.BlockNoteEditor,
@@ -53,6 +54,10 @@ const mediaLibraryBlockConfig: CustomBlockConfig = {
 		caption: {
 			default: '',
 		},
+		fileType: {
+			values: ['image', 'audio', 'video', 'other'],
+			default: 'image',
+		},
 	},
 	content: 'none',
 }
@@ -68,6 +73,7 @@ export const MediaLibrary = createReactBlockSpec(mediaLibraryBlockConfig, {
 	},
 
 	// ❗parse 是例如，將剪貼簿複製到編輯器時，要怎麼解析 HTML 轉換為 BLOCK
+	// @ts-ignore
 	parse: (element: HTMLElement) => {
 		// 取得節點上的 data-block-key
 		const blockKey = element.getAttribute('data-block-key')
@@ -83,69 +89,11 @@ export const MediaLibrary = createReactBlockSpec(mediaLibraryBlockConfig, {
 			alt: element.getAttribute('data-alt') || '',
 			title: element.getAttribute('data-title') || '',
 			caption: element.getAttribute('data-caption') || '',
+			fileType: element.getAttribute('data-file-type') || 'image',
 		}
 	},
-	toExternalHTML: ({ block, editor, contentRef }) => {
-		const url = block?.props?.url
-		if (!url) return null
-
-		const type = block?.type
-		const widthValue = block?.props?.widthValue
-		const widthUnit = block?.props?.widthUnit
-		const align = block?.props?.align || 'start'
-		const link = block?.props?.link || ''
-		const target = block?.props?.target || '_self'
-		const alt = block?.props?.alt || ''
-		const title = block?.props?.title || ''
-		const caption = block?.props?.caption || ''
-		return (
-			<div
-				data-block-key={type}
-				data-url={url}
-				data-width-value={widthValue}
-				data-align={align}
-				data-width-unit={widthUnit}
-				data-link={link}
-				data-target={target}
-				data-alt={alt}
-				data-title={title}
-				data-caption={caption}
-				className="at-flex at-w-full at-flex-col at-justify-center"
-				style={{
-					alignItems: align,
-				}}
-			>
-				{link ? (
-					<a
-						href={link}
-						target={target}
-						rel="noopener noreferrer"
-						className="at-contents"
-					>
-						<img
-							alt={alt}
-							title={title}
-							style={{
-								width: `${widthValue}${widthUnit}`,
-							}}
-							src={url}
-						/>
-					</a>
-				) : (
-					<img
-						alt={alt}
-						title={title}
-						style={{
-							width: `${widthValue}${widthUnit}`,
-						}}
-						src={url}
-					/>
-				)}
-
-				{caption && (
-					<div className="at-mt-1 at-text-xs at-text-gray-400">▲ {caption}</div>
-				)}
-			</div>
-		)
-	},
+	toExternalHTML: ({ block, editor, contentRef }) => (
+		// @ts-ignore
+		<Render block={block} editor={editor} contentRef={contentRef} />
+	),
 })

@@ -201,7 +201,18 @@ const INIT: any = [
 			widthValue: 30,
 			widthUnit: '%',
 			align: 'center',
+			title: '了解',
 			url: 'http://test.local/wp-content/uploads/2025/05/了解.jpg',
+			fileType: 'image',
+		},
+	},
+
+	{
+		type: 'mediaLibrary',
+		props: {
+			title: 'sample-2-sample-2-2.csv',
+			url: 'http://test.local/wp-content/uploads/2025/02/sample-2-sample-2-2.csv',
+			fileType: 'other',
 		},
 	},
 

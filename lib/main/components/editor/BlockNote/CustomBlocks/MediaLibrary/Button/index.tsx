@@ -27,12 +27,27 @@ import { useApiUrlMediaLibraryModal, useProps } from '../hooks'
 import Alt from './Alt'
 import { MediaLibrary } from '@/wp'
 import { TbSwitchHorizontal } from 'react-icons/tb'
-import { cn } from '@/main/utils'
+import { cn, isImageFile, isAudioFile, isVideoFile } from '@/main/utils'
+import Render from '../Render'
+
 export type TMediaLibraryButton = ReactCustomBlockRenderProps<
 	CustomBlockConfig,
 	DefaultInlineContentSchema,
 	DefaultStyleSchema
 >
+
+function getFileType(url: string) {
+	if (isImageFile(url)) {
+		return 'image'
+	}
+	if (isAudioFile(url)) {
+		return 'audio'
+	}
+	if (isVideoFile(url)) {
+		return 'video'
+	}
+	return 'other'
+}
 
 const MediaLibraryButton = () => {
 	const props = useProps()
@@ -56,17 +71,18 @@ const MediaLibraryButton = () => {
 	const { show, close, modalProps, ...mediaLibraryProps } =
 		useApiUrlMediaLibraryModal({
 			onConfirm: (items) => {
-				if (items.length) {
-					const item = items[0]
-					props.editor.updateBlock(props.block, {
+				if (items?.length) {
+					const item = items?.[0]
+					props.editor.updateBlock(props?.block, {
 						type: 'mediaLibrary',
 						props: {
 							...currentBlockProps,
-							url: item.url,
-							title: item.title,
-							widthValue: item.width,
+							url: item?.url,
+							title: item?.title,
+							widthValue: item?.width,
 							widthUnit: 'px',
-							alt: item._wp_attachment_image_alt,
+							alt: item?._wp_attachment_image_alt || item?.title,
+							fileType: getFileType(item?.url),
 						} as any,
 					})
 
@@ -77,7 +93,6 @@ const MediaLibraryButton = () => {
 
 	const currentBlock = props.editor.getBlock(props.block)
 
-	const currentBlockWidth = `${currentBlock?.props?.widthValue}${currentBlock?.props?.widthUnit}`
 	const currentBlockProps = currentBlock?.props
 
 	useEffect(() => {
@@ -90,42 +105,42 @@ const MediaLibraryButton = () => {
 		return null
 	}
 
+	const fileType = getFileType(currentBlockProps.url)
+
 	return (
 		<>
 			<div className="at-w-full">
 				<div
-					className="at-flex at-items-center at-w-full at-cursor-pointer"
+					className="[&_*]:at-pointer-events-none at-cursor-pointer"
 					onClick={show}
-					style={{
-						justifyContent: currentBlockProps.align,
-					}}
 				>
-					<img
-						className="at-max-w-full"
-						style={{ width: currentBlockWidth }}
-						src={currentBlockProps.url}
+					<Render
+						block={props.block}
+						editor={props.editor}
+						contentRef={props.contentRef}
 					/>
 				</div>
-
 				<div className="at-py-1 at-px-2 at-bg-gray-100 at-rounded-md" key={key}>
 					<div className="at-flex at-items-center at-justify-center at-gap-x-2">
-						<Space.Compact>
-							<InputNumber
-								size="small"
-								defaultValue={currentBlockProps.widthValue}
-								onChange={(value) => update('widthValue', value)}
-							/>
-							<Select
-								size="small"
-								defaultValue={currentBlockProps.widthUnit}
-								onChange={(value) => update('widthUnit', value)}
-								className="at-w-16"
-								options={['px', '%'].map((unit) => ({
-									label: unit,
-									value: unit,
-								}))}
-							/>
-						</Space.Compact>
+						{'image' === fileType && (
+							<Space.Compact>
+								<InputNumber
+									size="small"
+									defaultValue={currentBlockProps.widthValue}
+									onChange={(value) => update('widthValue', value)}
+								/>
+								<Select
+									size="small"
+									defaultValue={currentBlockProps.widthUnit}
+									onChange={(value) => update('widthUnit', value)}
+									className="at-w-16"
+									options={['px', '%'].map((unit) => ({
+										label: unit,
+										value: unit,
+									}))}
+								/>
+							</Space.Compact>
+						)}
 
 						<Space.Compact>
 							{Object.entries({
@@ -142,15 +157,20 @@ const MediaLibraryButton = () => {
 								/>
 							))}
 
-							<Tooltip title="設定圖片連結">
-								<Button
-									type={tool === 'link' ? 'primary' : 'default'}
-									size="small"
-									icon={<LinkOutlined />}
-									onClick={() => setTool(tool === 'link' ? null : 'link')}
-								/>
-							</Tooltip>
-							<Tooltip title="設定圖片 alt 文字">
+							{'image' === fileType && (
+								<Tooltip title="設定圖片連結">
+									<Button
+										type={tool === 'link' ? 'primary' : 'default'}
+										size="small"
+										icon={<LinkOutlined />}
+										onClick={() => setTool(tool === 'link' ? null : 'link')}
+									/>
+								</Tooltip>
+							)}
+
+							<Tooltip
+								title={'image' === fileType ? '設定 alt 文字' : '設定文字'}
+							>
 								<Button
 									type={tool === 'alt' ? 'primary' : 'default'}
 									size="small"
@@ -159,7 +179,7 @@ const MediaLibraryButton = () => {
 								/>
 							</Tooltip>
 
-							<Tooltip title="換另一張圖片">
+							<Tooltip title="換一個">
 								<Button
 									size="small"
 									icon={<TbSwitchHorizontal />}
@@ -210,13 +230,15 @@ const MediaLibraryButton = () => {
 								'alt' === tool ? 'at-block' : 'at-hidden',
 							)}
 						>
-							<Input
-								defaultValue={currentBlockProps.alt}
-								placeholder="請輸入圖片 alt 替代文字"
-								size="small"
-								onChange={(e) => update('alt', e.target.value)}
-								allowClear
-							/>
+							{'image' === fileType && (
+								<Input
+									defaultValue={currentBlockProps.alt}
+									placeholder="請輸入圖片 alt 替代文字"
+									size="small"
+									onChange={(e) => update('alt', e.target.value)}
+									allowClear
+								/>
+							)}
 							<Input
 								defaultValue={currentBlockProps.title}
 								placeholder="請輸入圖片 title 文字"
@@ -224,13 +246,15 @@ const MediaLibraryButton = () => {
 								onChange={(e) => update('title', e.target.value)}
 								allowClear
 							/>
-							<Input
-								defaultValue={currentBlockProps.caption}
-								placeholder="請輸入圖片 caption 文字"
-								size="small"
-								onChange={(e) => update('caption', e.target.value)}
-								allowClear
-							/>
+							{'image' === fileType && (
+								<Input
+									defaultValue={currentBlockProps.caption}
+									placeholder="請輸入圖片 caption 文字"
+									size="small"
+									onChange={(e) => update('caption', e.target.value)}
+									allowClear
+								/>
+							)}
 						</div>
 					</div>
 				</div>
