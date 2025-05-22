@@ -109,13 +109,13 @@ export const useBlockNote = ({
 		onChange: async (theEditor) => {
 			try {
 				// Saves the document JSON to state.
-				setBlocks(theEditor.document as Block[])
+				setBlocks(theEditor?.document as Block[])
 
 				// 如果沒有內容就 setHTML 為空字串
-				if (theEditor.document.length === 1) {
+				if (theEditor?.document?.length === 1) {
 					if (
-						'paragraph' === theEditor.document[0]?.type &&
-						!(theEditor.document[0]?.content as Array<any>)?.length
+						'paragraph' === theEditor?.document[0]?.type &&
+						!(theEditor?.document[0]?.content as Array<any>)?.length
 					) {
 						console.error('⭐ 沒有內容')
 						setHTML('')

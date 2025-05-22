@@ -102,163 +102,169 @@ const MediaLibraryButton = () => {
 		}
 	}, [currentBlockProps?.url])
 
-	if (!currentBlockProps?.url) {
-		return null
-	}
-
-	const fileType = getFileType(currentBlockProps.url)
+	const fileType = getFileType(currentBlockProps?.url || '')
 
 	return (
 		<>
 			<div className="at-w-full">
-				<div
-					className="[&_*]:at-pointer-events-none at-cursor-pointer"
-					onClick={show}
-				>
-					<Render
-						block={props.block}
-						editor={props.editor}
-						contentRef={props.contentRef}
-					/>
-				</div>
-				<div className="at-py-1 at-px-2 at-bg-gray-100 at-rounded-md" key={key}>
-					<div className="at-flex at-items-center at-justify-center at-gap-x-2">
-						{'other' !== fileType && (
-							<Space.Compact>
-								<InputNumber
-									size="small"
-									defaultValue={currentBlockProps.widthValue}
-									onChange={(value) => update('widthValue', value)}
-								/>
-								<Select
-									size="small"
-									defaultValue={currentBlockProps.widthUnit}
-									onChange={(value) => update('widthUnit', value)}
-									className="at-w-16"
-									options={['px', '%'].map((unit) => ({
-										label: unit,
-										value: unit,
-									}))}
-								/>
-							</Space.Compact>
-						)}
+				{currentBlockProps?.url && (
+					<>
+						<div
+							className="[&_*]:at-pointer-events-none at-cursor-pointer"
+							onClick={show}
+						>
+							<Render
+								block={props.block}
+								editor={props.editor}
+								contentRef={props.contentRef}
+							/>
+						</div>
+						<div
+							className="at-py-1 at-px-2 at-bg-gray-100 at-rounded-md"
+							key={key}
+						>
+							<div className="at-flex at-items-center at-justify-center at-gap-x-2">
+								{'other' !== fileType && (
+									<Space.Compact>
+										<InputNumber
+											size="small"
+											defaultValue={currentBlockProps.widthValue}
+											onChange={(value) => update('widthValue', value)}
+										/>
+										<Select
+											size="small"
+											defaultValue={currentBlockProps.widthUnit}
+											onChange={(value) => update('widthUnit', value)}
+											className="at-w-16"
+											options={['px', '%'].map((unit) => ({
+												label: unit,
+												value: unit,
+											}))}
+										/>
+									</Space.Compact>
+								)}
 
-						<Space.Compact>
-							{Object.entries({
-								start: <AlignLeftOutlined />,
-								center: <AlignCenterOutlined />,
-								end: <AlignRightOutlined />,
-							}).map(([key, icon]) => (
-								<Button
-									key={key}
-									type={currentBlockProps.align === key ? 'primary' : 'default'}
-									size="small"
-									icon={icon}
-									onClick={() => update('align', key)}
-								/>
-							))}
+								<Space.Compact>
+									{Object.entries({
+										start: <AlignLeftOutlined />,
+										center: <AlignCenterOutlined />,
+										end: <AlignRightOutlined />,
+									}).map(([key, icon]) => (
+										<Button
+											key={key}
+											type={
+												currentBlockProps.align === key ? 'primary' : 'default'
+											}
+											size="small"
+											icon={icon}
+											onClick={() => update('align', key)}
+										/>
+									))}
 
-							{'image' === fileType && (
-								<Tooltip title="設定圖片連結">
-									<Button
-										type={tool === 'link' ? 'primary' : 'default'}
+									{'image' === fileType && (
+										<Tooltip title="設定圖片連結">
+											<Button
+												type={tool === 'link' ? 'primary' : 'default'}
+												size="small"
+												icon={<LinkOutlined />}
+												onClick={() => setTool(tool === 'link' ? null : 'link')}
+											/>
+										</Tooltip>
+									)}
+
+									<Tooltip
+										title={'image' === fileType ? '設定 alt 文字' : '設定文字'}
+									>
+										<Button
+											type={tool === 'alt' ? 'primary' : 'default'}
+											size="small"
+											icon={<Alt color={tool === 'alt' ? '#fff' : '#444'} />}
+											onClick={() => setTool(tool === 'alt' ? null : 'alt')}
+										/>
+									</Tooltip>
+
+									<Tooltip title="換一個">
+										<Button
+											size="small"
+											icon={<TbSwitchHorizontal />}
+											onClick={show}
+										/>
+									</Tooltip>
+									<Tooltip title="刪除">
+										<Button
+											danger
+											type="primary"
+											size="small"
+											icon={<DeleteOutlined />}
+											onClick={() => {
+												props.editor.removeBlocks([props.block])
+											}}
+										/>
+									</Tooltip>
+								</Space.Compact>
+							</div>
+
+							<div className={cn('at-mt-1', tool ? 'at-block' : 'at-hidden')}>
+								<div
+									className={cn(
+										'at-flex at-items-center at-gap-x-2',
+										'link' === tool ? 'at-block' : 'at-hidden',
+									)}
+								>
+									<Input
+										defaultValue={currentBlockProps.link}
+										placeholder="請輸入包含 https:// 的連結，例如  https://www.google.com"
 										size="small"
-										icon={<LinkOutlined />}
-										onClick={() => setTool(tool === 'link' ? null : 'link')}
+										onChange={(e) => update('link', e.target.value)}
+										allowClear
 									/>
-								</Tooltip>
-							)}
-
-							<Tooltip
-								title={'image' === fileType ? '設定 alt 文字' : '設定文字'}
-							>
-								<Button
-									type={tool === 'alt' ? 'primary' : 'default'}
-									size="small"
-									icon={<Alt color={tool === 'alt' ? '#fff' : '#444'} />}
-									onClick={() => setTool(tool === 'alt' ? null : 'alt')}
-								/>
-							</Tooltip>
-
-							<Tooltip title="換一個">
-								<Button
-									size="small"
-									icon={<TbSwitchHorizontal />}
-									onClick={show}
-								/>
-							</Tooltip>
-							<Tooltip title="刪除">
-								<Button
-									danger
-									type="primary"
-									size="small"
-									icon={<DeleteOutlined />}
-									onClick={() => {
-										props.editor.removeBlocks([props.block])
-									}}
-								/>
-							</Tooltip>
-						</Space.Compact>
-					</div>
-
-					<div className={cn('at-mt-1', tool ? 'at-block' : 'at-hidden')}>
-						<div
-							className={cn(
-								'at-flex at-items-center at-gap-x-2',
-								'link' === tool ? 'at-block' : 'at-hidden',
-							)}
-						>
-							<Input
-								defaultValue={currentBlockProps.link}
-								placeholder="請輸入包含 https:// 的連結，例如  https://www.google.com"
-								size="small"
-								onChange={(e) => update('link', e.target.value)}
-								allowClear
-							/>
-							<Checkbox
-								defaultChecked={currentBlockProps.target === '_blank'}
-								onChange={(e) =>
-									update('target', e.target.checked ? '_blank' : '_self')
-								}
-								className="at-text-xs at-text-nowrap"
-							>
-								新視窗開啟
-							</Checkbox>
+									<Checkbox
+										defaultChecked={currentBlockProps.target === '_blank'}
+										onChange={(e) =>
+											update('target', e.target.checked ? '_blank' : '_self')
+										}
+										className="at-text-xs at-text-nowrap"
+									>
+										新視窗開啟
+									</Checkbox>
+								</div>
+								<div
+									className={cn(
+										'at-flex at-flex-col at-gap-1',
+										'alt' === tool ? 'at-block' : 'at-hidden',
+									)}
+								>
+									{'image' === fileType && (
+										<Input
+											defaultValue={currentBlockProps.alt}
+											placeholder="請輸入圖片 alt 替代文字"
+											size="small"
+											onChange={(e) => update('alt', e.target.value)}
+											allowClear
+										/>
+									)}
+									<Input
+										defaultValue={currentBlockProps.title}
+										placeholder="請輸入圖片 title 文字"
+										size="small"
+										onChange={(e) => update('title', e.target.value)}
+										allowClear
+									/>
+									{'image' === fileType && (
+										<Input
+											defaultValue={currentBlockProps.caption}
+											placeholder="請輸入圖片 caption 文字"
+											size="small"
+											onChange={(e) => update('caption', e.target.value)}
+											allowClear
+										/>
+									)}
+								</div>
+							</div>
 						</div>
-						<div
-							className={cn(
-								'at-flex at-flex-col at-gap-1',
-								'alt' === tool ? 'at-block' : 'at-hidden',
-							)}
-						>
-							{'image' === fileType && (
-								<Input
-									defaultValue={currentBlockProps.alt}
-									placeholder="請輸入圖片 alt 替代文字"
-									size="small"
-									onChange={(e) => update('alt', e.target.value)}
-									allowClear
-								/>
-							)}
-							<Input
-								defaultValue={currentBlockProps.title}
-								placeholder="請輸入圖片 title 文字"
-								size="small"
-								onChange={(e) => update('title', e.target.value)}
-								allowClear
-							/>
-							{'image' === fileType && (
-								<Input
-									defaultValue={currentBlockProps.caption}
-									placeholder="請輸入圖片 caption 文字"
-									size="small"
-									onChange={(e) => update('caption', e.target.value)}
-									allowClear
-								/>
-							)}
-						</div>
-					</div>
-				</div>
+					</>
+				)}
+
 				<Modal {...modalProps}>
 					<div className="at-max-h-[75vh] at-overflow-x-hidden at-overflow-y-auto at-pr-4">
 						<MediaLibrary {...mediaLibraryProps} />
