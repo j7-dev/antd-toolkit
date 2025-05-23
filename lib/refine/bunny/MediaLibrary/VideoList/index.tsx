@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useState, useEffect } from 'react'
 import Filter from './Filter'
 import { useInfiniteList } from '@refinedev/core'
 import { Button, Empty, Result, Alert } from 'antd'
@@ -9,16 +9,13 @@ import VideoItem from './VideoItem'
 import { LoadingCard } from '@/main/components'
 import FileEncodeProgress from './FileEncodeProgress'
 import FileUploadProgress from './FileUploadProgress'
-import { useBunny, filesInQueueAtom, TMediaLibraryProps } from '@/refine'
+import { useBunny, filesInQueueAtom } from '@/refine'
+import { useProps } from '@/refine/bunny/MediaLibrary/hooks'
 
 const PAGE_SIZE = 50
 
-const VideoList: FC<TMediaLibraryProps> = ({
-	selectedVideos,
-	setSelectedVideos,
-	selectButtonProps,
-	limit,
-}) => {
+const VideoList: FC = () => {
+	const { selectedItems, setSelectedItems, initialIds } = useProps()
 	const { bunny_library_id, bunny_stream_api_key, bunny_cdn_hostname } =
 		useBunny()
 	const [search, setSearch] = useState('')
@@ -31,6 +28,7 @@ const VideoList: FC<TMediaLibraryProps> = ({
 		fetchNextPage,
 		isFetchingNextPage,
 		isFetching,
+		isSuccess,
 	} = useInfiniteList<TBunnyVideo>({
 		dataProviderName: 'bunny-stream',
 		resource: `${bunny_library_id}/videos`,
@@ -50,11 +48,21 @@ const VideoList: FC<TMediaLibraryProps> = ({
 		},
 	})
 
-	const allVideos = ([] as TBunnyVideo[]).concat(
+	const allItems = ([] as TBunnyVideo[]).concat(
 		...(data?.pages ?? []).map((page) => page?.data || []),
 	)
 
 	const isSearchFetching = isFetching && !isFetchingNextPage
+
+	useEffect(() => {
+		if (!allItems?.length) {
+			return
+		}
+
+		setSelectedItems(
+			allItems?.filter((item) => initialIds?.includes(item.guid)),
+		)
+	}, [isSuccess, allItems?.length])
 
 	if (isError) {
 		return (
@@ -75,12 +83,9 @@ const VideoList: FC<TMediaLibraryProps> = ({
 			/>
 
 			<Filter
-				selectedVideos={selectedVideos}
-				setSelectedVideos={setSelectedVideos}
 				setSearch={setSearch}
 				disabled={isFetching}
 				loading={isSearchFetching}
-				selectButtonProps={selectButtonProps}
 			/>
 			<div className="at-flex">
 				<div className="at-flex-1">
@@ -107,15 +112,12 @@ const VideoList: FC<TMediaLibraryProps> = ({
 						)}
 
 						{!isSearchFetching &&
-							allVideos.map((video, index) => (
+							allItems.map((item, index) => (
 								<VideoItem
-									key={video.guid}
-									video={video}
+									key={item.guid}
+									item={item}
 									index={index}
-									allVideos={allVideos}
-									selectedVideos={selectedVideos}
-									limit={limit}
-									setSelectedVideos={setSelectedVideos}
+									allItems={allItems}
 								/>
 							))}
 
@@ -130,7 +132,7 @@ const VideoList: FC<TMediaLibraryProps> = ({
 							))}
 					</div>
 
-					{!allVideos?.length && !isFetching && (
+					{!allItems?.length && !isFetching && (
 						<Empty className="at-my-24" description="找不到影片資料" />
 					)}
 
@@ -147,8 +149,8 @@ const VideoList: FC<TMediaLibraryProps> = ({
 					)}
 				</div>
 				<div className="at-w-[28rem]">
-					{selectedVideos?.length > 0 && (
-						<VideoInfo video={selectedVideos.slice(-1)[0]} />
+					{selectedItems?.length > 0 && (
+						<VideoInfo item={selectedItems.slice(-1)[0]} />
 					)}
 				</div>
 			</div>

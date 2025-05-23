@@ -1,43 +1,21 @@
 import { FC, memo, useRef, useEffect, useState } from 'react'
-import { Tabs, TabsProps, Upload, UploadProps } from 'antd'
+import { Tabs, TabsProps, Upload } from 'antd'
 import { FaPhotoVideo } from 'react-icons/fa'
 import { CloudUploadOutlined, SettingOutlined } from '@ant-design/icons'
 import VideoList from './VideoList'
 import { atom } from 'jotai'
-import { TFileInQueue, TMediaLibraryProps, useBunny } from '@/refine'
+import { TFileInQueue, useBunny } from '@/refine'
 import { Button } from 'antd'
 import Settings from './Settings'
 import { useMediaUpload } from '@/refine/bunny/MediaLibrary/hooks'
 import UploadVideo from './UploadVideo'
+import { TMediaLibraryProps } from '@/refine/bunny/MediaLibrary/types'
+import { MediaLibraryContext } from '@/refine/bunny/MediaLibrary/hooks'
 
-/**
- * 檔案上傳佇列中的檔案狀態
- * @interface TFileStatus
- * @property {string} key - 檔案唯一識別碼
- * @property {File} file - 檔案物件
- * @property {'active' | 'done' | 'error'} status - 檔案上傳狀態
- * @property {string} videoId - Bunny Stream 影片 ID
- * @property {boolean} isEncoding - 是否正在編碼中
- * @property {number} encodeProgress - 編碼進度 (0-100)
- * @property {number} uploadProgress - 上傳進度 (0-100)
- * @property {string} preview - 預覽圖片的 URL
- */
-export type TFileStatus = {
-	key: string
-	file: File
-	status: 'active' | 'done' | 'error'
-	videoId: string
-	isEncoding: boolean
-	encodeProgress: number
-	uploadProgress: number
-	preview: string
-}
+export * from '@/refine/bunny/MediaLibrary/types'
 
-const MediaLibraryComponent: FC<TMediaLibraryCompoundProps> = ({
-	mediaLibraryProps,
-	uploadProps,
-	tabsProps,
-}) => {
+const MediaLibraryComponent: FC<TMediaLibraryProps> = (props) => {
+	const { uploadProps, tabsProps } = props
 	const dropZoneRef = useRef<HTMLDivElement>(null)
 	const [isDragging, setIsDragging] = useState(false)
 
@@ -89,7 +67,7 @@ const MediaLibraryComponent: FC<TMediaLibraryCompoundProps> = ({
 		{
 			key: 'bunny-media-library',
 			label: 'Bunny 媒體庫',
-			children: <VideoList {...mediaLibraryProps} />,
+			children: <VideoList />,
 			icon: <FaPhotoVideo />,
 			disabled: disabledBunny,
 		},
@@ -102,46 +80,47 @@ const MediaLibraryComponent: FC<TMediaLibraryCompoundProps> = ({
 	]
 
 	return (
-		<div className="at-relative">
-			<div ref={dropZoneRef} className="at-relative">
-				<div
-					className={`at-absolute at-top-0 at-left-0 at-size-full ${isDragging ? 'at-opacity-100 at-z-50' : 'at-opacity-0 -at-z-50'}`}
-				>
-					<UploadVideo uploadProps={bunnyUploadProps} />
+		<MediaLibraryContext.Provider value={props}>
+			<div className="at-relative">
+				<div ref={dropZoneRef} className="at-relative">
+					<div
+						className={`at-absolute at-top-0 at-left-0 at-size-full ${isDragging ? 'at-opacity-100 at-z-50' : 'at-opacity-0 -at-z-50'}`}
+					>
+						<UploadVideo uploadProps={bunnyUploadProps} />
+					</div>
+					<Tabs
+						className={isDragging ? 'at-opacity-0' : 'at-opacity-100'}
+						tabBarExtraContent={
+							<Upload {...bunnyUploadProps}>
+								<Button disabled={disabledBunny} icon={<CloudUploadOutlined />}>
+									上傳影片
+								</Button>
+							</Upload>
+						}
+						defaultActiveKey={
+							disabledBunny ? 'bunny-settings' : 'bunny-media-library'
+						}
+						items={items}
+						type="card"
+						{...tabsProps}
+					/>
 				</div>
-				<Tabs
-					className={isDragging ? 'at-opacity-0' : 'at-opacity-100'}
-					tabBarExtraContent={
-						<Upload {...bunnyUploadProps}>
-							<Button disabled={disabledBunny} icon={<CloudUploadOutlined />}>
-								上傳影片
-							</Button>
-						</Upload>
-					}
-					defaultActiveKey={
-						disabledBunny ? 'bunny-settings' : 'bunny-media-library'
-					}
-					items={items}
-					type="card"
-					{...tabsProps}
-				/>
 			</div>
-		</div>
+		</MediaLibraryContext.Provider>
 	)
 }
 
 /**
- * MediaLibrary 元件的屬性介面
- * @interface TMediaLibraryCompoundProps
- * @property {TMediaLibraryProps} mediaLibraryProps - 媒體庫的基本屬性
+ * Bunny 媒體庫
+ * @interface TMediaLibraryProps
+ *
+ * @property {string[]} initialIds - 初始選擇的媒體項目 ID 陣列
+ * @property {TBunnyVideo[]} selectedItems - 已選擇的媒體項目陣列
+ * @property {React.Dispatch<React.SetStateAction<TBunnyVideo[]>> | typeof useSetAtom} setSelectedItems - 設置已選擇媒體項目的函數
+ * @property {number} [limit] - 可選擇的媒體項目數量上限
  * @property {UploadProps} [uploadProps] - 可選的上傳元件屬性
  * @property {TabsProps} [tabsProps] - 可選的標籤頁元件屬性
  */
-type TMediaLibraryCompoundProps = {
-	mediaLibraryProps: TMediaLibraryProps
-	uploadProps?: UploadProps
-	tabsProps?: TabsProps
-}
 export const MediaLibrary = memo(
 	MediaLibraryComponent,
 ) as typeof MediaLibraryComponent
@@ -151,89 +130,3 @@ export const MediaLibrary = memo(
  * 使用 jotai 管理上傳中的檔案狀態
  */
 export const filesInQueueAtom = atom<TFileInQueue[]>([])
-
-// 上傳中
-const FAKES = [
-	{
-		key: 'rc-upload-1723542720209-7',
-		file: {
-			lastModified: 1719828868246,
-			name: 'feature.mp4',
-			size: 119071062,
-			type: 'video/mp4',
-			uid: 'rc-upload-1723542720209-14',
-			webkitRelativePath: '',
-		},
-		status: 'active',
-		videoId: '9428d90f-8e12-4909-924c-b3fef42e8829',
-		isEncoding: false,
-		encodeProgress: 0,
-		uploadProgress: 0,
-		preview: 'blob:http://test.local/c6e97785-1d4c-491a-a7c1-ed49d50ce788',
-	},
-	{
-		key: 'rc-upload-1723542720209-8',
-		file: {
-			lastModified: 17198280868246,
-			name: 'feature.mp4',
-			size: 31907162,
-			type: 'video/mp4',
-			uid: 'rc-upload-1723542720209-14',
-			webkitRelativePath: '',
-		},
-		status: 'active',
-		videoId: '',
-		isEncoding: false,
-		encodeProgress: 0,
-		uploadProgress: 0,
-		preview: 'blob:http://test.local/8b5b989a-4679-4355-a5d6-5178bbfe6241',
-	},
-	{
-		key: 'rc-upload-1723542720209-9',
-		file: {
-			lastModified: 17198288068246,
-			name: 'feature.mp4',
-			size: 18907162,
-			type: 'video/mp4',
-			uid: 'rc-upload-1723542720209-14',
-			webkitRelativePath: '',
-		},
-		status: 'active',
-		videoId: '',
-		isEncoding: true,
-		encodeProgress: 0,
-		uploadProgress: 0,
-		preview: 'blob:http://test.local/9add96bf-377f-4213-b3e2-8d2c624450b8',
-	},
-] as TFileInQueue[]
-
-// 編碼中
-// filesInQueue = [
-// 	{
-// 		"key": "rc-upload-1723542720209-7",
-// 		"file": {},
-// 		"status": "active",
-// 		"videoId": "9428d90f-8e12-4909-924c-b3fef42e8829",
-// 		"isEncoding": true,
-// 		"encodeProgress": 0,
-// 		"preview": "blob:http://test.local/c6e97785-1d4c-491a-a7c1-ed49d50ce788"
-// 	},
-// 	{
-// 		"key": "rc-upload-1723542720209-8",
-// 		"file": {},
-// 		"status": "active",
-// 		"videoId": "fd38f6d8-1fb1-4c63-b8b2-d1383af97120",
-// 		"isEncoding": true,
-// 		"encodeProgress": 0,
-// 		"preview": "blob:http://test.local/8b5b989a-4679-4355-a5d6-5178bbfe6241"
-// 	},
-// 	{
-// 		"key": "rc-upload-1723542720209-9",
-// 		"file": {},
-// 		"status": "active",
-// 		"videoId": "bb72f4db-0758-48c0-b5c6-70f2954f109f",
-// 		"isEncoding": true,
-// 		"encodeProgress": 0,
-// 		"preview": "blob:http://test.local/9add96bf-377f-4213-b3e2-8d2c624450b8"
-// 	}
-// ]

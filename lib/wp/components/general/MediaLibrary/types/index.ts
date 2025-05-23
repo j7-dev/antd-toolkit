@@ -40,7 +40,7 @@ export type TAttachment = {
 export type TMediaLibraryProps = {
 	initialIds?: string[] // 初始的檔案 ids
 	selectedItems: TAttachment[] // 已選擇的檔案
-	setSelectedItems: React.Dispatch<React.SetStateAction<TAttachment[]>> | typeof useSetAtom // 已選擇的檔案 setter
+	setSelectedItems: React.Dispatch<React.SetStateAction<TAttachment[]>> // 已選擇的檔案 setter
 	limit?: number // 能選擇的檔案數量
 	uploadProps?: UploadProps // 上傳檔案的屬性
 }

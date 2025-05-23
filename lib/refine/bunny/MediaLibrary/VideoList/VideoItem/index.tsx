@@ -3,6 +3,7 @@ import { TBunnyVideo, useBunny } from '@/refine'
 import { SimpleImage } from '@/main/components'
 import { Typography, message } from 'antd'
 import { uniqBy } from 'lodash-es'
+import { useProps } from '@/refine/bunny/MediaLibrary/hooks'
 
 const PREVIEW_FILENAME = 'preview.webp'
 const { Text } = Typography
@@ -30,41 +31,30 @@ const CheckIcon: FC<HTMLAttributes<SVGElement>> = (props) => {
 }
 
 const VideoItem = ({
-	children,
-	video,
-	allVideos,
+	item,
+	allItems,
 	index,
-	selectedVideos,
-	setSelectedVideos,
-	limit,
 }: {
-	children?: React.ReactNode
-	video: TBunnyVideo
-	allVideos: TBunnyVideo[]
+	item: TBunnyVideo
+	allItems: TBunnyVideo[]
 	index: number
-	selectedVideos: TBunnyVideo[]
-	setSelectedVideos:
-		| React.Dispatch<React.SetStateAction<TBunnyVideo[]>>
-		| ((
-				_videosOrFunction:
-					| TBunnyVideo[]
-					| ((_videos: TBunnyVideo[]) => TBunnyVideo[]),
-		  ) => void)
-	limit: number | undefined
 }) => {
+	const { selectedItems, setSelectedItems, limit } = useProps()
 	const { bunny_cdn_hostname } = useBunny()
-	const [filename, setFilename] = useState(video?.thumbnailFileName)
-	const isSelected = selectedVideos?.some(
-		(selectedVideo) => selectedVideo.guid === video.guid,
+	const [filename, setFilename] = useState(item?.thumbnailFileName)
+	const isSelected = selectedItems?.some(
+		(selectedVideo) => selectedVideo.guid === item.guid,
 	)
+	console.log('⭐ selectedItems:', selectedItems)
+	console.log('⭐ isSelected:', isSelected)
 
 	const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
 		// 上一個選中的
-		const prevSelected = selectedVideos?.length
-			? selectedVideos?.slice(-1)?.[0]
+		const prevSelected = selectedItems?.length
+			? selectedItems?.slice(-1)?.[0]
 			: null
 
-		const prevSelectedIndex = allVideos.findIndex(
+		const prevSelectedIndex = allItems.findIndex(
 			(v) => v.guid === prevSelected?.guid,
 		) // 沒找到會返回 -1
 		// 確保 prevSelectedIndex 不會是-1
@@ -73,27 +63,28 @@ const VideoItem = ({
 
 		if (e.shiftKey && formattedPrevSelectedIndex !== index) {
 			// 從上一個選中的 item 開始選擇到 這個 item
-			setSelectedVideos((prev) => {
+			setSelectedItems((prev) => {
 				// 确定开始和结束的索引
 				const start = Math.min(formattedPrevSelectedIndex, index)
 				const end = Math.max(formattedPrevSelectedIndex, index)
-				const newSelected = allVideos.slice(start, end + 1)
+				const newSelected = allItems.slice(start, end + 1)
 				return uniqBy([...prev, ...newSelected], 'guid')
 			})
 			return
 		}
+
 		if (isSelected) {
-			setSelectedVideos((prev) => prev.filter((v) => v.guid !== video.guid))
+			setSelectedItems((prev) => prev.filter((v) => v.guid !== item.guid))
 		} else {
-			if (limit && selectedVideos.length >= limit) {
+			if (limit && selectedItems.length >= limit) {
 				message.warning({
 					key: 'limit',
 					content: `最多只能選取${limit}個影片`,
 				})
-				setSelectedVideos((prev) => [...prev.slice(1), video])
+				setSelectedItems((prev) => [...prev.slice(1), item])
 				return
 			}
-			setSelectedVideos((prev) => [...prev, video])
+			setSelectedItems((prev) => [...prev, item])
 		}
 	}
 
@@ -105,7 +96,7 @@ const VideoItem = ({
 					setFilename(PREVIEW_FILENAME)
 				}}
 				onMouseLeave={() => {
-					setFilename(video?.thumbnailFileName)
+					setFilename(item?.thumbnailFileName)
 				}}
 				className={`at-rounded-md at-overflow-hidden at-cursor-pointer ${
 					isSelected
@@ -113,12 +104,10 @@ const VideoItem = ({
 						: ''
 				}`}
 				loadingClassName="at-text-sm at-text-gray-500 at-font-bold"
-				src={`https://${bunny_cdn_hostname}/${video.guid}/${filename}`}
-			>
-				{children}
-			</SimpleImage>
+				src={`https://${bunny_cdn_hostname}/${item.guid}/${filename}`}
+			/>
 			<Text className="at-text-xs at-text-gray-800" ellipsis>
-				{video.title}
+				{item.title}
 			</Text>
 			{isSelected && (
 				<div className="at-bg-white at-absolute at--top-2 at--right-2 at-z-30 at-size-6 at-rounded-full at-flex at-items-center at-justify-center">

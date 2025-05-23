@@ -55,6 +55,9 @@ export type TGetVideosResponse = {
 	items: TBunnyVideo[]
 }
 
+/**
+ * @deprecated
+ */
 export type TMediaLibraryProps = {
 	selectedVideos: TBunnyVideo[] // 已選擇的影片
 	setSelectedVideos:

@@ -163,9 +163,7 @@ const List = () => {
 		if (!allItems?.length) {
 			return
 		}
-		;(setSelectedItems as React.Dispatch<React.SetStateAction<TAttachment[]>>)(
-			allItems?.filter((item) => initialIds?.includes(item.id)),
-		)
+		setSelectedItems(allItems?.filter((item) => initialIds?.includes(item.id)))
 	}, [isSuccess, allItems?.length])
 
 	if (isError) {

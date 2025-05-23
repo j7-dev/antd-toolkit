@@ -22,7 +22,6 @@ const FileUploadProgress: FC<{
 	fileInQueue: UploadFile
 }> = ({ fileInQueue }) => {
 	const { status, percent, name } = fileInQueue
-	console.log('⭐ percent:', percent)
 	const statusMapper = {
 		uploading: 'active',
 		done: 'success',

@@ -1,7 +1,6 @@
 import React, { useState, memo } from 'react'
 import { isNumber, isString, isNull, isUndefined, isBoolean } from 'lodash-es'
-import { keyToWord } from '@/main/utils'
-import { cn } from '@/main/utils'
+import { cn, valueStringify, keyToWord } from '@/main/utils'
 import { Empty, Form, Input } from 'antd'
 import { ActionButton, TActionButton } from '@/main/components/ActionButton'
 
@@ -94,7 +93,7 @@ const ObjectTableComponent: React.FC<TObjectTable> = ({
 		}
 
 		if (!editable) {
-			return record?.[dataIndex as string]?.toString()
+			return valueStringify(record?.[dataIndex as string])
 		}
 
 		return (
@@ -125,7 +124,12 @@ const ObjectTableComponent: React.FC<TObjectTable> = ({
 				</div>
 			)}
 
-			<table className={cn('table table-vertical at-mb-4', className)}>
+			<table
+				className={cn(
+					'table table-xs table-vertical at-mb-4 [&_th]:at-text-left at-w-full',
+					className,
+				)}
+			>
 				<tbody>
 					{(columns ? columns : defaultColumns).map((column, i) => {
 						return (
@@ -133,7 +137,7 @@ const ObjectTableComponent: React.FC<TObjectTable> = ({
 								<th>
 									<div>{column?.title as string}</div>
 								</th>
-								<td>{getView(column, i)}</td>
+								<td className="at-break-all">{getView(column, i)}</td>
 							</tr>
 						)
 					})}

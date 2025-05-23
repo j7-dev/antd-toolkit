@@ -1,26 +1,26 @@
-import { useState, useEffect, memo } from 'react'
-import { filesInQueueAtom, useListVideo, useBunny } from '@/refine'
-import { useAtom } from 'jotai'
-import { Progress, Tooltip, Alert } from 'antd'
-import {
-	CodeOutlined,
-	CloudUploadOutlined,
-	LoadingOutlined,
-	UpOutlined,
-	DownOutlined,
-	ExclamationCircleFilled,
-} from '@ant-design/icons'
-import { getEstimateUploadTimeInSeconds } from '@/main/utils'
+import { useEffect } from 'react'
+import { CloudUploadOutlined } from '@ant-design/icons'
+import { notification } from 'antd'
+import FileUploadProgress from '@/refine/bunny/MediaLibraryNotification/FileUploadProgress'
+import { atom, useAtom } from 'jotai'
+import { TFileInQueue, useBunny, useListVideo } from '@/refine/bunny'
 import { useInvalidate } from '@refinedev/core'
+import { getEstimateUploadTimeInSeconds } from '@/main/utils'
 
+/**
+ * 上傳佇列的全域狀態
+ * 使用 jotai 管理上傳中的檔案狀態
+ */
+export const filesInQueueAtom = atom<TFileInQueue[]>([])
+
+// 每 30 秒去問 BUNNY 上傳 & 編碼進度
 const REFETCH_INTERVAL = 30000 // 30 秒
 
-const MediaLibraryIndicatorComponent = () => {
-	const [isExpanded, setIsExpanded] = useState(false)
+export const MediaLibraryNotification = () => {
 	const { bunny_library_id } = useBunny()
 	const invalidate = useInvalidate()
-
 	const [filesInQueue, setFilesInQueue] = useAtom(filesInQueueAtom)
+
 	const enabled =
 		filesInQueue.some((fileInQueue) => fileInQueue.isEncoding) &&
 		filesInQueue.every((fileInQueue) => fileInQueue.encodeProgress !== 100) &&
@@ -84,6 +84,35 @@ const MediaLibraryIndicatorComponent = () => {
 		}
 	}, [filesInQueue])
 
+	// upload indicator
+	useEffect(() => {
+		if (filesInQueue?.length) {
+			notification.open({
+				key: 'bunny-files-uploading',
+				icon: <CloudUploadOutlined style={{ color: '#1677ff' }} />,
+				message: '檔案上傳中',
+				description: (
+					<>
+						{filesInQueue?.map((fileInQueue) => (
+							<FileUploadProgress
+								key={`${fileInQueue?.key}-${new Date().getTime()}`}
+								fileInQueue={fileInQueue}
+							/>
+						))}
+					</>
+				),
+				duration: null,
+				onClose: () => {
+					if (!setFilesInQueue) return
+					// @ts-ignore
+					setFilesInQueue([])
+				},
+			})
+		} else {
+			notification.destroy('bunny-files-uploading')
+		}
+	}, [filesInQueue])
+
 	useEffect(() => {
 		if (!isFetching) {
 			setFilesInQueue((prev) => {
@@ -116,62 +145,5 @@ const MediaLibraryIndicatorComponent = () => {
 		}
 	}, [isFetching])
 
-	if (!filesInQueue.length) {
-		return null
-	}
-
-	return (
-		<div className="at-fixed at-w-[20rem] at-bottom-0 at-right-8 at-bg-white at-rounded-t-lg at-px-6 at-pt-3 at-pb-2 at-shadow-md at-text-gray-800 at-text-sm at-cursor-pointer at-z-[1001]">
-			<div
-				className="at-flex at-items-center at-justify-between"
-				onClick={() => setIsExpanded(!isExpanded)}
-			>
-				<div>
-					<LoadingOutlined className="at-mr-2 at-text-primary" /> 目前有{' '}
-					{filesInQueue.length} 個檔案正在上傳中...
-				</div>
-				{isExpanded ? <DownOutlined /> : <UpOutlined />}
-			</div>
-			<div
-				className={` at-mt-2 at-border-t at-border-gray-200 -at-mx-6 ${
-					isExpanded ? 'at-tw-block' : 'at-tw-hidden'
-				}`}
-			>
-				<Alert
-					className="at-text-xs at-text-center"
-					banner
-					message={
-						<>
-							<ExclamationCircleFilled className="at-mr-2 at-text-[#faad14]" />
-							請不要重新整理頁面
-						</>
-					}
-					type="warning"
-					showIcon={false}
-				/>
-				<div className="at-px-6 at-pt-2">
-					{filesInQueue.map(
-						({ key, encodeProgress, file, uploadProgress, isEncoding }) => (
-							<div className="at-flex at-items-center at-mb-1" key={key}>
-								<Tooltip
-									title={isEncoding ? 'Bunny 編碼中' : '檔案上傳中'}
-									className="at-w-32 at-line-clamp-1 at-mr-2 at-text-xs at-flex at-items-center at-gap-2"
-								>
-									{isEncoding ? <CodeOutlined /> : <CloudUploadOutlined />}
-									{file?.name}
-								</Tooltip>
-								<Progress
-									className="at-w-32"
-									percent={isEncoding ? encodeProgress : uploadProgress}
-									size="small"
-								/>
-							</div>
-						),
-					)}
-				</div>
-			</div>
-		</div>
-	)
+	return <></>
 }
-
-export const MediaLibraryIndicator = memo(MediaLibraryIndicatorComponent)

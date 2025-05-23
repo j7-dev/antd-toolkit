@@ -2,6 +2,9 @@ import { atom } from 'jotai'
 import { ModalProps, FormInstance } from 'antd'
 import { TMediaLibraryProps, TBunnyVideo } from '@/refine'
 
+/**
+ * @deprecated
+ */
 export const mediaLibraryAtom = atom<{
 	form?: FormInstance
 	name?: string[]

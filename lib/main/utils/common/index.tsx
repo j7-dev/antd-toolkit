@@ -270,3 +270,31 @@ export function getTextContent(html: string) {
 	const doc = parser.parseFromString(html, 'text/html')
 	return doc.body.textContent || ''
 }
+
+/**
+ * 將值轉換為字串
+ */
+export function valueStringify(value: any) {
+	if (value === null) {
+		return 'null'
+	}
+	if (value === undefined) {
+		return 'undefined'
+	}
+	if (typeof value === 'string') {
+		return value
+	}
+	if (typeof value === 'number') {
+		return value.toString()
+	}
+	if (Array.isArray(value)) {
+		return value.join(', ')
+	}
+	if (typeof value === 'boolean') {
+		return value ? 'true' : 'false'
+	}
+	if (typeof value === 'object') {
+		return JSON.stringify(value)
+	}
+	return value?.toString()
+}

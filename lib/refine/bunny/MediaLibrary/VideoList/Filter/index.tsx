@@ -1,37 +1,20 @@
 import React, { useState } from 'react'
-import {
-	Input,
-	InputProps,
-	Button,
-	Popconfirm,
-	message,
-	ButtonProps,
-} from 'antd'
-import { TBunnyVideo, useBunny } from '@/refine'
+import { Input, InputProps, Button, Popconfirm, message } from 'antd'
+import { useBunny } from '@/refine'
 import { useDelete, useInvalidate } from '@refinedev/core'
+import { useProps } from '@/refine/bunny/MediaLibrary/hooks'
 
 const { Search } = Input
 
 const Filter = ({
-	selectedVideos,
-	setSelectedVideos,
 	setSearch,
 	loading,
-	selectButtonProps,
 	...inputProps
 }: {
-	selectedVideos: TBunnyVideo[]
-	setSelectedVideos:
-		| React.Dispatch<React.SetStateAction<TBunnyVideo[]>>
-		| ((
-				_videosOrFunction:
-					| TBunnyVideo[]
-					| ((_videos: TBunnyVideo[]) => TBunnyVideo[]),
-		  ) => void)
 	setSearch: React.Dispatch<React.SetStateAction<string>>
 	loading?: boolean
-	selectButtonProps?: ButtonProps
 } & InputProps) => {
+	const { selectedItems, setSelectedItems } = useProps()
 	const { bunny_library_id } = useBunny()
 	const [value, setValue] = useState('')
 	const [isLoading, setIsLoading] = useState(false)
@@ -40,7 +23,7 @@ const Filter = ({
 
 	const handleBulkDelete = () => {
 		setIsLoading(true)
-		selectedVideos.forEach((video, index) => {
+		selectedItems.forEach((video, index) => {
 			deleteVideo(
 				{
 					dataProviderName: 'bunny-stream',
@@ -50,9 +33,9 @@ const Filter = ({
 				},
 				{
 					onSuccess: () => {
-						if (index === selectedVideos.length - 1) {
+						if (index === selectedItems.length - 1) {
 							message.success('影片已經全部刪除成功')
-							setSelectedVideos([])
+							setSelectedItems([])
 						}
 					},
 					onError: () => {
@@ -60,7 +43,7 @@ const Filter = ({
 					},
 					onSettled: () => {
 						setIsLoading(false)
-						if (index === selectedVideos.length - 1) {
+						if (index === selectedItems.length - 1) {
 							invalidate({
 								dataProviderName: 'bunny-stream',
 								resource: `${bunny_library_id}/videos`,
@@ -89,7 +72,7 @@ const Filter = ({
 
 			<div className="at-flex at-items-center at-gap-2">
 				<p className="at-text-sm at-m-0 at-text-gray-500">
-					已經選取 {selectedVideos?.length ?? 0} 個影片
+					已經選取 {selectedItems?.length ?? 0} 個影片
 				</p>
 				<Popconfirm
 					title="確定要刪除這些影片嗎？"
@@ -98,22 +81,14 @@ const Filter = ({
 					cancelText="取消"
 				>
 					<Button
-						disabled={!selectedVideos?.length}
+						disabled={!selectedItems?.length}
 						loading={isLoading}
 						type="primary"
 						danger
 					>
-						批量刪除{' '}
-						{selectedVideos?.length ? `(${selectedVideos?.length})` : ''}
+						批量刪除 {selectedItems?.length ? `(${selectedItems?.length})` : ''}
 					</Button>
 				</Popconfirm>
-				<Button
-					type="primary"
-					{...selectButtonProps}
-					disabled={!selectedVideos?.length}
-				>
-					選取影片 {selectedVideos?.length ? `(${selectedVideos?.length})` : ''}
-				</Button>
 			</div>
 		</div>
 	)
