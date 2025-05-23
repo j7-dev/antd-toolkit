@@ -55,22 +55,6 @@ export type TGetVideosResponse = {
 	items: TBunnyVideo[]
 }
 
-/**
- * @deprecated
- */
-export type TMediaLibraryProps = {
-	selectedVideos: TBunnyVideo[] // 已選擇的影片
-	setSelectedVideos:
-		| React.Dispatch<React.SetStateAction<TBunnyVideo[]>>
-		| ((
-				_videosOrFunction:
-					| TBunnyVideo[]
-					| ((_videos: TBunnyVideo[]) => TBunnyVideo[]),
-		  ) => void) // 已選擇的影片 setter
-	limit?: number // 能選擇的影片數量
-	selectButtonProps?: ButtonProps // "選取影片"按鈕的屬性，可以設定 onClick 後的動作
-}
-
 export type TUploadStatus =
 	| 'active'
 	| 'normal'

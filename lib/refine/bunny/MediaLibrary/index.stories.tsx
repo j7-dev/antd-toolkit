@@ -10,7 +10,7 @@ import { refineDecorator } from '../../../stories'
 import { useSetAtom } from 'jotai'
 
 // 上傳中
-const FAKES = [
+const MOCK_FILES = [
 	{
 		key: 'rc-upload-1723542720209-7',
 		file: {
@@ -131,7 +131,7 @@ export const General: Story = {
 		const setFilesInQueue = useSetAtom(filesInQueueAtom)
 
 		useEffect(() => {
-			setFilesInQueue(FAKES)
+			setFilesInQueue(MOCK_FILES)
 		}, [])
 
 		return (

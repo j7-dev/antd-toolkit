@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { UploadFile, UploadProps } from 'antd'
 import { RcFile } from 'antd/lib/upload/interface'
-import { useSetAtom } from 'jotai'
+import { useAtom } from 'jotai'
 import { getVideoUrl } from '@/main/utils'
 import {
 	useBunny,
@@ -9,7 +9,7 @@ import {
 	TBunnyVideo,
 	TUploadVideoResponse,
 	filesInQueueAtom,
-} from '@/refine'
+} from '@/refine/bunny'
 import { useInvalidate } from '@refinedev/core'
 
 /**
@@ -21,7 +21,7 @@ import { useInvalidate } from '@refinedev/core'
  */
 export const useMediaUpload = (uploadProps?: UploadProps) => {
 	const { bunny_library_id, bunny_stream_axios } = useBunny()
-	const setFilesInQueue = useSetAtom(filesInQueueAtom)
+	const [filesInQueue, setFilesInQueue] = useAtom(filesInQueueAtom)
 
 	// 這個是想做多檔同時上傳，但目前應該是比較不會用到
 	const [fileList, setFileList] = useState<

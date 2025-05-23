@@ -4,7 +4,7 @@ import { FaPhotoVideo } from 'react-icons/fa'
 import { CloudUploadOutlined, SettingOutlined } from '@ant-design/icons'
 import VideoList from './VideoList'
 import { atom } from 'jotai'
-import { TFileInQueue, useBunny } from '@/refine'
+import { TFileInQueue, useBunny } from '@/refine/bunny'
 import { Button } from 'antd'
 import Settings from './Settings'
 import { useMediaUpload } from '@/refine/bunny/MediaLibrary/hooks'
@@ -124,9 +124,3 @@ const MediaLibraryComponent: FC<TMediaLibraryProps> = (props) => {
 export const MediaLibrary = memo(
 	MediaLibraryComponent,
 ) as typeof MediaLibraryComponent
-
-/**
- * 上傳佇列的全域狀態
- * 使用 jotai 管理上傳中的檔案狀態
- */
-export const filesInQueueAtom = atom<TFileInQueue[]>([])

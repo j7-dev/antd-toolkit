@@ -5,6 +5,7 @@ import FileUploadProgress from '@/refine/bunny/MediaLibraryNotification/FileUplo
 import { atom, useAtom } from 'jotai'
 import { TFileInQueue, useBunny, useListVideo } from '@/refine/bunny'
 import { useInvalidate } from '@refinedev/core'
+import { useColor } from '@/main'
 import { getEstimateUploadTimeInSeconds } from '@/main/utils'
 
 /**
@@ -17,6 +18,7 @@ export const filesInQueueAtom = atom<TFileInQueue[]>([])
 const REFETCH_INTERVAL = 30000 // 30 秒
 
 export const MediaLibraryNotification = () => {
+	const { colorPrimary } = useColor()
 	const { bunny_library_id } = useBunny()
 	const invalidate = useInvalidate()
 	const [filesInQueue, setFilesInQueue] = useAtom(filesInQueueAtom)
@@ -89,7 +91,7 @@ export const MediaLibraryNotification = () => {
 		if (filesInQueue?.length) {
 			notification.open({
 				key: 'bunny-files-uploading',
-				icon: <CloudUploadOutlined style={{ color: '#1677ff' }} />,
+				icon: <CloudUploadOutlined style={{ color: colorPrimary }} />,
 				message: '檔案上傳中',
 				description: (
 					<>

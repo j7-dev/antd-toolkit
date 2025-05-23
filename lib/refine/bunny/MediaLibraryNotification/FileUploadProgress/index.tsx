@@ -23,8 +23,12 @@ const FileUploadProgress: FC<{
 				zIndex={10000}
 				className="at-flex at-items-center at-gap-2"
 			>
-				{isEncoding ? <CodeOutlined /> : <MdFileUpload />}
-				<p className="at-m-0 at-text-xs at-truncate">{name}</p>
+				{isEncoding ? (
+					<CodeOutlined className="at-size-3.5" />
+				) : (
+					<MdFileUpload className="at-size-3.5" />
+				)}
+				<p className="at-flex-1 at-m-0 at-text-xs at-truncate">{name}</p>
 			</Tooltip>
 
 			<Progress

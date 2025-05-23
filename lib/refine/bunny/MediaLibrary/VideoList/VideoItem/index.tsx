@@ -45,8 +45,6 @@ const VideoItem = ({
 	const isSelected = selectedItems?.some(
 		(selectedVideo) => selectedVideo.guid === item.guid,
 	)
-	console.log('⭐ selectedItems:', selectedItems)
-	console.log('⭐ isSelected:', isSelected)
 
 	const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
 		// 上一個選中的

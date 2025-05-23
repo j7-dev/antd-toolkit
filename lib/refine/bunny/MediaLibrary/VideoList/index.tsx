@@ -3,13 +3,10 @@ import Filter from './Filter'
 import { useInfiniteList } from '@refinedev/core'
 import { Button, Empty, Result, Alert } from 'antd'
 import { TBunnyVideo } from '@/refine/bunny/types'
-import { useAtomValue } from 'jotai'
 import VideoInfo from './VideoInfo'
 import VideoItem from './VideoItem'
 import { LoadingCard } from '@/main/components'
-import FileEncodeProgress from './FileEncodeProgress'
-import FileUploadProgress from './FileUploadProgress'
-import { useBunny, filesInQueueAtom } from '@/refine'
+import { useBunny } from '@/refine'
 import { useProps } from '@/refine/bunny/MediaLibrary/hooks'
 
 const PAGE_SIZE = 50
@@ -20,7 +17,6 @@ const VideoList: FC = () => {
 		useBunny()
 	const [search, setSearch] = useState('')
 
-	const filesInQueue = useAtomValue(filesInQueueAtom)
 	const {
 		data,
 		isError,
@@ -90,27 +86,6 @@ const VideoList: FC = () => {
 			<div className="at-flex">
 				<div className="at-flex-1">
 					<div className="at-flex at-flex-wrap at-gap-4">
-						{filesInQueue.map((fileInQueue) =>
-							fileInQueue?.isEncoding ? (
-								<div
-									key={fileInQueue?.key}
-									className="at-w-36 at-aspect-video at-bg-gray-200 at-rounded-md at-px-4 at-py-2 at-flex at-flex-col at-items-center at-justify-center"
-								>
-									<FileEncodeProgress fileInQueue={fileInQueue} />
-								</div>
-							) : (
-								<div
-									key={fileInQueue?.key}
-									className="at-w-36 at-aspect-video at-bg-gray-200 at-rounded-md at-px-4 at-py-2 at-flex at-flex-col at-items-center at-justify-center"
-								>
-									<FileUploadProgress
-										key={fileInQueue?.key}
-										fileInQueue={fileInQueue}
-									/>
-								</div>
-							),
-						)}
-
 						{!isSearchFetching &&
 							allItems.map((item, index) => (
 								<VideoItem
