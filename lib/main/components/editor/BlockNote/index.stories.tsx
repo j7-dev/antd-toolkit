@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
 import { BlockNote, useBlockNote } from './index'
 import { refineDecorator, ENV } from '../../../../stories'
-
+import { MediaLibraryNotification as BunnyMediaLibraryNotification } from '../../../../refine/bunny/MediaLibraryNotification'
+import { MediaLibraryNotification as WPMediaLibraryNotification } from '../../../../wp/components/general/MediaLibraryNotification'
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 
 const meta: Meta<typeof BlockNote> & {
@@ -318,24 +319,17 @@ const BlockNoteWithHooks = () => {
 	const editor2 = blockNoteViewProps2.editor
 
 	useEffect(() => {
-		let isMounted = true
-
 		async function loadInitialHTML() {
 			try {
-				const blocksFromHTML = await editor2.tryParseHTMLToBlocks(html)
-				if (isMounted) {
-					editor2.replaceBlocks(editor2.document, blocksFromHTML)
-				}
+				const blocksFromHTML = await editor2.tryParseHTMLToBlocks(html) // 解析初始 HTML 字串 [1, 2]
+				// console.log('⭐ blocks:', blocks)
+				// console.log('⭐ blocksFromHTML:', blocksFromHTML)
+				editor2.replaceBlocks(editor2.document, blocksFromHTML)
 			} catch (error) {
 				console.error('Failed to parse HTML to blocks:', error)
 			}
 		}
-
 		loadInitialHTML()
-
-		return () => {
-			isMounted = false
-		}
 	}, [html])
 
 	return (
@@ -381,6 +375,8 @@ export const General: Story = {
 	render: () => (
 		<>
 			<BlockNoteWithHooks />
+			<BunnyMediaLibraryNotification />
+			<WPMediaLibraryNotification />
 		</>
 	),
 	decorators: [refineDecorator],

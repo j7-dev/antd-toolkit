@@ -15,25 +15,35 @@ const index: FC<
 	>
 > = ({ block, editor, contentRef }) => {
 	// 取得 bunny 的 library_id
-	const { bunny_library_id = '' } = useBunny()
+	const { bunny_library_id = '', bunny_cdn_hostname = '' } = useBunny()
 
-	if (!bunny_library_id) {
-		console.error('bunny_library_id is not set')
+	if (!bunny_library_id || !bunny_cdn_hostname) {
+		console.error('bunny_library_id or bunny_cdn_hostname is not set', {
+			bunny_library_id,
+			bunny_cdn_hostname,
+		})
 		return null
 	}
 
-	const vId = block.props.vId
+	const vId = block?.props?.vId
+
 	const videoUrl = `https://iframe.mediadelivery.net/embed/${bunny_library_id}/${vId}?autoplay=false&loop=false&muted=false&preload=true&responsive=true`
+	const audioUrl = `https://${bunny_cdn_hostname}/${vId}/playlist.m3u8`
+
 	const widthValue = block?.props?.widthValue || 100
 	const widthUnit = block?.props?.widthUnit || '%'
 	const align = block?.props?.align || 'start'
 	const aspectRatio = block?.props?.aspectRatio || 1.7778 // 16/9
+	const player = block?.props?.player || 'video'
 
 	const divDataProps = {
 		'data-block-key': block?.type,
 		'data-width-value': widthValue,
 		'data-width-unit': widthUnit,
 		'data-align': align,
+		'data-player': player,
+		'data-aspect-ratio': aspectRatio,
+		'data-v-id': vId,
 	}
 
 	return (
@@ -44,18 +54,32 @@ const index: FC<
 				alignItems: align || 'start',
 			}}
 		>
-			<iframe
-				className="at-border-0 at-rounded-xl at-aspect-video"
-				style={{
-					width: `${widthValue}${widthUnit}`,
-					maxWidth: '100%',
-					aspectRatio,
-				}}
-				src={videoUrl}
-				loading="lazy"
-				allow="encrypted-media;picture-in-picture;"
-				allowFullScreen={true}
-			></iframe>
+			{'video' === player && (
+				<iframe
+					className="at-border-0 at-rounded-xl at-aspect-video"
+					style={{
+						width: `${widthValue}${widthUnit}`,
+						maxWidth: '100%',
+						aspectRatio,
+					}}
+					src={videoUrl}
+					loading="lazy"
+					allow="encrypted-media;picture-in-picture;"
+					allowFullScreen={true}
+				></iframe>
+			)}
+
+			{'audio' === player && (
+				<audio
+					preload="metadata"
+					style={{
+						width: `${widthValue}${widthUnit}`,
+						maxWidth: '100%',
+					}}
+					src={audioUrl}
+					controls
+				></audio>
+			)}
 		</div>
 	)
 }

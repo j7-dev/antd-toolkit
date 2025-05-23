@@ -1,17 +1,34 @@
-import { defaultProps, insertOrUpdateBlock } from '@blocknote/core'
+import {
+	defaultProps,
+	insertOrUpdateBlock,
+	CustomBlockConfig,
+} from '@blocknote/core'
 import { createReactBlockSpec } from '@blocknote/react'
 import { Menu } from '@mantine/core'
 import { MdCancel, MdCheckCircle, MdError, MdInfo } from 'react-icons/md'
 import { schema } from '../../useBlockNote'
 import { RiAlertFill } from 'react-icons/ri'
 
+const CONFIG: CustomBlockConfig = {
+	type: 'alert',
+	propSchema: {
+		textAlignment: defaultProps.textAlignment,
+		textColor: defaultProps.textColor,
+		type: {
+			default: 'warning',
+			values: ['warning', 'error', 'info', 'success'],
+		},
+	},
+	content: 'inline',
+}
+
 export const alertMenuItem = (editor: typeof schema.BlockNoteEditor) => ({
-	key: 'alert',
+	key: CONFIG.type,
 	title: 'Alert',
 	subtext: '可製作醒目提醒、注意事項', // 說明文字
 	onItemClick: () => {
 		insertOrUpdateBlock(editor, {
-			type: 'alert',
+			type: CONFIG.type,
 		})
 	},
 	aliases: [
@@ -75,91 +92,78 @@ export const alertTypes = [
  * @see https://www.blocknotejs.org/docs/custom-schemas/custom-blocks
  * 可自訂 toExternalHTML & parse
  */
-export const Alert = createReactBlockSpec(
-	{
-		type: 'alert',
-		propSchema: {
-			textAlignment: defaultProps.textAlignment,
-			textColor: defaultProps.textColor,
-			type: {
-				default: 'warning',
-				values: ['warning', 'error', 'info', 'success'],
-			},
-		},
-		content: 'inline',
+export const Alert = createReactBlockSpec(CONFIG, {
+	render: (props) => {
+		const alertType = alertTypes.find(
+			(a) => a.value === props.block.props?.type,
+		)!
+		const Icon = alertType.icon
+		return (
+			<div
+				className={'alert'}
+				data-block-key={props.block?.type}
+				data-alert-type={props.block.props?.type}
+			>
+				{/*Icon which opens a menu to choose the Alert type*/}
+				<Menu withinPortal={false} zIndex={999999}>
+					<Menu.Target>
+						<div className={'alert-icon-wrapper'} contentEditable={false}>
+							<Icon
+								className={'alert-icon'}
+								data-alert-icon-type={props.block.props?.type}
+								size={32}
+							/>
+						</div>
+					</Menu.Target>
+					{/*Dropdown to change the Alert type*/}
+					<Menu.Dropdown>
+						<Menu.Label>Alert Type</Menu.Label>
+						<Menu.Divider />
+						{alertTypes.map((type) => {
+							const ItemIcon = type.icon
+
+							return (
+								<Menu.Item
+									key={type.value}
+									leftSection={
+										<ItemIcon
+											className={'alert-icon'}
+											data-alert-icon-type={type.value}
+										/>
+									}
+									onClick={() =>
+										props.editor.updateBlock(props.block, {
+											type: 'alert',
+											props: { type: type.value },
+										})
+									}
+								>
+									{type.title}
+								</Menu.Item>
+							)
+						})}
+					</Menu.Dropdown>
+				</Menu>
+				{/*Rich text field for user to type in*/}
+				<div className={'inline-content'} ref={props.contentRef} />
+			</div>
+		)
 	},
-	{
-		render: (props) => {
-			const alertType = alertTypes.find(
-				(a) => a.value === props.block.props?.type,
-			)!
-			const Icon = alertType.icon
-			return (
-				<div
-					className={'alert'}
-					data-block-key={props.block?.type}
-					data-alert-type={props.block.props?.type}
-				>
-					{/*Icon which opens a menu to choose the Alert type*/}
-					<Menu withinPortal={false} zIndex={999999}>
-						<Menu.Target>
-							<div className={'alert-icon-wrapper'} contentEditable={false}>
-								<Icon
-									className={'alert-icon'}
-									data-alert-icon-type={props.block.props?.type}
-									size={32}
-								/>
-							</div>
-						</Menu.Target>
-						{/*Dropdown to change the Alert type*/}
-						<Menu.Dropdown>
-							<Menu.Label>Alert Type</Menu.Label>
-							<Menu.Divider />
-							{alertTypes.map((type) => {
-								const ItemIcon = type.icon
 
-								return (
-									<Menu.Item
-										key={type.value}
-										leftSection={
-											<ItemIcon
-												className={'alert-icon'}
-												data-alert-icon-type={type.value}
-											/>
-										}
-										onClick={() =>
-											props.editor.updateBlock(props.block, {
-												type: 'alert',
-												props: { type: type.value },
-											})
-										}
-									>
-										{type.title}
-									</Menu.Item>
-								)
-							})}
-						</Menu.Dropdown>
-					</Menu>
-					{/*Rich text field for user to type in*/}
-					<div className={'inline-content'} ref={props.contentRef} />
-				</div>
-			)
-		},
+	// @ts-ignore
+	parse: (element: HTMLElement) => {
+		// 取得節點上的 data-block-key
+		const blockType = element.getAttribute('data-block-key')
+		if (CONFIG.type !== blockType) return
 
-		parse: (element: HTMLElement) => {
-			// 取得節點上的 data-block-key
-			const blockKey = element.getAttribute('data-block-key')
-			if ('alert' !== blockKey) return
+		const type = (element.getAttribute('data-alert-type') || 'warning') as
+			| 'warning'
+			| 'error'
+			| 'info'
+			| 'success'
 
-			const type = (element.getAttribute('data-alert-type') || 'warning') as
-				| 'warning'
-				| 'error'
-				| 'info'
-				| 'success'
-
-			return {
-				type: type || 'warning',
-			}
-		},
+		return {
+			type: type || 'warning',
+		}
 	},
-)
+})

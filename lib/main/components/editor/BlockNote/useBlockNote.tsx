@@ -33,8 +33,6 @@ import {
 	customHTMLMenuItem,
 	BunnyVideo,
 	bunnyVideoMenuItem,
-	BunnyAudio,
-	bunnyAudioMenuItem,
 	MediaLibrary,
 	mediaLibraryMenuItem,
 } from './CustomBlocks'
@@ -48,7 +46,6 @@ export const schema = BlockNoteSchema.create({
 		alert: Alert,
 		customHTML: CustomHTML,
 		bunnyVideo: BunnyVideo,
-		bunnyAudio: BunnyAudio,
 		// numberedListItem: undefined as any, // undefined = 禁用選單
 		checkListItem: undefined as any, // 樣式有問題，禁用
 		file: undefined as any, // 用媒體庫就好，禁用
@@ -132,9 +129,10 @@ export const useBlockNote = ({
 			}
 			return
 			//另一種輸出方式
+			/*
 			// const newHtml = await editor.blocksToFullHTML(editor.document)
 			const parser = new DOMParser()
-			const doc = parser.parseFromString(newHtml, 'text/html')
+			const doc = parser.parseFromString('', 'text/html')
 
 			// 將圖片的 data-url 轉換成 src
 			doc.body
@@ -207,6 +205,7 @@ export const useBlockNote = ({
 				})
 
 			setHTML(doc.body.innerHTML)
+			*/
 		},
 		theme: 'light',
 		formattingToolbar: false, // 自訂 toolbar
@@ -234,7 +233,6 @@ export const useBlockNote = ({
 							alertMenuItem(editor),
 							customHTMLMenuItem(editor),
 							bunnyVideoMenuItem(editor),
-							bunnyAudioMenuItem(editor),
 							mediaLibraryMenuItem(editor),
 						]
 

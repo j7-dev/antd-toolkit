@@ -6,23 +6,7 @@ import { FaPhotoVideo } from 'react-icons/fa'
 import { PropsContext } from './hooks'
 import Render from './Render'
 
-export const mediaLibraryMenuItem = (
-	editor: typeof schema.BlockNoteEditor,
-) => ({
-	key: 'mediaLibrary',
-	title: '媒體庫', // 選單中文
-	subtext: 'WordPress 媒體庫', // 說明文字
-	onItemClick: () => {
-		insertOrUpdateBlock(editor, {
-			type: 'mediaLibrary',
-		})
-	},
-	aliases: ['mediaLibrary'],
-	group: 'Media',
-	icon: <FaPhotoVideo className="at-size-[1.125rem]" />,
-})
-
-const mediaLibraryBlockConfig: CustomBlockConfig = {
+const CONFIG: CustomBlockConfig = {
 	type: 'mediaLibrary',
 	propSchema: {
 		widthValue: {
@@ -62,13 +46,32 @@ const mediaLibraryBlockConfig: CustomBlockConfig = {
 	content: 'none',
 }
 
-export const MediaLibrary = createReactBlockSpec(mediaLibraryBlockConfig, {
+export const mediaLibraryMenuItem = (
+	editor: typeof schema.BlockNoteEditor,
+) => ({
+	key: CONFIG.type,
+	title: '媒體庫', // 選單中文
+	subtext: 'WordPress 媒體庫', // 說明文字
+	onItemClick: () => {
+		console.log('⭐ onItemClick:', CONFIG.type)
+		insertOrUpdateBlock(editor, {
+			type: CONFIG.type,
+		})
+	},
+	aliases: ['media', '媒體庫'],
+	group: 'Media',
+	icon: <FaPhotoVideo className="at-size-[1.125rem]" />,
+})
+
+export const MediaLibrary = createReactBlockSpec(CONFIG, {
 	render: (props) => {
 		return (
-			// @ts-ignore
-			<PropsContext.Provider value={props}>
-				<Button />
-			</PropsContext.Provider>
+			<>
+				{/* @ts-ignore */}
+				<PropsContext.Provider value={props}>
+					<Button />
+				</PropsContext.Provider>
+			</>
 		)
 	},
 
@@ -76,8 +79,8 @@ export const MediaLibrary = createReactBlockSpec(mediaLibraryBlockConfig, {
 	// @ts-ignore
 	parse: (element: HTMLElement) => {
 		// 取得節點上的 data-block-key
-		const blockKey = element.getAttribute('data-block-key')
-		if ('mediaLibrary' !== blockKey) return
+		const blockType = element.getAttribute('data-block-key')
+		if (CONFIG.type !== blockType) return
 
 		return {
 			widthValue: element.getAttribute('data-width-value') || 100,

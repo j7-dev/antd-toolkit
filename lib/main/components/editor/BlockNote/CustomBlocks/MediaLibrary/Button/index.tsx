@@ -53,7 +53,8 @@ function getFileType(url: string) {
 const MediaLibraryButton = () => {
 	const props = useProps()
 	const currentBlock = props.editor.getBlock(props.block)
-	const currentBlockProps = currentBlock?.props
+
+	const currentBlockProps = currentBlock?.props || props.block.props
 
 	// 封裝一個簡單的 editor 更新函數，包含 debounce
 	const update = debounce((key: string, value: any) => {
@@ -70,6 +71,7 @@ const MediaLibraryButton = () => {
 	const [tool, setTool] = useState<string | null>(null)
 	// 為了讓 input 的 defaultValue 的整個組件可以重新 render 重新設置 defaultValue，透過 key 來強制重新 render
 	const [key, setKey] = useState<number>(0)
+	const [showTool, setShowTool] = useState<boolean>(false)
 
 	const { show, close, modalProps, ...mediaLibraryProps } =
 		useMediaLibraryModal({
@@ -95,18 +97,29 @@ const MediaLibraryButton = () => {
 			},
 		})
 
+	const url = currentBlockProps?.url
+
 	useEffect(() => {
-		if (!currentBlockProps?.url) {
+		if (!url && currentBlock) {
 			show()
 		}
-	}, [currentBlockProps?.url])
+	}, [url])
 
-	const fileType = getFileType(currentBlockProps?.url || '')
+	const fileType = getFileType(url || '')
 
 	return (
 		<>
-			<div className="at-w-full">
-				{currentBlockProps?.url && (
+			{!url && (
+				<Button type="primary" onClick={show} size="small">
+					打開媒體庫
+				</Button>
+			)}
+			<div
+				className="at-w-full"
+				onMouseEnter={() => setShowTool(true)}
+				onMouseLeave={() => setShowTool(false)}
+			>
+				{url && (
 					<>
 						<div
 							className="[&_*]:at-pointer-events-none at-cursor-pointer"
@@ -119,7 +132,10 @@ const MediaLibraryButton = () => {
 							/>
 						</div>
 						<div
-							className="at-py-1 at-px-2 at-bg-gray-100 at-rounded-md"
+							className={cn(
+								'at-py-1 at-px-2 at-bg-gray-100 at-rounded-md at-transition-opacity at-duration-300',
+								showTool ? 'at-opacity-100' : 'at-opacity-30',
+							)}
 							key={key}
 						>
 							<div className="at-flex at-items-center at-justify-center at-gap-x-2">

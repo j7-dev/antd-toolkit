@@ -53,10 +53,20 @@ const ItemInfo = ({ item }: { item: TAttachment }) => {
 				/>
 			)}
 			{isVideo && (
-				<video src={url} controls className="at-w-full at-rounded-md" />
+				<video
+					preload="metadata"
+					src={url}
+					controls
+					className="at-w-full at-rounded-md"
+				/>
 			)}
 			{isAudio && (
-				<audio src={url} controls className="at-w-full at-rounded-md" />
+				<audio
+					preload="metadata"
+					src={url}
+					controls
+					className="at-w-full at-rounded-md"
+				/>
 			)}
 			{isOther && (
 				<div className="at-w-full at-rounded-md at-text-center at-object-contain">

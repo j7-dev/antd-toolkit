@@ -1,12 +1,12 @@
 import { memo, useEffect, useState } from 'react'
-import { Button, Select, Space, InputNumber, Tooltip } from 'antd'
+import { Button, Select, Space, InputNumber, Tooltip, Radio } from 'antd'
 import {
 	AlignLeftOutlined,
 	AlignCenterOutlined,
 	AlignRightOutlined,
 	DeleteOutlined,
 } from '@ant-design/icons'
-import { useBunny } from '@/refine'
+import { BsFillPlayBtnFill, BsFillVolumeUpFill } from 'react-icons/bs'
 import { useMediaLibraryModal, MediaLibraryModal } from '@/refine/bunny'
 import { ReactCustomBlockRenderProps } from '@blocknote/react'
 import {
@@ -17,6 +17,7 @@ import {
 import { TbSwitchHorizontal } from 'react-icons/tb'
 import { debounce } from 'lodash-es'
 import Render from '../Render'
+import { cn } from '@/main/utils'
 
 export type TMediaLibraryButton = ReactCustomBlockRenderProps<
 	CustomBlockConfig,
@@ -24,10 +25,20 @@ export type TMediaLibraryButton = ReactCustomBlockRenderProps<
 	DefaultStyleSchema
 >
 
+const playerOptions = [
+	{
+		label: <BsFillPlayBtnFill className="at-relative at-top-0.5" />,
+		value: 'video',
+	},
+	{
+		label: <BsFillVolumeUpFill className="at-relative at-top-0.5" />,
+		value: 'audio',
+	},
+]
+
 const MediaLibraryButton = (props: TMediaLibraryButton) => {
-	const { bunny_library_id } = useBunny()
 	const currentBlock = props.editor.getBlock(props.block)
-	const currentBlockProps = currentBlock?.props
+	const currentBlockProps = currentBlock?.props || props.block.props
 
 	// 封裝一個簡單的 editor 更新函數，包含 debounce
 	const update = debounce((key: string, value: any) => {
@@ -40,10 +51,9 @@ const MediaLibraryButton = (props: TMediaLibraryButton) => {
 		})
 	}, 500)
 
-	// 要顯示的副工具列
-	const [tool, setTool] = useState<string | null>(null)
 	// 為了讓 input 的 defaultValue 的整個組件可以重新 render 重新設置 defaultValue，透過 key 來強制重新 render
 	const [key, setKey] = useState<number>(0)
+	const [showTool, setShowTool] = useState(false)
 
 	const { show, close, modalProps, ...mediaLibraryProps } =
 		useMediaLibraryModal({
@@ -66,17 +76,19 @@ const MediaLibraryButton = (props: TMediaLibraryButton) => {
 
 	const vId = currentBlockProps?.vId
 
-	const videoUrl = `https://iframe.mediadelivery.net/embed/${bunny_library_id}/${vId}?autoplay=false&loop=false&muted=false&preload=true&responsive=true`
-
 	useEffect(() => {
-		if (!vId) {
+		if (!vId && currentBlock) {
+			console.log('⭐show  vId:', vId, currentBlock)
 			show()
 		}
 	}, [vId])
 
 	return (
 		<>
-			<div>
+			<div
+				onMouseEnter={() => setShowTool(true)}
+				onMouseLeave={() => setShowTool(false)}
+			>
 				{!!vId && (
 					<>
 						<div
@@ -91,10 +103,22 @@ const MediaLibraryButton = (props: TMediaLibraryButton) => {
 							/>
 						</div>
 						<div
-							className="at-py-1 at-px-2 at-bg-gray-100 at-rounded-md"
+							className={cn(
+								'at-py-1 at-px-2 at-bg-gray-100 at-rounded-md at-transition-opacity at-duration-300',
+								showTool ? 'at-opacity-100' : 'at-opacity-30',
+							)}
 							key={key}
 						>
 							<div className="at-flex at-items-center at-justify-center at-gap-x-2">
+								<Radio.Group
+									options={playerOptions}
+									size="small"
+									defaultValue={currentBlockProps.player}
+									optionType="button"
+									buttonStyle="solid"
+									onChange={(e) => update('player', e.target.value)}
+								/>
+
 								<Space.Compact>
 									<InputNumber
 										addonBefore="寬"
