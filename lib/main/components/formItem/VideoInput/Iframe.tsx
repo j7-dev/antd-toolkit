@@ -7,7 +7,7 @@ import {
 	useState,
 } from 'react'
 import { DeleteOutlined } from '@ant-design/icons'
-import { TVideoType } from './types/video'
+import { TVideoType } from '@/main/types/video'
 
 const { Item } = Form
 
@@ -53,7 +53,7 @@ const Iframe: FC<{
 
 	const videoId = watchField?.id
 	const validVideoId = watchField && videoId
-	const invalidVideoId = watchField && videoId === null
+	const invalidVideoId = watchField && !videoId
 
 	const embedVideoUrl = getEmbedVideoUrl(videoId)
 
@@ -66,7 +66,7 @@ const Iframe: FC<{
 	}
 
 	return (
-		<div className="at-relative">
+		<div className="at-relative [&_*]:at-box-border">
 			<Input
 				size="small"
 				allowClear
@@ -90,7 +90,7 @@ const Iframe: FC<{
 			{validVideoId && (
 				<>
 					<div
-						className="at-aspect-video at-w-full at-p-2 at-box-border"
+						className="at-aspect-video at-w-full at-p-2"
 						style={{
 							border: '1px dashed #d9d9d9',
 							backgroundColor: 'rgba(0, 0, 0, 0.02)',

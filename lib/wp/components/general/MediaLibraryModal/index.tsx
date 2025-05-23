@@ -2,6 +2,8 @@ import { memo } from 'react'
 import { Modal, ModalProps } from 'antd'
 import { MediaLibrary, TMediaLibraryProps } from '@/wp'
 
+export * from './hooks'
+
 const MediaLibraryModalComponent = ({
 	modalProps,
 	mediaLibraryProps,

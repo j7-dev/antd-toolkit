@@ -206,13 +206,18 @@ const INIT: any = [
 			fileType: 'image',
 		},
 	},
-
 	{
 		type: 'mediaLibrary',
 		props: {
 			title: 'sample-2-sample-2-2.csv',
 			url: 'http://test.local/wp-content/uploads/2025/02/sample-2-sample-2-2.csv',
 			fileType: 'other',
+		},
+	},
+	{
+		type: 'bunnyVideo',
+		props: {
+			vId: '0c2f90dd-d6a2-49be-8b72-e29ad111097a',
 		},
 	},
 

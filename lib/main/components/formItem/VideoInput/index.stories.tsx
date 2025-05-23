@@ -2,6 +2,7 @@ import React from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
 import { VideoInput } from './index'
 import { refineDecorator } from '../../../../stories'
+import { MediaLibraryNotification } from '../../../../refine/bunny'
 
 const meta: Meta<typeof VideoInput> & {
 	argTypes: any
@@ -34,9 +35,12 @@ export const General: Story = {
 	name: '一般用法',
 	render: () => {
 		return (
-			<div className="at-w-[20rem]">
-				<VideoInput formItemProps={{ name: 'feature_video' }} />
-			</div>
+			<>
+				<div className="at-w-[20rem]">
+					<VideoInput formItemProps={{ name: 'feature_video' }} />
+				</div>
+				<MediaLibraryNotification />
+			</>
 		)
 	},
 	decorators: [refineDecorator],

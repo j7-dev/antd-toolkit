@@ -1,47 +1,42 @@
+import { FC, useEffect } from 'react'
 import { Form, FormItemProps, Button } from 'antd'
-import { FC } from 'react'
 import { DeleteOutlined } from '@ant-design/icons'
-import NoLibraryId from './NoLibraryId'
 import { TVideo } from '@/main/types'
-import { useSetAtom } from 'jotai'
-import { useBunny, mediaLibraryAtom } from '@/refine'
+import { useBunny } from '@/refine'
+import {
+	useMediaLibraryModal,
+	MediaLibraryModal,
+} from '@/refine/bunny/MediaLibraryModal'
 
 const { Item } = Form
 const Bunny: FC<FormItemProps> = (formItemProps) => {
-	const { bunny_library_id, bunny_stream_api_key, bunny_cdn_hostname } =
-		useBunny()
+	const { bunny_library_id } = useBunny()
 	const form = Form.useFormInstance()
 
 	const name = formItemProps?.name
-	const recordId = Form.useWatch(['id'], form)
 
 	// 取得後端傳來的 saved video
 	const savedVideo: TVideo | undefined = Form.useWatch(name, form)
 
-	const setMediaLibrary = useSetAtom(mediaLibraryAtom)
+	const { show, close, modalProps, ...mediaLibraryProps } =
+		useMediaLibraryModal({
+			onConfirm: (selectedItems) => {
+				form.setFieldValue(name, {
+					type: 'bunny-stream-api',
+					id: selectedItems?.[0]?.guid || '',
+					meta: {},
+				})
+			},
+		})
 
-	const handleOpenMediaLibrary = () => {
-		setMediaLibrary((prev) => ({
-			...prev,
-			modalProps: {
-				...prev.modalProps,
-				open: true,
-			},
-			mediaLibraryProps: {
-				...prev.mediaLibraryProps,
-				selectedVideos: [],
-			},
-			name,
-			form,
-		}))
-	}
+	useEffect(() => {
+		if (!savedVideo?.id) {
+			show()
+		}
+	}, [])
 
 	if (!name) {
-		throw new Error('name is required')
-	}
-
-	if (!bunny_library_id || !bunny_stream_api_key || !bunny_cdn_hostname) {
-		return <NoLibraryId type="video" />
+		throw new Error('VideoInput name is required')
 	}
 
 	const isEmpty = savedVideo?.id === ''
@@ -62,13 +57,13 @@ const Bunny: FC<FormItemProps> = (formItemProps) => {
 				size="small"
 				type="link"
 				className="at-ml-0 at-mb-2 at-pl-0"
-				onClick={handleOpenMediaLibrary}
+				onClick={show}
 			>
 				開啟 Bunny 媒體庫
 			</Button>
 			<Item hidden {...formItemProps} />
 			{/* 如果章節已經有存影片，則顯示影片，有瀏覽器 preview，則以 瀏覽器 preview 優先 */}
-			{recordId && !isEmpty && (
+			{!isEmpty && (
 				<div className="at-relative at-aspect-video at-rounded-lg at-border at-border-dashed at-border-gray-300">
 					<div className="at-absolute at-size-full at-top-0 at-left-0 at-p-2">
 						<div className="at-size-full at-rounded-xl at-overflow-hidden">
@@ -98,6 +93,13 @@ const Bunny: FC<FormItemProps> = (formItemProps) => {
 					</div>
 				</div>
 			)}
+			<MediaLibraryModal
+				modalProps={modalProps}
+				mediaLibraryProps={{
+					...mediaLibraryProps,
+					initialIds: savedVideo?.id ? [savedVideo?.id] : [],
+				}}
+			/>
 		</div>
 	)
 }

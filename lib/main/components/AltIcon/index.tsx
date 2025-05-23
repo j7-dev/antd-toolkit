@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Alt = ({
+export const AltIcon = ({
 	color = '#444',
 	className = 'at-size-4',
 }: {
@@ -31,5 +31,3 @@ const Alt = ({
 		</svg>
 	)
 }
-
-export default Alt

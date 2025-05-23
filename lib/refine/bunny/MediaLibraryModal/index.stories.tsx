@@ -1,6 +1,7 @@
 import React from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
 import { MediaLibraryModal } from './index'
+import { MediaLibraryNotification } from '../MediaLibraryNotification'
 import { refineDecorator } from '../../../stories'
 import { useMediaLibraryModal } from './hooks'
 import { Button } from 'antd'
@@ -49,6 +50,7 @@ export const General: Story = {
 						...mediaLibraryProps,
 					}}
 				/>
+				<MediaLibraryNotification />
 			</>
 		)
 	},

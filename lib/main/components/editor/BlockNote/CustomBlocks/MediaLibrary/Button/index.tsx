@@ -1,7 +1,6 @@
 import { memo, useEffect, useState } from 'react'
 import {
 	Button,
-	Modal,
 	Select,
 	Space,
 	InputNumber,
@@ -23,11 +22,13 @@ import {
 	DefaultStyleSchema,
 } from '@blocknote/core'
 import { debounce } from 'lodash-es'
-import { useApiUrlMediaLibraryModal, useProps } from '../hooks'
-import Alt from './Alt'
-import { MediaLibrary } from '@/wp'
+import { useProps } from '../hooks'
 import { TbSwitchHorizontal } from 'react-icons/tb'
-import { cn, isImageFile, isAudioFile, isVideoFile } from '@/main/utils'
+import { cn, isImageFile, isAudioFile, isVideoFile, AltIcon } from '@/main'
+import {
+	useMediaLibraryModal,
+	MediaLibraryModal,
+} from '@/wp/components/general/MediaLibraryModal'
 import Render from '../Render'
 
 export type TMediaLibraryButton = ReactCustomBlockRenderProps<
@@ -51,6 +52,8 @@ function getFileType(url: string) {
 
 const MediaLibraryButton = () => {
 	const props = useProps()
+	const currentBlock = props.editor.getBlock(props.block)
+	const currentBlockProps = currentBlock?.props
 
 	// 封裝一個簡單的 editor 更新函數，包含 debounce
 	const update = debounce((key: string, value: any) => {
@@ -69,7 +72,7 @@ const MediaLibraryButton = () => {
 	const [key, setKey] = useState<number>(0)
 
 	const { show, close, modalProps, ...mediaLibraryProps } =
-		useApiUrlMediaLibraryModal({
+		useMediaLibraryModal({
 			onConfirm: (items) => {
 				if (items?.length) {
 					const item = items?.[0]
@@ -91,10 +94,6 @@ const MediaLibraryButton = () => {
 				}
 			},
 		})
-
-	const currentBlock = props.editor.getBlock(props.block)
-
-	const currentBlockProps = currentBlock?.props
 
 	useEffect(() => {
 		if (!currentBlockProps?.url) {
@@ -127,6 +126,8 @@ const MediaLibraryButton = () => {
 								{'other' !== fileType && (
 									<Space.Compact>
 										<InputNumber
+											addonBefore="寬"
+											className="at-w-32"
 											size="small"
 											defaultValue={currentBlockProps.widthValue}
 											onChange={(value) => update('widthValue', value)}
@@ -178,7 +179,9 @@ const MediaLibraryButton = () => {
 										<Button
 											type={tool === 'alt' ? 'primary' : 'default'}
 											size="small"
-											icon={<Alt color={tool === 'alt' ? '#fff' : '#444'} />}
+											icon={
+												<AltIcon color={tool === 'alt' ? '#fff' : '#444'} />
+											}
 											onClick={() => setTool(tool === 'alt' ? null : 'alt')}
 										/>
 									</Tooltip>
@@ -265,11 +268,13 @@ const MediaLibraryButton = () => {
 					</>
 				)}
 
-				<Modal {...modalProps}>
-					<div className="at-max-h-[75vh] at-overflow-x-hidden at-overflow-y-auto at-pr-4">
-						<MediaLibrary {...mediaLibraryProps} />
-					</div>
-				</Modal>
+				<MediaLibraryModal
+					modalProps={modalProps}
+					mediaLibraryProps={{
+						initialIds: [],
+						...mediaLibraryProps,
+					}}
+				/>
 			</div>
 		</>
 	)
