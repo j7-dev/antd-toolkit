@@ -1,21 +1,29 @@
 import { memo } from 'react'
-import { CopyText } from '@/main/components'
+import { CopyText, ExtIcon } from '@/main/components'
 import { Button, Tooltip, Form, Input } from 'antd'
 import { CopyOutlined, ExportOutlined } from '@ant-design/icons'
 import { DeleteButton } from '@refinedev/antd'
 import { TAttachment } from '@/wp/components/general/MediaLibrary/types'
-import { keyToWord } from '@/main/utils'
+import {
+	keyToWord,
+	isImageFile,
+	isVideoFile,
+	isAudioFile,
+	getFileExtension,
+	useEnv,
+} from '@/main'
 import { useUpdate } from '@refinedev/core'
 import { notificationProps } from '@/refine'
+import { FaWordpress } from 'react-icons/fa'
 
 const { Item } = Form
 
 const ItemInfo = ({ item }: { item: TAttachment }) => {
 	const [form] = Form.useForm()
+	const { SITE_URL } = useEnv()
 
 	// @ts-ignore
 	const { id, url, img_url = '', type = '' } = item
-	const isImage = type === 'image'
 	const { mutate: update, isLoading } = useUpdate({
 		resource: 'posts',
 	})
@@ -29,13 +37,33 @@ const ItemInfo = ({ item }: { item: TAttachment }) => {
 		})
 	}
 
+	const ext = getFileExtension(url)
+	const isImage = isImageFile(url)
+	const isVideo = isVideoFile(url)
+	const isAudio = isAudioFile(url)
+	const isOther = !isImage && !isVideo && !isAudio
+
 	return (
 		<>
-			<img
-				className="at-w-full at-rounded-md at-aspect-square at-object-contain"
-				src={img_url}
-			/>
-			<div className="at-flex at-gap-4 at-my-4">
+			{isImage && (
+				<img
+					className="at-w-full at-rounded-md at-aspect-square at-object-contain"
+					src={img_url}
+				/>
+			)}
+			{isVideo && (
+				<video src={url} controls className="at-w-full at-rounded-md" />
+			)}
+			{isAudio && (
+				<audio src={url} controls className="at-w-full at-rounded-md" />
+			)}
+			{isOther && (
+				<div className="at-w-full at-rounded-md at-text-center at-object-contain">
+					<ExtIcon ext={ext} className="at-size-3/4" />
+				</div>
+			)}
+
+			<div className="at-flex at-gap-2 at-my-4">
 				<CopyText text={url}>
 					<Button type="default" icon={<CopyOutlined />} iconPosition="end">
 						複製下載連結
@@ -43,6 +71,13 @@ const ItemInfo = ({ item }: { item: TAttachment }) => {
 				</CopyText>
 				<Tooltip title="新分頁打開">
 					<Button icon={<ExportOutlined />} href={url} target="_blank" />
+				</Tooltip>
+				<Tooltip title="傳統介面檢視">
+					<Button
+						icon={<FaWordpress className="at-text-gray-400" />}
+						href={`${SITE_URL}/wp-admin/upload.php?item=${id}`}
+						target="_blank"
+					/>
 				</Tooltip>
 				<Tooltip title="刪除檔案">
 					<DeleteButton
