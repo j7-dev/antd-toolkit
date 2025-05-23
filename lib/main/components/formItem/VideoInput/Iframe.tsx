@@ -90,7 +90,7 @@ const Iframe: FC<{
 			{validVideoId && (
 				<>
 					<div
-						className="at-aspect-video at-w-full at-p-2"
+						className="at-aspect-video at-w-full at-p-2 at-box-border"
 						style={{
 							border: '1px dashed #d9d9d9',
 							backgroundColor: 'rgba(0, 0, 0, 0.02)',

@@ -1,7 +1,7 @@
 import React from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
 import { VideoInput } from './index'
-import { Form } from 'antd'
+import { refineDecorator } from '../../../../stories'
 
 const meta: Meta<typeof VideoInput> & {
 	argTypes: any
@@ -32,18 +32,12 @@ type Story = StoryObj<typeof VideoInput>
 
 export const General: Story = {
 	name: '一般用法',
-	args: {
-		formItemProps: {
-			name: 'feature_video',
-		},
+	render: () => {
+		return (
+			<div className="at-w-[20rem]">
+				<VideoInput formItemProps={{ name: 'feature_video' }} />
+			</div>
+		)
 	},
-	decorators: [
-		(Story) => (
-			<Form>
-				<div className="at-w-[20rem]">
-					<Story />
-				</div>
-			</Form>
-		),
-	],
+	decorators: [refineDecorator],
 }

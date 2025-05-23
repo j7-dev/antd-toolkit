@@ -1,5 +1,4 @@
 import { UploadProps } from 'antd'
-import { useSetAtom } from 'jotai'
 
 export type TAttachment = {
 	id: string
