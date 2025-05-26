@@ -53,7 +53,6 @@ function getFileType(url: string) {
 const MediaLibraryButton = () => {
 	const props = useProps()
 	const currentBlock = props.editor.getBlock(props.block)
-
 	const currentBlockProps = currentBlock?.props || props.block.props
 
 	// 封裝一個簡單的 editor 更新函數，包含 debounce

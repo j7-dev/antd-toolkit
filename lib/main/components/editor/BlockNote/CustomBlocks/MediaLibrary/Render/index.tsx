@@ -38,8 +38,11 @@ const index: FC<
 	return (
 		<div
 			{...divDataProps}
-			className="at-flex at-w-full at-flex-col at-justify-center"
 			style={{
+				display: 'flex',
+				width: '100%',
+				flexDirection: 'column',
+				justifyContent: 'center',
 				alignItems: block?.props?.align || 'start',
 			}}
 		>

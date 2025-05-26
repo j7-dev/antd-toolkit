@@ -1,27 +1,48 @@
-import {
-	defaultProps,
-	insertOrUpdateBlock,
-	CustomBlockConfig,
-} from '@blocknote/core'
+import { useState } from 'react'
+import { insertOrUpdateBlock, CustomBlockConfig } from '@blocknote/core'
 import { createReactBlockSpec } from '@blocknote/react'
-import { Menu } from '@mantine/core'
 import { MdCancel, MdCheckCircle, MdError, MdInfo } from 'react-icons/md'
 import { schema } from '../../useBlockNote'
+import { Alert as AntdAlert, Select } from 'antd'
+import {
+	InfoCircleFilled,
+	CheckCircleFilled,
+	ExclamationCircleFilled,
+	CloseCircleFilled,
+} from '@ant-design/icons'
 import { RiAlertFill } from 'react-icons/ri'
 import { isLegacy } from '@/main/components/editor/BlockNote/utils'
+import { cn } from '@/main/utils'
 
 const CONFIG: CustomBlockConfig = {
 	type: 'alert',
 	propSchema: {
-		textAlignment: defaultProps.textAlignment,
-		textColor: defaultProps.textColor,
 		type: {
-			default: 'warning',
+			default: 'info',
 			values: ['warning', 'error', 'info', 'success'],
 		},
 	},
 	content: 'inline',
 }
+
+const OPTIONS = [
+	{
+		label: '資訊',
+		value: 'info',
+	},
+	{
+		label: '成功',
+		value: 'success',
+	},
+	{
+		label: '警告',
+		value: 'warning',
+	},
+	{
+		label: '錯誤',
+		value: 'error',
+	},
+]
 
 export const alertMenuItem = (editor: typeof schema.BlockNoteEditor) => ({
 	key: CONFIG.type,
@@ -95,59 +116,51 @@ export const alertTypes = [
  */
 export const Alert = createReactBlockSpec(CONFIG, {
 	render: (props) => {
+		const currentBlock = props.editor.getBlock(props.block)
+		const currentBlockProps = currentBlock?.props || props.block.props
+
 		const alertType = alertTypes.find(
 			(a) => a.value === props.block.props?.type,
 		)!
-		const Icon = alertType.icon
+
+		const [showTool, setShowTool] = useState<boolean>(false)
+
 		return (
 			<div
-				className={'alert'}
 				data-block-key={props.block?.type}
 				data-alert-type={props.block.props?.type}
+				onMouseEnter={() => setShowTool(true)}
+				onMouseLeave={() => setShowTool(false)}
 			>
-				{/*Icon which opens a menu to choose the Alert type*/}
-				<Menu withinPortal={false} zIndex={999999}>
-					<Menu.Target>
-						<div className={'alert-icon-wrapper'} contentEditable={false}>
-							<Icon
-								className={'alert-icon'}
-								data-alert-icon-type={props.block.props?.type}
-								size={32}
-							/>
-						</div>
-					</Menu.Target>
-					{/*Dropdown to change the Alert type*/}
-					<Menu.Dropdown>
-						<Menu.Label>Alert Type</Menu.Label>
-						<Menu.Divider />
-						{alertTypes.map((type) => {
-							const ItemIcon = type.icon
-
-							return (
-								<Menu.Item
-									key={type.value}
-									leftSection={
-										<ItemIcon
-											className={'alert-icon'}
-											data-alert-icon-type={type.value}
-										/>
-									}
-									onClick={() =>
-										props.editor.updateBlock(props.block, {
-											type: 'alert',
-											// @ts-ignore
-											props: { type: type.value },
-										})
-									}
-								>
-									{type.title}
-								</Menu.Item>
-							)
-						})}
-					</Menu.Dropdown>
-				</Menu>
-				{/*Rich text field for user to type in className 必須是 bn-inline-content*/}
-				<div className="bn-inline-content" ref={props.contentRef} />
+				<AntdAlert
+					className="at-w-full"
+					message={<div className="bn-inline-content" ref={props.contentRef} />}
+					type={currentBlockProps?.type}
+					showIcon
+				/>
+				<div
+					className={cn(
+						'at-py-1 at-px-2 at-bg-gray-100 at-rounded-md at-transition-opacity at-duration-300',
+						showTool ? 'at-opacity-100' : 'at-opacity-30',
+					)}
+				>
+					<div className="at-flex at-justify-center">
+						<Select
+							size="small"
+							defaultValue={currentBlockProps.type}
+							onChange={(value) => {
+								props.editor.updateBlock(props.block, {
+									props: {
+										...currentBlockProps,
+										type: value,
+									} as any,
+								})
+							}}
+							className="at-w-24"
+							options={OPTIONS}
+						/>
+					</div>
+				</div>
 			</div>
 		)
 	},
@@ -171,6 +184,35 @@ export const Alert = createReactBlockSpec(CONFIG, {
 		return {
 			type: type || 'warning',
 		}
+	},
+
+	toExternalHTML: ({ block, editor, contentRef }) => {
+		const alertType = block.props?.type
+
+		return (
+			<div
+				data-block-key={block?.type}
+				className="alert"
+				data-alert-type={alertType}
+			>
+				<div className="alert-icon-wrapper">
+					{alertType === 'info' && <InfoCircleFilled className="alert-icon" />}
+					{alertType === 'warning' && (
+						<ExclamationCircleFilled className="alert-icon" />
+					)}
+					{alertType === 'error' && (
+						<CloseCircleFilled className="alert-icon" />
+					)}
+					{alertType === 'success' && (
+						<CheckCircleFilled className="alert-icon" />
+					)}
+				</div>
+				<div className="bn-inline-content">
+					{/* @ts-ignore */}
+					{block?.content?.[0]?.text || ''}
+				</div>
+			</div>
+		)
 	},
 })
 

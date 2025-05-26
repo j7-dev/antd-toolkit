@@ -21,13 +21,22 @@ export const Other: FC<
 	const title = block?.props?.title || ''
 
 	return (
-		<div className="at-flex at-items-center at-gap-x-2">
-			<ExtIcon ext={ext} />
+		<div
+			style={{
+				display: 'flex',
+				alignItems: 'center',
+				columnGap: '0.5rem',
+			}}
+		>
+			<ExtIcon ext={ext} style={{ width: '1.5rem', height: '1.5rem' }} />
 			<a
 				href={url}
 				target={target}
 				rel="noopener noreferrer"
-				className="at-contents at-text-sm"
+				style={{
+					display: 'contents',
+					fontSize: '0.75rem',
+				}}
 			>
 				{title}
 			</a>

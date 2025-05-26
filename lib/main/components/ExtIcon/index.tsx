@@ -3,7 +3,8 @@ import React, { FC } from 'react'
 export const ExtIcon: FC<{
 	ext: string
 	className?: string
-}> = ({ ext, className = 'at-size-6' }) => {
+	style?: React.CSSProperties
+}> = ({ ext, className = 'at-size-6', style }) => {
 	if ('txt' === ext) {
 		return (
 			<svg
@@ -107,6 +108,7 @@ export const ExtIcon: FC<{
 	if (['ppt', 'pptx'].includes(ext)) {
 		return (
 			<svg
+				style={style}
 				className={className}
 				version="1.1"
 				xmlns="http://www.w3.org/2000/svg"

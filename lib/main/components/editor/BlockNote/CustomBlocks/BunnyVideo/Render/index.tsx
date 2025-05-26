@@ -49,15 +49,20 @@ const index: FC<
 	return (
 		<div
 			{...divDataProps}
-			className="at-flex at-w-full at-flex-col at-justify-center"
 			style={{
+				display: 'flex',
+				width: '100%',
+				flexDirection: 'column',
+				justifyContent: 'center',
 				alignItems: align || 'start',
 			}}
 		>
 			{'video' === player && (
 				<iframe
-					className="at-border-0 at-rounded-xl at-aspect-video"
 					style={{
+						border: 'none',
+						outline: 'none',
+						borderRadius: '0.75rem',
 						width: `${widthValue}${widthUnit}`,
 						maxWidth: '100%',
 						aspectRatio,

@@ -101,7 +101,16 @@ const INIT: any = [
 	},
 	{
 		type: 'alert',
-		content: '警報 Alert',
+		props: {
+			type: 'info',
+		},
+		content: [
+			{
+				type: 'text',
+				text: 'Alert',
+				styles: {},
+			},
+		],
 	},
 	{
 		type: 'bulletListItem',

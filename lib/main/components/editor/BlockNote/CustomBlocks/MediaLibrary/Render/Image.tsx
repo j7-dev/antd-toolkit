@@ -29,7 +29,9 @@ export const Image: FC<
 					href={link}
 					target={target}
 					rel="noopener noreferrer"
-					className="at-contents"
+					style={{
+						display: 'contents',
+					}}
 				>
 					<img
 						alt={alt}
@@ -55,7 +57,15 @@ export const Image: FC<
 			)}
 
 			{caption && (
-				<div className="at-mt-1 at-text-xs at-text-gray-400">▲ {caption}</div>
+				<div
+					style={{
+						marginTop: '0.25rem',
+						fontSize: '0.75rem',
+						color: '#9ca3af',
+					}}
+				>
+					▲ {caption}
+				</div>
 			)}
 		</>
 	)

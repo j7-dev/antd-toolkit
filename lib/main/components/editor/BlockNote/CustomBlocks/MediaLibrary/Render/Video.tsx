@@ -23,7 +23,15 @@ export const Video: FC<
 	return (
 		<>
 			{!!title && (
-				<p className="at-text-sm at-text-gray-400 !at-mb-2">{title}</p>
+				<p
+					style={{
+						fontSize: '0.75rem',
+						color: '#9ca3af',
+						marginBottom: '0.5rem',
+					}}
+				>
+					{title}
+				</p>
 			)}
 			<video
 				controls
