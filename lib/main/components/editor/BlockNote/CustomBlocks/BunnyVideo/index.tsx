@@ -5,6 +5,7 @@ import { FaPhotoVideo } from 'react-icons/fa'
 import { TMediaLibraryButton } from './Button'
 import Button from './Button'
 import Render from './Render'
+import { isLegacy } from '@/main/components/editor/BlockNote/utils'
 
 const CONFIG: CustomBlockConfig = {
 	type: 'bunnyVideo',
@@ -55,6 +56,9 @@ export const BunnyVideo = createReactBlockSpec(CONFIG, {
 	// ❗parse 是例如，將剪貼簿複製到編輯器時，要怎麼解析 HTML 轉換為 BLOCK
 	// @ts-ignore
 	parse: (element: HTMLElement) => {
+		if (isLegacy(element)) {
+			return parseLegacy(element)
+		}
 		// 取得節點上的 data-block-key
 		const blockType = element.getAttribute('data-block-key')
 		if (CONFIG.type !== blockType) return
@@ -73,3 +77,18 @@ export const BunnyVideo = createReactBlockSpec(CONFIG, {
 		<Render block={block} editor={editor} contentRef={contentRef} />
 	),
 })
+
+function parseLegacy(element: HTMLElement) {
+	const contentType = element.getAttribute('data-content-type')
+	if (![CONFIG.type, 'bunnyAudio'].includes(contentType || '')) return
+
+	const player = 'bunnyAudio' === contentType ? 'audio' : 'video'
+
+	return {
+		widthValue: 100,
+		widthUnit: '%',
+		player,
+		aspectRatio: 1.7778,
+		vId: element.getAttribute('data-v-id') || '',
+	}
+}

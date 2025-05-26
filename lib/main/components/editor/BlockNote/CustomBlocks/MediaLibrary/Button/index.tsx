@@ -105,15 +105,10 @@ const MediaLibraryButton = () => {
 		}
 	}, [url])
 
-	const fileType = getFileType(url || '')
+	const fileType = currentBlockProps?.fileType || getFileType(url || '')
 
 	return (
 		<>
-			{!url && (
-				<Button type="primary" onClick={show} size="small">
-					打開媒體庫
-				</Button>
-			)}
 			<div
 				className="at-w-full"
 				onMouseEnter={() => setShowTool(true)}

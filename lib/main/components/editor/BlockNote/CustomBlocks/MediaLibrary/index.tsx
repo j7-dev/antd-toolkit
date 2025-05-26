@@ -5,6 +5,7 @@ import Button from './Button'
 import { FaPhotoVideo } from 'react-icons/fa'
 import { PropsContext } from './hooks'
 import Render from './Render'
+import { isLegacy, toFlexAlign } from '@/main/components/editor/BlockNote/utils'
 
 const CONFIG: CustomBlockConfig = {
 	type: 'mediaLibrary',
@@ -53,7 +54,6 @@ export const mediaLibraryMenuItem = (
 	title: '媒體庫', // 選單中文
 	subtext: 'WordPress 媒體庫', // 說明文字
 	onItemClick: () => {
-		console.log('⭐ onItemClick:', CONFIG.type)
 		insertOrUpdateBlock(editor, {
 			type: CONFIG.type,
 		})
@@ -78,6 +78,10 @@ export const MediaLibrary = createReactBlockSpec(CONFIG, {
 	// ❗parse 是例如，將剪貼簿複製到編輯器時，要怎麼解析 HTML 轉換為 BLOCK
 	// @ts-ignore
 	parse: (element: HTMLElement) => {
+		if (isLegacy(element)) {
+			return parseLegacy(element)
+		}
+
 		// 取得節點上的 data-block-key
 		const blockType = element.getAttribute('data-block-key')
 		if (CONFIG.type !== blockType) return
@@ -100,3 +104,43 @@ export const MediaLibrary = createReactBlockSpec(CONFIG, {
 		<Render block={block} editor={editor} contentRef={contentRef} />
 	),
 })
+
+function parseLegacy(element: HTMLElement) {
+	const contentType = element.getAttribute('data-content-type')
+	if ('image' === contentType) {
+		const wrapperNode = element.querySelector('.bn-file-block-content-wrapper')
+		const imgNode = wrapperNode?.querySelector('img')
+		const style = wrapperNode?.getAttribute('style')
+		const widthValue = Number(style?.match(/width: (\d+)px/)?.[1]) || 100
+
+		return {
+			widthValue,
+			widthUnit: 'px',
+			align: toFlexAlign(
+				element.getAttribute('data-text-alignment') as
+					| 'center'
+					| 'start'
+					| 'left'
+					| 'right'
+					| ''
+					| undefined
+					| null,
+			),
+			url: element.getAttribute('data-url') || '',
+			alt: imgNode?.getAttribute('alt') || '',
+			title: imgNode?.getAttribute('title') || '',
+			caption: element.getAttribute('data-caption') || '',
+			fileType: 'image',
+		}
+	}
+
+	if ('file' === contentType) {
+		const url = element.getAttribute('data-url') || ''
+
+		return {
+			url,
+			title: element.getAttribute('data-name') || '',
+			fileType: 'other',
+		}
+	}
+}

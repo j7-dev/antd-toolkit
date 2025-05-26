@@ -8,6 +8,7 @@ import { Menu } from '@mantine/core'
 import { MdCancel, MdCheckCircle, MdError, MdInfo } from 'react-icons/md'
 import { schema } from '../../useBlockNote'
 import { RiAlertFill } from 'react-icons/ri'
+import { isLegacy } from '@/main/components/editor/BlockNote/utils'
 
 const CONFIG: CustomBlockConfig = {
 	type: 'alert',
@@ -134,6 +135,7 @@ export const Alert = createReactBlockSpec(CONFIG, {
 									onClick={() =>
 										props.editor.updateBlock(props.block, {
 											type: 'alert',
+											// @ts-ignore
 											props: { type: type.value },
 										})
 									}
@@ -144,14 +146,18 @@ export const Alert = createReactBlockSpec(CONFIG, {
 						})}
 					</Menu.Dropdown>
 				</Menu>
-				{/*Rich text field for user to type in*/}
-				<div className={'inline-content'} ref={props.contentRef} />
+				{/*Rich text field for user to type in className 必須是 bn-inline-content*/}
+				<div className="bn-inline-content" ref={props.contentRef} />
 			</div>
 		)
 	},
 
 	// @ts-ignore
 	parse: (element: HTMLElement) => {
+		if (isLegacy(element)) {
+			return parseLegacy(element)
+		}
+
 		// 取得節點上的 data-block-key
 		const blockType = element.getAttribute('data-block-key')
 		if (CONFIG.type !== blockType) return
@@ -167,3 +173,16 @@ export const Alert = createReactBlockSpec(CONFIG, {
 		}
 	},
 })
+
+function parseLegacy(element: HTMLElement) {
+	const contentType = element.getAttribute('data-content-type')
+	if (CONFIG.type !== contentType) return
+
+	const alertType =
+		element.querySelector('.alert')?.getAttribute('data-alert-type') ||
+		'warning'
+
+	return {
+		type: alertType,
+	}
+}

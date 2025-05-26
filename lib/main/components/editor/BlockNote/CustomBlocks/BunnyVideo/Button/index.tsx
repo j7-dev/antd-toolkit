@@ -78,14 +78,14 @@ const MediaLibraryButton = (props: TMediaLibraryButton) => {
 
 	useEffect(() => {
 		if (!vId && currentBlock) {
-			console.log('⭐show  vId:', vId, currentBlock)
 			show()
 		}
-	}, [vId])
+	}, [vId, currentBlock])
 
 	return (
 		<>
 			<div
+				className="at-w-full"
 				onMouseEnter={() => setShowTool(true)}
 				onMouseLeave={() => setShowTool(false)}
 			>
@@ -139,17 +139,19 @@ const MediaLibraryButton = (props: TMediaLibraryButton) => {
 									/>
 								</Space.Compact>
 
-								<InputNumber
-									addonBefore={
-										<Tooltip title="可自由填入影片長寬比，例如 16/9 為 1.7778">
-											比例
-										</Tooltip>
-									}
-									className="at-w-32"
-									size="small"
-									defaultValue={currentBlockProps.aspectRatio}
-									onChange={(value) => update('aspectRatio', value)}
-								/>
+								{'video' === currentBlockProps.player && (
+									<InputNumber
+										addonBefore={
+											<Tooltip title="可自由填入影片長寬比，例如 16/9 為 1.7778">
+												比例
+											</Tooltip>
+										}
+										className="at-w-32"
+										size="small"
+										defaultValue={currentBlockProps.aspectRatio}
+										onChange={(value) => update('aspectRatio', value)}
+									/>
+								)}
 
 								<Space.Compact>
 									{Object.entries({

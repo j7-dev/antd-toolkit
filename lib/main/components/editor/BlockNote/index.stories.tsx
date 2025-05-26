@@ -369,11 +369,143 @@ export const General: Story = {
 	decorators: [refineDecorator],
 }
 
+const DEFAULT_HTML = `<div class="bn-block-group" data-node-type="blockGroup">
+	<div class="bn-block-outer" data-node-type="blockOuter"
+		data-id="e0011fd6-408a-4fa1-85de-570026f0859e">
+		<div class="bn-block" data-node-type="blockContainer"
+			data-id="e0011fd6-408a-4fa1-85de-570026f0859e">
+			<div class="bn-block-content" data-content-type="paragraph">
+				<p class="bn-inline-content">123</p>
+			</div>
+		</div>
+	</div>
+	<div class="bn-block-outer" data-node-type="blockOuter"
+		data-id="0ab5a166-19e7-440d-ac1e-9d8582e57935">
+		<div class="bn-block" data-node-type="blockContainer"
+			data-id="0ab5a166-19e7-440d-ac1e-9d8582e57935">
+			<div class="bn-block-content" data-content-type="paragraph">
+				<p class="bn-inline-content">456</p>
+			</div>
+		</div>
+	</div>
+	<div class="bn-block-outer" data-node-type="blockOuter"
+		data-id="3e8faf08-8249-4a58-bf6e-b484756ba281">
+		<div class="bn-block" data-node-type="blockContainer"
+			data-id="3e8faf08-8249-4a58-bf6e-b484756ba281">
+			<div class="bn-block-content" data-content-type="codeBlock">
+				<pre><code class="bn-inline-content language-javascript">21212</code></pre>
+			</div>
+		</div>
+	</div>
+	<div class="bn-block-outer" data-node-type="blockOuter"
+		data-id="7fca5f73-072a-4105-8835-c2b746cf987c">
+		<div class="bn-block" data-node-type="blockContainer"
+			data-id="7fca5f73-072a-4105-8835-c2b746cf987c">
+			<div class="bn-block-content" data-content-type="customHTML" data-html="html"
+				data-node-view-wrapper="" style="white-space: normal;">
+				<div>html</div>
+			</div>
+		</div>
+	</div>
+	<div class="bn-block-outer" data-node-type="blockOuter"
+		data-id="6d15d659-7c6c-4cc7-aef5-efdb269949f9">
+		<div class="bn-block" data-node-type="blockContainer"
+			data-id="6d15d659-7c6c-4cc7-aef5-efdb269949f9">
+			<div class="bn-block-content" data-content-type="image"
+				data-name="images?q=tbn:ANd9GcSVZNzrVO-IM0AvficLG0DBPpzuBchDMKigzQ&amp;s"
+				data-url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVZNzrVO-IM0AvficLG0DBPpzuBchDMKigzQ&amp;s"
+				data-file-block="">
+				<div class="bn-file-block-content-wrapper" style="width: 512px;">
+					<div class="bn-visual-media-wrapper"><img class="bn-visual-media"
+							src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVZNzrVO-IM0AvficLG0DBPpzuBchDMKigzQ&amp;s"
+							alt="images?q=tbn:ANd9GcSVZNzrVO-IM0AvficLG0DBPpzuBchDMKigzQ&amp;s"
+							contenteditable="false" draggable="false"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="bn-block-outer" data-node-type="blockOuter"
+		data-id="cf7bb2f3-8e1a-48fb-8e68-026a2051070f">
+		<div class="bn-block" data-node-type="blockContainer"
+			data-id="cf7bb2f3-8e1a-48fb-8e68-026a2051070f">
+			<div class="bn-block-content" data-content-type="file" data-name="sample-2-sample-2-2 (1).csv"
+				data-url="http://test.local/wp-content/uploads/2025/05/sample-2-sample-2-2-1-1.csv"
+				data-file-block="">
+				<div class="bn-file-block-content-wrapper">
+					<div class="bn-file-name-with-icon">
+						<div class="bn-file-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+								fill="currentColor">
+								<path
+									d="M3 8L9.00319 2H19.9978C20.5513 2 21 2.45531 21 2.9918V21.0082C21 21.556 20.5551 22 20.0066 22H3.9934C3.44476 22 3 21.5501 3 20.9932V8ZM10 4V9H5V20H19V4H10Z">
+								</path>
+							</svg></div>
+						<p class="bn-file-name">sample-2-sample-2-2 (1).csv</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="bn-block-outer" data-node-type="blockOuter"
+		data-id="6f341ebb-2421-4214-87ec-331277e56533">
+		<div class="bn-block" data-node-type="blockContainer"
+			data-id="6f341ebb-2421-4214-87ec-331277e56533">
+			<div class="bn-block-content" data-content-type="alert" data-node-view-wrapper=""
+				style="white-space: normal;">
+				<div class="alert" data-alert-type="warning">
+					<div class="alert-icon-wrapper" contenteditable="false" aria-haspopup="menu"
+						aria-expanded="false" aria-controls="mantine-bcqyujlhm-dropdown"
+						id="mantine-bcqyujlhm-target"><svg stroke="currentColor" fill="currentColor"
+							stroke-width="0" viewBox="0 0 24 24" class="alert-icon" data-alert-icon-type="warning"
+							height="32" width="32" xmlns="http://www.w3.org/2000/svg">
+							<path fill="none" d="M0 0h24v24H0z"></path>
+							<path
+								d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+							</path>
+						</svg></div>
+					<div class="bn-inline-content" data-editable="">11</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="bn-block-outer" data-node-type="blockOuter"
+		data-id="9128bba8-679a-491c-9544-1efd923d58a6">
+		<div class="bn-block" data-node-type="blockContainer"
+			data-id="9128bba8-679a-491c-9544-1efd923d58a6">
+			<div class="bn-block-content" data-content-type="bunnyVideo"
+				data-v-id="dcc35759-e1b3-4f09-a0dd-f5a67afa2e92" data-node-view-wrapper=""
+				style="white-space: normal;"><iframe class="border-0 w-full aspect-video rounded-xl"
+					src="https://iframe.mediadelivery.net/embed/244459/dcc35759-e1b3-4f09-a0dd-f5a67afa2e92?autoplay=false&amp;loop=false&amp;muted=false&amp;preload=true&amp;responsive=true"
+					loading="lazy" allow="encrypted-media;picture-in-picture;" allowfullscreen=""></iframe>
+			</div>
+		</div>
+	</div>
+	<div class="bn-block-outer" data-node-type="blockOuter"
+		data-id="be1ff71f-95f9-4c22-b58e-028e0d220ea9">
+		<div class="bn-block" data-node-type="blockContainer"
+			data-id="be1ff71f-95f9-4c22-b58e-028e0d220ea9">
+			<div class="bn-block-content" data-content-type="bunnyAudio"
+				data-v-id="e1989a5e-c54c-46c6-9ba5-df8fcca2ee3e" data-node-view-wrapper=""
+				style="white-space: normal;"><audio id="audioPlayer"
+					data-src="https://vz-da633ab8-b36.b-cdn.net/e1989a5e-c54c-46c6-9ba5-df8fcca2ee3e/playlist.m3u8"
+					controls=""></audio></div>
+		</div>
+	</div>
+	<div class="bn-block-outer" data-node-type="blockOuter"
+		data-id="0af01dd3-13a5-411a-b7f0-ec2be4dca471">
+		<div class="bn-block" data-node-type="blockContainer"
+			data-id="0af01dd3-13a5-411a-b7f0-ec2be4dca471">
+			<div class="bn-block-content" data-content-type="paragraph">
+				<p class="bn-inline-content"></p>
+			</div>
+		</div>
+	</div>
+</div>`
+
 export const ParseHTML: Story = {
 	name: '解析 HTML',
 	args: {},
 	render: () => {
-		const [html, setHtml] = useState('')
+		const [html, setHtml] = useState(DEFAULT_HTML)
 		const { blockNoteViewProps: blockNoteViewProps2, blocks: blocks2 } =
 			useBlockNote()
 
@@ -384,7 +516,6 @@ export const ParseHTML: Story = {
 				try {
 					const blocksFromHTML = await editor2.tryParseHTMLToBlocks(html) // 解析初始 HTML 字串 [1, 2]
 					// console.log('⭐ blocks:', blocks)
-					// console.log('⭐ blocksFromHTML:', blocksFromHTML)
 					editor2.replaceBlocks(editor2.document, blocksFromHTML)
 				} catch (error) {
 					console.error('Failed to parse HTML to blocks:', error)
