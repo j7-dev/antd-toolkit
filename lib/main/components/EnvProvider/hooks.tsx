@@ -45,6 +45,6 @@ export function useEnv<T extends TEnv = TEnv>(): T {
 
 	return {
 		...context,
-		AXIOS_INSTANCE: axiosInstance,
+		AXIOS_INSTANCE: axiosInstance as AxiosInstance,
 	} as T
 }

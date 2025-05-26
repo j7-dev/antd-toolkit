@@ -57,6 +57,10 @@ const config: UserConfig = {
 				'react-icons',
 				'storybook',
         'dayjs',
+				'@blocknote/core',
+				'@blocknote/react',
+				'@blocknote/mantine',
+
 
 
 				// ---
