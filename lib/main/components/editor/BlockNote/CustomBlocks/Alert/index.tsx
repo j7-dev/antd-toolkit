@@ -127,8 +127,7 @@ export const Alert = createReactBlockSpec(CONFIG, {
 
 		return (
 			<div
-				data-block-key={props.block?.type}
-				data-alert-type={props.block.props?.type}
+				className="at-w-full"
 				onMouseEnter={() => setShowTool(true)}
 				onMouseLeave={() => setShowTool(false)}
 			>
