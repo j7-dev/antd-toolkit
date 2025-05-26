@@ -16,6 +16,11 @@ export type TUploadData = {
 	height: number
 }
 
+/**
+ * @description 改用媒體庫上傳
+ * @param apiConfig
+ * @returns
+ */
 export const uploadWP =
 	(apiConfig: TApiConfig) =>
 	async (file: File): Promise<string> => {

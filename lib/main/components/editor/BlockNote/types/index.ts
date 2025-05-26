@@ -18,7 +18,6 @@ export type TUseBlockNoteParams = {
 		DefaultStyleSchema
 	>
 	deps?: React.DependencyList
-	apiConfig: TApiConfig
 	itemsFilter?: (
 		_items: DefaultReactSuggestionItem[],
 		_query: string,

@@ -79,16 +79,14 @@ const CUSTOM_MENU_ORDER = [
 	'bunnyAudio',
 ]
 
-export const useBlockNote = ({
-	options = undefined,
-	deps = [],
-	apiConfig,
-}: TUseBlockNoteParams) => {
+export const useBlockNote = (params?: TUseBlockNoteParams) => {
+	const options = params?.options
+	const deps = params?.deps || []
+
 	/** @see https://www.blocknotejs.org/docs/editor-basics/setup */
 	const editor = useCreateBlockNote(
 		{
 			schema,
-			uploadFile: uploadWP(apiConfig),
 			...options,
 		},
 		deps,
