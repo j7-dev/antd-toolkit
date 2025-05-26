@@ -1,4 +1,5 @@
-import React, { useEffect, useCallback } from 'react'
+import React, { useEffect, useState } from 'react'
+import { Input } from 'antd'
 import type { Meta, StoryObj } from '@storybook/react'
 import { BlockNote, useBlockNote } from './index'
 import { refineDecorator, ENV } from '../../../../stories'
@@ -298,24 +299,10 @@ const BlockNoteWithHooks = () => {
 		options: {
 			initialContent: INIT,
 		} as any,
-		apiConfig: {
-			apiEndpoint: ENV.UPLOAD_API,
-			headers: new Headers({
-				Authorization: 'Basic ' + btoa(ENV.USERNAME + ':' + ENV.PASSWORD),
-			}),
-		},
 	})
 
 	const { blockNoteViewProps: blockNoteViewProps2, blocks: blocks2 } =
-		useBlockNote({
-			options: {} as any,
-			apiConfig: {
-				apiEndpoint: ENV.UPLOAD_API,
-				headers: new Headers({
-					Authorization: 'Basic ' + btoa(ENV.USERNAME + ':' + ENV.PASSWORD),
-				}),
-			},
-		})
+		useBlockNote()
 	const editor2 = blockNoteViewProps2.editor
 
 	useEffect(() => {
@@ -342,18 +329,18 @@ const BlockNoteWithHooks = () => {
 				<pre className="at-my-4 at-prismjs at-bg-gray-100 at-p-4 at-rounded-md at-h-[20rem] at-overflow-y-auto">
 					{JSON.stringify(blocks, null, 2)}
 				</pre>
-				<p>serialize HTML</p>
+				<p> ▼ serialize HTML</p>
 				<pre className="at-my-4 prismjs at-bg-gray-100 at-p-4 at-rounded-md at-whitespace-normal">
 					{html}
 				</pre>
 				<p>
-					render HTML (需用 <code>.bn-container</code> 包住)
+					▼ render HTML (需用 <code>.bn-container</code> 包住)
 				</p>
 				<div
 					className="bn-editor bn-default-styles bn-container at-border at-border-solid at-border-gray-400"
 					dangerouslySetInnerHTML={{ __html: html }}
 				/>
-				<p>unserialize 上方的HTML</p>
+				<p> ▼ unserialize 上方的HTML</p>
 				<BlockNote {...blockNoteViewProps2} />
 
 				{/* <pre className="at-my-4 at-prismjs at-bg-gray-100 at-p-4 at-rounded-md">
@@ -379,5 +366,53 @@ export const General: Story = {
 			<WPMediaLibraryNotification />
 		</>
 	),
+	decorators: [refineDecorator],
+}
+
+export const ParseHTML: Story = {
+	name: '解析 HTML',
+	args: {},
+	render: () => {
+		const [html, setHtml] = useState('')
+		const { blockNoteViewProps: blockNoteViewProps2, blocks: blocks2 } =
+			useBlockNote()
+
+		const editor2 = blockNoteViewProps2.editor
+
+		useEffect(() => {
+			async function loadInitialHTML() {
+				try {
+					const blocksFromHTML = await editor2.tryParseHTMLToBlocks(html) // 解析初始 HTML 字串 [1, 2]
+					// console.log('⭐ blocks:', blocks)
+					// console.log('⭐ blocksFromHTML:', blocksFromHTML)
+					editor2.replaceBlocks(editor2.document, blocksFromHTML)
+				} catch (error) {
+					console.error('Failed to parse HTML to blocks:', error)
+				}
+			}
+			loadInitialHTML()
+		}, [html])
+
+		return (
+			<>
+				<p> ▼ 輸入 HTML</p>
+				<Input.TextArea
+					rows={10}
+					value={html}
+					onChange={(e) => setHtml(e.target.value)}
+				/>
+
+				<p>
+					▼ render HTML (需用 <code>.bn-container</code> 包住)
+				</p>
+				<div
+					className="bn-editor bn-default-styles bn-container at-border at-border-solid at-border-gray-400"
+					dangerouslySetInnerHTML={{ __html: html }}
+				/>
+				<p> ▼ unserialize 上方的HTML</p>
+				<BlockNote {...blockNoteViewProps2} />
+			</>
+		)
+	},
 	decorators: [refineDecorator],
 }
