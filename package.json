@@ -156,5 +156,8 @@
 			"import": "./dist/style.css"
 		}
 	},
-	"resolutions": {}
+	"resolutions": {
+		"antd": "5.25.3",
+		"prosemirror-model": "1.25.1"
+	}
 }

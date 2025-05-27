@@ -1,9 +1,11 @@
+import { useEffect } from 'react'
 import { insertOrUpdateBlock, CustomBlockConfig } from '@blocknote/core'
 import { createReactBlockSpec } from '@blocknote/react'
 import { schema } from '../../useBlockNote'
 import Button from './Button'
 import { FaPhotoVideo } from 'react-icons/fa'
-import { PropsContext } from './hooks'
+import { propsAtom } from './hooks'
+import { useSetAtom } from 'jotai'
 import Render from './Render'
 import { isLegacy, toFlexAlign } from '@/main/components/editor/BlockNote/utils'
 
@@ -65,14 +67,11 @@ export const mediaLibraryMenuItem = (
 
 export const MediaLibrary = createReactBlockSpec(CONFIG, {
 	render: (props) => {
-		return (
-			<>
-				{/* @ts-ignore */}
-				<PropsContext.Provider value={props}>
-					<Button />
-				</PropsContext.Provider>
-			</>
-		)
+		const setProps = useSetAtom(propsAtom)
+		useEffect(() => {
+			setProps(props as any)
+		}, [props])
+		return <Button />
 	},
 
 	// ❗parse 是例如，將剪貼簿複製到編輯器時，要怎麼解析 HTML 轉換為 BLOCK

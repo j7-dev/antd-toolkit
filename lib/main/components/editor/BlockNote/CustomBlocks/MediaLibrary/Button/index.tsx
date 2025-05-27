@@ -22,13 +22,14 @@ import {
 	DefaultStyleSchema,
 } from '@blocknote/core'
 import { debounce } from 'lodash-es'
-import { useProps } from '../hooks'
 import { TbSwitchHorizontal } from 'react-icons/tb'
 import { cn, isImageFile, isAudioFile, isVideoFile, AltIcon } from '@/main'
 import {
-	useMediaLibraryModal,
-	MediaLibraryModal,
-} from '@/wp/components/general/MediaLibraryModal'
+	keyAtom,
+	propsAtom,
+	show,
+} from '@/main/components/editor/BlockNote/CustomBlocks/MediaLibrary/hooks'
+import { useAtomValue } from 'jotai'
 import Render from '../Render'
 
 export type TMediaLibraryButton = ReactCustomBlockRenderProps<
@@ -37,7 +38,7 @@ export type TMediaLibraryButton = ReactCustomBlockRenderProps<
 	DefaultStyleSchema
 >
 
-function getFileType(url: string) {
+export function getFileType(url: string) {
 	if (isImageFile(url)) {
 		return 'image'
 	}
@@ -51,12 +52,26 @@ function getFileType(url: string) {
 }
 
 const MediaLibraryButton = () => {
-	const props = useProps()
-	const currentBlock = props.editor.getBlock(props.block)
-	const currentBlockProps = currentBlock?.props || props.block.props
+	const props = useAtomValue(propsAtom)
+
+	// 為了讓 input 的 defaultValue 的整個組件可以重新 render 重新設置 defaultValue，透過 key 來強制重新 render
+	const key = useAtomValue(keyAtom)
+	const currentBlock = props ? props.editor.getBlock(props.block) : null
+	const currentBlockProps = currentBlock?.props || props?.block?.props || null
+
+	const url = currentBlockProps?.url
+
+	useEffect(() => {
+		if (!url && currentBlock) {
+			show()
+		}
+	}, [url])
 
 	// 封裝一個簡單的 editor 更新函數，包含 debounce
 	const update = debounce((key: string, value: any) => {
+		if (!props) {
+			return
+		}
 		props.editor.updateBlock(props.block, {
 			type: 'mediaLibrary',
 			props: {
@@ -68,43 +83,15 @@ const MediaLibraryButton = () => {
 
 	// 要顯示的副工具列
 	const [tool, setTool] = useState<string | null>(null)
-	// 為了讓 input 的 defaultValue 的整個組件可以重新 render 重新設置 defaultValue，透過 key 來強制重新 render
-	const [key, setKey] = useState<number>(0)
+
 	const [showTool, setShowTool] = useState<boolean>(false)
 
-	const { show, close, modalProps, ...mediaLibraryProps } =
-		useMediaLibraryModal({
-			onConfirm: (items) => {
-				if (items?.length) {
-					const item = items?.[0]
-					const fileType = getFileType(item?.url)
-					props.editor.updateBlock(props?.block, {
-						type: 'mediaLibrary',
-						props: {
-							...currentBlockProps,
-							url: item?.url,
-							title: item?.title,
-							widthValue: 'image' === fileType ? item?.width : 100,
-							widthUnit: 'image' === fileType ? 'px' : '%',
-							alt: item?._wp_attachment_image_alt || item?.title,
-							fileType,
-						} as any,
-					})
-
-					setKey((prev) => prev + 1)
-				}
-			},
-		})
-
-	const url = currentBlockProps?.url
-
-	useEffect(() => {
-		if (!url && currentBlock) {
-			show()
-		}
-	}, [url])
-
 	const fileType = currentBlockProps?.fileType || getFileType(url || '')
+
+	if (!props) {
+		console.warn('props is null', props)
+		return null
+	}
 
 	return (
 		<>
@@ -277,14 +264,6 @@ const MediaLibraryButton = () => {
 						</div>
 					</>
 				)}
-
-				<MediaLibraryModal
-					modalProps={modalProps}
-					mediaLibraryProps={{
-						initialIds: [],
-						...mediaLibraryProps,
-					}}
-				/>
 			</div>
 		</>
 	)
