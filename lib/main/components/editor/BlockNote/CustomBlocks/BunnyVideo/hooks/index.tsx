@@ -30,9 +30,9 @@ export const useBunnyMediaLibraryModal = () => {
 		title: 'Bunny 媒體庫',
 		width: 1600,
 		centered: true,
-		zIndex: 2000,
+		zIndex: -2000,
 		className: 'pc-media-library',
-		open: false,
+		open: true,
 	})
 	const [mediaLibraryProps, setMediaLibraryProps] =
 		useState<TMediaLibraryProps>({
@@ -42,11 +42,11 @@ export const useBunnyMediaLibraryModal = () => {
 		})
 
 	const show = () => {
-		setModalProps((prev) => ({ ...prev, open: true }))
+		setModalProps((prev) => ({ ...prev, zIndex: 2000 }))
 	}
 
 	const close = () => {
-		setModalProps((prev) => ({ ...prev, open: false }))
+		setModalProps((prev) => ({ ...prev, zIndex: -2000 }))
 	}
 
 	modalProps.onCancel = close

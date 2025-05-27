@@ -350,7 +350,7 @@ const BlockNoteWithHooks = () => {
 					dangerouslySetInnerHTML={{ __html: html }}
 				/>
 				<p> ▼ unserialize 上方的HTML</p>
-				<BlockNote {...blockNoteViewProps2} />
+				{/* <BlockNote {...blockNoteViewProps2} /> */}
 
 				{/* <pre className="at-my-4 at-prismjs at-bg-gray-100 at-p-4 at-rounded-md">
 					{JSON.stringify(blocks2, null, 2)}
