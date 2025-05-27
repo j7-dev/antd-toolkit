@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import { CloseOutlined } from '@ant-design/icons'
 
 export type ModalProps = {
@@ -24,6 +24,15 @@ const Modal = ({
 	opacity = 0,
 	pointerEvents = 'none',
 }: ModalProps) => {
+	const [show, setShow] = useState(false)
+
+	useEffect(() => {
+		const delay = setTimeout(() => {
+			setShow(true)
+		}, 700)
+		return () => clearTimeout(delay)
+	}, [])
+
 	const handleBgClick = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation()
 		e.preventDefault()
@@ -64,10 +73,15 @@ const Modal = ({
 				className={className}
 			>
 				<div className="at-mb-2 at-font-semibold at-text-lg">{title}</div>
-				<div className="at-h-[75vh] at-max-h-[calc(100vh-16rem)] at-overflow-y-auto at-overflow-x-hidden at-pr-2">
-					{children}
-				</div>
-				<div className="at-flex at-justify-end at-mt-4">{footer}</div>
+				{show && (
+					<>
+						<div className="at-h-[75vh] at-max-h-[calc(100vh-16rem)] at-overflow-y-auto at-overflow-x-hidden at-pr-2">
+							{children}
+						</div>
+						<div className="at-flex at-justify-end at-mt-4">{footer}</div>
+					</>
+				)}
+				{!show && <>loading...</>}
 
 				<div
 					onClick={onCancel}
@@ -79,4 +93,4 @@ const Modal = ({
 		</div>
 	)
 }
-export default Modal
+export default memo(Modal)
