@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext } from 'react'
-import { ModalProps } from 'antd'
+import { ModalProps } from '@/main/components/editor/BlockNote/Modal'
 import { TMediaLibraryProps } from '@/refine/bunny'
 
 type ContextProps = {
@@ -29,10 +29,10 @@ export const useBunnyMediaLibraryModal = () => {
 	const [modalProps, setModalProps] = useState<ModalProps>({
 		title: 'Bunny 媒體庫',
 		width: 1600,
-		centered: true,
-		zIndex: -2000,
 		className: 'pc-media-library',
-		open: true,
+		zIndex: -2000,
+		opacity: 0,
+		pointerEvents: 'none',
 	})
 	const [mediaLibraryProps, setMediaLibraryProps] =
 		useState<TMediaLibraryProps>({
@@ -42,11 +42,21 @@ export const useBunnyMediaLibraryModal = () => {
 		})
 
 	const show = () => {
-		setModalProps((prev) => ({ ...prev, zIndex: 2000 }))
+		setModalProps((prev) => ({
+			...prev,
+			zIndex: 2000,
+			opacity: 1,
+			pointerEvents: 'auto',
+		}))
 	}
 
 	const close = () => {
-		setModalProps((prev) => ({ ...prev, zIndex: -2000 }))
+		setModalProps((prev) => ({
+			...prev,
+			zIndex: -2000,
+			opacity: 0,
+			pointerEvents: 'none',
+		}))
 	}
 
 	modalProps.onCancel = close

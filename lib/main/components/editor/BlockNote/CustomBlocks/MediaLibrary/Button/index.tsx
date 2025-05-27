@@ -7,7 +7,6 @@ import {
 	Input,
 	Checkbox,
 	Tooltip,
-	ModalProps,
 } from 'antd'
 import {
 	AlignLeftOutlined,
@@ -29,6 +28,7 @@ import { TbSwitchHorizontal } from 'react-icons/tb'
 import { cn, isImageFile, isAudioFile, isVideoFile, AltIcon } from '@/main'
 import { TAttachment } from '@/wp'
 import { useContextProps } from '@/main/components/editor/BlockNote/CustomBlocks/MediaLibrary/hooks'
+import { ModalProps } from '@/main/components/editor/BlockNote/Modal'
 import Render from '../Render'
 
 export type TMediaLibraryButton = ReactCustomBlockRenderProps<

@@ -1,13 +1,5 @@
 import { memo, useEffect, useState } from 'react'
-import {
-	Button,
-	Select,
-	Space,
-	InputNumber,
-	Tooltip,
-	Radio,
-	ModalProps,
-} from 'antd'
+import { Button, Select, Space, InputNumber, Tooltip, Radio } from 'antd'
 import {
 	AlignLeftOutlined,
 	AlignCenterOutlined,
@@ -27,6 +19,7 @@ import Render from '../Render'
 import { cn } from '@/main/utils'
 import { TBunnyVideo } from '@/refine/bunny'
 import { useContextProps } from '@/main/components/editor/BlockNote/CustomBlocks/BunnyVideo/hooks'
+import { ModalProps } from '@/main/components/editor/BlockNote/Modal'
 
 export type TMediaLibraryButton = ReactCustomBlockRenderProps<
 	CustomBlockConfig,
