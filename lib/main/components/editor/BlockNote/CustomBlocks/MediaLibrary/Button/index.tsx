@@ -7,6 +7,7 @@ import {
 	Input,
 	Checkbox,
 	Tooltip,
+	ModalProps,
 } from 'antd'
 import {
 	AlignLeftOutlined,
@@ -18,18 +19,16 @@ import {
 import { ReactCustomBlockRenderProps } from '@blocknote/react'
 import {
 	CustomBlockConfig,
+	InlineContentSchema,
+	StyleSchema,
 	DefaultInlineContentSchema,
 	DefaultStyleSchema,
 } from '@blocknote/core'
 import { debounce } from 'lodash-es'
 import { TbSwitchHorizontal } from 'react-icons/tb'
 import { cn, isImageFile, isAudioFile, isVideoFile, AltIcon } from '@/main'
-import {
-	keyAtom,
-	propsAtom,
-	show,
-} from '@/main/components/editor/BlockNote/CustomBlocks/MediaLibrary/hooks'
-import { useAtomValue } from 'jotai'
+import { TAttachment } from '@/wp'
+import { useContextProps } from '@/main/components/editor/BlockNote/CustomBlocks/MediaLibrary/hooks'
 import Render from '../Render'
 
 export type TMediaLibraryButton = ReactCustomBlockRenderProps<
@@ -51,21 +50,71 @@ export function getFileType(url: string) {
 	return 'other'
 }
 
-const MediaLibraryButton = () => {
-	const props = useAtomValue(propsAtom)
-
+const MediaLibraryButton = (
+	props: ReactCustomBlockRenderProps<
+		CustomBlockConfig,
+		InlineContentSchema,
+		StyleSchema
+	>,
+) => {
 	// 為了讓 input 的 defaultValue 的整個組件可以重新 render 重新設置 defaultValue，透過 key 來強制重新 render
-	const key = useAtomValue(keyAtom)
-	const currentBlock = props ? props.editor.getBlock(props.block) : null
-	const currentBlockProps = currentBlock?.props || props?.block?.props || null
+	const [key, setKey] = useState(0)
+	const currentBlock = props ? props?.block : null
+	const currentBlockProps = currentBlock?.props || null
 
 	const url = currentBlockProps?.url
+
+	const { show, close, setMediaLibraryProps, setModalProps } = useContextProps()
 
 	useEffect(() => {
 		if (!url && currentBlock) {
 			show()
 		}
 	}, [url])
+
+	const [selectedItems, setSelectedItems] = useState<TAttachment[]>([])
+
+	useEffect(() => {
+		setMediaLibraryProps({
+			selectedItems,
+			setSelectedItems,
+			limit: 1,
+		})
+
+		/** 按下[選擇檔案]按鈕後，要把值 set 到 form 裡 */
+		const handleConfirm = () => {
+			close()
+			if (selectedItems?.length && currentBlockProps && currentBlock) {
+				const item = selectedItems?.[0]
+				const fileType = getFileType(item?.url)
+				props!.editor.updateBlock(currentBlock, {
+					type: 'mediaLibrary',
+					props: {
+						...currentBlockProps,
+						url: item?.url,
+						title: item?.title,
+						widthValue: 'image' === fileType ? item?.width : 100,
+						widthUnit: 'image' === fileType ? 'px' : '%',
+						alt: item?._wp_attachment_image_alt || item?.title,
+						fileType,
+					} as any,
+				})
+
+				setKey((prev: number) => prev + 1)
+			}
+		}
+
+		setModalProps((prev: ModalProps) => {
+			return {
+				...prev,
+				footer: (
+					<Button type="primary" onClick={handleConfirm}>
+						確定選取 ({selectedItems?.length})
+					</Button>
+				),
+			} as ModalProps
+		})
+	}, [selectedItems, setSelectedItems, currentBlockProps, currentBlock])
 
 	// 封裝一個簡單的 editor 更新函數，包含 debounce
 	const update = debounce((key: string, value: any) => {
@@ -87,11 +136,6 @@ const MediaLibraryButton = () => {
 	const [showTool, setShowTool] = useState<boolean>(false)
 
 	const fileType = currentBlockProps?.fileType || getFileType(url || '')
-
-	if (!props) {
-		console.warn('props is null', props)
-		return null
-	}
 
 	return (
 		<>

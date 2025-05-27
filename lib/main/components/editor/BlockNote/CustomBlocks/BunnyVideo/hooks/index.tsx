@@ -1,6 +1,6 @@
 import React, { createContext, useState, useContext } from 'react'
 import { ModalProps } from 'antd'
-import { TMediaLibraryProps } from '@/wp'
+import { TMediaLibraryProps } from '@/refine/bunny'
 
 type ContextProps = {
 	show: () => void
@@ -11,23 +11,23 @@ type ContextProps = {
 	setMediaLibraryProps: React.Dispatch<React.SetStateAction<TMediaLibraryProps>>
 }
 
-export const WpMediaLibraryModalContext = createContext<ContextProps | null>(
+export const BunnyMediaLibraryModalContext = createContext<ContextProps | null>(
 	null,
 )
 
 export const useContextProps = () => {
-	const context = useContext(WpMediaLibraryModalContext)
+	const context = useContext(BunnyMediaLibraryModalContext)
 	if (!context) {
 		throw new Error(
-			'useContextProps must be used within a WpMediaLibraryModalContext',
+			'useContextProps must be used within a BunnyMediaLibraryModalContext',
 		)
 	}
 	return context
 }
 
-export const useWpMediaLibraryModal = () => {
+export const useBunnyMediaLibraryModal = () => {
 	const [modalProps, setModalProps] = useState<ModalProps>({
-		title: '媒體庫',
+		title: 'Bunny 媒體庫',
 		width: 1600,
 		centered: true,
 		zIndex: 2000,

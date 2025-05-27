@@ -2,11 +2,9 @@ import { insertOrUpdateBlock, CustomBlockConfig } from '@blocknote/core'
 import { createReactBlockSpec } from '@blocknote/react'
 import { schema } from '../../useBlockNote'
 import { FaPhotoVideo } from 'react-icons/fa'
-import { TMediaLibraryButton } from './Button'
 import Button from './Button'
 import Render from './Render'
 import { isLegacy } from '@/main/components/editor/BlockNote/utils'
-
 const CONFIG: CustomBlockConfig = {
 	type: 'bunnyVideo',
 	propSchema: {
@@ -50,7 +48,7 @@ export const bunnyVideoMenuItem = (editor: typeof schema.BlockNoteEditor) => ({
 
 export const BunnyVideo = createReactBlockSpec(CONFIG, {
 	render: (props) => {
-		return <Button {...(props as unknown as TMediaLibraryButton)} />
+		return <Button {...(props as any)} />
 	},
 
 	// ❗parse 是例如，將剪貼簿複製到編輯器時，要怎麼解析 HTML 轉換為 BLOCK

@@ -4,12 +4,17 @@ import { BlockNoteViewProps } from '@blocknote/react'
 import { BlockNoteView } from '@blocknote/mantine'
 import { DefaultStyleSchema, DefaultInlineContentSchema } from '@blocknote/core'
 import '@blocknote/mantine/style.css'
-import { MediaLibraryModal } from '@/wp/components/general/MediaLibraryModal'
+import { MediaLibraryModal as WpMediaLibraryModal } from '@/wp/components/general/MediaLibraryModal'
+import { MediaLibraryModal as BunnyMediaLibraryModal } from '@/refine/bunny/MediaLibraryModal'
 import {
-	modalPropsAtom,
-	selectedItemsAtom,
+	WpMediaLibraryModalContext,
+	useWpMediaLibraryModal,
 } from '@/main/components/editor/BlockNote/CustomBlocks/MediaLibrary/hooks'
-import { useAtomValue, useSetAtom } from 'jotai'
+
+import {
+	BunnyMediaLibraryModalContext,
+	useBunnyMediaLibraryModal,
+} from '@/main/components/editor/BlockNote/CustomBlocks/BunnyVideo/hooks'
 import { schema } from './useBlockNote'
 import './index.scss'
 export * from './useBlockNote'
@@ -25,20 +30,31 @@ export const BlockNote: FC<
 		DefaultStyleSchema
 	>
 > = (blockNoteViewProps) => {
-	const modalProps = useAtomValue(modalPropsAtom)
-	const selectedItems = useAtomValue(selectedItemsAtom)
-	const setSelectedItems = useSetAtom(selectedItemsAtom)
+	const wpMediaLibraryModalProps = useWpMediaLibraryModal()
+	const { modalProps: wpModalProps, mediaLibraryProps: wpMediaLibraryProps } =
+		wpMediaLibraryModalProps
+
+	const bunnyMediaLibraryModalProps = useBunnyMediaLibraryModal()
+	const {
+		modalProps: bunnyModalProps,
+		mediaLibraryProps: bunnyMediaLibraryProps,
+	} = bunnyMediaLibraryModalProps
+
 	return (
-		<>
-			<BlockNoteView {...blockNoteViewProps} />
-			<MediaLibraryModal
-				modalProps={modalProps}
-				mediaLibraryProps={{
-					selectedItems,
-					setSelectedItems,
-					limit: 1,
-				}}
-			/>
-		</>
+		<WpMediaLibraryModalContext.Provider value={wpMediaLibraryModalProps}>
+			<BunnyMediaLibraryModalContext.Provider
+				value={bunnyMediaLibraryModalProps}
+			>
+				<BlockNoteView {...blockNoteViewProps} />
+				<WpMediaLibraryModal
+					modalProps={wpModalProps}
+					mediaLibraryProps={wpMediaLibraryProps}
+				/>
+				<BunnyMediaLibraryModal
+					modalProps={bunnyModalProps}
+					mediaLibraryProps={bunnyMediaLibraryProps}
+				/>
+			</BunnyMediaLibraryModalContext.Provider>
+		</WpMediaLibraryModalContext.Provider>
 	)
 }

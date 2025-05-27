@@ -38,6 +38,7 @@ const Item = ({
 		if (e.shiftKey && formattedPrevSelectedIndex !== index) {
 			// 從上一個選中的 item 開始選擇到 這個 item
 			// @ts-ignore
+
 			setSelectedItems((prev) => {
 				// 确定开始和结束的索引
 				const start = Math.min(formattedPrevSelectedIndex, index)

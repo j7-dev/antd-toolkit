@@ -1,5 +1,13 @@
 import { memo, useEffect, useState } from 'react'
-import { Button, Select, Space, InputNumber, Tooltip, Radio } from 'antd'
+import {
+	Button,
+	Select,
+	Space,
+	InputNumber,
+	Tooltip,
+	Radio,
+	ModalProps,
+} from 'antd'
 import {
 	AlignLeftOutlined,
 	AlignCenterOutlined,
@@ -7,7 +15,6 @@ import {
 	DeleteOutlined,
 } from '@ant-design/icons'
 import { BsFillPlayBtnFill, BsFillVolumeUpFill } from 'react-icons/bs'
-import { useMediaLibraryModal, MediaLibraryModal } from '@/refine/bunny'
 import { ReactCustomBlockRenderProps } from '@blocknote/react'
 import {
 	CustomBlockConfig,
@@ -18,6 +25,8 @@ import { TbSwitchHorizontal } from 'react-icons/tb'
 import { debounce } from 'lodash-es'
 import Render from '../Render'
 import { cn } from '@/main/utils'
+import { TBunnyVideo } from '@/refine/bunny'
+import { useContextProps } from '@/main/components/editor/BlockNote/CustomBlocks/BunnyVideo/hooks'
 
 export type TMediaLibraryButton = ReactCustomBlockRenderProps<
 	CustomBlockConfig,
@@ -37,11 +46,18 @@ const playerOptions = [
 ]
 
 const MediaLibraryButton = (props: TMediaLibraryButton) => {
-	const currentBlock = props.editor.getBlock(props.block)
-	const currentBlockProps = currentBlock?.props || props.block.props
+	// 為了讓 input 的 defaultValue 的整個組件可以重新 render 重新設置 defaultValue，透過 key 來強制重新 render
+	const [key, setKey] = useState(0)
+	const currentBlock = props ? props?.block : null
+	const currentBlockProps = currentBlock?.props || null
+
+	const { show, close, setMediaLibraryProps, setModalProps } = useContextProps()
 
 	// 封裝一個簡單的 editor 更新函數，包含 debounce
 	const update = debounce((key: string, value: any) => {
+		if (!props) {
+			return
+		}
 		props.editor.updateBlock(props.block, {
 			type: 'bunnyVideo',
 			props: {
@@ -51,28 +67,9 @@ const MediaLibraryButton = (props: TMediaLibraryButton) => {
 		})
 	}, 500)
 
-	// 為了讓 input 的 defaultValue 的整個組件可以重新 render 重新設置 defaultValue，透過 key 來強制重新 render
-	const [key, setKey] = useState<number>(0)
 	const [showTool, setShowTool] = useState(false)
 
-	const { show, close, modalProps, ...mediaLibraryProps } =
-		useMediaLibraryModal({
-			onConfirm: (items) => {
-				if (items?.length) {
-					const item = items?.[0]
-					props.editor.updateBlock(props.block, {
-						type: 'bunnyVideo',
-						// @ts-ignore
-						props: {
-							...currentBlockProps,
-							vId: item?.guid as any,
-						},
-					})
-
-					setKey((prev) => prev + 1)
-				}
-			},
-		})
+	const [selectedItems, setSelectedItems] = useState<TBunnyVideo[]>([])
 
 	const vId = currentBlockProps?.vId
 
@@ -80,7 +77,43 @@ const MediaLibraryButton = (props: TMediaLibraryButton) => {
 		if (!vId && currentBlock) {
 			show()
 		}
-	}, [vId, currentBlock])
+	}, [vId])
+
+	useEffect(() => {
+		setMediaLibraryProps({
+			selectedItems,
+			setSelectedItems,
+			limit: 1,
+		})
+
+		/** 按下[選擇檔案]按鈕後，要把值 set 到 form 裡 */
+		const handleConfirm = () => {
+			close()
+			if (selectedItems?.length && currentBlockProps && currentBlock) {
+				const item = selectedItems?.[0]
+				props!.editor.updateBlock(props!.block, {
+					type: 'bunnyVideo',
+					props: {
+						...currentBlockProps,
+						vId: item?.guid as any,
+					} as any,
+				})
+
+				setKey((prev: number) => prev + 1)
+			}
+		}
+
+		setModalProps((prev: ModalProps) => {
+			return {
+				...prev,
+				footer: (
+					<Button type="primary" onClick={handleConfirm}>
+						確定選取 ({selectedItems?.length})
+					</Button>
+				),
+			} as ModalProps
+		})
+	}, [selectedItems, setSelectedItems, currentBlockProps, currentBlock])
 
 	return (
 		<>
@@ -192,13 +225,6 @@ const MediaLibraryButton = (props: TMediaLibraryButton) => {
 						</div>
 					</>
 				)}
-				<MediaLibraryModal
-					modalProps={modalProps}
-					mediaLibraryProps={{
-						...mediaLibraryProps,
-						initialIds: vId ? [vId] : [],
-					}}
-				/>
 			</div>
 		</>
 	)
