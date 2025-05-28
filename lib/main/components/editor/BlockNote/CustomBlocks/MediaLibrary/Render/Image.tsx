@@ -60,7 +60,7 @@ export const Image: FC<
 				<div
 					style={{
 						marginTop: '0.25rem',
-						fontSize: '0.75rem',
+						fontSize: '0.875rem',
 						color: '#9ca3af',
 					}}
 				>

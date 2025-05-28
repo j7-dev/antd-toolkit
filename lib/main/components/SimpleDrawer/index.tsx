@@ -15,6 +15,7 @@ export type TSimpleDrawerProps = {
 	opacity?: number
 	pointerEvents?: 'auto' | 'none'
 	destroyOnHidden?: boolean
+	closeConfirm?: boolean
 }
 
 export * from './hooks'
@@ -31,6 +32,7 @@ const SimpleDrawerComponent = ({
 	opacity = 0,
 	pointerEvents = 'none',
 	destroyOnHidden = false,
+	closeConfirm = false,
 }: TSimpleDrawerProps) => {
 	const [show, setShow] = useState(false)
 	const open = opacity === 1
@@ -48,14 +50,27 @@ const SimpleDrawerComponent = ({
 		return null
 	}
 
-	const handleBgClick = (e: React.MouseEvent<HTMLDivElement>) => {
-		e.stopPropagation()
-		e.preventDefault()
-		if (e.target === e.currentTarget) {
-			if (onCancel) {
-				onCancel()
+	const handleClickClose = (
+		e: React.MouseEvent<HTMLDivElement>,
+		context?: 'bg',
+	) => {
+		if ('bg' === context) {
+			e.stopPropagation()
+			e.preventDefault()
+			if (e.target !== e.currentTarget) {
+				return
 			}
 		}
+
+		if (!onCancel) {
+			return
+		}
+
+		if (closeConfirm) {
+			const canClose = window.confirm('確定要關閉嗎？沒有儲存的內容會遺失')
+			if (!canClose) return
+		}
+		onCancel()
 	}
 
 	return (
@@ -92,7 +107,7 @@ const SimpleDrawerComponent = ({
 						<div className="at-font-semibold at-text-lg at-ml-4">{title}</div>
 						<div>
 							<CloseOutlined
-								onClick={onCancel}
+								onClick={handleClickClose}
 								className="at-text-2xl at-text-gray-700 at-cursor-pointer"
 							/>
 						</div>
@@ -121,7 +136,7 @@ const SimpleDrawerComponent = ({
 						transition: 'opacity 0.3s ease-out',
 						willChange: 'opacity',
 					}}
-					onClick={handleBgClick}
+					onClick={(e) => handleClickClose(e, 'bg')}
 				/>
 			</div>
 		</Portal>

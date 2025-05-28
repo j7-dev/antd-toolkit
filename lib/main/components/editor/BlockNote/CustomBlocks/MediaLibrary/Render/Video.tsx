@@ -25,7 +25,7 @@ export const Video: FC<
 			{!!title && (
 				<p
 					style={{
-						fontSize: '0.75rem',
+						fontSize: '0.875rem',
 						color: '#9ca3af',
 						marginBottom: '0.5rem',
 					}}

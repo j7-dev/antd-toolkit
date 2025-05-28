@@ -36,8 +36,7 @@ import {
 	MediaLibrary,
 	mediaLibraryMenuItem,
 } from './CustomBlocks'
-import { uploadWP, getIconHTML, convertDivToATag, hasScriptTag } from './utils'
-import { getFileExtension } from '@/main/utils'
+import { debounce } from 'lodash-es'
 
 // undefined = 禁用選單
 export const schema = BlockNoteSchema.create({
@@ -101,7 +100,7 @@ export const useBlockNote = (params?: TUseBlockNoteParams) => {
 		DefaultStyleSchema
 	> = {
 		editor,
-		onChange: async (theEditor) => {
+		onChange: debounce(async (theEditor) => {
 			try {
 				// Saves the document JSON to state.
 				setBlocks(theEditor?.document as Block[])
@@ -204,7 +203,7 @@ export const useBlockNote = (params?: TUseBlockNoteParams) => {
 
 			setHTML(doc.body.innerHTML)
 			*/
-		},
+		}, 700),
 		theme: 'light',
 		formattingToolbar: false, // 自訂 toolbar
 		linkToolbar: true,

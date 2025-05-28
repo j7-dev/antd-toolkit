@@ -35,7 +35,7 @@ export const Other: FC<
 				rel="noopener noreferrer"
 				style={{
 					display: 'contents',
-					fontSize: '0.75rem',
+					fontSize: '0.875rem',
 				}}
 			>
 				{title}

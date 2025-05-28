@@ -222,6 +222,16 @@ const INIT: any = [
 		props: {
 			title: 'sample-2-sample-2-2.csv',
 			url: 'http://test.local/wp-content/uploads/2025/02/sample-2-sample-2-2.csv',
+			fileType: 'audio',
+			widthValue: 30,
+			widthUnit: '%',
+		},
+	},
+	{
+		type: 'mediaLibrary',
+		props: {
+			title: 'sample-2-sample-2-2.csv',
+			url: 'http://test.local/wp-content/uploads/2025/02/sample-2-sample-2-2.csv',
 			fileType: 'other',
 		},
 	},
@@ -315,17 +325,21 @@ const BlockNoteWithHooks = () => {
 	const editor2 = blockNoteViewProps2.editor
 
 	useEffect(() => {
-		async function loadInitialHTML() {
-			try {
-				const blocksFromHTML = await editor2.tryParseHTMLToBlocks(html) // 解析初始 HTML 字串 [1, 2]
-				// console.log('⭐ blocks:', blocks)
-				// console.log('⭐ blocksFromHTML:', blocksFromHTML)
-				editor2.replaceBlocks(editor2.document, blocksFromHTML)
-			} catch (error) {
-				console.error('Failed to parse HTML to blocks:', error)
+		const delay = setTimeout(() => {
+			async function loadInitialHTML() {
+				try {
+					const blocksFromHTML = await editor2.tryParseHTMLToBlocks(html) // 解析初始 HTML 字串 [1, 2]
+					// console.log('⭐ blocks:', blocks)
+					// console.log('⭐ blocksFromHTML:', blocksFromHTML)
+					editor2.replaceBlocks(editor2.document, blocksFromHTML)
+				} catch (error) {
+					console.error('Failed to parse HTML to blocks:', error)
+				}
 			}
-		}
-		loadInitialHTML()
+			loadInitialHTML()
+		}, 500)
+
+		return () => clearTimeout(delay)
 	}, [html])
 
 	return (
@@ -343,10 +357,10 @@ const BlockNoteWithHooks = () => {
 					{html}
 				</pre>
 				<p>
-					▼ render HTML (需用 <code>.bn-container</code> 包住)
+					▼ render HTML (需用 <code>.power-editor</code> 包住)
 				</p>
 				<div
-					className="bn-editor bn-default-styles bn-container at-border at-border-solid at-border-gray-400"
+					className="bn-editor bn-default-styles power-editor at-border at-border-solid at-border-gray-400"
 					dangerouslySetInnerHTML={{ __html: html }}
 				/>
 				<p> ▼ unserialize 上方的HTML</p>
@@ -543,10 +557,10 @@ export const ParseHTML: Story = {
 				/>
 
 				<p>
-					▼ render HTML (需用 <code>.bn-container</code> 包住)
+					▼ render HTML (需用 <code>.power-editor</code> 包住)
 				</p>
 				<div
-					className="bn-editor bn-default-styles bn-container at-border at-border-solid at-border-gray-400"
+					className="bn-editor bn-default-styles power-editor at-border at-border-solid at-border-gray-400"
 					dangerouslySetInnerHTML={{ __html: html }}
 				/>
 				<p> ▼ unserialize 上方的HTML</p>

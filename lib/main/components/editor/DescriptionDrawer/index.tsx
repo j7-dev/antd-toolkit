@@ -36,7 +36,7 @@ const DescriptionDrawerComponent: FC<TDescriptionDrawerProps> = ({
 
 	const { editor } = blockNoteViewProps
 
-	const { drawerProps, show, close } = useSimpleDrawer({ closeConfirm: true })
+	const { drawerProps, show, close } = useSimpleDrawer()
 	const open = drawerProps.opacity === 1
 
 	const handleSaveContent = () => {
@@ -45,7 +45,7 @@ const DescriptionDrawerComponent: FC<TDescriptionDrawerProps> = ({
 			{
 				id: watchId,
 				values: {
-					[nameString]: html,
+					[nameString]: `<div class="power-editor">${html}</div>`,
 				},
 			},
 			{
@@ -135,6 +135,7 @@ const DescriptionDrawerComponent: FC<TDescriptionDrawerProps> = ({
 			<Item name={name} label={`完整介紹`} hidden />
 			<SimpleDrawer
 				{...drawerProps}
+				closeConfirm
 				title={`編輯內容`}
 				footer={
 					<div className="at-flex at-gap-x-4">

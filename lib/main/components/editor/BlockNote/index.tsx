@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react'
+import { FC } from 'react'
 import '@blocknote/core/fonts/inter.css'
 import { BlockNoteViewProps } from '@blocknote/react'
 import { BlockNoteView } from '@blocknote/mantine'
