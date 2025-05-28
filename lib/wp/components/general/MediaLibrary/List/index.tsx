@@ -14,6 +14,7 @@ import Item from '@/wp/components/general/MediaLibrary/List/Item'
 import UploadFile from '@/wp/components/general/MediaLibrary/List/UploadFile'
 import { filesInQueueAtom } from '@/wp/components/general/MediaLibraryNotification'
 import { useSetAtom } from 'jotai'
+import { objToCrudFilters } from '@/refine'
 
 const PAGE_SIZE = 50
 
@@ -134,23 +135,12 @@ const List = () => {
 		pagination: {
 			pageSize: PAGE_SIZE,
 		},
-		filters: [
-			{
-				field: 's',
-				operator: 'eq',
-				value: search,
-			},
-			{
-				field: 'post_type',
-				operator: 'eq',
-				value: 'attachment',
-			},
-			{
-				field: 'post_status',
-				operator: 'eq',
-				value: 'inherit',
-			},
-		],
+		filters: objToCrudFilters({
+			s: search,
+			post_type: 'attachment',
+			post_status: 'inherit',
+			post_parent: 'unset',
+		}),
 	})
 
 	const allItems = ([] as TAttachment[]).concat(
