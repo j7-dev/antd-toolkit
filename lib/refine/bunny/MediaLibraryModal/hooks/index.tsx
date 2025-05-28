@@ -1,24 +1,14 @@
 import { useState } from 'react'
-import { ModalProps, Button } from 'antd'
+import { Button } from 'antd'
 import { TBunnyVideo } from '@/refine/bunny'
-
-const DEFAULT_MODAL_PROPS: ModalProps = {
-	title: 'Bunny 媒體庫',
-	width: 1600,
-	centered: true,
-	zIndex: 2000,
-	className: 'pc-media-library',
-}
+import { useSimpleModal } from '@/main/components/SimpleModal'
 
 export const useMediaLibraryModal = (params?: {
 	onConfirm?: (selectedItems: TBunnyVideo[]) => void
 }) => {
 	const onConfirm = params?.onConfirm
-	const [modalProps, setModalProps] = useState<ModalProps>(DEFAULT_MODAL_PROPS)
+	const { show, close, modalProps, setModalProps } = useSimpleModal()
 	const [selectedItems, setSelectedItems] = useState<TBunnyVideo[]>([])
-
-	const close = () => setModalProps((prev) => ({ ...prev, open: false }))
-	const show = () => setModalProps((prev) => ({ ...prev, open: true }))
 
 	/** 按下[選擇檔案]按鈕後，要把值 set 到 form 裡 */
 	const handleConfirm = () => {
@@ -27,6 +17,7 @@ export const useMediaLibraryModal = (params?: {
 	}
 
 	const formattedModalProps = {
+		title: 'Bunny 媒體庫',
 		footer: (
 			<>
 				<Button type="primary" onClick={handleConfirm}>
@@ -43,8 +34,8 @@ export const useMediaLibraryModal = (params?: {
 		show,
 		close,
 		modalProps: formattedModalProps,
-		selectedItems,
 		setModalProps,
+		selectedItems,
 		setSelectedItems,
 	}
 }

@@ -12,6 +12,7 @@ export type TSimpleModalProps = {
 	zIndex?: number
 	opacity?: number
 	pointerEvents?: 'auto' | 'none'
+	destroyOnHidden?: boolean
 }
 
 export * from './hooks'
@@ -26,15 +27,23 @@ const SimpleModalComponent = ({
 	zIndex = 2000,
 	opacity = 0,
 	pointerEvents = 'none',
+	destroyOnHidden = false,
 }: TSimpleModalProps) => {
 	const [show, setShow] = useState(false)
+	const open = opacity === 1
 
 	useEffect(() => {
 		const delay = setTimeout(() => {
-			setShow(true)
+			if (open) {
+				setShow(true)
+			}
 		}, 700)
 		return () => clearTimeout(delay)
-	}, [])
+	}, [open])
+
+	if (destroyOnHidden && !open) {
+		return null
+	}
 
 	const handleBgClick = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation()

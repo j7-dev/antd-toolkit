@@ -220,7 +220,7 @@ const List = () => {
 									/>
 								))}
 
-							{isLoading &&
+							{(isLoading || isFetchingNextPage) &&
 								new Array(PAGE_SIZE).fill(0).map((_, index) => (
 									<div key={index} className="at-w-full xl:at-w-36">
 										<LoadingCard className="at-aspect-square" />
@@ -241,6 +241,7 @@ const List = () => {
 									type="link"
 									onClick={() => fetchNextPage()}
 									disabled={isLoading}
+									loading={isFetchingNextPage}
 								>
 									顯示更多
 								</Button>

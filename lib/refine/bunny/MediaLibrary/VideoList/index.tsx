@@ -96,7 +96,7 @@ const VideoList: FC = () => {
 								/>
 							))}
 
-						{isFetching &&
+						{(isFetching || isFetchingNextPage) &&
 							new Array(PAGE_SIZE).fill(0).map((_, index) => (
 								<div key={index} className="at-w-36">
 									<LoadingCard />
@@ -117,6 +117,7 @@ const VideoList: FC = () => {
 								type="link"
 								onClick={() => fetchNextPage()}
 								disabled={isFetching}
+								loading={isFetchingNextPage}
 							>
 								顯示更多
 							</Button>
