@@ -54,7 +54,8 @@
 		"react-countdown": "^2.3.6",
 		"react-highlight-words": "^0.21.0",
 		"storybook": "^8.1.11",
-		"tailwind-merge": "^2.5.4"
+		"tailwind-merge": "^2.5.4",
+		"zod": "^3.25.0-beta.20250519T094321"
 	},
 	"devDependencies": {
 		"@etchteam/storybook-addon-status": "^5.0.0",

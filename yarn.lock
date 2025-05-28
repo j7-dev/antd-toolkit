@@ -8512,6 +8512,11 @@ z-schema@~5.0.2:
   optionalDependencies:
     commander "^10.0.0"
 
+zod@^3.25.0-beta.20250519T094321:
+  version "3.25.0-beta.20250519T094321"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-3.25.0-beta.20250519T094321.tgz#9e3bb9b86902227adc65f69c0d271a8cba186447"
+  integrity sha512-FvDMTcBUhM/CZjeT0HJQ8M6KbSGRPHqEx2yLWx9kDU3ufoTiq7tQAI8UyBJ/82CBp1mv6tKVWp00ll6zV/WxmA==
+
 zwitch@^1.0.0:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/zwitch/-/zwitch-1.0.5.tgz#d11d7381ffed16b742f6af7b3f223d5cd9fe9920"

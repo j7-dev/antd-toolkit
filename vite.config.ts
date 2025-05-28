@@ -60,6 +60,7 @@ const config: UserConfig = {
 				'@blocknote/core',
 				'@blocknote/react',
 				'@blocknote/mantine',
+				'zod',
 
 
 
