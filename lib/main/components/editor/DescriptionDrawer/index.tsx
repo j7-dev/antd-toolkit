@@ -16,10 +16,12 @@ const { Item } = Form
 type TDescriptionDrawerProps = {
 	name?: FormItemProps['name']
 	resource?: string
+	editorFormItemProps?: FormItemProps
 }
 const DescriptionDrawerComponent: FC<TDescriptionDrawerProps> = ({
 	name = ['description'],
 	resource = 'posts',
+	editorFormItemProps,
 }) => {
 	const { SITE_URL, ELEMENTOR_ENABLED } = useEnv()
 	const form = Form.useFormInstance()
@@ -83,6 +85,7 @@ const DescriptionDrawerComponent: FC<TDescriptionDrawerProps> = ({
 						name={['editor']}
 						label="編輯內容"
 						tooltip={getTooltipTitle(ELEMENTOR_ENABLED)}
+						{...editorFormItemProps}
 					>
 						<Radio.Group
 							block
@@ -174,7 +177,7 @@ const DescriptionDrawerComponent: FC<TDescriptionDrawerProps> = ({
 
 function getTooltipTitle(canElementor: boolean) {
 	if (canElementor) {
-		return ''
+		return undefined
 	}
 	return '您必須安裝並啟用 Elementor 外掛才可以使用 Elementor 編輯'
 }
