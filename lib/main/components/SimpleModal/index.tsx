@@ -1,6 +1,7 @@
 import React, { memo, useEffect, useState } from 'react'
 import { CloseOutlined } from '@ant-design/icons'
 import { Portal } from '@/main/components/Portal'
+import { Skeleton } from 'antd'
 
 export type TSimpleModalProps = {
 	width?: number
@@ -100,6 +101,7 @@ const SimpleModalComponent = ({
 					</div>
 
 					{/* body */}
+					{!show && <Skeleton active className="at-my-8" />}
 					{show && (
 						<>
 							<div className="at-h-fit at-max-h-[calc(100vh-20rem)] at-my-8 at-overflow-auto at-pr-2">

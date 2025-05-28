@@ -1,6 +1,7 @@
 import React, { memo, useEffect, useState } from 'react'
 import { CloseOutlined } from '@ant-design/icons'
 import { Portal } from '@/main/components/Portal'
+import { Skeleton } from 'antd'
 
 export type TSimpleDrawerProps = {
 	width?: number
@@ -98,6 +99,7 @@ const SimpleDrawerComponent = ({
 					</div>
 
 					{/* body */}
+					{!show && <Skeleton active className="at-my-8" />}
 					{show && (
 						<>
 							<div className="at-h-[calc(100%-5rem)] at-mt-12 at-mb-4 at-overflow-auto at-pr-2">
