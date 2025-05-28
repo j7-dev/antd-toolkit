@@ -7,9 +7,8 @@ import {
 	CloudFilled,
 } from '@ant-design/icons'
 import { IoMdDownload } from 'react-icons/io'
-import { PRODUCT_TYPES } from '@/wp/utils'
 import { TProductType } from '@/wp/types'
-import { stringToBool } from '@/wp'
+import { stringToBool, useWoocommerce } from '@/wp'
 
 type TBaseRecord = {
 	type: TProductType
@@ -37,7 +36,9 @@ const ProductTypeComponent = <T extends TBaseRecord>({
 		virtual = false,
 		downloadable = false,
 	} = record
-	const tag = PRODUCT_TYPES.find((productType) => productType.value === type)
+
+	const { product_types } = useWoocommerce()
+	const tag = product_types?.find((productType) => productType.value === type)
 	if (!type) return null
 	return (
 		<div className="at-flex at-items-center at-gap-2">

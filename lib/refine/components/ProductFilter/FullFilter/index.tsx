@@ -18,8 +18,9 @@ import {
 	BACKORDERS,
 	PRODUCT_STOCK_STATUS,
 	PRODUCT_STATUS,
-	PRODUCT_TYPES,
 	TUserBaseRecord,
+	useWoocommerce,
+	isVariation,
 } from '@/wp'
 
 import { SearchOutlined, UndoOutlined } from '@ant-design/icons'
@@ -46,6 +47,26 @@ const FullFilter: FC<{
 
 	const { isLoading, ...options } = useContext(FilterContext)
 	const { product_cats = [], product_tags = [], max_price, min_price } = options
+	const { product_types } = useWoocommerce()
+	const renameProductType = product_types
+		.map((productType) => {
+			if (productType.value === 'simple') {
+				return {
+					...productType,
+					label: `${productType.label} (單選項商品)`,
+				}
+			}
+
+			if (productType.value === 'variable') {
+				return {
+					...productType,
+					label: `${productType.label} (多選項商品)`,
+				}
+			}
+
+			return productType
+		})
+		.filter((productType) => !isVariation(productType.value))
 
 	useEffect(() => {
 		if (!isLoading) {
@@ -88,7 +109,7 @@ const FullFilter: FC<{
 					<Item name={['type']} label={productKeyLabelMapper('type')}>
 						<Select
 							{...defaultSelectProps}
-							options={PRODUCT_TYPES}
+							options={renameProductType}
 							placeholder="可多選"
 						/>
 					</Item>

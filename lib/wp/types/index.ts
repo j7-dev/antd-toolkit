@@ -23,6 +23,7 @@ export type TOrderStatus = (typeof ORDER_STATUS)[number]['value']
 
 
 export * from './product'
+export * from './woocommerce'
 
 export type TUserBaseRecord = {
 	id: string

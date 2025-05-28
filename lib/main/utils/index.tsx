@@ -3,6 +3,7 @@ export * from './api'
 export * from './common'
 export * from './dayjs'
 export * from './video'
+export * from './zod'
 
 export const defaultImage = 'https://placehold.co/480x480?text=%3CIMG%20/%3E'
 export const defaultImageVideo =

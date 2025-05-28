@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { ProductType } from './index'
+import { refineDecorator } from '../../../../stories'
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 
@@ -84,4 +85,5 @@ export const General: Story = {
 		},
 		hideDownloadable: false,
 	},
+	decorators: [refineDecorator],
 }
