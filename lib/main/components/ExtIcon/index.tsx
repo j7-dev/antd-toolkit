@@ -4,7 +4,7 @@ export const ExtIcon: FC<{
 	ext: string
 	className?: string
 	style?: React.CSSProperties
-}> = ({ ext, className = 'at-size-6', style }) => {
+}> = ({ ext, className = 'h-6 w-6', style }) => {
 	if ('txt' === ext) {
 		return (
 			<svg

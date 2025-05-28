@@ -1,7 +1,14 @@
 import { useState } from 'react'
 import { TSimpleDrawerProps } from './index'
 
-export const useSimpleDrawer = () => {
+type TUseSimpleDrawerParams = {
+	closeConfirm?: boolean
+}
+
+export const useSimpleDrawer = (params?: TUseSimpleDrawerParams) => {
+
+	const closeConfirm = params?.closeConfirm || false
+
 	const [drawerProps, setDrawerProps] = useState<Partial<TSimpleDrawerProps>>({
 		title: '媒體庫',
 	})
@@ -17,6 +24,12 @@ export const useSimpleDrawer = () => {
 	}
 
 	const close = () => {
+
+		if(closeConfirm){
+			const canClose = window.confirm('確定要關閉嗎？沒有儲存的內容會遺失')
+			if (!canClose) return
+		}
+
 		setDrawerProps((prev) => ({
 			...prev,
 			transform: 'translateX(-100%)',
@@ -26,7 +39,6 @@ export const useSimpleDrawer = () => {
 	}
 
 	drawerProps.onCancel = close
-
 
 	return {
 		show,

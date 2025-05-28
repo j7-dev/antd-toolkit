@@ -28,7 +28,7 @@ const BlockNoteDrawerComponent: FC<TBlockNoteDrawerProps> = ({
 
 	const { editor } = blockNoteViewProps
 
-	const { drawerProps, show, close } = useSimpleDrawer()
+	const { drawerProps, show, close } = useSimpleDrawer({ closeConfirm: true })
 	const open = drawerProps.opacity === 1
 
 	const handleSaveContent = () => {
