@@ -93,9 +93,6 @@ const SimpleDrawerComponent = ({
 						<>
 							<div className="at-h-[calc(100%-5rem)] at-mt-12 at-mb-4 at-overflow-auto at-pr-2">
 								{children}
-								{children}
-								{children}
-								{children}
 							</div>
 						</>
 					)}
