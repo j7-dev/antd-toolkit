@@ -66,7 +66,7 @@ const FullFilter: FC<{
 
 			return productType
 		})
-		.filter((productType) => !isVariation(productType.value))
+		.filter((productType) => !isVariation(productType?.value?.toString()))
 
 	useEffect(() => {
 		if (!isLoading) {
