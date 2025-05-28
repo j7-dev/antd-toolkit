@@ -143,6 +143,9 @@ const MediaLibraryButton = (
 				className="at-w-full"
 				onMouseEnter={() => setShowTool(true)}
 				onMouseLeave={() => setShowTool(false)}
+				style={{
+					contain: 'layout paint paint',
+				}}
 			>
 				{url && (
 					<>
@@ -173,16 +176,20 @@ const MediaLibraryButton = (
 											defaultValue={currentBlockProps.widthValue}
 											onChange={(value) => update('widthValue', value)}
 										/>
-										<Select
-											size="small"
-											defaultValue={currentBlockProps.widthUnit}
-											onChange={(value) => update('widthUnit', value)}
-											className="at-w-16"
-											options={['px', '%'].map((unit) => ({
-												label: unit,
-												value: unit,
-											}))}
-										/>
+										{['px', '%'].map((unit) => (
+											<Button
+												key={unit}
+												type={
+													currentBlockProps.widthUnit === unit
+														? 'primary'
+														: 'default'
+												}
+												size="small"
+												onClick={() => update('widthUnit', unit)}
+											>
+												{unit}
+											</Button>
+										))}
 									</Space.Compact>
 								)}
 

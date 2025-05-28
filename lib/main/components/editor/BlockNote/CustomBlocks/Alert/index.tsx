@@ -130,6 +130,9 @@ export const Alert = createReactBlockSpec(CONFIG, {
 				className="at-w-full"
 				onMouseEnter={() => setShowTool(true)}
 				onMouseLeave={() => setShowTool(false)}
+				style={{
+					contain: 'layout paint paint',
+				}}
 			>
 				<AntdAlert
 					className="at-w-full"

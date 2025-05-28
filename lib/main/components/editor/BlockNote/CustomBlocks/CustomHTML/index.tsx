@@ -37,7 +37,13 @@ export const CustomHTML = createReactBlockSpec(CONFIG, {
 		const value = props.block.props.html
 
 		return (
-			<div data-block-key={props.block?.type} className={'at-w-full'}>
+			<div
+				data-block-key={props.block?.type}
+				className={'at-w-full'}
+				style={{
+					contain: 'layout paint paint',
+				}}
+			>
 				<textarea
 					className="at-w-full at-rounded-sm at-outline-none at-border-2 at-border-solid at-border-gray-100 at-bg-gray-100 at-p-2 at-whitespace-pre-wrap"
 					rows={10}
