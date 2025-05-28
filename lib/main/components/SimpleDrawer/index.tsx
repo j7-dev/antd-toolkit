@@ -69,7 +69,7 @@ const SimpleDrawerComponent = ({
 						width: `${width}px`,
 						height: '100%',
 						maxWidth: 'max(75%, calc(100% - 100rem))',
-						backgroundColor: '#f0f0f0',
+						backgroundColor: '#ffffff',
 						padding: '2rem 1.5rem 2rem 2rem',
 						transform,
 						transition: 'transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)',
@@ -98,7 +98,7 @@ const SimpleDrawerComponent = ({
 					)}
 
 					{/* footer */}
-					<div className="at-px-4 at-absolute at-bottom-2 at-left-0 at-w-full at-h-12 at-flex at-items-center at-justify-between">
+					<div className="at-px-4 at-absolute at-bottom-2 at-left-0 at-w-full at-h-12 at-flex at-flex-row-reverse at-items-center at-justify-between">
 						{footer}
 					</div>
 				</div>

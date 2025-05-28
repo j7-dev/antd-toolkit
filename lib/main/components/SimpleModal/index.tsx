@@ -73,7 +73,7 @@ const SimpleModalComponent = ({
 						position: 'relative',
 						width: `${width}px`,
 						maxWidth: 'max(90%, calc(100vw - 4rem))',
-						backgroundColor: '#f0f0f0',
+						backgroundColor: '#ffffff',
 						padding: '2rem',
 						borderRadius: '1rem',
 					}}
@@ -100,7 +100,7 @@ const SimpleModalComponent = ({
 					)}
 
 					{/* footer */}
-					<div className="at-px-4 at-absolute at-bottom-2 at-left-0 at-w-full at-h-12 at-flex at-items-center at-justify-between">
+					<div className="at-px-4 at-absolute at-bottom-2 at-left-0 at-w-full at-h-12 at-flex at-flex-row-reverse at-items-center at-justify-between">
 						{footer}
 					</div>
 				</div>

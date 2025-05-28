@@ -1,13 +1,13 @@
 import React, { createContext, useState, useContext } from 'react'
-import { ModalProps } from '@/main/components/editor/BlockNote/Modal'
+import { TSimpleModalProps } from '@/main/components/SimpleModal'
 import { TMediaLibraryProps } from '@/refine/bunny'
 
 type ContextProps = {
 	show: () => void
 	close: () => void
-	modalProps: ModalProps
+	modalProps: TSimpleModalProps
 	mediaLibraryProps: TMediaLibraryProps
-	setModalProps: React.Dispatch<React.SetStateAction<ModalProps>>
+	setModalProps: React.Dispatch<React.SetStateAction<TSimpleModalProps>>
 	setMediaLibraryProps: React.Dispatch<React.SetStateAction<TMediaLibraryProps>>
 }
 
@@ -26,7 +26,7 @@ export const useContextProps = () => {
 }
 
 export const useBunnyMediaLibraryModal = () => {
-	const [modalProps, setModalProps] = useState<ModalProps>({
+	const [modalProps, setModalProps] = useState<TSimpleModalProps>({
 		title: 'Bunny 媒體庫',
 		width: 1600,
 		className: 'pc-media-library',

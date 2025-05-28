@@ -19,7 +19,7 @@ import Render from '../Render'
 import { cn } from '@/main/utils'
 import { TBunnyVideo } from '@/refine/bunny'
 import { useContextProps } from '@/main/components/editor/BlockNote/CustomBlocks/BunnyVideo/hooks'
-import { ModalProps } from '@/main/components/editor/BlockNote/Modal'
+import { TSimpleModalProps } from '@/main/components/SimpleModal'
 
 export type TMediaLibraryButton = ReactCustomBlockRenderProps<
 	CustomBlockConfig,
@@ -96,7 +96,7 @@ const MediaLibraryButton = (props: TMediaLibraryButton) => {
 			}
 		}
 
-		setModalProps((prev: ModalProps) => {
+		setModalProps((prev: TSimpleModalProps) => {
 			return {
 				...prev,
 				footer: (
@@ -104,7 +104,7 @@ const MediaLibraryButton = (props: TMediaLibraryButton) => {
 						確定選取 ({selectedItems?.length})
 					</Button>
 				),
-			} as ModalProps
+			} as TSimpleModalProps
 		})
 	}, [selectedItems, setSelectedItems, currentBlockProps, currentBlock])
 

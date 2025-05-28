@@ -46,8 +46,15 @@ export const General: Story = {
 					顯示
 				</Button>
 				<SimpleModal {...modalProps}>
-					<div className="at-size-[20rem] at-bg-red-200 at-rounded-lg at-flex at-items-center at-justify-center">
-						<h1>Hello</h1>
+					<div className="at-flex at-flex-wrap at-gap-2">
+						{Array.from({ length: 10 }).map((_, index) => (
+							<div
+								key={index}
+								className="at-size-[20rem] at-bg-red-200 at-rounded-lg at-flex at-items-center at-justify-center"
+							>
+								<h1>Hello</h1>
+							</div>
+						))}
 					</div>
 				</SimpleModal>
 			</>
