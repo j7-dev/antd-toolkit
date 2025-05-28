@@ -1,29 +1,31 @@
 import React, { memo, useEffect, useState } from 'react'
 import { CloseOutlined } from '@ant-design/icons'
 
-export type ModalProps = {
-	width: number
-	title: React.ReactNode
+export type TSimpleModalProps = {
+	width?: number
+	title?: React.ReactNode
 	children?: React.ReactNode
 	footer?: React.ReactNode | null
 	className?: string
 	onCancel?: () => void
-	zIndex: number
+	zIndex?: number
 	opacity?: number
 	pointerEvents?: 'auto' | 'none'
 }
 
-const Modal = ({
-	width,
-	title,
+export * from './hooks'
+
+const SimpleModalComponent = ({
+	width = 1600,
+	title = '',
 	children,
-	footer,
-	className,
+	footer = null,
+	className = 'pc-media-library',
 	onCancel,
-	zIndex,
+	zIndex = 2000,
 	opacity = 0,
 	pointerEvents = 'none',
-}: ModalProps) => {
+}: TSimpleModalProps) => {
 	const [show, setShow] = useState(false)
 
 	useEffect(() => {
@@ -46,6 +48,7 @@ const Modal = ({
 	return (
 		<div
 			style={{
+				contain: 'strict',
 				position: 'fixed',
 				top: 0,
 				left: 0,
@@ -58,6 +61,8 @@ const Modal = ({
 				zIndex,
 				opacity,
 				pointerEvents,
+				transition: 'opacity 0.3s ease-out',
+				willChange: 'opacity',
 			}}
 			onClick={handleBgClick}
 		>
@@ -65,32 +70,39 @@ const Modal = ({
 				style={{
 					position: 'relative',
 					width: `${width}px`,
-					maxWidth: '100%',
+					maxWidth: 'max(90%, calc(100vw - 4rem))',
 					backgroundColor: '#f0f0f0',
 					padding: '2rem',
 					borderRadius: '1rem',
 				}}
 				className={className}
 			>
-				<div className="at-mb-2 at-font-semibold at-text-lg">{title}</div>
+				{/* head */}
+				<div className="at-px-4 at-absolute at-top-4 at-left-0 at-w-full at-h-8 at-flex at-items-center at-justify-between">
+					<div className="at-font-semibold at-text-lg at-ml-4">{title}</div>
+					<div>
+						<CloseOutlined
+							onClick={onCancel}
+							className="at-text-2xl at-text-gray-700 at-cursor-pointer"
+						/>
+					</div>
+				</div>
+
+				{/* body */}
 				{show && (
 					<>
-						<div className="at-h-[75vh] at-max-h-[calc(100vh-16rem)] at-overflow-y-auto at-overflow-x-hidden at-pr-2">
+						<div className="at-h-fit at-max-h-[calc(100vh-20rem)] at-my-8 at-overflow-auto at-pr-2">
 							{children}
 						</div>
-						<div className="at-flex at-justify-end at-mt-4">{footer}</div>
 					</>
 				)}
-				{!show && <>loading...</>}
 
-				<div
-					onClick={onCancel}
-					className="at-absolute at-top-4 at-right-4 at-p-2 at-cursor-pointer"
-				>
-					<CloseOutlined className="at-text-2xl at-text-gray-700" />
+				{/* footer */}
+				<div className="at-px-4 at-absolute at-bottom-2 at-left-0 at-w-full at-h-12 at-flex at-items-center at-justify-between">
+					{footer}
 				</div>
 			</div>
 		</div>
 	)
 }
-export default memo(Modal)
+export const SimpleModal = memo(SimpleModalComponent)

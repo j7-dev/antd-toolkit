@@ -28,7 +28,7 @@ import { TbSwitchHorizontal } from 'react-icons/tb'
 import { cn, isImageFile, isAudioFile, isVideoFile, AltIcon } from '@/main'
 import { TAttachment } from '@/wp'
 import { useContextProps } from '@/main/components/editor/BlockNote/CustomBlocks/MediaLibrary/hooks'
-import { ModalProps } from '@/main/components/editor/BlockNote/Modal'
+import { TSimpleModalProps } from '@/main/components/SimpleModal'
 import Render from '../Render'
 
 export type TMediaLibraryButton = ReactCustomBlockRenderProps<
@@ -104,7 +104,7 @@ const MediaLibraryButton = (
 			}
 		}
 
-		setModalProps((prev: ModalProps) => {
+		setModalProps((prev: TSimpleModalProps) => {
 			return {
 				...prev,
 				footer: (
@@ -112,7 +112,7 @@ const MediaLibraryButton = (
 						確定選取 ({selectedItems?.length})
 					</Button>
 				),
-			} as ModalProps
+			} as TSimpleModalProps
 		})
 	}, [selectedItems, setSelectedItems, currentBlockProps, currentBlock])
 

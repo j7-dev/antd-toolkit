@@ -1,13 +1,14 @@
 import React, { createContext, useState, useContext } from 'react'
-import { ModalProps } from '@/main/components/editor/BlockNote/Modal'
+import { TSimpleModalProps } from '@/main/components/SimpleModal'
+import { useSimpleModal } from '@/main/components/SimpleModal'
 import { TMediaLibraryProps } from '@/wp'
 
 type ContextProps = {
 	show: () => void
 	close: () => void
-	modalProps: ModalProps
+	modalProps: TSimpleModalProps
 	mediaLibraryProps: TMediaLibraryProps
-	setModalProps: React.Dispatch<React.SetStateAction<ModalProps>>
+	setModalProps: React.Dispatch<React.SetStateAction<TSimpleModalProps>>
 	setMediaLibraryProps: React.Dispatch<React.SetStateAction<TMediaLibraryProps>>
 }
 
@@ -26,40 +27,14 @@ export const useContextProps = () => {
 }
 
 export const useWpMediaLibraryModal = () => {
-	const [modalProps, setModalProps] = useState<ModalProps>({
-		title: '媒體庫',
-		width: 1600,
-		className: 'pc-media-library',
-		zIndex: -2000,
-		opacity: 0,
-		pointerEvents: 'none',
-	})
+	const { modalProps, show, close, setModalProps } = useSimpleModal()
+
 	const [mediaLibraryProps, setMediaLibraryProps] =
 		useState<TMediaLibraryProps>({
 			selectedItems: [],
 			setSelectedItems: () => {},
 			limit: 1,
 		})
-
-	const show = () => {
-		setModalProps((prev) => ({
-			...prev,
-			zIndex: 2000,
-			opacity: 1,
-			pointerEvents: 'auto',
-		}))
-	}
-
-	const close = () => {
-		setModalProps((prev) => ({
-			...prev,
-			zIndex: -2000,
-			opacity: 0,
-			pointerEvents: 'none',
-		}))
-	}
-
-	modalProps.onCancel = close
 
 	return {
 		show,

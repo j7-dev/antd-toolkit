@@ -17,7 +17,7 @@ import {
 } from '@/main/components/editor/BlockNote/CustomBlocks/BunnyVideo/hooks'
 import { schema } from './useBlockNote'
 import './index.scss'
-import Modal from './Modal'
+import { SimpleModal } from '@/main/components/SimpleModal'
 
 export * from './useBlockNote'
 
@@ -49,13 +49,13 @@ export const BlockNote: FC<
 			>
 				<BlockNoteView {...blockNoteViewProps} />
 
-				<Modal {...wpModalProps}>
+				<SimpleModal {...wpModalProps}>
 					<WpMediaLibrary {...wpMediaLibraryProps} />
-				</Modal>
+				</SimpleModal>
 
-				<Modal {...bunnyModalProps}>
+				<SimpleModal {...bunnyModalProps}>
 					<BunnyMediaLibrary {...bunnyMediaLibraryProps} />
-				</Modal>
+				</SimpleModal>
 			</BunnyMediaLibraryModalContext.Provider>
 		</WpMediaLibraryModalContext.Provider>
 	)
