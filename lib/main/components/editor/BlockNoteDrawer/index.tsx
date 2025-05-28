@@ -52,9 +52,11 @@ const BlockNoteDrawerComponent: FC<TBlockNoteDrawerProps> = ({
 		try {
 			if (watchId && open && editor) {
 				const description = form.getFieldValue(name)
+				const descriptionString =
+					typeof description === 'string' ? description : ''
 
 				async function loadInitialHTML() {
-					const blocks = await editor.tryParseHTMLToBlocks(description)
+					const blocks = await editor.tryParseHTMLToBlocks(descriptionString)
 					editor.replaceBlocks(editor.document, blocks)
 				}
 				loadInitialHTML()

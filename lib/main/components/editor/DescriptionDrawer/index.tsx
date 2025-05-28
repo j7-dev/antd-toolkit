@@ -29,8 +29,8 @@ const DescriptionDrawerComponent: FC<TDescriptionDrawerProps> = ({
 		resource,
 		...notificationProps,
 	})
-	const watchId = Form.useWatch(['id'], form)
-	const watchEditor = Form.useWatch(['editor'], form)
+	const watchId = Form.useWatch(['id'], form) || 0
+	const watchEditor = Form.useWatch(['editor'], form) || 'power-editor'
 
 	const { blockNoteViewProps, html, setHTML } = useBlockNote()
 
@@ -60,9 +60,11 @@ const DescriptionDrawerComponent: FC<TDescriptionDrawerProps> = ({
 		try {
 			if (watchId && open && editor) {
 				const description = form.getFieldValue(name)
+				const descriptionString =
+					typeof description === 'string' ? description : ''
 
 				async function loadInitialHTML() {
-					const blocks = await editor.tryParseHTMLToBlocks(description)
+					const blocks = await editor.tryParseHTMLToBlocks(descriptionString)
 					editor.replaceBlocks(editor.document, blocks)
 				}
 				loadInitialHTML()
