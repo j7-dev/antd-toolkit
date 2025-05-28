@@ -1,5 +1,6 @@
 import React, { memo, useEffect, useState } from 'react'
 import { CloseOutlined } from '@ant-design/icons'
+import { Portal } from '@/main/components/Portal'
 
 export type TSimpleModalProps = {
 	width?: number
@@ -46,63 +47,65 @@ const SimpleModalComponent = ({
 	}
 
 	return (
-		<div
-			style={{
-				contain: 'strict',
-				position: 'fixed',
-				top: 0,
-				left: 0,
-				width: '100%',
-				height: '100%',
-				backgroundColor: 'rgba(0, 0, 0, 0.5)',
-				display: 'flex',
-				justifyContent: 'center',
-				alignItems: 'center',
-				zIndex,
-				opacity,
-				pointerEvents,
-				transition: 'opacity 0.3s ease-out',
-				willChange: 'opacity',
-			}}
-			onClick={handleBgClick}
-		>
+		<Portal>
 			<div
 				style={{
-					position: 'relative',
-					width: `${width}px`,
-					maxWidth: 'max(90%, calc(100vw - 4rem))',
-					backgroundColor: '#f0f0f0',
-					padding: '2rem',
-					borderRadius: '1rem',
+					contain: 'strict',
+					position: 'fixed',
+					top: 0,
+					left: 0,
+					width: '100%',
+					height: '100%',
+					backgroundColor: 'rgba(0, 0, 0, 0.5)',
+					display: 'flex',
+					justifyContent: 'center',
+					alignItems: 'center',
+					zIndex,
+					opacity,
+					pointerEvents,
+					transition: 'opacity 0.3s ease-out',
+					willChange: 'opacity',
 				}}
-				className={className}
+				onClick={handleBgClick}
 			>
-				{/* head */}
-				<div className="at-px-4 at-absolute at-top-4 at-left-0 at-w-full at-h-8 at-flex at-items-center at-justify-between">
-					<div className="at-font-semibold at-text-lg at-ml-4">{title}</div>
-					<div>
-						<CloseOutlined
-							onClick={onCancel}
-							className="at-text-2xl at-text-gray-700 at-cursor-pointer"
-						/>
+				<div
+					style={{
+						position: 'relative',
+						width: `${width}px`,
+						maxWidth: 'max(90%, calc(100vw - 4rem))',
+						backgroundColor: '#f0f0f0',
+						padding: '2rem',
+						borderRadius: '1rem',
+					}}
+					className={className}
+				>
+					{/* head */}
+					<div className="at-px-4 at-absolute at-top-4 at-left-0 at-w-full at-h-8 at-flex at-items-center at-justify-between">
+						<div className="at-font-semibold at-text-lg at-ml-4">{title}</div>
+						<div>
+							<CloseOutlined
+								onClick={onCancel}
+								className="at-text-2xl at-text-gray-700 at-cursor-pointer"
+							/>
+						</div>
+					</div>
+
+					{/* body */}
+					{show && (
+						<>
+							<div className="at-h-fit at-max-h-[calc(100vh-20rem)] at-my-8 at-overflow-auto at-pr-2">
+								{children}
+							</div>
+						</>
+					)}
+
+					{/* footer */}
+					<div className="at-px-4 at-absolute at-bottom-2 at-left-0 at-w-full at-h-12 at-flex at-items-center at-justify-between">
+						{footer}
 					</div>
 				</div>
-
-				{/* body */}
-				{show && (
-					<>
-						<div className="at-h-fit at-max-h-[calc(100vh-20rem)] at-my-8 at-overflow-auto at-pr-2">
-							{children}
-						</div>
-					</>
-				)}
-
-				{/* footer */}
-				<div className="at-px-4 at-absolute at-bottom-2 at-left-0 at-w-full at-h-12 at-flex at-items-center at-justify-between">
-					{footer}
-				</div>
 			</div>
-		</div>
+		</Portal>
 	)
 }
 export const SimpleModal = memo(SimpleModalComponent)

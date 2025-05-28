@@ -27,3 +27,5 @@ export * from '@/main/components/CheckIcon'
 export * from '@/main/components/AltIcon'
 export * from '@/main/components/SimpleModal'
 export * from '@/main/components/SimpleDrawer'
+export * from '@/main/components/Portal'
+

@@ -41,7 +41,7 @@ export const General: Story = {
 		const { drawerProps, show } = useSimpleDrawer()
 
 		useEffect(() => {
-			show()
+			// show()
 		}, [])
 
 		return (

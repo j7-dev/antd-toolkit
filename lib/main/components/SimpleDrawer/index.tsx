@@ -1,5 +1,6 @@
 import React, { memo, useEffect, useState } from 'react'
 import { CloseOutlined } from '@ant-design/icons'
+import { Portal } from '@/main/components/Portal'
 
 export type TSimpleDrawerProps = {
 	width?: number
@@ -48,72 +49,74 @@ const SimpleDrawerComponent = ({
 	}
 
 	return (
-		<div
-			style={{
-				contain: 'strict',
-				position: 'fixed',
-				top: 0,
-				left: 0,
-				width: '100%',
-				height: '100%',
-				zIndex,
-				pointerEvents,
-			}}
-		>
+		<Portal>
 			<div
 				style={{
-					zIndex: zIndex - 1,
-					position: 'relative',
-					width: `${width}px`,
+					contain: 'strict',
+					position: 'fixed',
+					top: 0,
+					left: 0,
+					width: '100%',
 					height: '100%',
-					maxWidth: 'max(75%, calc(100% - 100rem))',
-					backgroundColor: '#f0f0f0',
-					padding: '2rem 1.5rem 2rem 2rem',
-					transform,
-					transition: 'transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)',
-					willChange: 'transform',
+					zIndex,
+					pointerEvents,
 				}}
-				className={className}
 			>
-				{/* head */}
-				<div className="at-px-4 at-absolute at-top-4 at-left-0 at-w-full at-h-8 at-flex at-items-center at-justify-between">
-					<div className="at-font-semibold at-text-lg at-ml-4">{title}</div>
-					<div>
-						<CloseOutlined
-							onClick={onCancel}
-							className="at-text-2xl at-text-gray-700 at-cursor-pointer"
-						/>
+				<div
+					style={{
+						zIndex: zIndex - 1,
+						position: 'relative',
+						width: `${width}px`,
+						height: '100%',
+						maxWidth: 'max(75%, calc(100% - 100rem))',
+						backgroundColor: '#f0f0f0',
+						padding: '2rem 1.5rem 2rem 2rem',
+						transform,
+						transition: 'transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)',
+						willChange: 'transform',
+					}}
+					className={className}
+				>
+					{/* head */}
+					<div className="at-px-4 at-absolute at-top-4 at-left-0 at-w-full at-h-8 at-flex at-items-center at-justify-between">
+						<div className="at-font-semibold at-text-lg at-ml-4">{title}</div>
+						<div>
+							<CloseOutlined
+								onClick={onCancel}
+								className="at-text-2xl at-text-gray-700 at-cursor-pointer"
+							/>
+						</div>
+					</div>
+
+					{/* body */}
+					{show && (
+						<>
+							<div className="at-h-[calc(100%-5rem)] at-mt-12 at-mb-4 at-overflow-auto at-pr-2">
+								{children}
+								{children}
+								{children}
+								{children}
+							</div>
+						</>
+					)}
+
+					{/* footer */}
+					<div className="at-px-4 at-absolute at-bottom-2 at-left-0 at-w-full at-h-12 at-flex at-items-center at-justify-between">
+						{footer}
 					</div>
 				</div>
-
-				{/* body */}
-				{show && (
-					<>
-						<div className="at-h-[calc(100%-5rem)] at-mt-12 at-mb-4 at-overflow-auto at-pr-2">
-							{children}
-							{children}
-							{children}
-							{children}
-						</div>
-					</>
-				)}
-
-				{/* footer */}
-				<div className="at-px-4 at-absolute at-bottom-2 at-left-0 at-w-full at-h-12 at-flex at-items-center at-justify-between">
-					{footer}
-				</div>
+				<div
+					className="at-absolute at-top-0 at-left-0 at-w-full at-h-full at-bg-black/50"
+					style={{
+						zIndex: zIndex - 2,
+						opacity,
+						transition: 'opacity 0.3s ease-out',
+						willChange: 'opacity',
+					}}
+					onClick={handleBgClick}
+				/>
 			</div>
-			<div
-				className="at-absolute at-top-0 at-left-0 at-w-full at-h-full at-bg-black/50"
-				style={{
-					zIndex: zIndex - 2,
-					opacity,
-					transition: 'opacity 0.3s ease-out',
-					willChange: 'opacity',
-				}}
-				onClick={handleBgClick}
-			/>
-		</div>
+		</Portal>
 	)
 }
 export const SimpleDrawer = memo(SimpleDrawerComponent)
