@@ -45,8 +45,8 @@ export const CustomHTML = createReactBlockSpec(CONFIG, {
 				}}
 			>
 				<textarea
-					className="at-w-full at-rounded-sm at-outline-none at-border-2 at-border-solid at-border-gray-100 at-bg-gray-100 at-p-2 at-whitespace-pre-wrap"
-					rows={10}
+					className="at-w-full at-text-sm at-rounded-md at-outline-none at-border-2 at-border-solid at-border-gray-100 at-bg-gray-100 at-p-2 at-whitespace-pre-wrap"
+					rows={6}
 					onChange={(e) => {
 						props.editor.updateBlock(props.block, {
 							type: 'customHTML',
