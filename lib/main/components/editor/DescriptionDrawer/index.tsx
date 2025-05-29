@@ -42,7 +42,7 @@ const DescriptionDrawerComponent: FC<TDescriptionDrawerProps> = ({
 
 	const handleSaveContent = async () => {
 		const nameString = getNameString(name)
-		const html = await getEditorHtml(editor as any, true)
+		const html = await getEditorHtml(editor as any)
 		update(
 			{
 				id: watchId,
