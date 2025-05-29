@@ -19,7 +19,8 @@ import { schema } from './useBlockNote'
 import './index.scss'
 import { SimpleModal } from '@/main/components/SimpleModal'
 
-export * from './useBlockNote'
+export * from '@/main/components/editor/BlockNote/useBlockNote'
+export { getEditorHtml } from '@/main/components/editor/BlockNote/utils/parse'
 
 /**
  * TODO

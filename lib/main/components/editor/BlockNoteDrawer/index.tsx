@@ -2,6 +2,7 @@ import { FC, useEffect, memo } from 'react'
 import { Button, Form, Alert, FormItemProps, ButtonProps } from 'antd'
 import { ExportOutlined } from '@ant-design/icons'
 import { useUpdate } from '@refinedev/core'
+import { getEditorHtml } from '@/main/components/editor/BlockNote/utils/parse'
 import { useBlockNote, BlockNote, SimpleDrawer, useSimpleDrawer } from '@/main'
 import { notificationProps } from '@/refine'
 
@@ -24,15 +25,16 @@ const BlockNoteDrawerComponent: FC<TBlockNoteDrawerProps> = ({
 	})
 	const watchId = Form.useWatch(['id'], form)
 
-	const { blockNoteViewProps, html, setHTML } = useBlockNote()
+	const { blockNoteViewProps } = useBlockNote()
 
 	const { editor } = blockNoteViewProps
 
 	const { drawerProps, show, close } = useSimpleDrawer()
 	const open = drawerProps.opacity === 1
 
-	const handleSaveContent = () => {
+	const handleSaveContent = async () => {
 		const nameString = getNameString(name)
+		const html = await getEditorHtml(editor as any, true)
 		update(
 			{
 				id: watchId,
@@ -63,7 +65,6 @@ const BlockNoteDrawerComponent: FC<TBlockNoteDrawerProps> = ({
 			}
 
 			if (!watchId && open && editor) {
-				setHTML('')
 				editor.removeBlocks(editor.document)
 			}
 		} catch (error) {
@@ -95,7 +96,6 @@ const BlockNoteDrawerComponent: FC<TBlockNoteDrawerProps> = ({
 							type="default"
 							danger
 							onClick={() => {
-								setHTML('')
 								editor.removeBlocks(editor.document)
 							}}
 						>

@@ -59,6 +59,17 @@ export const renderHTML = (HTMLstring: string, allowJS: boolean = false) => {
 }
 
 /**
+ * 轉換 HTML 實體
+ * @param text
+ * @returns
+ */
+export function escapeHtml(text: string) {
+	const div = document.createElement('div')
+	div.textContent = text
+	return div.innerHTML
+}
+
+/**
  * 取得可複製的 JSON 字串
  */
 export const getCopyableJson = (variable: object) => {

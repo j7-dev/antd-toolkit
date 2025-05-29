@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { Input } from 'antd'
+import { Input, Button } from 'antd'
 import type { Meta, StoryObj } from '@storybook/react'
 import { BlockNote, useBlockNote } from './index'
-import { refineDecorator, ENV } from '../../../../stories'
+import { renderHTML } from '../../../utils'
+import { getEditorHtml } from './utils/parse'
+import { refineDecorator } from '../../../../stories'
 import { MediaLibraryNotification as BunnyMediaLibraryNotification } from '../../../../refine/bunny/MediaLibraryNotification'
 import { MediaLibraryNotification as WPMediaLibraryNotification } from '../../../../wp/components/general/MediaLibraryNotification'
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
@@ -314,11 +316,13 @@ const INIT: any = [
 ]
 
 const BlockNoteWithHooks = () => {
-	const { blockNoteViewProps, blocks, html } = useBlockNote({
+	const { blockNoteViewProps, blocks } = useBlockNote({
 		options: {
 			initialContent: INIT,
 		} as any,
 	})
+
+	const [html, setHtml] = useState<string>('')
 
 	const { blockNoteViewProps: blockNoteViewProps2, blocks: blocks2 } =
 		useBlockNote()
@@ -342,6 +346,11 @@ const BlockNoteWithHooks = () => {
 		return () => clearTimeout(delay)
 	}, [html])
 
+	const handleGetHTML = async () => {
+		const html = await getEditorHtml(blockNoteViewProps?.editor as any)
+		setHtml(html)
+	}
+
 	return (
 		<>
 			<div className="at-w-full at-max-w-[50rem] at-max-h-[75vh] at-overflow-x-hidden at-overflow-y-auto">
@@ -353,16 +362,18 @@ const BlockNoteWithHooks = () => {
 					{JSON.stringify(blocks, null, 2)}
 				</pre>
 				<p> ▼ serialize HTML</p>
+				<Button type="primary" onClick={handleGetHTML}>
+					產生 HTML
+				</Button>
 				<pre className="at-my-4 prismjs at-bg-gray-100 at-p-4 at-rounded-md at-whitespace-normal">
 					{html}
 				</pre>
 				<p>
 					▼ render HTML (需用 <code>.power-editor</code> 包住)
 				</p>
-				<div
-					className="bn-editor bn-default-styles power-editor at-border at-border-solid at-border-gray-400"
-					dangerouslySetInnerHTML={{ __html: html }}
-				/>
+				<div className="bn-editor bn-default-styles power-editor at-border at-border-solid at-border-gray-400">
+					{renderHTML(html)}
+				</div>
 				<p> ▼ unserialize 上方的HTML</p>
 				{/* <BlockNote {...blockNoteViewProps2} /> */}
 

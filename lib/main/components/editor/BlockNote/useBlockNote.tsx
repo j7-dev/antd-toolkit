@@ -92,7 +92,6 @@ export const useBlockNote = (params?: TUseBlockNoteParams) => {
 	)
 
 	const [blocks, setBlocks] = useState<Block[]>([])
-	const [html, setHTML] = useState<string>('')
 
 	const blockNoteViewProps: BlockNoteViewProps<
 		typeof schema.blockSchema,
@@ -101,108 +100,7 @@ export const useBlockNote = (params?: TUseBlockNoteParams) => {
 	> = {
 		editor,
 		onChange: debounce(async (theEditor) => {
-			try {
-				// Saves the document JSON to state.
-				setBlocks(theEditor?.document as Block[])
-
-				// 如果沒有內容就 setHTML 為空字串
-				if (theEditor?.document?.length === 1) {
-					if (
-						'paragraph' === theEditor?.document[0]?.type &&
-						!(theEditor?.document[0]?.content as Array<any>)?.length
-					) {
-						console.error('⭐ 沒有內容')
-						setHTML('')
-						return
-					}
-				}
-
-				const newHtml = await theEditor?.blocksToHTMLLossy(
-					theEditor?.document || [],
-				)
-				setHTML(newHtml)
-			} catch (error) {
-				console.error('BlockNote onChange error:', error)
-			}
-			return
-			//另一種輸出方式
-			/*
-			// const newHtml = await editor.blocksToFullHTML(editor.document)
-			const parser = new DOMParser()
-			const doc = parser.parseFromString('', 'text/html')
-
-			// 將圖片的 data-url 轉換成 src
-			doc.body
-				.querySelectorAll('[data-content-type="image"]')
-				.forEach((node) => {
-					const src = node.getAttribute('data-url')
-					const imageNode = node.querySelector('img')
-					if (imageNode) {
-						imageNode.setAttribute('src', src || '')
-					}
-				})
-
-			// 將檔案的 data-url 轉換成 下載連結
-			doc.body
-				.querySelectorAll('[data-content-type="file"]')
-				.forEach((node) => {
-					const link = node.getAttribute('data-url')
-					const previewNode = node.querySelector(
-						'.bn-file-default-preview',
-					) as HTMLDivElement
-
-					if (previewNode) {
-						const previewANode = convertDivToATag(previewNode)
-						previewANode.setAttribute('href', link || '')
-						previewANode.setAttribute('target', '_blank')
-
-						const iconNode = previewANode.querySelector(
-							'.bn-file-default-preview-icon',
-						)
-
-						if (iconNode) {
-							const ext = getFileExtension(link || '')
-							iconNode.innerHTML = getIconHTML(ext)
-						}
-					}
-				})
-
-			// 將自訂 HTML
-			doc.body
-				.querySelectorAll('[data-content-type="customHTML"]')
-				.forEach((node) => {
-					const html = node.getAttribute('data-html')
-					const hasScript = hasScriptTag(html || '')
-
-					if (!hasScript) {
-						node.innerHTML = html || ''
-					} else {
-						const tempDiv = document.createElement('div')
-						tempDiv.innerHTML = html || ''
-
-						const scripts = tempDiv.getElementsByTagName('script')
-						const scriptContents = Array.from(scripts).map(
-							(script) => script.textContent || '',
-						)
-
-						// 移除所有 script 標籤
-						Array.from(scripts).forEach((script) => script.remove())
-
-						// 將剩餘的 HTML 內容放回
-						node.innerHTML = tempDiv.innerHTML
-
-						// 執行所有 script
-						scriptContents.forEach((content) => {
-							const scriptElement = document.createElement('script')
-							scriptElement.textContent = content
-							document.body.appendChild(scriptElement)
-							scriptElement.remove()
-						})
-					}
-				})
-
-			setHTML(doc.body.innerHTML)
-			*/
+			setBlocks(theEditor?.document as Block[])
 		}, 700),
 		theme: 'light',
 		formattingToolbar: false, // 自訂 toolbar
@@ -314,7 +212,7 @@ export const useBlockNote = (params?: TUseBlockNoteParams) => {
 		blockNoteViewProps,
 		blocks,
 		setBlocks,
-		html,
-		setHTML,
+		// html,
+		// setHTML,
 	}
 }
