@@ -65,7 +65,14 @@ export const CustomHTML = createReactBlockSpec(CONFIG, {
 		// 取得節點上的 data-block-key
 		const blockType = element.getAttribute('data-block-key')
 		if (CONFIG.type !== blockType) return
-		const innerHTML = element.innerHTML
+		// 找 element 底下一層的 div
+		const childDiv = element.querySelector(':scope > div')
+		if (!childDiv) {
+			return {
+				html: element.innerHTML,
+			}
+		}
+		const innerHTML = childDiv.innerHTML
 		return {
 			html: innerHTML,
 		}

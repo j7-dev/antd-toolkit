@@ -30,18 +30,35 @@ export const toFlexAlign = (
 
 export async function getEditorHtml(editor: BlockNoteEditor, escape = false) {
 	try {
+		const blocks = editor?.document || []
+
+		if (!blocks) return ''
+
 		// 如果沒有內容就 setHTML 為空字串
-		if (editor?.document?.length === 1) {
+		if (blocks?.length === 1) {
+			const firstBlock = blocks[0]
 			if (
-				'paragraph' === editor?.document[0]?.type &&
-				!(editor?.document[0]?.content as Array<any>)?.length
+				'paragraph' === firstBlock?.type &&
+				!(firstBlock?.content as Array<any>)?.length
 			) {
 				console.error('⭐ 沒有內容')
 				return ''
 			}
 		}
 
-		const newHtml = await editor?.blocksToHTMLLossy(editor?.document || [])
+		const html = await editor?.blocksToHTMLLossy(editor?.document || [])
+
+		// 解析 html 結構
+		const parser = new DOMParser()
+		const doc = parser.parseFromString(html, 'text/html')
+
+		// 將 customHTML 的 data-html 移除
+		doc.body.querySelectorAll('[data-html]').forEach((ele) => {
+			ele.removeAttribute('data-html')
+		})
+
+		const newHtml = doc.body.innerHTML
+
 		if (escape) {
 			return escapeHtml(newHtml)
 		}
