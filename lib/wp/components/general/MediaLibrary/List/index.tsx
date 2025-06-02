@@ -26,7 +26,6 @@ const List = () => {
 
 	// 上傳檔案
 	const { uploadProps: wpUploadProps } = useOnChangeUpload({
-		uploadProps,
 		onUploading: (file) => {
 			if (!setFilesInQueue) return
 			// @ts-ignore
@@ -167,14 +166,19 @@ const List = () => {
 			<div
 				className={`at-absolute at-top-0 at-left-0 at-size-full ${isDragging ? 'at-opacity-100 at-z-10' : 'at-opacity-0 -at-z-50'}`}
 			>
-				<UploadFile uploadProps={wpUploadProps} />
+				<UploadFile
+					uploadProps={{
+						...wpUploadProps,
+						...uploadProps,
+					}}
+				/>
 			</div>
 			<div className={cn(isDragging ? 'at-opacity-0' : 'at-opacity-100')}>
 				<div className="at-flex at-justify-end at-mb-8 at-gap-x-2">
 					<Button href={`${SITE_URL}/wp-admin/upload.php`} target="_blank">
 						前往傳統媒體庫介面
 					</Button>
-					<Upload {...wpUploadProps}>
+					<Upload {...wpUploadProps} {...uploadProps}>
 						<Button icon={<CloudUploadOutlined />}>上傳檔案</Button>
 					</Upload>
 				</div>

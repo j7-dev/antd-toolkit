@@ -24,13 +24,13 @@ const ItemInfo = ({ item }: { item: TAttachment | TImage }) => {
 	const { SITE_URL } = useEnv()
 
 	// @ts-ignore
-	const { id, url, img_url = '', type = '', description = '' } = item
+	const { id, url, img_url = '', type = '', slug = '' } = item
 	const { mutate: update, isLoading } = useUpdate({
 		resource: 'posts',
 	})
 
 	// 是 TAttachment 才顯示
-	if (!description) {
+	if (!slug) {
 		return null
 	}
 

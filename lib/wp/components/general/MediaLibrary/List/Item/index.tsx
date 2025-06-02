@@ -6,6 +6,7 @@ import { useProps } from '@/wp/components/general/MediaLibrary/hooks'
 import { isImageFile, getFileExtension } from '@/main/utils'
 import { ExtIcon, CheckIcon } from '@/main/components'
 import { TImage } from '@/wp'
+
 const { Text } = Typography
 
 const Item = ({
@@ -17,12 +18,22 @@ const Item = ({
 	allItems: (TAttachment | TImage)[]
 	index: number
 }) => {
-	const { selectedItems, setSelectedItems, limit } = useProps()
+	const { selectedItems, setSelectedItems, limit, mime } = useProps()
+
 	const isSelected = selectedItems?.some(
 		(selectedItem) => selectedItem.id === item.id,
 	)
 
 	const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+		// @ts-ignore
+		if (!mime.validate(item?.mime || '')) {
+			message.warning({
+				key: 'limit',
+				content: `不允許選取此類型的檔案`,
+			})
+			return
+		}
+
 		// 上一個選中的
 		const prevSelected = selectedItems?.length
 			? selectedItems?.slice(-1)?.[0]
@@ -52,10 +63,6 @@ const Item = ({
 			// @ts-ignore
 			setSelectedItems((prev) => prev.filter((v) => v.id !== item.id))
 		} else {
-			console.log('limit', limit)
-			console.log('selectedItems', selectedItems)
-			console.log('condition', limit && selectedItems.length >= limit)
-
 			if (limit && selectedItems.length >= limit) {
 				message.warning({
 					key: 'limit',

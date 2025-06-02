@@ -75,6 +75,7 @@ export const General: Story = {
 							'X-WP-Nonce': NONCE, // 需要帶當下的 NONCE
 							Authorization: `Basic ${btoa(USERNAME + ':' + PASSWORD)}`,
 						},
+						accept: 'image/*',
 					}}
 				/>
 				<MediaLibraryNotification />

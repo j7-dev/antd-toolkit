@@ -24,8 +24,6 @@ type TAttachment = {
  * - 整合 WordPress 媒體庫上傳
  *
  * @param {Object} props - 配置選項
- * @param {UploadProps} [props.uploadProps] - 可選的 antd Upload 組件屬性
- * @param {Function} [props.beforeUpload] - 上傳前的處理函數
  * @param {Function} [props.onUploading] - 上傳中的回調函數，參數為上傳中的檔案
  * @param {Function} [props.onDone] - 上傳完成的回調函數，參數為上傳成功的附件資料
  * @param {Function} [props.onError] - 上傳錯誤的回調函數，參數為錯誤的檔案
@@ -38,13 +36,12 @@ type TAttachment = {
  * @returns {boolean} returns.isUploading - 上傳狀態
  */
 export const useOnChangeUpload = (props?: {
-	uploadProps?: UploadProps
 	onUploading?: (_file: UploadFile<any>) => void
 	onDone?: (_file: UploadFile<any>, _attachment: TAttachment) => void
 	onError?: (_file: UploadFile<any>) => void
 	onRemoved?: (_file: UploadFile<any>) => void
 }) => {
-	const { uploadProps, onDone, onError, onRemoved, onUploading } = props || {}
+	const { onDone, onError, onRemoved, onUploading } = props || {}
 	const { NONCE } = useEnv()
 	const [fileList, setFileList] = useState<UploadFile[]>([])
 	const [attachmentId, setAttachmentId] = useState<number | undefined>(
@@ -109,7 +106,6 @@ export const useOnChangeUpload = (props?: {
 		fileList,
 		onChange,
 		showUploadList: false,
-		...uploadProps,
 	}
 
 	return {
