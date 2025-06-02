@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Button } from 'antd'
 import { TBunnyVideo } from '@/refine/bunny'
 import { useSimpleModal } from '@/main/components/SimpleModal'
@@ -8,10 +8,9 @@ export const useMediaLibraryModal = (params?: {
 	initItems?: TBunnyVideo[]
 }) => {
 	const onConfirm = params?.onConfirm
+	const initItems = params?.initItems || []
 	const { show, close, modalProps, setModalProps } = useSimpleModal()
-	const [selectedItems, setSelectedItems] = useState<TBunnyVideo[]>(
-		params?.initItems || [],
-	)
+	const [selectedItems, setSelectedItems] = useState<TBunnyVideo[]>([])
 
 	/** 按下[選擇檔案]按鈕後，要把值 set 到 form 裡 */
 	const handleConfirm = () => {
@@ -32,6 +31,10 @@ export const useMediaLibraryModal = (params?: {
 		destroyOnHidden: true,
 		...modalProps,
 	}
+
+	useEffect(() => {
+		setSelectedItems(initItems)
+	}, [initItems?.map((item) => item.guid)?.join(',')])
 
 	return {
 		show,
