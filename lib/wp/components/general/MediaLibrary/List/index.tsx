@@ -22,8 +22,7 @@ const List = () => {
 	const { SITE_URL } = useEnv()
 	const invalidate = useInvalidate()
 	const setFilesInQueue = useSetAtom(filesInQueueAtom)
-	const { uploadProps, selectedItems, setSelectedItems, initialIds } =
-		useProps()
+	const { uploadProps, selectedItems } = useProps()
 
 	// 上傳檔案
 	const { uploadProps: wpUploadProps } = useOnChangeUpload({
@@ -125,7 +124,6 @@ const List = () => {
 	const {
 		data,
 		isError,
-		isSuccess,
 		hasNextPage,
 		fetchNextPage,
 		isFetchingNextPage,
@@ -148,13 +146,6 @@ const List = () => {
 	)
 
 	const isSearchFetching = isLoading && !isFetchingNextPage
-
-	useEffect(() => {
-		if (!allItems?.length) {
-			return
-		}
-		setSelectedItems(allItems?.filter((item) => initialIds?.includes(item.id)))
-	}, [isSuccess, allItems?.length])
 
 	if (isError) {
 		return (

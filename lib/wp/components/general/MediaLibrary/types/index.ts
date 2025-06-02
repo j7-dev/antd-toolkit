@@ -1,4 +1,5 @@
 import { UploadProps } from 'antd'
+import { TImage } from '@/wp'
 
 export type TAttachment = {
 	id: string
@@ -31,15 +32,14 @@ export type TAttachment = {
  * WordPress 媒體庫元件的屬性介面
  * @interface TMediaLibraryProps
  * @template TAttachment - 媒體項目類型，必須包含 id 和 url 屬性，預設為 TAttachment
- * @property {TAttachment[]} selectedItems - 已選擇的媒體項目陣列
- * @property {React.Dispatch<React.SetStateAction<TAttachment[]>> | typeof useSetAtom} setSelectedItems - 設置已選擇媒體項目的函數
+ * @property {(TAttachment | TImage)[]} selectedItems - 已選擇的媒體項目陣列
+ * @property {React.Dispatch<React.SetStateAction<(TAttachment | TImage)[]>> | typeof useSetAtom} setSelectedItems - 設置已選擇媒體項目的函數
  * @property {number} [limit] - 可選擇的媒體項目數量上限
  * @property {UploadProps} [uploadProps] - 上傳媒體項目的屬性設定
  */
 export type TMediaLibraryProps = {
-	initialIds?: string[] // 初始的檔案 ids
-	selectedItems: TAttachment[] // 已選擇的檔案
-	setSelectedItems: React.Dispatch<React.SetStateAction<TAttachment[]>> // 已選擇的檔案 setter
+	selectedItems: (TAttachment | TImage)[] // 已選擇的檔案
+	setSelectedItems: React.Dispatch<React.SetStateAction<(TAttachment | TImage)[]>> // 已選擇的檔案 setter
 	limit?: number // 能選擇的檔案數量
 	uploadProps?: UploadProps // 上傳檔案的屬性
 }

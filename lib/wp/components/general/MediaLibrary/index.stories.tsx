@@ -3,7 +3,8 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { MediaLibrary } from './index'
 import { refineDecorator } from '../../../../stories'
 import { TAttachment } from './types'
-import { useEnv } from '../../../../main/'
+import { useEnv } from '../../../../main/components/EnvProvider/hooks'
+import { TImage } from '../../../../wp/types'
 import {
 	MediaLibraryNotification,
 	filesInQueueAtom,
@@ -40,7 +41,9 @@ export const General: Story = {
 	name: '一般用法',
 	render: () => {
 		const { NONCE, USERNAME, PASSWORD } = useEnv()
-		const [selectedItems, setSelectedItems] = useState<TAttachment[]>([])
+		const [selectedItems, setSelectedItems] = useState<
+			(TAttachment | TImage)[]
+		>([])
 		const setFilesInQueue = useSetAtom(filesInQueueAtom)
 
 		useEffect(() => {

@@ -16,18 +16,23 @@ import {
 import { useUpdate } from '@refinedev/core'
 import { notificationProps } from '@/refine'
 import { FaWordpress } from 'react-icons/fa'
-
+import { TImage } from '@/wp'
 const { Item } = Form
 
-const ItemInfo = ({ item }: { item: TAttachment }) => {
+const ItemInfo = ({ item }: { item: TAttachment | TImage }) => {
 	const [form] = Form.useForm()
 	const { SITE_URL } = useEnv()
 
 	// @ts-ignore
-	const { id, url, img_url = '', type = '' } = item
+	const { id, url, img_url = '', type = '', description = '' } = item
 	const { mutate: update, isLoading } = useUpdate({
 		resource: 'posts',
 	})
+
+	// 是 TAttachment 才顯示
+	if (!description) {
+		return null
+	}
 
 	const handleSave = () => {
 		const values = form.getFieldsValue()

@@ -137,7 +137,6 @@ export const General: Story = {
 		return (
 			<>
 				<MediaLibrary
-					initialIds={['d26ae686-7c87-4510-aa05-d91b9714cead']}
 					selectedItems={selectedItems}
 					setSelectedItems={setSelectedItems}
 				/>

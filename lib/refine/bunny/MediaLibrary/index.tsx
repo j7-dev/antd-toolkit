@@ -113,7 +113,6 @@ const MediaLibraryComponent: FC<TMediaLibraryProps> = (props) => {
  * Bunny 媒體庫
  * @interface TMediaLibraryProps
  *
- * @property {string[]} initialIds - 初始選擇的媒體項目 ID 陣列
  * @property {TBunnyVideo[]} selectedItems - 已選擇的媒體項目陣列
  * @property {React.Dispatch<React.SetStateAction<TBunnyVideo[]>> | typeof useSetAtom} setSelectedItems - 設置已選擇媒體項目的函數
  * @property {number} [limit] - 可選擇的媒體項目數量上限

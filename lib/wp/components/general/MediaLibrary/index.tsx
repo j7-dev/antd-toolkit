@@ -16,9 +16,8 @@ const MediaLibraryComponent: FC<TMediaLibraryProps> = (props) => {
 /**
  * WordPress 媒體庫
  * @interface TMediaLibraryProps
- * @property {TAttachment[]} initialIds - 初始選擇的媒體項目 ID 陣列
- * @property {TAttachment[]} selectedItems - 已選擇的媒體項目陣列
- * @property {React.Dispatch<React.SetStateAction<TAttachment[]>> | typeof useSetAtom} setSelectedItems - 設置已選擇媒體項目的函數
+ * @property {(TAttachment | TImage)[]} selectedItems - 已選擇的媒體項目陣列
+ * @property {React.Dispatch<React.SetStateAction<(TAttachment | TImage)[]>> | typeof useSetAtom} setSelectedItems - 設置已選擇媒體項目的函數
  * @property {number} [limit] - 可選擇的媒體項目數量上限
  * @property {UploadProps} [uploadProps] - 上傳媒體項目的屬性設定
  */

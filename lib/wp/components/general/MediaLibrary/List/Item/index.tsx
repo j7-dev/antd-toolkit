@@ -5,7 +5,7 @@ import { TAttachment } from '@/wp/components/general/MediaLibrary/types'
 import { useProps } from '@/wp/components/general/MediaLibrary/hooks'
 import { isImageFile, getFileExtension } from '@/main/utils'
 import { ExtIcon, CheckIcon } from '@/main/components'
-
+import { TImage } from '@/wp'
 const { Text } = Typography
 
 const Item = ({
@@ -13,8 +13,8 @@ const Item = ({
 	allItems,
 	index,
 }: {
-	item: TAttachment
-	allItems: TAttachment[]
+	item: TAttachment | TImage
+	allItems: (TAttachment | TImage)[]
 	index: number
 }) => {
 	const { selectedItems, setSelectedItems, limit } = useProps()

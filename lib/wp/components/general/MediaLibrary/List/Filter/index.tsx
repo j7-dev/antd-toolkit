@@ -52,6 +52,7 @@ const Filter = ({
 				<p className="at-hidden xl:at-block at-text-sm at-m-0 at-text-gray-500">
 					已經選取 {selectedItems?.length ?? 0} 個檔案
 				</p>
+				<Button onClick={() => setSelectedItems([])}>清空選取</Button>
 				<Popconfirm
 					title="確定要刪除這些檔案嗎？"
 					onConfirm={handleBulkDelete}

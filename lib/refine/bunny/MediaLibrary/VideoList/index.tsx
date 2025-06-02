@@ -12,7 +12,7 @@ import { useProps } from '@/refine/bunny/MediaLibrary/hooks'
 const PAGE_SIZE = 50
 
 const VideoList: FC = () => {
-	const { selectedItems, setSelectedItems, initialIds } = useProps()
+	const { selectedItems } = useProps()
 	const { bunny_library_id, bunny_stream_api_key, bunny_cdn_hostname } =
 		useBunny()
 	const [search, setSearch] = useState('')
@@ -24,7 +24,6 @@ const VideoList: FC = () => {
 		fetchNextPage,
 		isFetchingNextPage,
 		isFetching,
-		isSuccess,
 	} = useInfiniteList<TBunnyVideo>({
 		dataProviderName: 'bunny-stream',
 		resource: `${bunny_library_id}/videos`,
@@ -49,16 +48,6 @@ const VideoList: FC = () => {
 	)
 
 	const isSearchFetching = isFetching && !isFetchingNextPage
-
-	useEffect(() => {
-		if (!allItems?.length) {
-			return
-		}
-
-		setSelectedItems(
-			allItems?.filter((item) => initialIds?.includes(item.guid)),
-		)
-	}, [isSuccess, allItems?.length])
 
 	if (isError) {
 		return (
