@@ -74,7 +74,7 @@ const VideoList: FC = () => {
 			/>
 			<div className="at-flex">
 				<div className="at-flex-1">
-					<div className="at-flex at-flex-wrap at-gap-4">
+					<div className="at-flex at-px-2 at-flex-wrap at-gap-4">
 						{!isSearchFetching &&
 							allItems.map((item, index) => (
 								<VideoItem

@@ -57,7 +57,7 @@ const Filter = ({
 	}
 
 	return (
-		<div className="pc-media-library__tabs__filter at-flex at-items-center at-justify-between at-sticky at-backdrop-blur-sm at-z-50 at-top-0 at-p-2 at-mb-4">
+		<div className="pc-media-library__tabs__filter at-flex at-items-center at-justify-between at-sticky at-backdrop-blur-sm at-z-50 at-top-0 at-py-2 at-mb-4">
 			<Search
 				placeholder="搜尋關鍵字，按 ENTER 也能搜"
 				className="at-w-[20rem]"

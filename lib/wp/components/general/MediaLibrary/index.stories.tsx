@@ -57,6 +57,7 @@ export const General: Story = {
 					size: 2375442,
 					type: 'image/gif',
 					percent: 0,
+					// @ts-ignore
 					originFileObj: {
 						uid: 'rc-upload-1745987120068-9',
 					},
