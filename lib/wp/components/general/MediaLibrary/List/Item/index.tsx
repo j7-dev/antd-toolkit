@@ -52,6 +52,10 @@ const Item = ({
 			// @ts-ignore
 			setSelectedItems((prev) => prev.filter((v) => v.id !== item.id))
 		} else {
+			console.log('limit', limit)
+			console.log('selectedItems', selectedItems)
+			console.log('condition', limit && selectedItems.length >= limit)
+
 			if (limit && selectedItems.length >= limit) {
 				message.warning({
 					key: 'limit',

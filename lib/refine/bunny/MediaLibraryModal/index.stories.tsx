@@ -46,7 +46,6 @@ export const General: Story = {
 				<MediaLibraryModal
 					modalProps={modalProps}
 					mediaLibraryProps={{
-						initialIds: [],
 						...mediaLibraryProps,
 					}}
 				/>

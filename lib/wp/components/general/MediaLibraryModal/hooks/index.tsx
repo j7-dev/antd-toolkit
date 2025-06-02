@@ -1,14 +1,17 @@
 import { useState } from 'react'
 import { Button } from 'antd'
-import { TAttachment } from '@/wp'
+import { TAttachment, TImage } from '@/wp'
 import { useSimpleModal } from '@/main/components/SimpleModal'
 
 export const useMediaLibraryModal = (params?: {
-	onConfirm?: (selectedItems: TAttachment[]) => void
+	onConfirm?: (selectedItems: (TAttachment | TImage)[]) => void
+	initItems?: (TAttachment | TImage)[]
 }) => {
 	const onConfirm = params?.onConfirm
 	const { modalProps, setModalProps, show, close } = useSimpleModal()
-	const [selectedItems, setSelectedItems] = useState<TAttachment[]>([])
+	const [selectedItems, setSelectedItems] = useState<(TAttachment | TImage)[]>(
+		params?.initItems || [],
+	)
 
 	/** 按下[選擇檔案]按鈕後，要把值 set 到 form 裡 */
 	const handleConfirm = () => {

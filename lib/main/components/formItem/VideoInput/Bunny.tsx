@@ -97,7 +97,6 @@ const Bunny: FC<FormItemProps> = (formItemProps) => {
 				modalProps={modalProps}
 				mediaLibraryProps={{
 					...mediaLibraryProps,
-					initialIds: savedVideo?.id ? [savedVideo?.id] : [],
 				}}
 			/>
 		</div>

@@ -5,10 +5,13 @@ import { useSimpleModal } from '@/main/components/SimpleModal'
 
 export const useMediaLibraryModal = (params?: {
 	onConfirm?: (selectedItems: TBunnyVideo[]) => void
+	initItems?: TBunnyVideo[]
 }) => {
 	const onConfirm = params?.onConfirm
 	const { show, close, modalProps, setModalProps } = useSimpleModal()
-	const [selectedItems, setSelectedItems] = useState<TBunnyVideo[]>([])
+	const [selectedItems, setSelectedItems] = useState<TBunnyVideo[]>(
+		params?.initItems || [],
+	)
 
 	/** 按下[選擇檔案]按鈕後，要把值 set 到 form 裡 */
 	const handleConfirm = () => {

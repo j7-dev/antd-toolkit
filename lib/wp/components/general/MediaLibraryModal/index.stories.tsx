@@ -36,7 +36,14 @@ export const General: Story = {
 	name: '一般用法',
 	render: () => {
 		const { show, close, modalProps, ...mediaLibraryProps } =
-			useMediaLibraryModal()
+			useMediaLibraryModal({
+				initItems: [
+					{
+						id: '3222',
+						url: 'http://test.local/wp-content/uploads/2024/11/0e7331f3-30b6-49ab-a0ab-fffd23383685-image.png',
+					},
+				],
+			})
 
 		return (
 			<>
@@ -46,8 +53,8 @@ export const General: Story = {
 				<MediaLibraryModal
 					modalProps={modalProps}
 					mediaLibraryProps={{
-						initialIds: [],
 						...mediaLibraryProps,
+						limit: 3,
 					}}
 				/>
 				<MediaLibraryNotification />
