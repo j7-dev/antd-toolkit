@@ -39,6 +39,29 @@ export function useEnv<T extends TEnv = TEnv>(): T {
 
 		// 錯誤處理
 		(error) => {
+			if (error.response) {
+				// 伺服器有響應但狀態碼表示錯誤
+				switch (error.response.status) {
+					case 403:
+						const confirm = window.confirm(
+							'網站 Cookie 已經過期，請重新登入後才能繼續使用，按"確認"，重整頁面',
+						)
+						if (confirm) {
+							window.location.reload()
+						}
+						break
+					default:
+						console.error('請求失敗:', error.response.data.message)
+				}
+			} else if (error.request) {
+				// 請求已發送但沒有收到響應
+				console.error('沒有收到伺服器響應')
+			} else {
+				// 設定請求時發生錯誤
+				console.error('請求配置錯誤:', error.message)
+			}
+
+			// 返回錯誤
 			return Promise.reject(error) // 會被捕獲然後發送通知
 		},
 	)
