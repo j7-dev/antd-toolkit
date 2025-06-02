@@ -86,7 +86,7 @@ const Item = ({
 			{!isImage && (
 				<div
 					onClick={handleClick}
-					className={`at-cursor-pointer ${
+					className={`at-cursor-pointer at-rounded-md  ${
 						isSelected
 							? 'at-outline at-outline-4 at-outline-yellow-300 at-outline-offset-1'
 							: ''
@@ -94,7 +94,7 @@ const Item = ({
 				>
 					<ExtIcon
 						ext={ext}
-						className={`at-rounded-md at-w-full at-object-contain at-aspect-square`}
+						className={`at-w-full at-object-contain at-aspect-square`}
 					/>
 				</div>
 			)}
