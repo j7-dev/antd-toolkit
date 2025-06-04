@@ -44,7 +44,7 @@ export function useEnv<T extends TEnv = TEnv>(): T {
 				switch (error.response.status) {
 					case 403:
 						const confirm = window.confirm(
-							'網站 Cookie 已經過期，請重新登入後才能繼續使用，按"確認"，重整頁面',
+							'\n網站 Cookie 已經過期，請重新整理頁面後才能繼續使用\n\n按 【確認】 ，重新整理頁面\n\n或者按 【取消】 ，您可以手動複製尚未儲存的資料避免頁面刷新後遺失',
 						)
 						if (confirm) {
 							window.location.reload()
