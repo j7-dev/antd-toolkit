@@ -4,9 +4,9 @@ import {
 	UseCustomProps,
 	HttpError,
 	BaseRecord,
+	useApiUrl,
 } from '@refinedev/core'
 import { FormInstance } from 'antd'
-import { useEnv } from '@/main'
 
 /**
  * API 回應的基本型別定義
@@ -62,11 +62,11 @@ export const useOptions = <
 	form,
 	useCustomParams,
 }: TUseOptionsParams<TQueryFnData, TError, TQuery, TPayload, TData>) => {
-	const { SITE_URL } = useEnv()
+	const apiUrl = useApiUrl()
 
 	// 使用 useCustom hook 發送請求
 	const result = useCustom<TQueryFnData, TError, TQuery, TPayload, TData>({
-		url: `${SITE_URL}/wp-json/v2/powerhouse/options`, // 預設 API 路徑
+		url: `${apiUrl}/options`, // 預設 API 路徑
 		method: 'get',
 		...useCustomParams,
 	})

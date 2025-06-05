@@ -8,17 +8,13 @@ import { useOptions, useSave } from '../hooks'
 
 const { Item } = Form
 
-type TSettingProps = {
-	onFinish?: ((values: any) => void) | undefined
-}
-
-const Settings = ({ onFinish }: TSettingProps) => {
+const Settings = ({ url }: { url?: string }) => {
 	const [form] = Form.useForm()
-	const { handleSave, mutation } = useSave({ form })
+	const { handleSave, mutation } = useSave({ form, url })
 	const { isLoading: isSaveLoading } = mutation
 	const { isLoading: isGetLoading } = useOptions({ form })
 	return (
-		<Form layout="vertical" form={form} onFinish={onFinish || handleSave}>
+		<Form layout="vertical" form={form} onFinish={handleSave}>
 			<div className="at-flex at-flex-col md:at-flex-row at-gap-8">
 				<div className="at-w-full at-max-w-[400px]">
 					<Spin spinning={isGetLoading}>
@@ -51,7 +47,7 @@ const Settings = ({ onFinish }: TSettingProps) => {
 						</Item>
 					</Spin>
 				</div>
-				<div className="at-flex-1 at-h-auto md:at-h-[calc(100%-5.375rem)] md:at-overflow-y-auto">
+				<div className="at-flex-1">
 					<p className="at-font-bold at-mb-4">說明</p>
 					<Alert
 						message="沒有 Bunny 帳號？"

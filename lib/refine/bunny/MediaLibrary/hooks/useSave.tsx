@@ -1,18 +1,16 @@
 import {
 	useCustomMutation,
-	useApiUrl,
 	UseCustomMutationReturnType,
 	UseLoadingOvertimeReturnType,
 	BaseRecord,
 	HttpError,
+	useApiUrl,
 } from '@refinedev/core'
 import { FormInstance, message } from 'antd'
-import { useCallback } from 'react'
-import { useEnv } from '@/main'
 
 type TUseSaveParams = {
-	/** Antd Form 實例 */
 	form: FormInstance
+	url?: string // 覆寫 API 路徑，預設為 `${apiUrl}/options`
 }
 
 type TUseSaveReturn = {
@@ -29,13 +27,12 @@ type TUseSaveReturn = {
  * @param props.form - Antd Form 實例，用於獲取和驗證表單數據
  * @returns 包含儲存處理函數和 mutation 狀態的物件
  */
-export const useSave = ({ form }: TUseSaveParams): TUseSaveReturn => {
+export const useSave = ({ form, url }: TUseSaveParams): TUseSaveReturn => {
 	const apiUrl = useApiUrl()
 	const mutation = useCustomMutation()
-	const { SITE_URL } = useEnv()
 	const { mutate } = mutation
 
-	const handleSave = useCallback(() => {
+	const handleSave = () => {
 		// 顯示儲存中的 loading 訊息
 		message.loading({
 			content: '儲存中...',
@@ -47,7 +44,7 @@ export const useSave = ({ form }: TUseSaveParams): TUseSaveReturn => {
 		form.validateFields().then((values) => {
 			mutate(
 				{
-					url: `${SITE_URL}/wp-json/v2/powerhouse/options`, // 預設 API 路徑
+					url: url || `${apiUrl}/options`, // 預設 API 路徑
 					method: 'post',
 					values,
 				},
@@ -60,12 +57,17 @@ export const useSave = ({ form }: TUseSaveParams): TUseSaveReturn => {
 						})
 
 						// 刷新頁面
-						window.location.reload()
+						const confirmReload = window.confirm(
+							'\n儲存成功，需要重新整理頁面後才能使用\n\n按【確認】重新整理頁面',
+						)
+						if (confirmReload) {
+							window.location.reload()
+						}
 					},
 				},
 			)
 		})
-	}, [form, mutate, apiUrl])
+	}
 
 	return {
 		handleSave,
