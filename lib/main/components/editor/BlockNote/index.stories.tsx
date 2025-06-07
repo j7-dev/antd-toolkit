@@ -215,7 +215,7 @@ const INIT: any = [
 			widthUnit: '%',
 			align: 'center',
 			title: '了解',
-			url: 'http://test.local/wp-content/uploads/2025/05/了解.jpg',
+			url: 'http://test.local/wp-content/uploads/2025/06/beanie-with-logo-1.jpg',
 			fileType: 'image',
 		},
 	},

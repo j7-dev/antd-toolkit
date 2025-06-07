@@ -1,13 +1,5 @@
 import { memo, useEffect, useState } from 'react'
-import {
-	Button,
-	Select,
-	Space,
-	InputNumber,
-	Input,
-	Checkbox,
-	Tooltip,
-} from 'antd'
+import { Button, Space, InputNumber, Input, Checkbox, Tooltip } from 'antd'
 import {
 	AlignLeftOutlined,
 	AlignCenterOutlined,
@@ -25,11 +17,9 @@ import {
 } from '@blocknote/core'
 import { debounce } from 'lodash-es'
 import { TbSwitchHorizontal } from 'react-icons/tb'
-import { cn, isImageFile, isAudioFile, isVideoFile, AltIcon } from '@/main'
-import { TAttachment, TImage } from '@/wp'
-import { useContextProps } from '@/main/components/editor/BlockNote/CustomBlocks/MediaLibrary/hooks'
-import { TSimpleModalProps } from '@/main/components/SimpleModal'
 import Render from '../Render'
+import { cn, isImageFile, isAudioFile, isVideoFile, AltIcon } from '@/main'
+import { MediaLibraryModal, useMediaLibraryModal } from '@/wp'
 
 export type TMediaLibraryButton = ReactCustomBlockRenderProps<
 	CustomBlockConfig,
@@ -64,29 +54,12 @@ const MediaLibraryButton = (
 
 	const url = currentBlockProps?.url
 
-	const { show, close, setMediaLibraryProps, setModalProps } = useContextProps()
-
-	useEffect(() => {
-		if (!url && currentBlock) {
-			show()
-		}
-	}, [url])
-
-	const [selectedItems, setSelectedItems] = useState<(TAttachment | TImage)[]>(
-		[],
-	)
-	console.log('🐛 currentBlock', currentBlock)
-	useEffect(() => {
-		setMediaLibraryProps({
-			selectedItems,
-			setSelectedItems,
-			limit: 1,
-		})
-
-		/** 按下[選擇檔案]按鈕後，要把值 set 到 form 裡 */
-		const handleConfirm = () => {
-			close()
-			if (selectedItems?.length && currentBlockProps && currentBlock) {
+	const { show, close, modalProps, setModalProps, ...mediaLibraryProps } =
+		useMediaLibraryModal({
+			onConfirm: (selectedItems) => {
+				if (!currentBlock) {
+					return
+				}
 				const item = selectedItems?.[0]
 				const fileType = getFileType(item?.url)
 				props!.editor.updateBlock(currentBlock, {
@@ -103,20 +76,14 @@ const MediaLibraryButton = (
 				})
 
 				setKey((prev: number) => prev + 1)
-			}
-		}
-
-		setModalProps((prev: TSimpleModalProps) => {
-			return {
-				...prev,
-				footer: (
-					<Button type="primary" onClick={handleConfirm}>
-						確定選取 ({selectedItems?.length})
-					</Button>
-				),
-			} as TSimpleModalProps
+			},
 		})
-	}, [selectedItems, setSelectedItems, currentBlock])
+
+	useEffect(() => {
+		if (!url && currentBlock) {
+			show()
+		}
+	}, [url])
 
 	// 封裝一個簡單的 editor 更新函數，包含 debounce
 	const update = debounce((key: string, value: any) => {
@@ -318,6 +285,10 @@ const MediaLibraryButton = (
 					</>
 				)}
 			</div>
+			<MediaLibraryModal
+				modalProps={modalProps}
+				mediaLibraryProps={mediaLibraryProps}
+			/>
 		</>
 	)
 }

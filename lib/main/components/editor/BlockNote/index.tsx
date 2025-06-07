@@ -4,12 +4,7 @@ import { BlockNoteViewProps } from '@blocknote/react'
 import { BlockNoteView } from '@blocknote/mantine'
 import { DefaultStyleSchema, DefaultInlineContentSchema } from '@blocknote/core'
 import '@blocknote/mantine/style.css'
-import { MediaLibrary as WpMediaLibrary } from '@/wp/components/general/MediaLibrary'
 import { MediaLibrary as BunnyMediaLibrary } from '@/refine/bunny/MediaLibrary'
-import {
-	WpMediaLibraryModalContext,
-	useWpMediaLibraryModal,
-} from '@/main/components/editor/BlockNote/CustomBlocks/MediaLibrary/hooks'
 
 import {
 	BunnyMediaLibraryModalContext,
@@ -33,10 +28,6 @@ export const BlockNote: FC<
 		DefaultStyleSchema
 	>
 > = (blockNoteViewProps) => {
-	const wpMediaLibraryModalProps = useWpMediaLibraryModal()
-	const { modalProps: wpModalProps, mediaLibraryProps: wpMediaLibraryProps } =
-		wpMediaLibraryModalProps
-
 	const bunnyMediaLibraryModalProps = useBunnyMediaLibraryModal()
 	const {
 		modalProps: bunnyModalProps,
@@ -44,20 +35,12 @@ export const BlockNote: FC<
 	} = bunnyMediaLibraryModalProps
 
 	return (
-		<WpMediaLibraryModalContext.Provider value={wpMediaLibraryModalProps}>
-			<BunnyMediaLibraryModalContext.Provider
-				value={bunnyMediaLibraryModalProps}
-			>
-				<BlockNoteView {...blockNoteViewProps} />
+		<BunnyMediaLibraryModalContext.Provider value={bunnyMediaLibraryModalProps}>
+			<BlockNoteView {...blockNoteViewProps} />
 
-				<SimpleModal {...wpModalProps}>
-					<WpMediaLibrary {...wpMediaLibraryProps} />
-				</SimpleModal>
-
-				<SimpleModal {...bunnyModalProps}>
-					<BunnyMediaLibrary {...bunnyMediaLibraryProps} />
-				</SimpleModal>
-			</BunnyMediaLibraryModalContext.Provider>
-		</WpMediaLibraryModalContext.Provider>
+			<SimpleModal {...bunnyModalProps}>
+				<BunnyMediaLibrary {...bunnyMediaLibraryProps} />
+			</SimpleModal>
+		</BunnyMediaLibraryModalContext.Provider>
 	)
 }
