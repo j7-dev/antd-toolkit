@@ -7,7 +7,7 @@ import {
 	useInvalidate,
 	UseInvalidateProp,
 } from '@refinedev/core'
-import { notificationProps } from 'antd-toolkit/refine'
+import { notificationProps } from '@/refine'
 
 const CopyResourcesComponent: FC<{
 	id: string
@@ -30,10 +30,7 @@ const CopyResourcesComponent: FC<{
 			},
 			{
 				onSuccess: (data, variables, context) => {
-					invalidate({
-						invalidates: ['list'],
-						...invalidateProps,
-					})
+					invalidate({ invalidates: ['list'], ...invalidateProps })
 				},
 			},
 		)

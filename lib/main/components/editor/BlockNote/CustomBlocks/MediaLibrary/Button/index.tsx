@@ -26,7 +26,7 @@ import {
 import { debounce } from 'lodash-es'
 import { TbSwitchHorizontal } from 'react-icons/tb'
 import { cn, isImageFile, isAudioFile, isVideoFile, AltIcon } from '@/main'
-import { TAttachment } from '@/wp'
+import { TAttachment, TImage } from '@/wp'
 import { useContextProps } from '@/main/components/editor/BlockNote/CustomBlocks/MediaLibrary/hooks'
 import { TSimpleModalProps } from '@/main/components/SimpleModal'
 import Render from '../Render'
@@ -72,8 +72,10 @@ const MediaLibraryButton = (
 		}
 	}, [url])
 
-	const [selectedItems, setSelectedItems] = useState<TAttachment[]>([])
-
+	const [selectedItems, setSelectedItems] = useState<(TAttachment | TImage)[]>(
+		[],
+	)
+	console.log('🐛 currentBlock', currentBlock)
 	useEffect(() => {
 		setMediaLibraryProps({
 			selectedItems,
@@ -114,7 +116,7 @@ const MediaLibraryButton = (
 				),
 			} as TSimpleModalProps
 		})
-	}, [selectedItems, setSelectedItems, currentBlockProps, currentBlock])
+	}, [selectedItems, setSelectedItems, currentBlock])
 
 	// 封裝一個簡單的 editor 更新函數，包含 debounce
 	const update = debounce((key: string, value: any) => {
