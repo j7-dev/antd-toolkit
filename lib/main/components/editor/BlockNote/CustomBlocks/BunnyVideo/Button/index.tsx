@@ -18,8 +18,8 @@ import { debounce } from 'lodash-es'
 import Render from '../Render'
 import { cn } from '@/main/utils'
 import { TBunnyVideo } from '@/refine/bunny'
-import { useContextProps } from '@/main/components/editor/BlockNote/CustomBlocks/BunnyVideo/hooks'
 import { TSimpleModalProps } from '@/main/components/SimpleModal'
+import { MediaLibraryModal, useMediaLibraryModal } from '@/refine'
 
 export type TMediaLibraryButton = ReactCustomBlockRenderProps<
 	CustomBlockConfig,
@@ -44,7 +44,21 @@ const MediaLibraryButton = (props: TMediaLibraryButton) => {
 	const currentBlock = props ? props?.block : null
 	const currentBlockProps = currentBlock?.props || null
 
-	const { show, close, setMediaLibraryProps, setModalProps } = useContextProps()
+	const { show, close, modalProps, setModalProps, ...mediaLibraryProps } =
+		useMediaLibraryModal({
+			onConfirm: (selectedItems) => {
+				const item = selectedItems?.[0]
+				props!.editor.updateBlock(props!.block, {
+					type: 'bunnyVideo',
+					props: {
+						...currentBlockProps,
+						vId: item?.guid as any,
+					} as any,
+				})
+
+				setKey((prev: number) => prev + 1)
+			},
+		})
 
 	// 封裝一個簡單的 editor 更新函數，包含 debounce
 	const update = debounce((key: string, value: any) => {
@@ -62,8 +76,6 @@ const MediaLibraryButton = (props: TMediaLibraryButton) => {
 
 	const [showTool, setShowTool] = useState(false)
 
-	const [selectedItems, setSelectedItems] = useState<TBunnyVideo[]>([])
-
 	const vId = currentBlockProps?.vId
 
 	useEffect(() => {
@@ -71,42 +83,6 @@ const MediaLibraryButton = (props: TMediaLibraryButton) => {
 			show()
 		}
 	}, [vId])
-
-	useEffect(() => {
-		setMediaLibraryProps({
-			selectedItems,
-			setSelectedItems,
-			limit: 1,
-		})
-
-		/** 按下[選擇檔案]按鈕後，要把值 set 到 form 裡 */
-		const handleConfirm = () => {
-			close()
-			if (selectedItems?.length && currentBlockProps && currentBlock) {
-				const item = selectedItems?.[0]
-				props!.editor.updateBlock(props!.block, {
-					type: 'bunnyVideo',
-					props: {
-						...currentBlockProps,
-						vId: item?.guid as any,
-					} as any,
-				})
-
-				setKey((prev: number) => prev + 1)
-			}
-		}
-
-		setModalProps((prev: TSimpleModalProps) => {
-			return {
-				...prev,
-				footer: (
-					<Button type="primary" onClick={handleConfirm}>
-						確定選取 ({selectedItems?.length})
-					</Button>
-				),
-			} as TSimpleModalProps
-		})
-	}, [selectedItems, setSelectedItems, currentBlockProps, currentBlock])
 
 	return (
 		<>
@@ -226,6 +202,10 @@ const MediaLibraryButton = (props: TMediaLibraryButton) => {
 					</>
 				)}
 			</div>
+			<MediaLibraryModal
+				modalProps={modalProps}
+				mediaLibraryProps={mediaLibraryProps}
+			/>
 		</>
 	)
 }
