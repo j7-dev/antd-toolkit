@@ -17,17 +17,20 @@ const { Item } = Form
 type TDescriptionDrawerProps = {
 	name?: FormItemProps['name']
 	resource?: string
+	dataProviderName?: string
 	editorFormItemProps?: FormItemProps
 }
 const DescriptionDrawerComponent: FC<TDescriptionDrawerProps> = ({
 	name = ['description'],
 	resource = 'posts',
+	dataProviderName = 'default',
 	editorFormItemProps,
 }) => {
 	const { SITE_URL, ELEMENTOR_ENABLED } = useEnv()
 	const form = Form.useFormInstance()
 	const { mutate: update, isLoading } = useUpdate({
 		resource,
+		dataProviderName,
 		...notificationProps,
 	})
 	const watchId = Form.useWatch(['id'], form) || 0
