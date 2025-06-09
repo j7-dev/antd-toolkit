@@ -1,4 +1,4 @@
-import { FC, useEffect, memo } from 'react'
+import { FC, useEffect, memo, useState } from 'react'
 import { Button, Form, Alert, FormItemProps, ButtonProps } from 'antd'
 import { ExportOutlined } from '@ant-design/icons'
 import { useUpdate } from '@refinedev/core'
@@ -11,16 +11,19 @@ const { Item } = Form
 type TBlockNoteDrawerProps = {
 	name?: FormItemProps['name']
 	resource?: string
+	dataProviderName?: string
 	buttonProps?: ButtonProps
 }
 const BlockNoteDrawerComponent: FC<TBlockNoteDrawerProps> = ({
 	name = ['short_description'],
 	resource = 'posts',
+	dataProviderName = 'default',
 	buttonProps,
 }) => {
 	const form = Form.useFormInstance()
 	const { mutate: update, isLoading } = useUpdate({
 		resource,
+		dataProviderName,
 		...notificationProps,
 	})
 	const watchId = Form.useWatch(['id'], form)
@@ -72,6 +75,8 @@ const BlockNoteDrawerComponent: FC<TBlockNoteDrawerProps> = ({
 		}
 	}, [watchId, open, editor])
 
+	const [fullWidth, setFullWidth] = useState(false)
+
 	return (
 		<>
 			<Button
@@ -85,13 +90,21 @@ const BlockNoteDrawerComponent: FC<TBlockNoteDrawerProps> = ({
 				開始編輯
 			</Button>
 
-			<Item name={name} label={`完整介紹`} hidden />
+			<Item name={name} hidden />
 			<SimpleDrawer
 				{...drawerProps}
 				closeConfirm
 				title={`編輯內容`}
 				footer={
 					<div className="at-flex at-gap-x-4">
+						<Button
+							type="default"
+							onClick={() => {
+								setFullWidth((prev) => !prev)
+							}}
+						>
+							{fullWidth ? '退出全螢幕編輯' : '全螢幕編輯'}
+						</Button>
 						<Button
 							type="default"
 							danger
@@ -110,6 +123,7 @@ const BlockNoteDrawerComponent: FC<TBlockNoteDrawerProps> = ({
 						</Button>
 					</div>
 				}
+				fullWidth={fullWidth}
 			>
 				<Alert
 					className="at-mb-4"

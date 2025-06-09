@@ -57,6 +57,13 @@ export async function getEditorHtml(editor: BlockNoteEditor, escape = false) {
 			ele.removeAttribute('data-html')
 		})
 
+		// 將每個 <p></p> 的空標籤，加上空白字符 &nbsp;
+		doc.body.querySelectorAll('p').forEach((ele) => {
+			if (ele.innerHTML.trim() === '') {
+				ele.innerHTML = '&nbsp;'
+			}
+		})
+
 		const newHtml = doc.body.innerHTML
 
 		if (escape) {

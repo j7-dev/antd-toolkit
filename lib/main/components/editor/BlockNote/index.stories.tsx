@@ -403,7 +403,7 @@ export const General: Story = {
 	decorators: [refineDecorator],
 }
 
-const DEFAULT_HTML = `<div class="bn-block-group" data-node-type="blockGroup">
+const DEFAULT_HTML_LEGACY = `<div class="bn-block-group" data-node-type="blockGroup">
 	<div class="bn-block-outer" data-node-type="blockOuter"
 		data-id="e0011fd6-408a-4fa1-85de-570026f0859e">
 		<div class="bn-block" data-node-type="blockContainer"
@@ -535,6 +535,55 @@ const DEFAULT_HTML = `<div class="bn-block-group" data-node-type="blockGroup">
 	</div>
 </div>`
 
+export const ParseHTMLLegacy: Story = {
+	name: '解析舊版 BlockNote 的 HTML',
+	args: {},
+	render: () => {
+		const [html, setHtml] = useState(DEFAULT_HTML_LEGACY)
+		const { blockNoteViewProps: blockNoteViewProps2, blocks: blocks2 } =
+			useBlockNote()
+
+		const editor2 = blockNoteViewProps2.editor
+
+		useEffect(() => {
+			async function loadInitialHTML() {
+				try {
+					const blocksFromHTML = await editor2.tryParseHTMLToBlocks(html) // 解析初始 HTML 字串 [1, 2]
+					// console.log('⭐ blocks:', blocks)
+					editor2.replaceBlocks(editor2.document, blocksFromHTML)
+				} catch (error) {
+					console.error('Failed to parse HTML to blocks:', error)
+				}
+			}
+			loadInitialHTML()
+		}, [html])
+
+		return (
+			<>
+				<p> ▼ 輸入 HTML</p>
+				<Input.TextArea
+					rows={10}
+					value={html}
+					onChange={(e) => setHtml(e.target.value)}
+				/>
+
+				<p>
+					▼ render HTML (需用 <code>.power-editor</code> 包住)
+				</p>
+				<div
+					className="bn-editor bn-default-styles power-editor at-border at-border-solid at-border-gray-400"
+					dangerouslySetInnerHTML={{ __html: html }}
+				/>
+				<p> ▼ unserialize 上方的HTML</p>
+				<BlockNote {...blockNoteViewProps2} />
+			</>
+		)
+	},
+	decorators: [refineDecorator],
+}
+
+const DEFAULT_HTML = `<div class="power-editor"><p>d060502030301PP</p><p>&nbsp;</p><p>&nbsp;</p><p></p><p>1501050</p><p>AAA</p><div data-block-key="mediaLibrary" data-url="https://test.local/wp-content/uploads/2025/05/頗機八.jpg" data-width-value="1024" data-width-unit="px" data-align="start" data-link="" data-target="_self" data-alt="頗機八" data-title="頗機八" data-caption="" data-file-type="image" style="display: flex; width: 100%; flex-direction: column; justify-content: center; align-items: start;"><img alt="頗機八" title="頗機八" style="width: 1024px; max-width: 100%;" src="https://test.local/wp-content/uploads/2025/05/頗機八.jpg"></div><p>BBB</p><div data-block-key="mediaLibrary" data-url="http://test.local/wp-content/uploads/2025/03/壹碳學院_碳管理人才實戰班_階段二作業.pdf" data-width-value="100" data-width-unit="%" data-align="start" data-link="" data-target="_self" data-alt="" data-title="壹碳學院_碳管理人才實戰班_階段二作業.pdf" data-caption="" data-file-type="other" style="display: flex; width: 100%; flex-direction: column; justify-content: center; align-items: start;"><div style="display: flex; align-items: center; column-gap: 0.5rem;"><svg class="h-6 w-6" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="#000000"><g stroke-width="0"></g><g stroke-linecap="round" stroke-linejoin="round"></g><g> <path fill="#E2E5E7" d="M128,0c-17.6,0-32,14.4-32,32v448c0,17.6,14.4,32,32,32h320c17.6,0,32-14.4,32-32V128L352,0H128z"></path> <path fill="#B0B7BD" d="M384,128h96L352,0v96C352,113.6,366.4,128,384,128z"></path> <polygon fill="#CAD1D8" points="480,224 384,128 480,128 "></polygon> <path fill="#F15642" d="M416,416c0,8.8-7.2,16-16,16H48c-8.8,0-16-7.2-16-16V256c0-8.8,7.2-16,16-16h352c8.8,0,16,7.2,16,16 V416z"></path> <g> <path fill="#FFFFFF" d="M101.744,303.152c0-4.224,3.328-8.832,8.688-8.832h29.552c16.64,0,31.616,11.136,31.616,32.48 c0,20.224-14.976,31.488-31.616,31.488h-21.36v16.896c0,5.632-3.584,8.816-8.192,8.816c-4.224,0-8.688-3.184-8.688-8.816V303.152z M118.624,310.432v31.872h21.36c8.576,0,15.36-7.568,15.36-15.504c0-8.944-6.784-16.368-15.36-16.368H118.624z"></path> <path fill="#FFFFFF" d="M196.656,384c-4.224,0-8.832-2.304-8.832-7.92v-72.672c0-4.592,4.608-7.936,8.832-7.936h29.296 c58.464,0,57.184,88.528,1.152,88.528H196.656z M204.72,311.088V368.4h21.232c34.544,0,36.08-57.312,0-57.312H204.72z"></path> <path fill="#FFFFFF" d="M303.872,312.112v20.336h32.624c4.608,0,9.216,4.608,9.216,9.072c0,4.224-4.608,7.68-9.216,7.68 h-32.624v26.864c0,4.48-3.184,7.92-7.664,7.92c-5.632,0-9.072-3.44-9.072-7.92v-72.672c0-4.592,3.456-7.936,9.072-7.936h44.912 c5.632,0,8.96,3.344,8.96,7.936c0,4.096-3.328,8.704-8.96,8.704h-37.248V312.112z"></path> </g> <path fill="#CAD1D8" d="M400,432H96v16h304c8.8,0,16-7.2,16-16v-16C416,424.8,408.8,432,400,432z"></path> </g></svg><a href="http://test.local/wp-content/uploads/2025/03/壹碳學院_碳管理人才實戰班_階段二作業.pdf" target="_self" rel="noopener noreferrer" style="display: contents; font-size: 0.875rem;">壹碳學院_碳管理人才實戰班_階段二作業.pdf</a></div></div><p>22200303</p><div data-block-key="bunnyVideo" data-width-value="100" data-width-unit="%" data-align="start" data-player="video" data-aspect-ratio="1.7778" data-v-id="1b8985b8-f083-4bce-9a81-e020c50d0e22" style="display: flex; width: 100%; flex-direction: column; justify-content: center; align-items: start;"><iframe style="border: medium; outline: none; border-radius: 0.75rem; width: 100%; max-width: 100%; aspect-ratio: 1.7778 / 1;" src="https://iframe.mediadelivery.net/embed/279801/1b8985b8-f083-4bce-9a81-e020c50d0e22?autoplay=false&amp;loop=false&amp;muted=false&amp;preload=true&amp;responsive=true" loading="lazy" allow="encrypted-media;picture-in-picture;" allowfullscreen=""></iframe></div><p></p></div>`
+
 export const ParseHTML: Story = {
 	name: '解析 HTML',
 	args: {},
@@ -549,7 +598,7 @@ export const ParseHTML: Story = {
 			async function loadInitialHTML() {
 				try {
 					const blocksFromHTML = await editor2.tryParseHTMLToBlocks(html) // 解析初始 HTML 字串 [1, 2]
-					// console.log('⭐ blocks:', blocks)
+					console.log('⭐ blocksFromHTML:', blocksFromHTML)
 					editor2.replaceBlocks(editor2.document, blocksFromHTML)
 				} catch (error) {
 					console.error('Failed to parse HTML to blocks:', error)

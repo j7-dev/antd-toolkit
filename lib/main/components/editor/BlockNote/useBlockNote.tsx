@@ -212,7 +212,5 @@ export const useBlockNote = (params?: TUseBlockNoteParams) => {
 		blockNoteViewProps,
 		blocks,
 		setBlocks,
-		// html,
-		// setHTML,
 	}
 }
