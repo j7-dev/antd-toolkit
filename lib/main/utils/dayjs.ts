@@ -92,6 +92,7 @@ export function parseDatePickerValue(value: unknown) {
 			if (value.toString().length === 10) {
 				return dayjs(value * 1000)
 			}
+			return undefined
 		}
 		// @ts-ignore
 		return dayjs(value)
