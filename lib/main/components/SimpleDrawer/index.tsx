@@ -16,6 +16,7 @@ export type TSimpleDrawerProps = {
 	pointerEvents?: 'auto' | 'none'
 	destroyOnHidden?: boolean
 	closeConfirm?: boolean
+	fullWidth?: boolean
 }
 
 export * from './hooks'
@@ -33,6 +34,7 @@ const SimpleDrawerComponent = ({
 	pointerEvents = 'none',
 	destroyOnHidden = false,
 	closeConfirm = false,
+	fullWidth = false,
 }: TSimpleDrawerProps) => {
 	const [show, setShow] = useState(false)
 	const open = opacity === 1
@@ -91,9 +93,9 @@ const SimpleDrawerComponent = ({
 					style={{
 						zIndex: zIndex - 1,
 						position: 'relative',
-						width: `${width}px`,
+						width: fullWidth ? '100%' : `${width}px`,
 						height: '100%',
-						maxWidth: 'max(75%, calc(100% - 100rem))',
+						maxWidth: fullWidth ? '100%' : 'max(75%, calc(100% - 100rem))',
 						backgroundColor: '#ffffff',
 						padding: '2rem 1.5rem 2rem 2rem',
 						transform,

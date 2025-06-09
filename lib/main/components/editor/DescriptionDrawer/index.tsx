@@ -1,4 +1,4 @@
-import { FC, useEffect, memo } from 'react'
+import { FC, useEffect, memo, useState } from 'react'
 import { Button, Form, Alert, Radio, FormItemProps } from 'antd'
 import { ExportOutlined } from '@ant-design/icons'
 import { useUpdate } from '@refinedev/core'
@@ -83,6 +83,8 @@ const DescriptionDrawerComponent: FC<TDescriptionDrawerProps> = ({
 		}
 	}, [watchId, open, editor])
 
+	const [fullWidth, setFullWidth] = useState(false)
+
 	return (
 		<>
 			<div className="at-max-w-[24rem]">
@@ -145,6 +147,14 @@ const DescriptionDrawerComponent: FC<TDescriptionDrawerProps> = ({
 					<div className="at-flex at-gap-x-4">
 						<Button
 							type="default"
+							onClick={() => {
+								setFullWidth((prev) => !prev)
+							}}
+						>
+							{fullWidth ? '退出全螢幕編輯' : '全螢幕編輯'}
+						</Button>
+						<Button
+							type="default"
 							danger
 							onClick={() => {
 								editor.removeBlocks(editor.document)
@@ -161,6 +171,7 @@ const DescriptionDrawerComponent: FC<TDescriptionDrawerProps> = ({
 						</Button>
 					</div>
 				}
+				fullWidth={fullWidth}
 			>
 				<Alert
 					className="at-mb-4"
