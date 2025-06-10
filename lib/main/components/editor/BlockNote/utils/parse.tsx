@@ -47,6 +47,7 @@ export async function getEditorHtml(editor: BlockNoteEditor, escape = false) {
 		}
 
 		const html = await editor?.blocksToHTMLLossy(blocks || [])
+		// const html = await editor?.blocksToHTMLLossy(blocks || [])
 
 		// 解析 html 結構
 		const parser = new DOMParser()
