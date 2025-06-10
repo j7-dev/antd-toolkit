@@ -3,12 +3,6 @@
 .au_countdown {
 	&_digit {
 		font-size: 5rem;
-		@media (max-width: $md) {
-			font-size: 2rem;
-		}
-		@media (max-width: $sm) {
-			font-size: 1.25rem;
-		}
 		width: 100%; //1.2em
 		height: 1.8em;
 		background: #eaeef2;
@@ -26,5 +20,11 @@
 		position: relative;
 		justify-content: center;
 		align-items: center;
+		@media (max-width: $md) {
+			font-size: 2rem;
+		}
+		@media (max-width: $sm) {
+			font-size: 1.25rem;
+		}
 	}
 }
