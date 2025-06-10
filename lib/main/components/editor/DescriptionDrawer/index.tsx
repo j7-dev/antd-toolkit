@@ -50,7 +50,7 @@ const DescriptionDrawerComponent: FC<TDescriptionDrawerProps> = ({
 			{
 				id: watchId,
 				values: {
-					[nameString]: `<div class="power-editor">${html}</div>`,
+					[nameString]: html,
 				},
 			},
 			{

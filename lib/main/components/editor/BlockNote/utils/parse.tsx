@@ -70,7 +70,7 @@ export async function getEditorHtml(editor: BlockNoteEditor, escape = false) {
 		if (escape) {
 			return escapeHtml(newHtml)
 		}
-		return newHtml
+		return `<div class="power-editor">${newHtml}</div>`
 	} catch (error) {
 		console.error('BlockNote getHtml error:', error)
 		return ''
