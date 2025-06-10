@@ -1,2 +1,2 @@
 export * from './useItemSelect'
-export * from './useWooCommerce'
+export * from './useWoocommerce'
