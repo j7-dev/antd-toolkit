@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Input, Button } from 'antd'
 import type { Meta, StoryObj } from '@storybook/react'
-import { BlockNote, useBlockNote } from './index'
+import { BlockNote } from './index'
+import { useBlockNote } from './useBlockNote'
 import { renderHTML } from '../../../utils'
 import { getEditorHtml } from './utils/parse'
 import { refineDecorator } from '../../../../stories'
@@ -375,7 +376,7 @@ const BlockNoteWithHooks = () => {
 					{renderHTML(html)}
 				</div>
 				<p> ▼ unserialize 上方的HTML</p>
-				{/* <BlockNote {...blockNoteViewProps2} /> */}
+				<BlockNote {...blockNoteViewProps2} />
 
 				{/* <pre className="at-my-4 at-prismjs at-bg-gray-100 at-p-4 at-rounded-md">
 					{JSON.stringify(blocks2, null, 2)}
