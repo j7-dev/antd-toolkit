@@ -36,7 +36,7 @@ export const useMediaLibraryModal = (params?: {
 
 	useEffect(() => {
 		setSelectedItems(initItems)
-	}, [initItems?.map((item) => item.id)?.join(',')])
+	}, [initItems?.map((item) => item?.id || '')?.join(',')])
 
 	return {
 		show,
