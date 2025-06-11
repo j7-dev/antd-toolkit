@@ -35,6 +35,7 @@
 		"publish:npm": "yarn build && yarn publish && git push"
 	},
 	"dependencies": {
+		"@blocknote/code-block": "^0.31.2",
 		"@blocknote/core": "0.30.0",
 		"@blocknote/mantine": "0.30.0",
 		"@blocknote/react": "0.30.0",

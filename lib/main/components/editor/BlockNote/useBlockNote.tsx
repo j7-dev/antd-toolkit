@@ -37,6 +37,7 @@ import {
 	mediaLibraryMenuItem,
 } from './CustomBlocks'
 import { debounce } from 'lodash-es'
+import { codeBlock } from '@blocknote/code-block'
 
 // undefined = 禁用選單
 export const schema = BlockNoteSchema.create({
@@ -85,6 +86,7 @@ export const useBlockNote = (params?: TUseBlockNoteParams) => {
 	/** @see https://www.blocknotejs.org/docs/editor-basics/setup */
 	const editor = useCreateBlockNote(
 		{
+			codeBlock,
 			schema,
 			...options,
 		},
