@@ -14,7 +14,7 @@ const Settings = ({ url }: { url?: string }) => {
 	const { isLoading: isSaveLoading } = mutation
 	const { isLoading: isGetLoading } = useOptions({ form })
 	return (
-		<Form layout="vertical" form={form} onFinish={handleSave}>
+		<Form layout="vertical" form={form}>
 			<div className="at-flex at-flex-col md:at-flex-row at-gap-8">
 				<div className="at-w-full at-max-w-[400px]">
 					<Spin spinning={isGetLoading}>
@@ -41,7 +41,11 @@ const Settings = ({ url }: { url?: string }) => {
 							/>
 						</Item>
 						<Item label={null}>
-							<Button type="primary" htmlType="submit" loading={isSaveLoading}>
+							<Button
+								type="primary"
+								onClick={handleSave}
+								loading={isSaveLoading}
+							>
 								儲存
 							</Button>
 						</Item>
