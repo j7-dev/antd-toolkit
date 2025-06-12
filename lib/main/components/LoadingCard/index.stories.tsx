@@ -24,25 +24,7 @@ const meta: Meta<typeof LoadingCard> & {
 		},
 	},
 	tags: ['autodocs'],
-	argTypes: {
-		children: {
-			control: {
-				type: 'text',
-			},
-		},
-		size: {
-			control: {
-				type: 'radio',
-				options: ['sm', 'md'],
-			},
-			defaultValue: 'md',
-		},
-		titleProps: {
-			control: {
-				type: 'object',
-			},
-		},
-	},
+	argTypes: {},
 }
 
 export default meta

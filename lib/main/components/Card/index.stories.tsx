@@ -19,11 +19,13 @@ const meta: Meta<typeof Card> & {
 				component: `
 卡片元件
 
+為什麼需要這個: 因為有頁面組件通常會搭配卡片，例如 user list ，但有時候做篩選器時，也會搭配這個 user list 但不需要顯示卡片容器
+
 基於 Antd Card 組件的封裝，提供要不要顯示卡片容器的選項 \`showCard\`
 
 其他 props 都跟 antd 一樣
 
-why: 因為有頁面組件通常會搭配卡片，例如 user list ，但有時候做篩選器時，也會搭配這個 user list 但不需要顯示卡片容器
+
 
 				`, // 可以寫 markdown
 			},

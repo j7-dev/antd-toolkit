@@ -18,6 +18,8 @@ const meta: Meta<typeof Countdown> & {
 			description: {
 				component: `
 
+已棄用，未來統一使用 DaisyUI 的 Countdown 元件
+
 倒數計時組件
 
 #### 未來優化:

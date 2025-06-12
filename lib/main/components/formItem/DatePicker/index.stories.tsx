@@ -15,6 +15,10 @@ const meta: Meta<typeof DatePicker> & {
 				component: `
 \`Form.Item\` 封裝後的 DatePicker 組件
 
+預設傳給後端 unix timestamp (10位)
+
+後端傳給前端皆可，可以是 10 位或 13 位
+
 				`, // 可以寫 markdown
 			},
 		},
