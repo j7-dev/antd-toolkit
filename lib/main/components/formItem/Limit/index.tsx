@@ -51,7 +51,7 @@ const LimitComponent: FC<{
 	}
 
 	return (
-		<div>
+		<div style={{ contain: 'layout paint style' }}>
 			<Item
 				label="觀看期限"
 				initialValue={'unlimited'}
