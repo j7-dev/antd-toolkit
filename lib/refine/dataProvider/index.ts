@@ -261,7 +261,7 @@ export const dataProvider = (
 				requestUrl = `${requestUrl}&${stringify(query, { arrayFormat: 'bracket' })}`
 			}
 
-			if (headers) {
+			if (headers) { // TODO 應該移除
 				// @ts-ignore
 				httpClient.defaults.headers = {
 					'Content-Type': 'multipart/form-data;',
