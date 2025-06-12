@@ -25,6 +25,12 @@ import {
 	BlockNoteSchema,
 	defaultBlockSpecs,
 	filterSuggestionItems,
+	getNearestBlockPos,
+	BlockSchema,
+	InlineContentSchema,
+	StyleSchema,
+	BlockNoteEditor,
+	PartialBlock,
 } from '@blocknote/core'
 import {
 	Alert,
@@ -38,6 +44,16 @@ import {
 } from './CustomBlocks'
 import { debounce } from 'lodash-es'
 import { codeBlock } from '@blocknote/code-block'
+import { useCustomMutation, useApiUrl } from '@refinedev/core'
+import { TImage } from '@/wp'
+
+type TUploadedImage = TImage & {
+	name: string
+	size: number
+	type: string
+	width: number
+	height: number
+}
 
 // undefined = 禁用選單
 export const schema = BlockNoteSchema.create({
@@ -83,11 +99,81 @@ export const useBlockNote = (params?: TUseBlockNoteParams) => {
 	const options = params?.options
 	const deps = params?.deps || []
 
+	const { mutate: uploadFile, isSuccess, isLoading } = useCustomMutation()
+	const apiUrl = useApiUrl()
+
 	/** @see https://www.blocknotejs.org/docs/editor-basics/setup */
 	const editor = useCreateBlockNote(
 		{
 			codeBlock,
 			schema,
+			pasteHandler: ({ event, editor, defaultPasteHandler }) => {
+				try {
+					if ((event?.clipboardData?.files?.length || 0) > 0) {
+						const file = event?.clipboardData?.files?.[0]
+
+						// 自定義圖片上傳邏輯
+						if (file?.type?.startsWith('image/')) {
+							// 例如：使用自己的上傳服務
+
+							const insertedBlockId = getInsertedBlockId(
+								event as ClipboardEvent,
+								editor as any,
+							)
+							if (!insertedBlockId) {
+								throw new Error('插入區塊失敗，找不到 insertedBlockId')
+							}
+
+							uploadFile(
+								{
+									url: `${apiUrl}/upload`,
+									method: 'post',
+									values: {
+										files: [file],
+									},
+									config: {
+										headers: {
+											'Content-Type': 'multipart/form-data',
+										},
+									},
+								},
+								{
+									onSuccess: (data) => {
+										const image = data?.data?.data?.[0] as TUploadedImage
+										if (!image) {
+											throw new Error('上傳成功但找不到圖片!?')
+										}
+
+										editor.updateBlock(insertedBlockId as string, {
+											type: 'mediaLibrary',
+											props: {
+												widthValue: image.width,
+												widthUnit: 'px',
+												align: 'start',
+												url: image.url,
+												alt: image.name,
+												title: image.name,
+												fileType: 'image',
+											},
+										})
+										console.log('🐛 上傳成功', insertedBlockId, data)
+									},
+									onError: (error) => {
+										console.log('🐛 上傳失敗', insertedBlockId, error)
+									},
+								},
+							)
+
+							return true
+						}
+					}
+
+					return defaultPasteHandler()
+				} catch (error) {
+					console.error('❌ 貼上操作失敗', error)
+					return defaultPasteHandler()
+				}
+			},
 			...options,
 		},
 		deps,
@@ -215,4 +301,105 @@ export const useBlockNote = (params?: TUseBlockNoteParams) => {
 		blocks,
 		setBlocks,
 	}
+}
+
+/**
+ * 執行插入或更新，並返回插入的區塊 ID
+ *
+ * 處理貼上或拖放事件時插入區塊的邏輯,並返回插入區塊的 ID
+ *
+ * @param {ClipboardEvent} event - 剪貼簿事件對象
+ * @param {BlockNoteEditor} editor - BlockNote 編輯器實例
+ * @returns {string|undefined} 插入區塊的 ID,如果插入失敗則返回 undefined
+ */
+function getInsertedBlockId(
+	event: ClipboardEvent,
+	editor: BlockNoteEditor<BlockSchema, InlineContentSchema, StyleSchema>,
+) {
+	const newBlock = {
+		type: 'paragraph',
+		content: [
+			{
+				type: 'text',
+				text: '上傳中...',
+				styles: {},
+			},
+		],
+		props: {
+			textAlignment: 'center',
+			textColor: 'orange',
+		},
+	} as any
+
+	let insertedBlockId: string | undefined = undefined
+
+	if (event.type === 'paste') {
+		const currentBlock = editor.getTextCursorPosition().block
+		insertedBlockId = insertOrUpdateBlock(editor, currentBlock, newBlock as any)
+	} else if (event.type === 'drop') {
+		const coords = {
+			left: (event as unknown as DragEvent).clientX,
+			top: (event as unknown as DragEvent).clientY,
+		}
+
+		const pos = editor.prosemirrorView?.posAtCoords(coords)
+		if (!pos) {
+			return
+		}
+
+		insertedBlockId = editor.transact((tr) => {
+			const posInfo = getNearestBlockPos(tr.doc, pos.pos)
+			return insertOrUpdateBlock(
+				editor,
+				editor.getBlock(posInfo.node.attrs.id)!,
+				newBlock as any,
+			)
+		})
+
+		return insertedBlockId
+	} else {
+		return
+	}
+
+	return insertedBlockId
+}
+
+/**
+ * 插入或更新區塊
+ *
+ * 根據參考區塊插入新區塊,或更新現有區塊
+ *
+ * @template BSchema - 區塊結構類型
+ * @template I - 內聯內容結構類型
+ * @template S - 樣式結構類型
+ * @param {BlockNoteEditor<BSchema, I, S>} editor - BlockNote 編輯器實例
+ * @param {Block<BSchema, I, S>} referenceBlock - 參考區塊
+ * @param {PartialBlock<BSchema, I, S>} newBlock - 要插入的新區塊
+ * @returns {string|undefined} 插入或更新後區塊的 ID
+ */
+function insertOrUpdateBlock<
+	BSchema extends BlockSchema,
+	I extends InlineContentSchema,
+	S extends StyleSchema,
+>(
+	editor: BlockNoteEditor<BSchema, I, S>,
+	referenceBlock: Block<BSchema, I, S>,
+	newBlock: PartialBlock<BSchema, I, S>,
+) {
+	let insertedBlockId: string | undefined
+
+	if (
+		Array.isArray(referenceBlock.content) &&
+		referenceBlock.content.length === 0
+	) {
+		insertedBlockId = editor.updateBlock(referenceBlock, newBlock).id
+	} else {
+		insertedBlockId = editor.insertBlocks(
+			[newBlock],
+			referenceBlock,
+			'after',
+		)[0].id
+	}
+
+	return insertedBlockId
 }
