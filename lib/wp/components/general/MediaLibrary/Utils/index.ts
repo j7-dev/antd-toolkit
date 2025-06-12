@@ -35,11 +35,6 @@ export class MimeTypeValidator {
 	 */
 	validate = (mimeType: string): boolean => {
 
-console.log('🐛 ', {
-		allow: this.allowMimeTypes,
-		mimeType,
-});
-
 		if (!this.allowMimeTypes?.length) {
 			return true
 		}
