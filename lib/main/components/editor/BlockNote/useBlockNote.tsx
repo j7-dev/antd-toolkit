@@ -65,7 +65,7 @@ export const schema = BlockNoteSchema.create({
 		bunnyVideo: BunnyVideo,
 		// numberedListItem: undefined as any, // undefined = 禁用選單
 		checkListItem: undefined as any, // 樣式有問題，禁用
-		file: undefined as any, // 用媒體庫就好，禁用
+		// file: undefined as any, // 用媒體庫就好，禁用
 		video: undefined as any, // 用媒體庫就好，禁用
 		audio: undefined as any, // 用媒體庫就好，禁用
 		image: undefined as any, // 用媒體庫就好，禁用
@@ -99,7 +99,8 @@ const CUSTOM_MENU_ORDER = [
 export const useBlockNote = (params?: TUseBlockNoteParams) => {
 	const options = params?.options
 	const deps = params?.deps || []
-	const { mutate: uploadFile, isSuccess, isLoading } = useCustomMutation()
+	const { mutate: uploadFile, mutateAsync: uploadFileAsync } =
+		useCustomMutation()
 	const apiUrl = useApiUrl()
 
 	/** @see https://www.blocknotejs.org/docs/editor-basics/setup */
@@ -139,7 +140,7 @@ export const useBlockNote = (params?: TUseBlockNoteParams) => {
 								onSuccess: (data) => {
 									const file = data?.data?.data?.[0] as TUploaded
 									if (!file) {
-										throw new Error('上傳成功但找不到圖片!?')
+										throw new Error('上傳成功但找不到檔案!?')
 									}
 
 									const fileType = getFileType(file?.url)
@@ -155,7 +156,6 @@ export const useBlockNote = (params?: TUseBlockNoteParams) => {
 											fileType,
 										},
 									})
-									console.log('🐛 上傳成功', insertedBlockId, data)
 								},
 								onError: (error) => {
 									editor.updateBlock(insertedBlockId as string, {
@@ -172,7 +172,7 @@ export const useBlockNote = (params?: TUseBlockNoteParams) => {
 											},
 										],
 									})
-									console.log('🐛 上傳失敗', insertedBlockId, error)
+									console.log('❌ 上傳失敗', insertedBlockId, error)
 								},
 							},
 						)
@@ -184,6 +184,53 @@ export const useBlockNote = (params?: TUseBlockNoteParams) => {
 				} catch (error) {
 					console.error('❌ 貼上操作失敗', error)
 					return defaultPasteHandler()
+				}
+			},
+			uploadFile: async (file: File, blockId?: string): Promise<any> => {
+				// 處理 Drag & Drop 上傳
+				try {
+					const result = await uploadFileAsync({
+						url: `${apiUrl}/upload`,
+						method: 'post',
+						values: {
+							files: [file],
+						},
+						config: {
+							headers: {
+								'Content-Type': 'multipart/form-data',
+							},
+						},
+					})
+					const uploadedFile = result?.data?.data?.[0] as TUploaded
+					const fileType = getFileType(uploadedFile?.url)
+					return {
+						type: 'mediaLibrary',
+						props: {
+							widthValue: fileType === 'image' ? uploadedFile.width : undefined,
+							widthUnit: fileType === 'image' ? 'px' : undefined,
+							align: 'start',
+							url: uploadedFile.url,
+							alt: uploadedFile.name,
+							title: uploadedFile.name,
+							fileType,
+						},
+					}
+				} catch (error) {
+					editor.updateBlock(blockId as string, {
+						type: 'paragraph',
+						props: {
+							textColor: 'default',
+							textAlignment: 'left',
+						},
+						content: [
+							{
+								type: 'text',
+								text: '',
+								styles: {},
+							},
+						],
+					})
+					console.log('❌ 上傳失敗', blockId, error)
 				}
 			},
 			...options,
@@ -231,18 +278,20 @@ export const useBlockNote = (params?: TUseBlockNoteParams) => {
 							mediaLibraryMenuItem(editor),
 						]
 
-						const sortedMenuItems = customMenuItems.sort((a, b) => {
-							// 更簡潔的寫法
-							const getIndex = (key: string) => {
-								const index = CUSTOM_MENU_ORDER.indexOf(key)
-								return index === -1 ? Infinity : index
-							}
+						const sortedMenuItems = customMenuItems
+							.sort((a, b) => {
+								// 更簡潔的寫法
+								const getIndex = (key: string) => {
+									const index = CUSTOM_MENU_ORDER.indexOf(key)
+									return index === -1 ? Infinity : index
+								}
 
-							const result = getIndex(a.key) - getIndex(b.key)
+								const result = getIndex(a.key) - getIndex(b.key)
 
-							// 如果兩個都不在優先清單中 (Infinity - Infinity = NaN)
-							return isNaN(result) ? a.key.localeCompare(b.key) : result
-						})
+								// 如果兩個都不在優先清單中 (Infinity - Infinity = NaN)
+								return isNaN(result) ? a.key.localeCompare(b.key) : result
+							})
+							.filter((item) => item.key !== 'file')
 
 						return filterSuggestionItems(
 							// eslint-disable-next-line lines-around-comment
