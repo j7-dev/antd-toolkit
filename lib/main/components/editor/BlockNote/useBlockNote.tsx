@@ -46,13 +46,14 @@ import { debounce } from 'lodash-es'
 import { codeBlock } from '@blocknote/code-block'
 import { useCustomMutation, useApiUrl } from '@refinedev/core'
 import { TImage } from '@/wp'
+import { getFileType } from './CustomBlocks/MediaLibrary/Button'
 
-type TUploadedImage = TImage & {
+type TUploaded = TImage & {
 	name: string
 	size: number
 	type: string
-	width: number
-	height: number
+	width?: number
+	height?: number
 }
 
 // undefined = 禁用選單
@@ -98,7 +99,6 @@ const CUSTOM_MENU_ORDER = [
 export const useBlockNote = (params?: TUseBlockNoteParams) => {
 	const options = params?.options
 	const deps = params?.deps || []
-
 	const { mutate: uploadFile, isSuccess, isLoading } = useCustomMutation()
 	const apiUrl = useApiUrl()
 
@@ -112,60 +112,72 @@ export const useBlockNote = (params?: TUseBlockNoteParams) => {
 					if ((event?.clipboardData?.files?.length || 0) > 0) {
 						const file = event?.clipboardData?.files?.[0]
 
-						// 自定義圖片上傳邏輯
-						if (file?.type?.startsWith('image/')) {
-							// 例如：使用自己的上傳服務
+						// 自定義檔案上傳邏輯
 
-							const insertedBlockId = getInsertedBlockId(
-								event as ClipboardEvent,
-								editor as any,
-							)
-							if (!insertedBlockId) {
-								throw new Error('插入區塊失敗，找不到 insertedBlockId')
-							}
-
-							uploadFile(
-								{
-									url: `${apiUrl}/upload`,
-									method: 'post',
-									values: {
-										files: [file],
-									},
-									config: {
-										headers: {
-											'Content-Type': 'multipart/form-data',
-										},
-									},
-								},
-								{
-									onSuccess: (data) => {
-										const image = data?.data?.data?.[0] as TUploadedImage
-										if (!image) {
-											throw new Error('上傳成功但找不到圖片!?')
-										}
-
-										editor.updateBlock(insertedBlockId as string, {
-											type: 'mediaLibrary',
-											props: {
-												widthValue: image.width,
-												widthUnit: 'px',
-												align: 'start',
-												url: image.url,
-												alt: image.name,
-												title: image.name,
-												fileType: 'image',
-											},
-										})
-										console.log('🐛 上傳成功', insertedBlockId, data)
-									},
-									onError: (error) => {
-										console.log('🐛 上傳失敗', insertedBlockId, error)
-									},
-								},
-							)
-
-							return true
+						const insertedBlockId = getInsertedBlockId(
+							event as ClipboardEvent,
+							editor as any,
+						)
+						if (!insertedBlockId) {
+							throw new Error('插入區塊失敗，找不到 insertedBlockId')
 						}
+
+						uploadFile(
+							{
+								url: `${apiUrl}/upload`,
+								method: 'post',
+								values: {
+									files: [file],
+								},
+								config: {
+									headers: {
+										'Content-Type': 'multipart/form-data',
+									},
+								},
+							},
+							{
+								onSuccess: (data) => {
+									const file = data?.data?.data?.[0] as TUploaded
+									if (!file) {
+										throw new Error('上傳成功但找不到圖片!?')
+									}
+
+									const fileType = getFileType(file?.url)
+									editor.updateBlock(insertedBlockId as string, {
+										type: 'mediaLibrary',
+										props: {
+											widthValue: fileType === 'image' ? file.width : undefined,
+											widthUnit: fileType === 'image' ? 'px' : undefined,
+											align: 'start',
+											url: file.url,
+											alt: file.name,
+											title: file.name,
+											fileType,
+										},
+									})
+									console.log('🐛 上傳成功', insertedBlockId, data)
+								},
+								onError: (error) => {
+									editor.updateBlock(insertedBlockId as string, {
+										type: 'paragraph',
+										props: {
+											textColor: 'default',
+											textAlignment: 'left',
+										},
+										content: [
+											{
+												type: 'text',
+												text: '',
+												styles: {},
+											},
+										],
+									})
+									console.log('🐛 上傳失敗', insertedBlockId, error)
+								},
+							},
+						)
+
+						return true
 					}
 
 					return defaultPasteHandler()
