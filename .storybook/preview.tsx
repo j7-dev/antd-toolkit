@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import type { Preview } from '@storybook/react'
 import { withThemeByDataAttribute } from '@storybook/addon-themes'
 import {
@@ -58,11 +58,16 @@ const preview: Preview = {
 	},
 	decorators: [
 		// 添加新的 decorator 來包裝 .tailwind 容器
-		(Story) => (
-			<div id="tw">
-				<Story />
-			</div>
-		),
+		(Story) => {
+			// 在 decorator 中設定 body id
+			useEffect(() => {
+				const bodyId = document.body.id
+				if (!bodyId) {
+					document.body.id = 'tw'
+				}
+			}, [])
+			return <Story />
+		},
 
 		withThemeByDataAttribute({
 			themes: {
