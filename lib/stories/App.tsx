@@ -13,7 +13,7 @@ export const App = ({ story }: { story: any }) => {
 	return (
 		<Refine
 			dataProvider={{
-				default: dataProvider(API_URL, AXIOS_INSTANCE),
+				default: dataProvider(`${API_URL}/v2/powerhouse`, AXIOS_INSTANCE),
 				'bunny-stream': bunny_data_provider_result,
 			}}
 			notificationProvider={notificationProvider}
