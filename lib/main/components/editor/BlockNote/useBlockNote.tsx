@@ -382,14 +382,11 @@ function getInsertedBlockId(
 		content: [
 			{
 				type: 'text',
-				text: '上傳中...',
+				text: 'Loading...',
 				styles: {},
 			},
 		],
-		props: {
-			textAlignment: 'center',
-			textColor: 'orange',
-		},
+		props: {},
 	} as any
 
 	let insertedBlockId: string | undefined = undefined
