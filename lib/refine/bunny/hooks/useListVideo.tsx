@@ -24,7 +24,10 @@ export const useListVideo = (params?: TUseListVideoParams) => {
 			pageSize: 50,
 		},
 		dataProviderName: 'bunny-stream',
-		queryOptions,
+		queryOptions: {
+			enabled: !!bunny_library_id,
+			...queryOptions,
+		},
 	})
 
 	return result

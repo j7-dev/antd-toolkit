@@ -257,10 +257,12 @@ export function isVideoFile(url: string) {
  * 簡單解密
  */
 export function simpleDecrypt(str: string): any {
+	if (typeof str !== 'string') return null
+
 	// 反向位移
 	let decoded = ''
 	for (let i = 0; i < str.length; i++) {
-		decoded += String.fromCharCode(str.charCodeAt(i) - 1)
+		decoded += String.fromCharCode(str?.charCodeAt(i) - 1)
 	}
 
 	// base64 解碼

@@ -20,7 +20,10 @@ export const useGetVideo = ({
 		resource: `${bunny_library_id}/videos`,
 		id: videoId,
 		dataProviderName: 'bunny-stream',
-		queryOptions,
+		queryOptions: {
+			enabled: !!bunny_library_id,
+			...queryOptions,
+		},
 	})
 
 	return result
