@@ -5,6 +5,7 @@ import { TBunnyVideo } from '../types'
 import { useBunny } from '@/refine'
 
 type TUseListVideoParams<T = TBunnyVideo> = {
+	dataProviderName?: string
 	queryOptions?:
 		| UseQueryOptions<
 				GetListResponse<T>,
@@ -23,7 +24,7 @@ export const useListVideo = (params?: TUseListVideoParams) => {
 		pagination: {
 			pageSize: 50,
 		},
-		dataProviderName: 'bunny-stream',
+		dataProviderName: params?.dataProviderName || 'bunny-stream',
 		queryOptions: {
 			enabled: !!bunny_library_id,
 			...queryOptions,
