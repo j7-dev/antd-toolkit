@@ -60,6 +60,8 @@ export const BunnyProvider: FC<
 		parentContext,
 	])
 
+	console.log('🐛 context', context)
+
 	return (
 		<BunnyContext.Provider value={context}>{children}</BunnyContext.Provider>
 	)
