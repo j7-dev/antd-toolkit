@@ -17,19 +17,29 @@ type TUseListVideoParams<T = TBunnyVideo> = {
 }
 
 export const useListVideo = (params?: TUseListVideoParams) => {
-	const { bunny_library_id } = useBunny()
-	const queryOptions = params?.queryOptions
-	const result = useList({
-		resource: `${bunny_library_id}/videos`,
-		pagination: {
-			pageSize: 50,
-		},
-		dataProviderName: params?.dataProviderName || 'bunny-stream',
-		queryOptions: {
-			enabled: !!bunny_library_id,
-			...queryOptions,
-		},
-	})
+	try {
+		const { bunny_library_id } = useBunny()
+		const queryOptions = params?.queryOptions
+		const result = useList({
+			resource: `${bunny_library_id}/videos`,
+			pagination: {
+				pageSize: 50,
+			},
+			dataProviderName: params?.dataProviderName || 'bunny-stream',
+			queryOptions: {
+				enabled: !!bunny_library_id,
+				...queryOptions,
+			},
+		})
 
-	return result
+		return result
+	} catch (error) {
+		console.error('🐛 error', error)
+		return {
+			data: [],
+			isFetching: false,
+			isLoading: false,
+			isError: true,
+		}
+	}
 }
