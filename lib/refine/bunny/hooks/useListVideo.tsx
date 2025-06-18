@@ -7,13 +7,13 @@ import { useBunny } from '@/refine'
 type TUseListVideoParams<T = TBunnyVideo> = {
 	dataProviderName?: string
 	queryOptions?:
-		| UseQueryOptions<
-				GetListResponse<T>,
-				HttpError,
-				GetListResponse<T>,
-				QueryKey
-		  >
-		| undefined
+	| UseQueryOptions<
+		GetListResponse<T>,
+		HttpError,
+		GetListResponse<T>,
+		QueryKey
+	>
+	| undefined
 }
 
 export const useListVideo = (params?: TUseListVideoParams) => {
@@ -34,7 +34,7 @@ export const useListVideo = (params?: TUseListVideoParams) => {
 
 		return result
 	} catch (error) {
-		console.error('🐛 error', error)
+		console.error('❌', error)
 		return {
 			data: [],
 			isFetching: false,

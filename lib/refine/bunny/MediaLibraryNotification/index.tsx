@@ -28,9 +28,6 @@ export const MediaLibraryNotification = () => {
 		filesInQueue.every((fileInQueue) => fileInQueue.encodeProgress !== 100) &&
 		!!filesInQueue.length
 
-	console.log('🐛 enabled', enabled)
-	console.log('🐛 filesInQueue', filesInQueue)
-
 	const { data, isFetching } = useListVideo({
 		queryOptions: {
 			enabled,

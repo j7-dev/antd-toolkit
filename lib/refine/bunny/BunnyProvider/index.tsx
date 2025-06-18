@@ -32,39 +32,37 @@ export const BunnyProvider: FC<
 	bunny_stream_api_key,
 	bunny_cdn_hostname,
 }) => {
-	const parentContext = useContext(BunnyContext)
+		const parentContext = useContext(BunnyContext)
 
-	const context = useMemo(() => {
-		const bunny_stream_axios = axios.create({
-			baseURL: BUNNY_API_URL,
-			headers: {
-				AccessKey: bunny_stream_api_key,
-			},
-		})
+		const context = useMemo(() => {
+			const bunny_stream_axios = axios.create({
+				baseURL: BUNNY_API_URL,
+				headers: {
+					AccessKey: bunny_stream_api_key,
+				},
+			})
 
-		return {
-			...parentContext,
+			return {
+				...parentContext,
+				bunny_library_id,
+				bunny_stream_api_key,
+				bunny_cdn_hostname,
+				bunny_stream_axios,
+				bunny_data_provider_result: dataProvider(
+					BUNNY_API_URL,
+					bunny_stream_axios,
+				),
+			}
+		}, [
 			bunny_library_id,
 			bunny_stream_api_key,
 			bunny_cdn_hostname,
-			bunny_stream_axios,
-			bunny_data_provider_result: dataProvider(
-				BUNNY_API_URL,
-				bunny_stream_axios,
-			),
-		}
-	}, [
-		bunny_library_id,
-		bunny_stream_api_key,
-		bunny_cdn_hostname,
-		parentContext,
-	])
+			parentContext,
+		])
 
-	console.log('🐛 context', context)
-
-	return (
-		<BunnyContext.Provider value={context}>{children}</BunnyContext.Provider>
-	)
-}
+		return (
+			<BunnyContext.Provider value={context}>{children}</BunnyContext.Provider>
+		)
+	}
 
 export * from './hooks'
