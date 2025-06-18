@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import { FC, memo } from 'react'
 import { cn } from '@/main/utils'
 import { useEnv } from '@/main'
 
@@ -8,11 +8,11 @@ type TBackToWpAdminProps = {
 	href?: string
 }
 
-const BackToWpAdminComponent = ({
+const BackToWpAdminComponent: FC<TBackToWpAdminProps> = ({
 	iconClassName = '',
 	collapsed = false,
 	href = '',
-}: TBackToWpAdminProps) => {
+}) => {
 	const { SITE_URL = '' } = useEnv()
 	return (
 		<a
