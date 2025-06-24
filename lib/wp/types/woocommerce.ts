@@ -37,6 +37,7 @@ export const WoocommerceSchema = z.object({
 		label: z.string(),
 		color: z.string(),
 	})),
+	manage_stock: z.boolean(),
 })
 
 export type TWoocommerce = z.infer<typeof WoocommerceSchema>
@@ -63,4 +64,5 @@ export const DEFAULT_WOOCOMMERCE: TWoocommerce = {
 		attribute_rewrite_slug: '',
 	},
 	product_types: [],
+	manage_stock: true,
 }
