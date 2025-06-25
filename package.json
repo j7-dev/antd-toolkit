@@ -98,7 +98,7 @@
 		"prettier-plugin-multiline-arrays": "^3.0.6",
 		"react": "^18.3.1",
 		"react-dom": "^18.3.1",
-		"react-router-dom": "6.27.0",
+		"react-router-dom": "^7.6.2",
 		"rollup-plugin-typescript-paths": "^1.5.0",
 		"sass": "^1.77.6",
 		"sass-loader": "^14.2.1",
