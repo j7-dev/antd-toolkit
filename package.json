@@ -32,7 +32,7 @@
 		"preview": "vite preview",
 		"storybook": "storybook dev -p 6006",
 		"build-storybook": "cross-env BUILD_ENV=storybook storybook build",
-		"publish:npm": "pnpm build && pnpm version patch && pnpm publish && git push"
+		"publish:npm": "pnpm build && pnpm version patch && git push && pnpm publish"
 	},
 	"dependencies": {
 		"canvas-confetti": "^1.9.3",
