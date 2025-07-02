@@ -1,4 +1,4 @@
-import { ZodType } from 'zod'
+import { ZodType } from 'zod/v4'
 
 /**
  * 安全解析 Zod 的 Schema
