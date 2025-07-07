@@ -32,12 +32,27 @@ export const WoocommerceSchema = z.object({
 		tag_rewrite_slug: z.string(),
 		attribute_rewrite_slug: z.string(),
 	}),
+	manage_stock: z.boolean(),
 	product_types: z.array(z.object({
 		value: z.string(),
 		label: z.string(),
 		color: z.string(),
 	})),
-	manage_stock: z.boolean(),
+	order_statuses: z.array(z.object({
+		value: z.string(),
+		label: z.string(),
+		color: z.string(),
+	})),
+	post_statuses: z.array(z.object({
+		value: z.string(),
+		label: z.string(),
+		color: z.string(),
+	})),
+	product_stock_statuses: z.array(z.object({
+		value: z.string(),
+		label: z.string(),
+		color: z.string(),
+	})),
 })
 
 export type TWoocommerce = z.infer<typeof WoocommerceSchema>
@@ -63,6 +78,9 @@ export const DEFAULT_WOOCOMMERCE: TWoocommerce = {
 		tag_rewrite_slug: '',
 		attribute_rewrite_slug: '',
 	},
-	product_types: [],
 	manage_stock: true,
+	product_types: [],
+	order_statuses: [],
+	post_statuses: [],
+	product_stock_statuses: [],
 }
