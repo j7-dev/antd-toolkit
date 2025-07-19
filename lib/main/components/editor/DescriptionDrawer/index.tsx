@@ -1,5 +1,5 @@
 import { FC, useEffect, memo, useState } from 'react'
-import { Button, Form, Alert, Radio, FormItemProps } from 'antd'
+import { Button, Form, Alert, Radio, FormItemProps, ButtonProps } from 'antd'
 import { ExportOutlined } from '@ant-design/icons'
 import { useUpdate } from '@refinedev/core'
 import { getEditorHtml } from '@/main/components/editor/BlockNote/utils/parse'
@@ -19,12 +19,14 @@ type TDescriptionDrawerProps = {
 	resource?: string
 	dataProviderName?: string
 	editorFormItemProps?: FormItemProps
+	buttonProps?: ButtonProps
 }
 const DescriptionDrawerComponent: FC<TDescriptionDrawerProps> = ({
 	name = ['description'],
 	resource = 'posts',
 	dataProviderName = 'default',
 	editorFormItemProps,
+	buttonProps,
 }) => {
 	const { SITE_URL, ELEMENTOR_ENABLED } = useEnv()
 	const form = Form.useFormInstance()
@@ -134,6 +136,7 @@ const DescriptionDrawerComponent: FC<TDescriptionDrawerProps> = ({
 					}}
 					color="primary"
 					variant="filled"
+					{...buttonProps}
 				>
 					開始編輯
 				</Button>
