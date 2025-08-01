@@ -21,6 +21,7 @@ type TDescriptionDrawerProps = {
 	dataProviderName?: string
 	editorFormItemProps?: FormItemProps
 	buttonProps?: ButtonProps
+	initialEditor?: 'power-editor' | 'elementor'
 }
 const DescriptionDrawerComponent: FC<TDescriptionDrawerProps> = ({
 	name = ['description'],
@@ -28,6 +29,7 @@ const DescriptionDrawerComponent: FC<TDescriptionDrawerProps> = ({
 	dataProviderName = 'default',
 	editorFormItemProps,
 	buttonProps,
+	initialEditor,
 }) => {
 	const { SITE_URL, ELEMENTOR_ENABLED } = useEnv()
 	const form = Form.useFormInstance()
@@ -37,8 +39,9 @@ const DescriptionDrawerComponent: FC<TDescriptionDrawerProps> = ({
 		...notificationProps,
 	})
 	const watchId = Form.useWatch(['id'], form) || 0
-	const [initialEditor, setInitialEditor] = useState('power-editor')
 	const watchEditor = Form.useWatch(['editor'], form) || 'power-editor'
+	const editorChanged =
+		initialEditor === undefined ? false : initialEditor !== watchEditor
 
 	const { blockNoteViewProps } = useBlockNote()
 
@@ -88,10 +91,6 @@ const DescriptionDrawerComponent: FC<TDescriptionDrawerProps> = ({
 		}
 	}, [watchId, open, editor])
 
-	useEffect(() => {
-		setInitialEditor(form.getFieldValue('editor'))
-	}, [watchId])
-
 	const [fullWidth, setFullWidth] = useState(false)
 
 	return (
@@ -117,7 +116,6 @@ const DescriptionDrawerComponent: FC<TDescriptionDrawerProps> = ({
 									disabled: !ELEMENTOR_ENABLED,
 								},
 							]}
-							defaultValue="power-editor"
 							optionType="button"
 							buttonStyle="solid"
 						/>
@@ -125,7 +123,7 @@ const DescriptionDrawerComponent: FC<TDescriptionDrawerProps> = ({
 				</div>
 
 				<Button
-					disabled={initialEditor !== watchEditor}
+					disabled={editorChanged}
 					className="at-w-full"
 					icon={<ExportOutlined />}
 					iconPosition="end"
@@ -152,7 +150,7 @@ const DescriptionDrawerComponent: FC<TDescriptionDrawerProps> = ({
 				<p
 					className={cn(
 						'at-text-red-500 at-text-sm at-my-2',
-						initialEditor !== watchEditor ? 'at-opacity-100' : 'at-opacity-0',
+						editorChanged ? 'at-opacity-100' : 'at-opacity-0',
 					)}
 				>
 					<ExclamationCircleFilled /> 切換編輯器後請務必先儲存再開始編輯
