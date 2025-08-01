@@ -58,7 +58,6 @@ const DescriptionDrawerComponent: FC<TDescriptionDrawerProps> = ({
 				id: watchId,
 				values: {
 					[nameString]: html,
-					_elementor_edit_mode: watchEditor === 'elementor' ? 'builder' : '',
 				},
 			},
 			{
