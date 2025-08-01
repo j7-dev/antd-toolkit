@@ -38,9 +38,7 @@ const DescriptionDrawerComponent: FC<TDescriptionDrawerProps> = ({
 	})
 	const watchId = Form.useWatch(['id'], form) || 0
 	const [initialEditor, setInitialEditor] = useState('power-editor')
-	console.log(`initialEditor: ${initialEditor}`)
 	const watchEditor = Form.useWatch(['editor'], form) || 'power-editor'
-	console.log(`watchEditor: ${watchEditor}`)
 
 	const { blockNoteViewProps } = useBlockNote()
 
@@ -92,7 +90,7 @@ const DescriptionDrawerComponent: FC<TDescriptionDrawerProps> = ({
 
 	useEffect(() => {
 		setInitialEditor(form.getFieldValue('editor'))
-	}, [form])
+	}, [watchId])
 
 	const [fullWidth, setFullWidth] = useState(false)
 
