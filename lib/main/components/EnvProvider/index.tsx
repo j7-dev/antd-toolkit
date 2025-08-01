@@ -31,6 +31,7 @@ export const EnvContext = createContext<TEnv>({
 	KEBAB: '',
 	SNAKE: '',
 	NONCE: '',
+	ELEMENTOR_ENABLED: true,
 })
 
 export const EnvProvider: FC<{

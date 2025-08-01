@@ -1,6 +1,6 @@
 import { FC, useEffect, memo, useState } from 'react'
 import { Button, Form, Alert, Radio, FormItemProps, ButtonProps } from 'antd'
-import { ExportOutlined } from '@ant-design/icons'
+import { ExportOutlined, ExclamationCircleFilled } from '@ant-design/icons'
 import { useUpdate } from '@refinedev/core'
 import { getEditorHtml } from '@/main/components/editor/BlockNote/utils/parse'
 import {
@@ -9,6 +9,7 @@ import {
 	BlockNote,
 	SimpleDrawer,
 	useSimpleDrawer,
+	cn,
 } from '@/main'
 import { notificationProps } from '@/refine'
 
@@ -36,7 +37,10 @@ const DescriptionDrawerComponent: FC<TDescriptionDrawerProps> = ({
 		...notificationProps,
 	})
 	const watchId = Form.useWatch(['id'], form) || 0
+	const [initialEditor, setInitialEditor] = useState('power-editor')
+	console.log(`initialEditor: ${initialEditor}`)
 	const watchEditor = Form.useWatch(['editor'], form) || 'power-editor'
+	console.log(`watchEditor: ${watchEditor}`)
 
 	const { blockNoteViewProps } = useBlockNote()
 
@@ -53,6 +57,7 @@ const DescriptionDrawerComponent: FC<TDescriptionDrawerProps> = ({
 				id: watchId,
 				values: {
 					[nameString]: html,
+					_elementor_edit_mode: watchEditor === 'elementor' ? 'builder' : '',
 				},
 			},
 			{
@@ -84,6 +89,10 @@ const DescriptionDrawerComponent: FC<TDescriptionDrawerProps> = ({
 			console.error(error)
 		}
 	}, [watchId, open, editor])
+
+	useEffect(() => {
+		setInitialEditor(form.getFieldValue('editor'))
+	}, [form])
 
 	const [fullWidth, setFullWidth] = useState(false)
 
@@ -118,6 +127,7 @@ const DescriptionDrawerComponent: FC<TDescriptionDrawerProps> = ({
 				</div>
 
 				<Button
+					disabled={initialEditor !== watchEditor}
 					className="at-w-full"
 					icon={<ExportOutlined />}
 					iconPosition="end"
@@ -140,6 +150,15 @@ const DescriptionDrawerComponent: FC<TDescriptionDrawerProps> = ({
 				>
 					開始編輯
 				</Button>
+
+				<p
+					className={cn(
+						'at-text-red-500 at-text-sm at-my-2',
+						initialEditor !== watchEditor ? 'at-opacity-100' : 'at-opacity-0',
+					)}
+				>
+					<ExclamationCircleFilled /> 切換編輯器後請務必先儲存再開始編輯
+				</p>
 			</div>
 			<Item name={name} label={`完整介紹`} hidden />
 			<SimpleDrawer
