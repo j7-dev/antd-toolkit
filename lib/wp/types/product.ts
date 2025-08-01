@@ -45,6 +45,7 @@ export type TProductBaseRecord = {
 	parent_id: string
 
 	// 商品描述
+	editor: 'power-editor' | 'elementor'
 	description?: string
 	short_description?: string
 	page_template?: string
