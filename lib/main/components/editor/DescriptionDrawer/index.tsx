@@ -90,6 +90,13 @@ const DescriptionDrawerComponent: FC<TDescriptionDrawerProps> = ({
 		}
 	}, [watchId, open, editor])
 
+	useEffect(() => {
+		form.setFieldValue(
+			['_elementor_edit_mode'],
+			watchEditor === 'elementor' ? 'builder' : '',
+		)
+	}, [watchEditor])
+
 	const [fullWidth, setFullWidth] = useState(false)
 
 	return (
@@ -156,6 +163,8 @@ const DescriptionDrawerComponent: FC<TDescriptionDrawerProps> = ({
 				</p>
 			</div>
 			<Item name={name} label={`完整介紹`} hidden />
+			<Item name={['_elementor_edit_mode']} hidden />
+
 			<SimpleDrawer
 				{...drawerProps}
 				closeConfirm
