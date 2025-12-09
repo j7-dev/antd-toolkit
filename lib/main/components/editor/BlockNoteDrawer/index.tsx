@@ -13,12 +13,14 @@ type TBlockNoteDrawerProps = {
 	resource?: string
 	dataProviderName?: string
 	buttonProps?: ButtonProps
+	parseData?: (values: any) => any
 }
 const BlockNoteDrawerComponent: FC<TBlockNoteDrawerProps> = ({
 	name = ['short_description'],
 	resource = 'posts',
 	dataProviderName = 'default',
 	buttonProps,
+	parseData = (values) => values,
 }) => {
 	const form = Form.useFormInstance()
 	const { mutate: update, isLoading } = useUpdate({
@@ -38,12 +40,16 @@ const BlockNoteDrawerComponent: FC<TBlockNoteDrawerProps> = ({
 	const handleSaveContent = async () => {
 		const nameString = getNameString(name)
 		const html = await getEditorHtml(editor as any)
+		const rawValues = form.getFieldsValue()
+		const values = parseData({
+			...rawValues,
+			[nameString]: html,
+		})
+
 		update(
 			{
 				id: watchId,
-				values: {
-					[nameString]: html,
-				},
+				values,
 			},
 			{
 				onSuccess: () => {

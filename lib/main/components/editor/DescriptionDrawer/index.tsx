@@ -22,6 +22,7 @@ type TDescriptionDrawerProps = {
 	editorFormItemProps?: FormItemProps
 	buttonProps?: ButtonProps
 	initialEditor?: 'power-editor' | 'elementor'
+	parseData?: (values: any) => any
 }
 const DescriptionDrawerComponent: FC<TDescriptionDrawerProps> = ({
 	name = ['description'],
@@ -30,6 +31,7 @@ const DescriptionDrawerComponent: FC<TDescriptionDrawerProps> = ({
 	editorFormItemProps,
 	buttonProps,
 	initialEditor,
+	parseData = (values) => values,
 }) => {
 	const { SITE_URL, ELEMENTOR_ENABLED } = useEnv()
 	const form = Form.useFormInstance()
@@ -53,12 +55,15 @@ const DescriptionDrawerComponent: FC<TDescriptionDrawerProps> = ({
 	const handleSaveContent = async () => {
 		const nameString = getNameString(name)
 		const html = await getEditorHtml(editor as any)
+		const rawValues = form.getFieldsValue()
+		const values = parseData({
+			...rawValues,
+			[nameString]: html,
+		})
 		update(
 			{
 				id: watchId,
-				values: {
-					[nameString]: html,
-				},
+				values
 			},
 			{
 				onSuccess: () => {
