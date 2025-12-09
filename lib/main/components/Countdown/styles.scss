@@ -1,4 +1,4 @@
-@import "@/main/assets/scss/_variables.scss";
+@use "@/main/assets/scss/_variables.scss" as *;
 
 .au_countdown {
 	&_digit {

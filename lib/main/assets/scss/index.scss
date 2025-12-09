@@ -1,2 +1,2 @@
-@import "_tailwind.scss";
-@import "global.scss";
+@use "_tailwind.scss" as *;
+@use "global.scss" as *;
