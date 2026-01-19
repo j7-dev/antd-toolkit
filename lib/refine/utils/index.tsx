@@ -7,6 +7,7 @@ import {
 	CloseCircleTwoTone,
 } from '@ant-design/icons'
 import { getTextContent } from '@/main'
+import { AxiosError, AxiosResponse } from 'axios'
 export * from './woocommerce'
 
 /**
@@ -113,14 +114,24 @@ export const notificationProps: {
 	successNotification?: any
 	errorNotification?: any
 } = {
-	successNotification: (data: any, values: any, resource: string) => ({
+	successNotification: (data: AxiosResponse<{
+		code: number;
+		message: string;
+		data?: any;
+	}>, _values: any, _resource: string) => ({
 		// @ts-ignore
 		message: data?.data?.message || '成功',
 		type: 'success',
 	}),
-	errorNotification: (data: any, values: any, resource: string) => ({
+
+
+	errorNotification: (data: AxiosError<{
+		code: number;
+		message: string;
+		data?: any;
+	}>, _values: any, _resource: string) => ({
 		// @ts-ignore
-		message: getTextContent(data?.message || '失敗'),
+		message: getTextContent(data?.response?.data?.message || data?.message || '失敗'),
 		type: 'error',
 	}),
 }
