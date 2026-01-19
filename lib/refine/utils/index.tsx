@@ -119,7 +119,6 @@ export const notificationProps: {
 		message: string;
 		data?: any;
 	}>, _values: any, _resource: string) => ({
-		// @ts-ignore
 		message: data?.data?.message || '成功',
 		type: 'success',
 	}),
@@ -129,9 +128,11 @@ export const notificationProps: {
 		code: number;
 		message: string;
 		data?: any;
-	}>, _values: any, _resource: string) => ({
-		// @ts-ignore
-		message: getTextContent(data?.response?.data?.message || data?.message || '失敗'),
-		type: 'error',
-	}),
+	}>, _values: any, _resource: string) => {
+		console.log('error data', data)
+		return ({
+			message: getTextContent(data?.response?.data?.message || data?.message || '失敗'),
+			type: 'error',
+		})
+	},
 }
