@@ -27,3 +27,8 @@ node_modules
 storybook-static
 dist
 dist/**/*
+
+# Tool generated
+.playwright-cli/
+.serena/
+.claude/settings.local.json
