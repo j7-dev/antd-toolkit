@@ -37,6 +37,14 @@
 		"publish:npm": "pnpm build && pnpm version patch && git push && pnpm publish"
 	},
 	"dependencies": {
+		"@blocknote/code-block": "^0.49.0",
+		"@blocknote/core": "^0.49.0",
+		"@blocknote/mantine": "^0.49.0",
+		"@blocknote/react": "^0.49.0",
+		"@blocknote/xl-docx-exporter": "^0.49.0",
+		"@blocknote/xl-multi-column": "^0.49.0",
+		"@blocknote/xl-pdf-exporter": "^0.49.0",
+		"@tanstack/react-query": "^5.100.6",
 		"canvas-confetti": "^1.9.3",
 		"clsx": "^2.1.1",
 		"currency-symbol-map": "^5.1.0",
