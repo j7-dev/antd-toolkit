@@ -185,6 +185,7 @@ function App() {
 |------|--------|------|
 | `zh_TW` | `import { zh_TW } from 'antd-toolkit'` | 繁體中文（預設） |
 | `en_US` | `import { en_US } from 'antd-toolkit'` | English |
+| `ja_JP` | `import { ja_JP } from 'antd-toolkit'` | 日本語 |
 
 ### 自訂語系
 
