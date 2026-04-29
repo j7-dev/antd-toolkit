@@ -11,6 +11,11 @@ import {
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import '../lib/main/assets/scss/index.scss'
 import './preview.scss'
+import { LocaleProvider } from '../lib/main/components/LocaleProvider'
+import { zh_TW } from '../lib/main/locales/zh_TW'
+import { en_US } from '../lib/main/locales/en_US'
+
+const localeMap = { zh_TW, en_US } as const
 
 const preview: Preview = {
 	parameters: {
@@ -56,17 +61,36 @@ const preview: Preview = {
 			},
 		},
 	},
+	globalTypes: {
+		locale: {
+			name: 'Locale',
+			description: 'antd-toolkit i18n locale',
+			defaultValue: 'zh_TW',
+			toolbar: {
+				icon: 'globe',
+				items: [
+					{ value: 'zh_TW', title: '繁體中文' },
+					{ value: 'en_US', title: 'English' },
+				],
+				dynamicTitle: true,
+			},
+		},
+	},
 	decorators: [
-		// 添加新的 decorator 來包裝 .tailwind 容器
-		(Story) => {
-			// 在 decorator 中設定 body id
+		(Story, context) => {
+			const localeKey = (context.globals.locale || 'zh_TW') as keyof typeof localeMap
+			const locale = localeMap[localeKey] ?? zh_TW
 			useEffect(() => {
 				const bodyId = document.body.id
 				if (!bodyId) {
 					document.body.id = 'tw'
 				}
 			}, [])
-			return <Story />
+			return (
+				<LocaleProvider locale={locale}>
+					<Story />
+				</LocaleProvider>
+			)
 		},
 
 		withThemeByDataAttribute({
