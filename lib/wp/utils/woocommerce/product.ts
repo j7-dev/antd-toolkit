@@ -1,6 +1,81 @@
 import { TProductType } from '@/wp/types'
 import { TProductFilterProps } from '@/refine'
+import { useLocale } from '@/main/components/LocaleProvider'
 
+export const useBackorders = () => {
+	const t = useLocale('WcProduct')
+	return [
+		{ label: t.backorderNo, value: 'no' as const },
+		{ label: t.backorderYes, value: 'yes' as const },
+		{ label: t.backorderNotify, value: 'notify' as const },
+	]
+}
+
+export const useProductStockStatus = () => {
+	const t = useLocale('WcProduct')
+	return [
+		{ label: t.stockInStock, value: 'instock' as const, color: 'blue' },
+		{ label: t.stockOutOfStock, value: 'outofstock' as const, color: 'magenta' },
+		{ label: t.stockOnBackorder, value: 'onbackorder' as const, color: 'cyan' },
+	]
+}
+
+export const useProductDateFields = () => {
+	const t = useLocale('WcProduct')
+	return [
+		{ label: t.dateCreated, value: 'date_created' },
+		{ label: t.dateModified, value: 'date_modified' },
+		{ label: t.dateSaleFrom, value: 'date_on_sale_from' },
+		{ label: t.dateSaleTo, value: 'date_on_sale_to' },
+	]
+}
+
+export const useProductTypes = () => {
+	const t = useLocale('WcProduct')
+	return [
+		{ value: 'simple' as const, label: t.typeSimple, color: 'processing' },
+		{ value: 'grouped' as const, label: t.typeGrouped, color: 'orange' },
+		{ value: 'external' as const, label: t.typeExternal, color: 'lime' },
+		{ value: 'variable' as const, label: t.typeVariable, color: 'magenta' },
+		{ value: 'variation' as const, label: t.typeVariation, color: 'magenta' },
+		{ value: 'subscription' as const, label: t.typeSubscription, color: 'cyan' },
+		{ value: 'variable-subscription' as const, label: t.typeVariableSubscription, color: 'purple' },
+		{ value: 'subscription_variation' as const, label: t.typeSubscriptionVariation, color: 'purple' },
+	]
+}
+
+export const useProductCatalogVisibilities = () => {
+	const t = useLocale('WcProduct')
+	return [
+		{ value: 'hidden' as const, label: t.visibilityHidden, color: 'red' },
+		{ value: 'visible' as const, label: t.visibilityVisible, color: 'green' },
+		{ value: 'search' as const, label: t.visibilitySearch, color: 'blue' },
+		{ value: 'catalog' as const, label: t.visibilityCatalog, color: 'orange' },
+	]
+}
+
+export const useProductFilterLabels = (label = 'Product') => {
+	const t = useLocale('WcProduct')
+	return {
+		s: t.filterKeyword,
+		sku: t.filterSku,
+		type: t.filterType,
+		product_category_id: t.filterCategory(label),
+		product_tag_id: t.filterTag(label),
+		product_brand_id: t.filterBrand,
+		status: t.filterStatus(label),
+		featured: t.filterFeatured,
+		downloadable: t.filterDownloadable,
+		virtual: t.filterVirtual,
+		sold_individually: t.filterSoldIndividually,
+		backorders: t.filterBackorders,
+		stock_status: t.filterStockStatus,
+		date_created: t.filterDateCreated(label),
+		price_range: t.filterPriceRange,
+		author: t.filterAuthor,
+		include: t.filterInclude,
+	} as { [key in keyof TProductFilterProps]: string }
+}
 
 // 無庫存下單
 export const BACKORDERS = [

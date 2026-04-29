@@ -5,6 +5,7 @@ import { useUpdate } from '@refinedev/core'
 import { getEditorHtml } from '@/main/components/editor/BlockNote/utils/parse'
 import { useBlockNote, BlockNote, SimpleDrawer, useSimpleDrawer } from '@/main'
 import { notificationProps } from '@/refine'
+import { useLocale } from '@/main/components/LocaleProvider'
 
 const { Item } = Form
 
@@ -22,6 +23,7 @@ const BlockNoteDrawerComponent: FC<TBlockNoteDrawerProps> = ({
 	buttonProps,
 	parseData = (values) => values,
 }) => {
+	const t = useLocale('EditorDrawer')
 	const form = Form.useFormInstance()
 	const { mutate: update, isLoading } = useUpdate({
 		resource,
@@ -93,14 +95,14 @@ const BlockNoteDrawerComponent: FC<TBlockNoteDrawerProps> = ({
 				variant="filled"
 				{...buttonProps}
 			>
-				開始編輯
+				{t.startEditing}
 			</Button>
 
 			<Item name={name} hidden />
 			<SimpleDrawer
 				{...drawerProps}
 				closeConfirm
-				title={`編輯內容`}
+				title={t.editContent}
 				footer={
 					<div className="at-flex at-gap-x-4">
 						<Button
@@ -109,7 +111,7 @@ const BlockNoteDrawerComponent: FC<TBlockNoteDrawerProps> = ({
 								setFullWidth((prev) => !prev)
 							}}
 						>
-							{fullWidth ? '退出全螢幕編輯' : '全螢幕編輯'}
+							{fullWidth ? t.exitFullscreen : t.fullscreen}
 						</Button>
 						<Button
 							type="default"
@@ -118,14 +120,14 @@ const BlockNoteDrawerComponent: FC<TBlockNoteDrawerProps> = ({
 								editor.removeBlocks(editor.document)
 							}}
 						>
-							一鍵清空內容
+							{t.clearAll}
 						</Button>
 						<Button
 							type="primary"
 							onClick={handleSaveContent}
 							loading={isLoading}
 						>
-							儲存內容
+							{t.saveContent}
 						</Button>
 					</div>
 				}
@@ -133,11 +135,11 @@ const BlockNoteDrawerComponent: FC<TBlockNoteDrawerProps> = ({
 			>
 				<Alert
 					className="at-mb-4"
-					message="注意事項"
+					message={t.notes}
 					description={
 						<ol className="at-pl-4">
-							<li>可以使用 WordPress shortcode</li>
-							<li>未來有新功能持續擴充</li>
+							<li>{t.shortcodeSupport}</li>
+							<li>{t.moreFeatures}</li>
 						</ol>
 					}
 					type="warning"

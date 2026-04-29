@@ -2,12 +2,8 @@ import { memo, FC } from 'react'
 import { Tag, Tooltip } from 'antd'
 import dayjs from 'dayjs'
 import { TLimit, cn, NameId } from '@/main'
-
-const LIMIT_UNIT_LABEL = {
-	day: '日',
-	month: '月',
-	year: '年',
-}
+import { useLocale } from '@/main/components/LocaleProvider'
+import type { TLocale } from '@/main/locales/types'
 
 export type TBoundItemData = TLimit & { id: string; name: string }
 
@@ -29,6 +25,8 @@ const ProductBoundItemsComponent: FC<TProductBoundItemsProps> = ({
 	className,
 	hideName = false,
 }) => {
+	const t = useLocale('ProductBoundItems')
+
 	return items.map(({ id, name, limit_type, limit_value, limit_unit }) => {
 		return (
 			<div
@@ -40,17 +38,17 @@ const ProductBoundItemsComponent: FC<TProductBoundItemsProps> = ({
 			>
 				<div>
 					{hideName && (
-						<Tooltip title={name || '未知的名稱'}>
+						<Tooltip title={name || t.unknownName}>
 							<span className="at-text-gray-400 at-text-xs">#{id}</span>
 						</Tooltip>
 					)}
 					{!hideName && (
-						<NameId name={name || '未知的名稱'} id={id} tooltipProps={{}} />
+						<NameId name={name || t.unknownName} id={id} tooltipProps={{}} />
 					)}
 				</div>
 
 				<div>
-					<Tag>{getLimitLabel(limit_type, limit_value, limit_unit)}</Tag>
+					<Tag>{getLimitLabel(limit_type, limit_value, limit_unit, t)}</Tag>
 				</div>
 			</div>
 		)
@@ -63,15 +61,22 @@ function getLimitLabel(
 	limit_type: TLimit['limit_type'],
 	limit_value: TLimit['limit_value'],
 	limit_unit: TLimit['limit_unit'],
+	t: TLocale['ProductBoundItems'],
 ) {
+	const LIMIT_UNIT_LABEL = {
+		day: t.day,
+		month: t.month,
+		year: t.year,
+	}
+
 	switch (limit_type) {
 		case 'unlimited':
-			return '無期限'
+			return t.unlimited
 		case 'follow_subscription':
-			return '跟隨訂閱'
+			return t.followSubscription
 		case 'fixed':
-			return `訂單完成後 ${limit_value} ${LIMIT_UNIT_LABEL?.[limit_unit as keyof typeof LIMIT_UNIT_LABEL] || ''}`
+			return `${t.afterOrderComplete} ${limit_value} ${LIMIT_UNIT_LABEL?.[limit_unit as keyof typeof LIMIT_UNIT_LABEL] || ''}`
 		case 'assigned':
-			return `至 ${dayjs.unix(limit_value as number).format('YYYY/MM/DD HH:mm')}`
+			return `${t.until} ${dayjs.unix(limit_value as number).format('YYYY/MM/DD HH:mm')}`
 	}
 }

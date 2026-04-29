@@ -3,10 +3,12 @@ import { Progress, Tooltip } from 'antd'
 import { TFileInQueue } from '@/refine/bunny/types'
 import { CodeOutlined } from '@ant-design/icons'
 import { MdFileUpload } from 'react-icons/md'
+import { useLocale } from '@/main/components/LocaleProvider'
 
 const FileUploadProgress: FC<{
 	fileInQueue: TFileInQueue
 }> = ({ fileInQueue }) => {
+	const t = useLocale('BunnyModule')
 	const { status, uploadProgress, isEncoding, encodeProgress, file } =
 		fileInQueue
 	const { name } = file
@@ -19,7 +21,7 @@ const FileUploadProgress: FC<{
 	return (
 		<div className="at-grid at-grid-cols-2 at-place-content-center at-mb-2">
 			<Tooltip
-				title={isEncoding ? 'Bunny 編碼中' : '檔案上傳中'}
+				title={isEncoding ? t.encoding : t.uploading}
 				zIndex={10000}
 				className="at-flex at-items-center at-gap-2"
 			>

@@ -1,3 +1,23 @@
+import { useLocale } from '@/main/components/LocaleProvider'
+
+export const useOrderStatus = () => {
+	const t = useLocale('WcOrder')
+	return [
+		{ label: t.processing, value: 'processing' as const, color: '#108ee9' },
+		{ label: t.pending, value: 'pending' as const, color: 'volcano' },
+		{ label: t.inTransit, value: 'wmp-in-transit' as const, color: '#2db7f5' },
+		{ label: t.shipped, value: 'wmp-shipped' as const, color: 'green' },
+		{ label: t.onHold, value: 'on-hold' as const, color: 'gold' },
+		{ label: t.completed, value: 'completed' as const, color: '#87d068' },
+		{ label: t.cancelled, value: 'cancelled' as const, color: 'orange' },
+		{ label: t.refunded, value: 'refunded' as const, color: 'volcano' },
+		{ label: t.failed, value: 'failed' as const, color: 'magenta' },
+		{ label: t.checkoutDraft, value: 'checkout-draft' as const, color: 'gold' },
+		{ label: t.ryAtCvs, value: 'ry-at-cvs' as const, color: 'cyan' },
+		{ label: t.ryOutCvs, value: 'ry-out-cvs' as const, color: 'purple' },
+	]
+}
+
 export const ORDER_STATUS = [
   {
     label: '處理中',

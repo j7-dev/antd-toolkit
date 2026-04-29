@@ -3,6 +3,7 @@ import { Button, Alert } from 'antd'
 import { DoubleRightOutlined } from '@ant-design/icons'
 import { useBunny } from '@/refine'
 import { useLink } from '@refinedev/core'
+import { useLocale } from '@/main/components/LocaleProvider'
 
 const NoLibraryId = ({
 	type = 'alert',
@@ -12,25 +13,26 @@ const NoLibraryId = ({
 	const { bunny_library_id, bunny_stream_api_key, bunny_cdn_hostname } =
 		useBunny()
 	const Link = useLink()
+	const t = useLocale('VideoInput')
 	if ('alert' === type) {
 		return (
 			<Alert
-				message="缺少必要參數"
+				message={t.missingParams}
 				description={
 					<>
 						{!bunny_library_id && (
 							<div className="at-text-sm at-font-normal">
-								缺少 Bunny Library Id
+								{t.missingLibraryId}
 							</div>
 						)}
 						{!bunny_stream_api_key && (
 							<div className="at-text-sm at-font-normal">
-								缺少 Bunny Stream Api Key
+								{t.missingApiKey}
 							</div>
 						)}
 						{!bunny_cdn_hostname && (
 							<div className="at-text-sm at-font-normal">
-								缺少 Bunny Cdn Hostname
+								{t.missingCdnHostname}
 							</div>
 						)}
 
@@ -41,7 +43,7 @@ const NoLibraryId = ({
 								icon={<DoubleRightOutlined />}
 								iconPosition="end"
 							>
-								前往設定
+								{t.goToSettings}
 							</Button>
 						</Link>
 					</>
@@ -68,12 +70,12 @@ const NoLibraryId = ({
 			)}
 			{!bunny_stream_api_key && (
 				<div className="at-text-base at-font-normal">
-					缺少 Bunny Stream Api Key
+					{t.missingApiKey}
 				</div>
 			)}
 			{!bunny_cdn_hostname && (
 				<div className="at-text-base at-font-normal">
-					缺少 Bunny Cdn Hostname
+					{t.missingCdnHostname}
 				</div>
 			)}
 			<Link to="/media-library?tab=bunny-settings">
@@ -83,7 +85,7 @@ const NoLibraryId = ({
 					icon={<DoubleRightOutlined />}
 					iconPosition="end"
 				>
-					前往設定
+					{t.goToSettings}
 				</Button>
 			</Link>
 		</div>

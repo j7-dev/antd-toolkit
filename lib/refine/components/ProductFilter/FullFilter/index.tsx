@@ -26,6 +26,7 @@ import {
 import { SearchOutlined, UndoOutlined } from '@ant-design/icons'
 import { BsChevronDoubleDown, BsChevronDoubleUp } from 'react-icons/bs'
 import { FilterContext, initialFilteredValues } from '../index'
+import { useLocale } from '@/main/components/LocaleProvider'
 
 const { Item } = Form
 const { RangePicker } = DatePicker
@@ -38,6 +39,7 @@ const { RangePicker } = DatePicker
 const FullFilter: FC<{
 	searchFormProps: FormProps
 }> = ({ searchFormProps }) => {
+	const t = useLocale('ProductFilter')
 	const [isExpand, setIsExpand] = useState(false)
 	const form = searchFormProps.form as FormInstance<TProductFilterProps>
 	const handleReset = () => {
@@ -53,14 +55,14 @@ const FullFilter: FC<{
 			if (productType.value === 'simple') {
 				return {
 					...productType,
-					label: `${productType.label} (單選項商品)`,
+					label: t.simpleProduct(productType.label as string),
 				}
 			}
 
 			if (productType.value === 'variable') {
 				return {
 					...productType,
-					label: `${productType.label} (多選項商品)`,
+					label: t.variableProduct(productType.label as string),
 				}
 			}
 
@@ -104,13 +106,13 @@ const FullFilter: FC<{
 			>
 				<div className="at-grid at-grid-cols-2 xl:at-grid-cols-4 at-gap-x-4">
 					<Item name={['s']} label={productKeyLabelMapper('s')}>
-						<Input placeholder="模糊搜尋" allowClear />
+						<Input placeholder={t.fuzzySearch} allowClear />
 					</Item>
 					<Item name={['type']} label={productKeyLabelMapper('type')}>
 						<Select
 							{...defaultSelectProps}
 							options={renameProductType}
-							placeholder="可多選"
+							placeholder={t.multiSelect}
 						/>
 					</Item>
 					<Item
@@ -120,7 +122,7 @@ const FullFilter: FC<{
 						<Select
 							{...defaultSelectProps}
 							options={product_cats}
-							placeholder="可多選"
+							placeholder={t.multiSelect}
 						/>
 					</Item>
 
@@ -128,7 +130,7 @@ const FullFilter: FC<{
 						<Select
 							{...defaultSelectProps}
 							options={PRODUCT_STATUS}
-							placeholder="可多選"
+							placeholder={t.multiSelect}
 						/>
 					</Item>
 					{/* <Item
@@ -148,12 +150,12 @@ const FullFilter: FC<{
 					>
 						{isExpand ? (
 							<>
-								隱藏篩選條件{' '}
+								{t.hideFilters}{' '}
 								<BsChevronDoubleUp className="at-text-xs at-ml-2" />
 							</>
 						) : (
 							<>
-								顯示更多篩選條件{' '}
+								{t.showFilters}{' '}
 								<BsChevronDoubleDown className="at-text-xs at-ml-2" />
 							</>
 						)}
@@ -169,7 +171,7 @@ const FullFilter: FC<{
 						<Select
 							{...defaultSelectProps}
 							options={product_tags}
-							placeholder="可多選"
+							placeholder={t.multiSelect}
 						/>
 					</Item>
 					{(
@@ -195,7 +197,7 @@ const FullFilter: FC<{
 						<Select
 							{...defaultSelectProps}
 							options={BACKORDERS}
-							placeholder="可多選"
+							placeholder={t.multiSelect}
 						/>
 					</Item>
 					<Item
@@ -205,7 +207,7 @@ const FullFilter: FC<{
 						<Select
 							{...defaultSelectProps}
 							options={PRODUCT_STOCK_STATUS}
-							placeholder="可多選"
+							placeholder={t.multiSelect}
 						/>
 					</Item>
 					<Item
@@ -218,18 +220,18 @@ const FullFilter: FC<{
 						/>
 					</Item>
 					<Item name={['sku']} label={productKeyLabelMapper('sku')}>
-						<Input placeholder="模糊搜尋" allowClear />
+						<Input placeholder={t.fuzzySearch} allowClear />
 					</Item>
 					<Item name={['author']} label={productKeyLabelMapper('author')}>
 						<Select
 							{...defaultSelectProps}
 							{...selectProps}
-							placeholder="選擇作者"
+							placeholder={t.selectAuthor}
 							mode={undefined}
 						/>
 					</Item>
 					<Item name={['include']} label={productKeyLabelMapper('include')}>
-						<Select mode="tags" placeholder="輸入商品 ID" allowClear />
+						<Select mode="tags" placeholder={t.productIdPlaceholder} allowClear />
 					</Item>
 				</div>
 				<div className="at-grid at-grid-cols-2 xl:at-grid-cols-4 at-gap-x-4 at-mt-4">
@@ -239,7 +241,7 @@ const FullFilter: FC<{
 						className="at-w-full"
 						icon={<SearchOutlined />}
 					>
-						篩選
+						{t.filter}
 					</Button>
 					<Button
 						type="default"
@@ -247,7 +249,7 @@ const FullFilter: FC<{
 						onClick={handleReset}
 						icon={<UndoOutlined />}
 					>
-						重置
+						{t.reset}
 					</Button>
 				</div>
 			</Form>

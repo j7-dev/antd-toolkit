@@ -8,6 +8,7 @@ import {
 	CloseCircleFilled,
 	CheckCircleFilled,
 } from '@ant-design/icons'
+import { useLocale } from '@/main/components/LocaleProvider'
 
 type TBaseRecord = {
 	stock_status: TProductStockStatus
@@ -20,10 +21,20 @@ type TProductStockProps<T extends TBaseRecord> = {
 	type?: 'text' | 'tag'
 }
 
+type TStockLabels = {
+	inStock: string
+	stockSufficient: string
+	lowStock: string
+	outOfStock: string
+	onBackorder: string
+	unknownStatus: string
+}
+
 const ProductStockComponent = <T extends TBaseRecord>({
 	record,
 	type = 'text',
 }: TProductStockProps<T>) => {
+	const t = useLocale('ProductStock')
 	const { stock_status, stock_quantity, low_stock_amount = 0 } = record
 
 	if (!stock_status) return null
@@ -32,6 +43,7 @@ const ProductStockComponent = <T extends TBaseRecord>({
 		stock_status,
 		stock_quantity,
 		low_stock_amount,
+		t,
 	)
 
 	if (type === 'tag') {
@@ -60,42 +72,43 @@ function getTagProps(
 	stock_status: TProductStockStatus,
 	stock_quantity: number | null,
 	low_stock_amount: number | null,
+	t: TStockLabels,
 ) {
 	switch (stock_status) {
 		case 'instock':
 			if (stock_quantity === null || low_stock_amount === null) {
 				return {
-					label: '尚有庫存',
+					label: t.inStock,
 					color: 'text-green-500',
 					Icon: ({ ...props }) => <CheckCircleFilled {...props} />,
 				}
 			}
 			return stock_quantity > low_stock_amount
 				? {
-						label: '庫存充足',
+						label: t.stockSufficient,
 						color: 'text-green-500',
 						Icon: ({ ...props }) => <CheckCircleFilled {...props} />,
 					}
 				: {
-						label: '低庫存',
+						label: t.lowStock,
 						color: 'text-orange-500',
 						Icon: ({ ...props }) => <WarningOutlined {...props} />,
 					}
 		case 'outofstock':
 			return {
-				label: '缺貨中',
+				label: t.outOfStock,
 				color: 'text-red-500',
 				Icon: ({ ...props }) => <CloseCircleFilled {...props} />,
 			}
 		case 'onbackorder':
 			return {
-				label: '延期交貨(預購)',
+				label: t.onBackorder,
 				color: 'text-purple-500',
 				Icon: ({ ...props }) => <FieldTimeOutlined {...props} />,
 			}
 		default:
 			return {
-				label: '庫存狀態未知',
+				label: t.unknownStatus,
 				color: 'text-gray-500',
 				Icon: ({ ...props }) => <QuestionCircleOutlined {...props} />,
 			}

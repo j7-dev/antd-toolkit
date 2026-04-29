@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import { TSimpleDrawerProps } from './index'
+import { useLocale } from '@/main/components/LocaleProvider'
 
 export const useSimpleDrawer = () => {
-
+	const t = useLocale('SimpleDrawerModal')
 
 	const [drawerProps, setDrawerProps] = useState<Partial<TSimpleDrawerProps>>({
-		title: '媒體庫',
+		title: t.defaultTitle,
 	})
 
 

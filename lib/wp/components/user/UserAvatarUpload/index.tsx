@@ -2,6 +2,7 @@ import { memo, useState, useEffect } from 'react'
 import ImgCrop from 'antd-img-crop'
 import { Upload, UploadProps, Form, UploadFile } from 'antd'
 import { useApiUrl } from '@refinedev/core'
+import { useLocale } from '@/main/components/LocaleProvider'
 
 const { Item } = Form
 
@@ -16,6 +17,7 @@ const UserAvatarUploadComponent = ({
 	nonce,
 	name,
 }: TUserAvatarUploadProps) => {
+	const t = useLocale('UserAvatarUpload')
 	const [fileList, setFileList] = useState<UploadFile[]>([])
 	const form = Form.useFormInstance()
 	const watchId = Form.useWatch(['id'], form)
@@ -63,7 +65,7 @@ const UserAvatarUploadComponent = ({
 				quality={1}
 				rotationSlider
 				showReset
-				resetText="重置"
+				resetText={t.reset}
 				cropShape="round"
 				showGrid
 				onModalCancel={(resolve) => {
@@ -90,7 +92,7 @@ const UserAvatarUploadComponent = ({
 				>
 					{fileList.length < 1 && (
 						<p className="at-text-xs">
-							建議尺寸
+							{t.recommendedSize}
 							<br />
 							400x400
 						</p>

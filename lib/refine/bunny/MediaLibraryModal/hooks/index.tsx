@@ -2,11 +2,13 @@ import { useState, useEffect } from 'react'
 import { Button } from 'antd'
 import { TBunnyVideo } from '@/refine/bunny'
 import { useSimpleModal } from '@/main/components/SimpleModal'
+import { useLocale } from '@/main/components/LocaleProvider'
 
 export const useMediaLibraryModal = (params?: {
 	onConfirm?: (selectedItems: TBunnyVideo[]) => void
 	initItems?: TBunnyVideo[]
 }) => {
+	const t = useLocale('BunnyModule')
 	const onConfirm = params?.onConfirm
 	const initItems = params?.initItems || []
 	const { show, close, modalProps, setModalProps } = useSimpleModal()
@@ -19,11 +21,11 @@ export const useMediaLibraryModal = (params?: {
 	}
 
 	const formattedModalProps = {
-		title: 'Bunny 媒體庫',
+		title: t.mediaLibrary,
 		footer: (
 			<>
 				<Button type="primary" onClick={handleConfirm}>
-					確定選取 ({selectedItems?.length})
+					{t.confirmSelect(selectedItems?.length)}
 				</Button>
 			</>
 		),

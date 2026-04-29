@@ -5,6 +5,7 @@ import bunnyTutorial1 from '@/refine/bunny/assets/images/bunny-tutorial-1.jpg'
 import bunnyTutorial2 from '@/refine/bunny/assets/images/bunny-tutorial-2.jpg'
 import { RxExternalLink } from 'react-icons/rx'
 import { useOptions, useSave } from '../hooks'
+import { useLocale } from '@/main/components/LocaleProvider'
 
 const { Item } = Form
 
@@ -13,6 +14,7 @@ const Settings = ({ url }: { url?: string }) => {
 	const { handleSave, mutation } = useSave({ form, url })
 	const { isLoading: isSaveLoading } = mutation
 	const { isLoading: isGetLoading } = useOptions({ form })
+	const t = useLocale('BunnyModule')
 	return (
 		<Form layout="vertical" form={form}>
 			<div className="at-flex at-flex-col md:at-flex-row at-gap-8">
@@ -46,29 +48,29 @@ const Settings = ({ url }: { url?: string }) => {
 								onClick={handleSave}
 								loading={isSaveLoading}
 							>
-								儲存
+								{t.save}
 							</Button>
 						</Item>
 					</Spin>
 				</div>
 				<div className="at-flex-1">
-					<p className="at-font-bold at-mb-4">說明</p>
+					<p className="at-font-bold at-mb-4">{t.descriptionLabel}</p>
 					<Alert
-						message="沒有 Bunny 帳號？"
+						message={t.noAccount}
 						className="mb-4"
 						description={
 							<>
-								若還沒有 Bunny 帳號，可以
+								{t.noAccountHint}
 								<a
 									href="https://bunny.net?ref=wd7c7lcrv4"
 									target="_blank"
 									rel="noopener noreferrer"
 									className="at-ml-2 at-font-bold"
 								>
-									點此申請 <RxExternalLink className="at-relative at-top-0.5" />
+									{t.applyHere} <RxExternalLink className="at-relative at-top-0.5" />
 								</a>
 							</>
-						}
+}
 						type="info"
 						showIcon
 					/>

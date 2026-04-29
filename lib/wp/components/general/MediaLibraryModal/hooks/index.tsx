@@ -2,11 +2,13 @@ import { useState, useEffect } from 'react'
 import { Button } from 'antd'
 import { TAttachment, TImage } from '@/wp'
 import { useSimpleModal } from '@/main/components/SimpleModal'
+import { useLocale } from '@/main/components/LocaleProvider'
 
 export const useMediaLibraryModal = (params?: {
 	onConfirm?: (selectedItems: (TAttachment | TImage)[]) => void
 	initItems?: (TAttachment | TImage)[]
 }) => {
+	const t = useLocale('WpMediaLibraryModal')
 	const onConfirm = params?.onConfirm
 	const initItems = params?.initItems || []
 	const { modalProps, setModalProps, show, close } = useSimpleModal()
@@ -21,11 +23,11 @@ export const useMediaLibraryModal = (params?: {
 	}
 
 	const formattedModalProps = {
-		title: '媒體庫',
+		title: t.defaultTitle,
 		footer: (
 			<>
 				<Button type="primary" onClick={handleConfirm}>
-					確定選取 ({selectedItems?.length})
+					{t.confirmSelect(selectedItems?.length)}
 				</Button>
 			</>
 		),

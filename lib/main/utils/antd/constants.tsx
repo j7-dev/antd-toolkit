@@ -1,5 +1,21 @@
 import { SelectProps, RadioGroupProps, TableProps } from 'antd'
 import { NameId } from '@/main'
+import { useLocale } from '@/main/components/LocaleProvider'
+
+export const useDefaultSelectProps = (): SelectProps => {
+	const t = useLocale('AntdUtils')
+	return {
+		placeholder: t.search,
+		className: 'at-w-full',
+		allowClear: true,
+		showSearch: true,
+		mode: 'multiple',
+		optionRender: ({ value, label }) => {
+			return <NameId name={label} id={value as string} />
+		},
+		optionFilterProp: 'label',
+	}
+}
 
 export const defaultSelectProps: SelectProps = {
 	placeholder: '搜尋',

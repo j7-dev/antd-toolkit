@@ -10,6 +10,7 @@ import { useMediaUpload } from '@/refine/bunny/MediaLibrary/hooks'
 import UploadVideo from './UploadVideo'
 import { TMediaLibraryProps } from '@/refine/bunny/MediaLibrary/types'
 import { MediaLibraryContext } from '@/refine/bunny/MediaLibrary/hooks'
+import { useLocale } from '@/main/components/LocaleProvider'
 
 export * from '@/refine/bunny/MediaLibrary/types'
 
@@ -17,6 +18,7 @@ const MediaLibraryComponent: FC<TMediaLibraryProps> = (props) => {
 	const { uploadProps, tabsProps } = props
 	const dropZoneRef = useRef<HTMLDivElement>(null)
 	const [isDragging, setIsDragging] = useState(false)
+	const t = useLocale('BunnyModule')
 
 	const { uploadProps: bunnyUploadProps } = useMediaUpload(uploadProps)
 
@@ -65,14 +67,14 @@ const MediaLibraryComponent: FC<TMediaLibraryProps> = (props) => {
 	const items: TabsProps['items'] = [
 		{
 			key: 'bunny-media-library',
-			label: 'Bunny 媒體庫',
+			label: t.mediaLibrary,
 			children: <VideoList />,
 			icon: <FaPhotoVideo />,
 			disabled: disabledBunny,
 		},
 		{
 			key: 'bunny-settings',
-			label: 'Bunny 設定',
+			label: t.settings,
 			children: <Settings />,
 			icon: <SettingOutlined />,
 		},
@@ -92,7 +94,7 @@ const MediaLibraryComponent: FC<TMediaLibraryProps> = (props) => {
 						tabBarExtraContent={
 							<Upload {...bunnyUploadProps}>
 								<Button disabled={disabledBunny} icon={<CloudUploadOutlined />}>
-									上傳影片
+									{t.uploadVideo}
 								</Button>
 							</Upload>
 						}

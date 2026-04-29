@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { TSimpleModalProps } from './index'
+import { useLocale } from '@/main/components/LocaleProvider'
 
 export const useSimpleModal = () => {
+	const t = useLocale('SimpleDrawerModal')
 	const [modalProps, setModalProps] = useState<Partial<TSimpleModalProps>>({
-		title: '媒體庫',
+		title: t.defaultTitle,
 	})
 
 

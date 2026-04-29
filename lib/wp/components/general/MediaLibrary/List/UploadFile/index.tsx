@@ -1,6 +1,7 @@
 import { FC, memo } from 'react'
 import { Upload, UploadProps } from 'antd'
 import { InboxOutlined } from '@ant-design/icons'
+import { useLocale } from '@/main/components/LocaleProvider'
 
 const { Dragger } = Upload
 
@@ -8,6 +9,7 @@ const UploadFile: FC<{
 	uploadProps: UploadProps
 	children?: React.ReactNode
 }> = ({ uploadProps, children }) => {
+	const t = useLocale('WpMediaLibraryUploadFile')
 	const { accept } = uploadProps
 	return (
 		<div className="at-size-full at-max-h-[30rem]">
@@ -19,9 +21,9 @@ const UploadFile: FC<{
 						<p className="ant-upload-drag-icon">
 							<InboxOutlined />
 						</p>
-						<p className="ant-upload-text">點擊或拖曳文件到這裡上傳</p>
+						<p className="ant-upload-text">{t.uploadHint}</p>
 						{accept ? (
-							<p className="ant-upload-hint">支持 {accept} 類型檔案</p>
+							<p className="ant-upload-hint">{t.supportType(accept)}</p>
 						) : (
 							''
 						)}

@@ -1,6 +1,7 @@
 import { TGetColumnFilterProps } from '@/main/types'
 import { PaginationProps } from 'antd'
 import dayjs, { Dayjs } from 'dayjs'
+import { useLocale } from '@/main/components/LocaleProvider'
 
 export * from './constants'
 
@@ -47,6 +48,20 @@ export const getColumnFilterProps = <
 	return {
 		filters,
 		onFilter,
+	}
+}
+
+export const useDefaultPaginationProps = (label?: string) => {
+	const t = useLocale('AntdUtils')
+	const l = label ?? t.defaultLabel
+	return {
+		position: ['bottomCenter'] as const,
+		size: 'default' as const,
+		showSizeChanger: true,
+		showQuickJumper: true,
+		showTitle: true,
+		showTotal: (total: number, range: [number, number]) =>
+			t.paginationTotal(range[0], range[1], total, l),
 	}
 }
 

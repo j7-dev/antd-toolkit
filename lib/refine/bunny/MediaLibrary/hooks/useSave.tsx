@@ -7,6 +7,7 @@ import {
 	useApiUrl,
 } from '@refinedev/core'
 import { FormInstance, message } from 'antd'
+import { useLocale } from '@/main/components/LocaleProvider'
 
 type TUseSaveParams = {
 	form: FormInstance
@@ -28,6 +29,7 @@ type TUseSaveReturn = {
  * @returns 包含儲存處理函數和 mutation 狀態的物件
  */
 export const useSave = ({ form, url }: TUseSaveParams): TUseSaveReturn => {
+	const t = useLocale('BunnyModule')
 	const apiUrl = useApiUrl()
 	const mutation = useCustomMutation()
 	const { mutate } = mutation
@@ -58,7 +60,7 @@ export const useSave = ({ form, url }: TUseSaveParams): TUseSaveReturn => {
 
 						// 刷新頁面
 						const confirmReload = window.confirm(
-							'\n儲存成功，需要重新整理頁面後才能使用\n\n按【確認】重新整理頁面',
+							t.saveSuccess,
 						)
 						if (confirmReload) {
 							window.location.reload()

@@ -5,6 +5,7 @@ import { TAttachment } from '@/wp/components/general/MediaLibrary/types'
 import { useProps } from '@/wp/components/general/MediaLibrary/hooks'
 import { isImageFile, getFileExtension } from '@/main/utils'
 import { ExtIcon, CheckIcon } from '@/main/components'
+import { useLocale } from '@/main/components/LocaleProvider'
 import { TImage } from '@/wp'
 
 const { Text } = Typography
@@ -19,6 +20,7 @@ const Item = ({
 	index: number
 }) => {
 	const { selectedItems, setSelectedItems, limit, mime } = useProps()
+	const t = useLocale('WpMediaLibraryItem')
 
 	const isSelected = selectedItems?.some(
 		(selectedItem) => selectedItem.id === item.id,
@@ -29,7 +31,7 @@ const Item = ({
 		if (!mime.validate(item?.mime || '')) {
 			message.warning({
 				key: 'limit',
-				content: `不允許選取此類型的檔案`,
+				content: t.fileTypeNotAllowed,
 			})
 			return
 		}
@@ -66,7 +68,7 @@ const Item = ({
 			if (limit && selectedItems.length >= limit) {
 				message.warning({
 					key: 'limit',
-					content: `最多只能選取${limit}個檔案`,
+					content: t.maxFilesExceeded(limit),
 				})
 				// @ts-ignore
 				setSelectedItems((prev) => [...prev.slice(1), item])

@@ -1,11 +1,13 @@
 import { Form, FormItemProps, Input } from 'antd'
 import { FC, ChangeEvent, useState, useEffect } from 'react'
+import { useLocale } from '@/main/components/LocaleProvider'
 
 const { Item } = Form
 
 // 抽象組件，適用任何拿來 iFrame 的平台
 const Code: FC<FormItemProps> = (formItemProps) => {
 	const { name } = formItemProps
+	const t = useLocale('VideoInput')
 	const form = Form.useFormInstance()
 	const [value, setValue] = useState('')
 	const watchField = Form.useWatch(name, form)
@@ -37,7 +39,7 @@ const Code: FC<FormItemProps> = (formItemProps) => {
 				rows={12}
 				onChange={handleChange}
 				value={value}
-				placeholder="你可以放任何你想放的 HTML 或 iframe 或 Javascript 嵌入代碼，例如 JWP 影片、prestoplayer/WordPress shortcode 等..."
+				placeholder={t.codePlaceholder}
 			/>
 			<Item {...formItemProps} hidden />
 		</div>

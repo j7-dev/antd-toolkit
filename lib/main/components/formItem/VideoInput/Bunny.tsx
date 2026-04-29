@@ -3,6 +3,7 @@ import { Form, FormItemProps, Button } from 'antd'
 import { DeleteOutlined } from '@ant-design/icons'
 import { TVideo } from '@/main/types'
 import { useBunny } from '@/refine'
+import { useLocale } from '@/main/components/LocaleProvider'
 import {
 	useMediaLibraryModal,
 	MediaLibraryModal,
@@ -11,6 +12,7 @@ import {
 const { Item } = Form
 const Bunny: FC<FormItemProps> = (formItemProps) => {
 	const { bunny_library_id } = useBunny()
+	const t = useLocale('VideoInput')
 	const form = Form.useFormInstance()
 
 	const name = formItemProps?.name
@@ -59,7 +61,7 @@ const Bunny: FC<FormItemProps> = (formItemProps) => {
 				className="at-ml-0 at-mb-2 at-pl-0"
 				onClick={show}
 			>
-				開啟 Bunny 媒體庫
+				{t.openBunnyLibrary}
 			</Button>
 			<Item hidden {...formItemProps} />
 			{/* 如果章節已經有存影片，則顯示影片，有瀏覽器 preview，則以 瀏覽器 preview 優先 */}

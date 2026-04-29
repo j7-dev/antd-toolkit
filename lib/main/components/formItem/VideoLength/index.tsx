@@ -1,10 +1,12 @@
 import { FC, useState, useEffect, memo } from 'react'
 import { FormItemProps, Form, Space, InputNumber } from 'antd'
+import { useLocale } from '@/main/components/LocaleProvider'
 
 const { Item } = Form
 
 const VideoLengthComponent: FC<FormItemProps> = (formItemProps) => {
 	const form = Form.useFormInstance()
+	const tl = useLocale('VideoLength')
 	const [length, setLength] = useState({
 		hour: 0,
 		minute: 0,
@@ -46,20 +48,20 @@ const VideoLengthComponent: FC<FormItemProps> = (formItemProps) => {
 			)}
 			<Space.Compact block>
 				<InputNumber
-					addonAfter="時"
+					addonAfter={tl.hour}
 					value={length.hour}
 					min={0}
 					onChange={handleChange('hour')}
 				/>
 				<InputNumber
-					addonAfter="分"
+					addonAfter={tl.minute}
 					value={length.minute}
 					min={0}
 					max={59}
 					onChange={handleChange('minute')}
 				/>
 				<InputNumber
-					addonAfter="秒"
+					addonAfter={tl.second}
 					value={length.second}
 					min={0}
 					max={59}

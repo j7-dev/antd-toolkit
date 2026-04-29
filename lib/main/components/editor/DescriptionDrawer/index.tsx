@@ -12,6 +12,7 @@ import {
 	cn,
 } from '@/main'
 import { notificationProps } from '@/refine'
+import { useLocale } from '@/main/components/LocaleProvider'
 
 const { Item } = Form
 
@@ -33,6 +34,7 @@ const DescriptionDrawerComponent: FC<TDescriptionDrawerProps> = ({
 	initialEditor,
 	parseData = (values) => values,
 }) => {
+	const t = useLocale('EditorDrawer')
 	const { SITE_URL, ELEMENTOR_ENABLED } = useEnv()
 	const form = Form.useFormInstance()
 	const { mutate: update, isLoading } = useUpdate({
@@ -110,7 +112,7 @@ const DescriptionDrawerComponent: FC<TDescriptionDrawerProps> = ({
 				<div className="at-min-h-[4.5rem]">
 					<Item
 						name={['editor']}
-						label="編輯內容"
+						label={t.editContent}
 						tooltip={getTooltipTitle(ELEMENTOR_ENABLED)}
 						{...editorFormItemProps}
 					>
@@ -118,11 +120,11 @@ const DescriptionDrawerComponent: FC<TDescriptionDrawerProps> = ({
 							block
 							options={[
 								{
-									label: 'Power 編輯器',
+									label: t.powerEditor,
 									value: 'power-editor',
 								},
 								{
-									label: 'Elementor 編輯器',
+									label: t.elementorEditor,
 									value: 'elementor',
 									disabled: !ELEMENTOR_ENABLED,
 								},
@@ -155,7 +157,7 @@ const DescriptionDrawerComponent: FC<TDescriptionDrawerProps> = ({
 					variant="filled"
 					{...buttonProps}
 				>
-					開始編輯
+					{t.startEditing}
 				</Button>
 
 				<p
@@ -164,16 +166,16 @@ const DescriptionDrawerComponent: FC<TDescriptionDrawerProps> = ({
 						editorChanged ? 'at-opacity-100' : 'at-opacity-0',
 					)}
 				>
-					<ExclamationCircleFilled /> 切換編輯器後請務必先儲存再開始編輯
+					<ExclamationCircleFilled /> {t.switchEditorWarning}
 				</p>
 			</div>
-			<Item name={name} label={`完整介紹`} hidden />
+			<Item name={name} label={t.fullIntro} hidden />
 			<Item name={['_elementor_edit_mode']} hidden />
 
 			<SimpleDrawer
 				{...drawerProps}
 				closeConfirm
-				title={`編輯內容`}
+				title={t.editContent}
 				footer={
 					<div className="at-flex at-gap-x-4">
 						<Button

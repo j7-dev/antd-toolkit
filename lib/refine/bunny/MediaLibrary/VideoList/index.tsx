@@ -8,10 +8,12 @@ import VideoItem from './VideoItem'
 import { LoadingCard } from '@/main/components'
 import { useBunny } from '@/refine'
 import { useProps } from '@/refine/bunny/MediaLibrary/hooks'
+import { useLocale } from '@/main/components/LocaleProvider'
 
 const PAGE_SIZE = 50
 
 const VideoList: FC = () => {
+	const t = useLocale('BunnyModule')
 	const { selectedItems } = useProps()
 	const { bunny_library_id, bunny_stream_api_key, bunny_cdn_hostname } =
 		useBunny()
@@ -53,8 +55,8 @@ const VideoList: FC = () => {
 		return (
 			<Result
 				status="error"
-				title="獲取影片失敗"
-				subTitle="Bunny Stream API 回應錯誤，請聯繫網站管理人員或稍候再嘗試"
+				title={t.fetchError}
+				subTitle={t.fetchErrorDesc}
 			/>
 		)
 	}
@@ -62,7 +64,7 @@ const VideoList: FC = () => {
 	return (
 		<>
 			<Alert
-				message="影片上傳中可以離開此頁，但不要「重新整理」頁面，「重新整理」會導致上傳中斷"
+				message={t.uploadWarning}
 				banner
 				className="at-mb-8"
 			/>
@@ -97,7 +99,7 @@ const VideoList: FC = () => {
 					</div>
 
 					{!allItems?.length && !isFetching && (
-						<Empty className="at-my-24" description="找不到影片資料" />
+						<Empty className="at-my-24" description={t.noVideos} />
 					)}
 
 					{hasNextPage && (
@@ -108,7 +110,7 @@ const VideoList: FC = () => {
 								disabled={isFetching}
 								loading={isFetchingNextPage}
 							>
-								顯示更多
+								{t.showMore}
 							</Button>
 						</div>
 					)}

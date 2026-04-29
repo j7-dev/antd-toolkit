@@ -1,5 +1,7 @@
 import { memo } from 'react'
 import { Badge, Tooltip } from 'antd'
+import { useLocale } from '@/main/components/LocaleProvider'
+import type { TLocale } from '@/main/locales/types'
 
 const COLOR_GRADE = {
 	'tier-5': '#ffccc7',
@@ -22,9 +24,10 @@ const ProductTotalSalesComponent = <T extends TBaseRecord>({
 	record,
 	max_sales,
 }: TProductTotalSalesProps<T>) => {
+	const t = useLocale('ProductTotalSales')
 	const { total_sales } = record
 	if (total_sales === undefined) return null
-	const { color, label } = get_tier(total_sales, max_sales)
+	const { color, label } = get_tier(total_sales, max_sales, t)
 
 	return (
 		<Tooltip zIndex={1000000 + 20} title={label}>
@@ -37,35 +40,39 @@ export const ProductTotalSales = memo(
 	ProductTotalSalesComponent,
 ) as typeof ProductTotalSalesComponent
 
-function get_tier(total_sales: number, max_sales: number) {
+function get_tier(
+	total_sales: number,
+	max_sales: number,
+	t: TLocale['ProductTotalSales'],
+) {
 	if (total_sales > max_sales * 0.8 || max_sales === 0) {
 		return {
 			color: COLOR_GRADE['tier-1'],
 			tier: 'tier-1',
-			label: '最暢銷產品 (前20%)',
+			label: t.top20,
 		}
 	} else if (total_sales > max_sales * 0.6) {
 		return {
 			color: COLOR_GRADE['tier-2'],
 			tier: 'tier-2',
-			label: '暢銷產品 (前40%)',
+			label: t.top40,
 		}
 	} else if (total_sales > max_sales * 0.4) {
 		return {
 			color: COLOR_GRADE['tier-3'],
 			tier: 'tier-3',
-			label: '銷售量 (前60%)',
+			label: t.top60,
 		}
 	} else if (total_sales > max_sales * 0.2) {
 		return {
 			color: COLOR_GRADE['tier-4'],
 			tier: 'tier-4',
-			label: '銷售量 (前80%)',
+			label: t.top80,
 		}
 	}
 	return {
 		color: COLOR_GRADE['tier-5'],
 		tier: 'tier-5',
-		label: '銷售量 (前100%)',
+		label: t.top100,
 	}
 }

@@ -8,6 +8,7 @@ import {
 } from '@ant-design/icons'
 import { getTextContent } from '@/main'
 import { AxiosError, AxiosResponse } from 'axios'
+import { useLocale } from '@/main/components/LocaleProvider'
 export * from './woocommerce'
 
 /**
@@ -38,6 +39,17 @@ export function objToCrudFilters(values: BaseRecord) {
  */
 export function getInitialFilters(values: BaseRecord) {
 	return objToCrudFilters(values)
+}
+
+export const useDeleteButtonProps = (): DeleteButtonProps => {
+	const t = useLocale('RefineCommon')
+	return {
+		confirmTitle: t.confirmTitle,
+		confirmOkText: t.confirmOk,
+		confirmCancelText: t.confirmCancel,
+		hideText: true,
+		type: 'text',
+	}
 }
 
 // refine 預設的 delete button 的 props

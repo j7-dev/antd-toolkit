@@ -353,4 +353,76 @@ export type TLocale = {
 	SimpleDrawerModal: {
 		defaultTitle: string
 	}
+	WpConstants: {
+		booleanYes: string
+		booleanNo: string
+		publishStatus: string
+		pendingStatus: string
+		draftStatus: string
+		privateStatus: string
+		trashStatus: string
+		roleAdministrator: string
+		roleShopManager: string
+		roleEditor: string
+		roleAuthor: string
+		roleTranslator: string
+		roleContributor: string
+		roleCustomer: string
+		roleSubscriber: string
+	}
+	WcProduct: {
+		backorderNo: string
+		backorderYes: string
+		backorderNotify: string
+		stockInStock: string
+		stockOutOfStock: string
+		stockOnBackorder: string
+		dateCreated: string
+		dateModified: string
+		dateSaleFrom: string
+		dateSaleTo: string
+		typeSimple: string
+		typeGrouped: string
+		typeExternal: string
+		typeVariable: string
+		typeVariation: string
+		typeSubscription: string
+		typeVariableSubscription: string
+		typeSubscriptionVariation: string
+		visibilityHidden: string
+		visibilityVisible: string
+		visibilitySearch: string
+		visibilityCatalog: string
+		filterKeyword: string
+		filterSku: string
+		filterType: string
+		filterCategory: (label: string) => string
+		filterTag: (label: string) => string
+		filterBrand: string
+		filterStatus: (label: string) => string
+		filterFeatured: string
+		filterDownloadable: string
+		filterVirtual: string
+		filterSoldIndividually: string
+		filterBackorders: string
+		filterStockStatus: string
+		filterDateCreated: (label: string) => string
+		filterPriceRange: string
+		filterAuthor: string
+		filterInclude: string
+	}
+	WcOrder: {
+		processing: string
+		pending: string
+		inTransit: string
+		shipped: string
+		onHold: string
+		completed: string
+		cancelled: string
+		refunded: string
+		failed: string
+		checkoutDraft: string
+		ryAtCvs: string
+		ryOutCvs: string
+	}
 }

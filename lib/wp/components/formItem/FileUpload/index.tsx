@@ -9,6 +9,7 @@ import {
 	FormItemProps,
 } from 'antd'
 import { InboxOutlined, DeleteOutlined } from '@ant-design/icons'
+import { useLocale } from '@/main/components/LocaleProvider'
 
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0]
 
@@ -40,6 +41,7 @@ const FileUploadComponent = ({
 	imgCropProps,
 	disableImgCrop = false,
 }: TFileUploadProps) => {
+	const t = useLocale('FileUpload')
 	const form = Form.useFormInstance()
 	const fieldName = formItemProps?.name || ['images']
 
@@ -82,8 +84,8 @@ const FileUploadComponent = ({
 					<p className="ant-upload-drag-icon">
 						<InboxOutlined />
 					</p>
-					<p className="ant-upload-text">點擊或拖曳文件到這裡上傳</p>
-					<p className="ant-upload-hint">僅支持 image/* 類型 文件</p>
+					<p className="ant-upload-text">{t.uploadHint}</p>
+					<p className="ant-upload-hint">{t.imageOnly}</p>
 					{fileList.length > 0 && fileList?.[0]?.url && (
 						<div className="at-size-full at-absolute at-top-0 at-left-0 at-p-2">
 							<div className="at-size-full at-rounded-lg at-overflow-hidden">
@@ -114,7 +116,7 @@ const FileUploadComponent = ({
 				quality={1}
 				rotationSlider
 				showReset
-				resetText="重置"
+				resetText={t.reset}
 				showGrid
 				onModalCancel={(resolve) => {
 					resolve(Upload.LIST_IGNORE)
@@ -140,8 +142,8 @@ const FileUploadComponent = ({
 					<p className="ant-upload-drag-icon">
 						<InboxOutlined />
 					</p>
-					<p className="ant-upload-text">點擊或拖曳文件到這裡上傳</p>
-					<p className="ant-upload-hint">僅支持 image/* 類型 文件</p>
+					<p className="ant-upload-text">{t.uploadHint}</p>
+					<p className="ant-upload-hint">{t.imageOnly}</p>
 					{fileList.length > 0 && fileList?.[0]?.url && (
 						<div className="at-size-full at-absolute at-top-0 at-left-0 at-p-2">
 							<div className="at-size-full at-rounded-lg at-overflow-hidden">

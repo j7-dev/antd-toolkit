@@ -13,6 +13,7 @@ import {
 	useEnv,
 	valueStringify,
 } from '@/main'
+import { useLocale } from '@/main/components/LocaleProvider'
 import { useUpdate } from '@refinedev/core'
 import { notificationProps } from '@/refine'
 import { FaWordpress } from 'react-icons/fa'
@@ -22,6 +23,7 @@ const { Item } = Form
 const ItemInfo = ({ item }: { item: TAttachment | TImage }) => {
 	const [form] = Form.useForm()
 	const { SITE_URL } = useEnv()
+	const t = useLocale('WpMediaLibraryItemInfo')
 
 	// @ts-ignore
 	const { id, url, img_url = '', type = '', slug = '' } = item
@@ -82,10 +84,10 @@ const ItemInfo = ({ item }: { item: TAttachment | TImage }) => {
 			<div className="at-flex at-gap-2 at-my-4">
 				<CopyText text={url}>
 					<Button type="default" icon={<CopyOutlined />} iconPosition="end">
-						複製下載連結
+						{t.copyDownloadLink}
 					</Button>
 				</CopyText>
-				<Tooltip title="新分頁打開">
+				<Tooltip title={t.openInNewTab}>
 					<Button icon={<ExportOutlined />} href={url} target="_blank" />
 				</Tooltip>
 				<Tooltip title="傳統介面檢視">

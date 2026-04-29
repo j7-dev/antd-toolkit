@@ -4,8 +4,10 @@ import { ObjectTable, CopyText } from '@/main/components'
 import { Button, Tooltip } from 'antd'
 import { CopyOutlined, ExportOutlined } from '@ant-design/icons'
 import { DeleteButton } from '@refinedev/antd'
+import { useLocale } from '@/main/components/LocaleProvider'
 
 const VideoInfo = ({ item }: { item: TBunnyVideo }) => {
+	const t = useLocale('BunnyModule')
 	const { bunny_cdn_hostname, bunny_library_id } = useBunny()
 	const { guid, videoLibraryId } = item
 	const iframeText = `<div style="position:relative;padding-top:56.25%;"><iframe src="https://iframe.mediadelivery.net/embed/${videoLibraryId}/${guid}?autoplay=true&loop=false&muted=false&preload=true&responsive=true" loading="lazy" style="border:0;position:absolute;top:0;height:100%;width:100%;" allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;" allowfullscreen="true"></iframe></div>`
@@ -21,10 +23,10 @@ const VideoInfo = ({ item }: { item: TBunnyVideo }) => {
 			<div className="at-flex at-gap-4 at-my-4">
 				<CopyText text={iframeText}>
 					<Button type="default" icon={<CopyOutlined />} iconPosition="end">
-						複製 iframe 影片嵌入代碼
+						{t.copyIframe}
 					</Button>
 				</CopyText>
-				<Tooltip title="前往 Bunny 頁面">
+				<Tooltip title={t.goToBunny}>
 					<Button
 						type="default"
 						href={bunnyUrl}
@@ -34,15 +36,15 @@ const VideoInfo = ({ item }: { item: TBunnyVideo }) => {
 						<ExportOutlined />
 					</Button>
 				</Tooltip>
-				<Tooltip title="刪除 Bunny 影片">
+				<Tooltip title={t.deleteBunnyVideo}>
 					<DeleteButton
 						hideText
 						resource={`${bunny_library_id}/videos`}
 						dataProviderName="bunny-stream"
 						recordItemId={guid}
-						confirmTitle="確認刪除 Bunny 影片嗎?"
-						confirmOkText="確認"
-						confirmCancelText="取消"
+						confirmTitle={t.confirmDeleteBunny}
+						confirmOkText={t.confirmOk}
+						confirmCancelText={t.deleteCancel}
 					/>
 				</Tooltip>
 			</div>

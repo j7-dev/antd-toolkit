@@ -8,6 +8,7 @@ import {
 } from 'react'
 import { DeleteOutlined } from '@ant-design/icons'
 import { TVideoType } from '@/main/types/video'
+import { useLocale } from '@/main/components/LocaleProvider'
 
 const { Item } = Form
 
@@ -36,6 +37,7 @@ const Iframe: FC<{
 }) => {
 	const [vIdOrUrl, setVIdOrUrl] = useState('')
 	const form = Form.useFormInstance()
+	const t = useLocale('VideoInput')
 	const { name } = formItemProps
 	const watchField = Form.useWatch(name, form)
 	const platFormName = type.toUpperCase()
@@ -70,7 +72,7 @@ const Iframe: FC<{
 			<Input
 				size="small"
 				allowClear
-				placeholder={`請輸入 ${platFormName} 影片連結`}
+				placeholder={t.iframePlaceholder(platFormName)}
 				value={vIdOrUrl}
 				onChange={(e) => {
 					const string = e.target.value
@@ -129,7 +131,7 @@ const Iframe: FC<{
 
 			{invalidVideoId && (
 				<div>
-					請輸入有效的 {platFormName} 影片連結 例如:
+					{t.iframeError(platFormName)}
 					{exampleUrl}
 				</div>
 			)}
