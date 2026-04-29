@@ -1,0 +1,82 @@
+%% Activity: Main Module (antd-toolkit)
+%% Entry point: lib/main/index.tsx
+%% Export path: antd-toolkit -> dist/main/index.js
+
+graph TD
+    START([Consumer Developer imports from antd-toolkit])
+
+    %% Provider Setup
+    STEP1[1. Wrap app with LocaleProvider]
+    STEP1 -->|optional, default zh_TW| STEP2
+    STEP2[2. Wrap app with EnvProvider]
+    STEP2 -->|required for WP features| STEP3
+
+    %% Component Usage
+    STEP3{3. Choose component category}
+    STEP3 -->|Display| STEP3A[3a. Use display components]
+    STEP3 -->|Form| STEP3B[3b. Use form item components]
+    STEP3 -->|Layout| STEP3C[3c. Use layout components]
+    STEP3 -->|Editor| STEP3D[3d. Use editor components]
+
+    %% Display Components
+    STEP3A --> DISPLAY_AMOUNT[Amount - currency display]
+    STEP3A --> DISPLAY_DATETIME[DateTime - date/time formatting]
+    STEP3A --> DISPLAY_COUNTDOWN[Countdown - timer display]
+    STEP3A --> DISPLAY_SECONDTOSTR[SecondToStr - duration formatting]
+    STEP3A --> DISPLAY_COPYTEXT[CopyText - clipboard copy]
+    STEP3A --> DISPLAY_NAMEID[NameId - name with ID display]
+    STEP3A --> DISPLAY_OBJECTTABLE[ObjectTable - vertical key-value table]
+    STEP3A --> DISPLAY_TREND[TrendIndicator - trend percentage]
+    STEP3A --> DISPLAY_WATCHSTATUS[WatchStatusTag - subscription status]
+    STEP3A --> DISPLAY_BOOLEAN[BooleanIndicator - colored dot]
+    STEP3A --> DISPLAY_BREATHLIGHT[BreathLight - animated indicator]
+    STEP3A --> DISPLAY_SIMPLEIMAGE[SimpleImage - lazy image]
+    STEP3A --> DISPLAY_TOGGLECONTENT[ToggleContent - expandable HTML]
+    STEP3A --> DISPLAY_HEADING[Heading - section divider]
+    STEP3A --> DISPLAY_LOADING[LoadingCard / LoadingPage]
+    STEP3A --> DISPLAY_ICONS[ExtIcon / CheckIcon / AltIcon]
+
+    %% Form Item Components
+    STEP3B --> FORM_SWITCH[Switch - yes/no toggle]
+    STEP3B --> FORM_SEGMENTED[Segmented - yes/no segmented]
+    STEP3B --> FORM_DATEPICKER[DatePicker - timestamp date picker]
+    STEP3B --> FORM_RANGEPICKER[RangePicker - timestamp range picker]
+    STEP3B --> FORM_LIMIT[Limit - time limit selector]
+    STEP3B --> FORM_VIDEOINPUT[VideoInput - video source selector]
+    STEP3B --> FORM_VIDEOLENGTH[VideoLength - duration input]
+    STEP3B --> FORM_DOUBLECONFIRM[DoubleConfirmSwitch - confirm toggle]
+    STEP3B --> FORM_BOOLRADIO[BooleanRadioButton - boolean radio]
+    STEP3B --> FORM_BOOLSEG[BooleanSegmented - boolean segmented]
+
+    %% Layout Components
+    STEP3C --> LAYOUT_CARD[Card - conditional card wrapper]
+    STEP3C --> LAYOUT_PORTAL[Portal - DOM portal]
+    STEP3C --> LAYOUT_SIMPLEDRAWER[SimpleDrawer - custom drawer]
+    STEP3C --> LAYOUT_SIMPLEMODAL[SimpleModal - custom modal]
+    STEP3C --> LAYOUT_SELECTEDRECORD[SelectedRecord - selection indicator]
+    STEP3C --> LAYOUT_POPCONFIRMDELETE[PopconfirmDelete - delete confirmation]
+    STEP3C --> LAYOUT_ACTIONBUTTON[ActionButton - CRUD button group]
+
+    %% Editor Components
+    STEP3D --> EDITOR_BLOCKNOTE[BlockNote - rich text editor]
+    STEP3D --> EDITOR_BLOCKNOTE_DRAWER[BlockNoteDrawer - editor in drawer]
+    STEP3D --> EDITOR_DESC_DRAWER[DescriptionDrawer - description editor]
+
+    %% Hooks
+    STEP4[4. Use hooks]
+    STEP4 --> HOOK_COLOR[useColor - Ant Design tokens]
+    STEP4 --> HOOK_COLUMNSEARCH[useColumnSearch - table column search]
+    STEP4 --> HOOK_CONSTANTSELECT[useConstantSelect - constant dropdown]
+    STEP4 --> HOOK_ROWSELECTION[useRowSelection - table row selection]
+    STEP4 --> HOOK_UPDATERECORD[useUpdateRecord - inline editable table]
+
+    %% Utils
+    STEP5[5. Use utilities]
+    STEP5 --> UTIL_COMMON[cn, renderHTML, getCurrencyString, filterObjKeys, etc.]
+    STEP5 --> UTIL_ANTD[getColumnFilterProps, getDefaultPaginationProps, formatDateRangeData]
+    STEP5 --> UTIL_API[toFormData - axios form data helper]
+    STEP5 --> UTIL_DAYJS[parseDatePickerValue, parseRangePickerValue, formatters]
+    STEP5 --> UTIL_VIDEO[getYoutubeVideoId, getVimeoVideoId, getEstimateUploadTimeInSeconds]
+    STEP5 --> UTIL_ZOD[safeParse - safe Zod parsing with warning]
+
+    START --> STEP1

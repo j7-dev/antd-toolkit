@@ -1,0 +1,66 @@
+%% Activity: Refine Module (antd-toolkit/refine)
+%% Entry point: lib/refine/index.tsx
+%% Export path: antd-toolkit/refine -> dist/refine/index.js
+%% Dependencies: @refinedev/core, @refinedev/antd, antd-toolkit (main)
+
+graph TD
+    START([Consumer Developer imports from antd-toolkit/refine])
+
+    %% Data Provider Setup
+    STEP1[1. Configure dataProvider with apiUrl + axiosInstance]
+    STEP1 -->|WordPress REST API| STEP2
+
+    %% BunnyCDN Setup
+    STEP2{2. Need BunnyCDN video?}
+    STEP2 -->|Yes| STEP2A[2a. Wrap with BunnyProvider]
+    STEP2 -->|No| STEP3
+    STEP2A --> STEP3
+
+    %% Component Usage
+    STEP3{3. Choose component category}
+    STEP3 -->|Product Management| STEP3A
+    STEP3 -->|User Management| STEP3B
+    STEP3 -->|Table Utilities| STEP3C
+    STEP3 -->|Video Management| STEP3D
+
+    %% Product Management
+    STEP3A[3a. Product binding components]
+    STEP3A --> BIND[BindItems - bind items to products with limit]
+    STEP3A --> UNBIND[UnbindItems - remove bound items]
+    STEP3A --> UPDATE_BOUND[UpdateBoundItems - update bound item limits]
+    STEP3A --> PRODUCT_FILTER[ProductFilter - WooCommerce product filter]
+
+    %% User Management
+    STEP3B[3b. User grant components]
+    STEP3B --> GRANT[GrantUsers - grant item access to users]
+    STEP3B --> REVOKE[RevokeUsers - revoke user access]
+    STEP3B --> UPDATE_GRANTED[UpdateGrantedUsers - update user access limits]
+
+    %% Table Utilities
+    STEP3C[3c. Table utility components]
+    STEP3C --> FILTER_TAGS[FilterTags - active filter tag display]
+    STEP3C --> SELECTED_ITEM[SelectedItem - cross-page selection indicator]
+    STEP3C --> ACTION_AREA[ActionArea - fixed bottom action bar]
+
+    %% Video Management
+    STEP3D[3d. BunnyCDN video components]
+    STEP3D --> BUNNY_LIBRARY[BunnyMediaLibrary - video grid browser]
+    STEP3D --> BUNNY_MODAL[BunnyMediaLibraryModal - video picker modal]
+    STEP3D --> BUNNY_NOTIFICATION[BunnyMediaLibraryNotification - upload progress]
+
+    %% Data Provider
+    STEP4[4. Use WordPress REST API data provider]
+    STEP4 --> DP_GETLIST[getList - paginated list with WP headers]
+    STEP4 --> DP_GETONE[getOne - single resource]
+    STEP4 --> DP_CREATE[create - POST with form data]
+    STEP4 --> DP_UPDATE[update - PUT/PATCH resource]
+    STEP4 --> DP_DELETE[deleteOne - DELETE resource]
+
+    %% Utilities
+    STEP5[5. Use refine utilities]
+    STEP5 --> UTIL_OBJ2CRUD[objToCrudFilters - object to Refine CrudFilters]
+    STEP5 --> UTIL_NOTIFICATION[notificationProvider - styled notifications]
+    STEP5 --> UTIL_NOTIFICATION_PROPS[notificationProps - success/error notification helpers]
+    STEP5 --> UTIL_DELETE_BTN[defaultDeleteButtonProps - delete button defaults]
+
+    START --> STEP1

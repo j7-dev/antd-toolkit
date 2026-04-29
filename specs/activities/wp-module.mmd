@@ -1,0 +1,70 @@
+%% Activity: WordPress Module (antd-toolkit/wp)
+%% Entry point: lib/wp/index.tsx
+%% Export path: antd-toolkit/wp -> dist/wp/index.js
+%% Dependencies: antd-toolkit (main), WordPress environment
+
+graph TD
+    START([Consumer Developer imports from antd-toolkit/wp])
+
+    %% Component Categories
+    STEP1{1. Choose component category}
+    STEP1 -->|General| STEP1A
+    STEP1 -->|Product| STEP1B
+    STEP1 -->|User| STEP1C
+    STEP1 -->|Form Item| STEP1D
+
+    %% General Components
+    STEP1A[1a. General WordPress components]
+    STEP1A --> UPLOAD[Upload - drag-drop with image crop]
+    STEP1A --> ONCHANGE_UPLOAD[OnChangeUpload - instant upload]
+    STEP1A --> BACK_TO_WP[BackToWpAdmin - admin navigation link]
+    STEP1A --> MEDIA_LIBRARY[MediaLibrary - WP media grid browser]
+    STEP1A --> MEDIA_MODAL[MediaLibraryModal - media picker modal]
+    STEP1A --> MEDIA_NOTIFICATION[MediaLibraryNotification - upload progress]
+    STEP1A --> COPY_RESOURCES[CopyResources - resource copy utility]
+
+    %% Product Components
+    STEP1B[1b. WooCommerce product components]
+    STEP1B --> PRODUCT_NAME[ProductName - product name with link]
+    STEP1B --> PRODUCT_TYPE[ProductType - product type tag with icons]
+    STEP1B --> PRODUCT_PRICE[ProductPrice - formatted price display]
+    STEP1B --> PRODUCT_TOTAL_SALES[ProductTotalSales - sales count]
+    STEP1B --> PRODUCT_CAT[ProductCat - category tags]
+    STEP1B --> PRODUCT_STOCK[ProductStock - stock status display]
+    STEP1B --> PRODUCT_BOUND[ProductBoundItems - bound items list]
+
+    %% User Components
+    STEP1C[1c. WordPress user components]
+    STEP1C --> USER_NAME[UserName - user display with avatar]
+    STEP1C --> USER_AVATAR[UserAvatarUpload - avatar uploader]
+    STEP1C --> USER_FILTER[UserFilter - user search and filter form]
+    STEP1C --> USER_ROLE[UserRole - role tag display]
+
+    %% Form Item Components
+    STEP1D[1d. WordPress form items]
+    STEP1D --> FILE_UPLOAD[FileUpload - WP media file upload form item]
+
+    %% Hooks
+    STEP2[2. Use WordPress hooks]
+    STEP2 --> HOOK_ITEM_SELECT[useItemSelect - searchable resource Select with Refine]
+    STEP2 --> HOOK_WOOCOMMERCE[useWoocommerce - WooCommerce settings context]
+
+    %% Utilities
+    STEP3[3. Use WordPress utilities]
+    STEP3 --> UTIL_BOOLEAN[stringToBool / boolToString - WP boolean conversion]
+    STEP3 --> UTIL_PRODUCT[isVariable / isVariation / isSubscription - product type checks]
+    STEP3 --> UTIL_CONSTANTS[POST_STATUS / USER_ROLES / ORDER_STATUS / PRODUCT_TYPES constants]
+    STEP3 --> UTIL_CATALOG[PRODUCT_CATALOG_VISIBILITIES / PRODUCT_STOCK_STATUS / BACKORDERS]
+    STEP3 --> UTIL_LABELS[getProductFilterLabels / productKeyLabelMapper]
+    STEP3 --> UTIL_ORDER[getOrderStatus - order status lookup]
+
+    %% Types
+    STEP4[4. Use WordPress types]
+    STEP4 --> TYPE_PRODUCT[TProductBaseRecord / TProductVariationBase]
+    STEP4 --> TYPE_USER[TUserBaseRecord]
+    STEP4 --> TYPE_TERM[TTerm / TImage]
+    STEP4 --> TYPE_STATUS[TPostStatus / TOrderStatus / TProductType / TProductStockStatus]
+    STEP4 --> TYPE_WOO[TWoocommerce / WoocommerceSchema - Zod validated]
+    STEP4 --> TYPE_TAXONOMY[TTaxonomy / TaxonomySchema - Zod validated]
+
+    START --> STEP1
