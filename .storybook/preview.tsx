@@ -14,8 +14,9 @@ import './preview.scss'
 import { LocaleProvider } from '../lib/main/components/LocaleProvider'
 import { zh_TW } from '../lib/main/locales/zh_TW'
 import { en_US } from '../lib/main/locales/en_US'
+import { ja_JP } from '../lib/main/locales/ja_JP'
 
-const localeMap = { zh_TW, en_US } as const
+const localeMap = { zh_TW, en_US, ja_JP } as const
 
 const preview: Preview = {
 	parameters: {
@@ -71,6 +72,7 @@ const preview: Preview = {
 				items: [
 					{ value: 'zh_TW', title: '繁體中文' },
 					{ value: 'en_US', title: 'English' },
+					{ value: 'ja_JP', title: '日本語' },
 				],
 				dynamicTitle: true,
 			},
