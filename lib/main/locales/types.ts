@@ -171,4 +171,186 @@ export type TLocale = {
 		downloadable: string
 		notDownloadable: string
 	}
+	VideoInput: {
+		noVideo: string
+		wpMediaLibrary: string
+		youtubeEmbed: string
+		vimeoEmbed: string
+		bunnyLibrary: string
+		customCode: string
+		openBunnyLibrary: string
+		codePlaceholder: string
+		iframePlaceholder: (platform: string) => string
+		iframeError: (platform: string) => string
+		missingParams: string
+		missingLibraryId: string
+		missingApiKey: string
+		missingCdnHostname: string
+		goToSettings: string
+	}
+	VideoLength: {
+		hour: string
+		minute: string
+		second: string
+	}
+	EditorDrawer: {
+		startEditing: string
+		editContent: string
+		exitFullscreen: string
+		fullscreen: string
+		clearAll: string
+		saveContent: string
+		notes: string
+		shortcodeSupport: string
+		moreFeatures: string
+		powerEditor: string
+		elementorEditor: string
+		switchEditorWarning: string
+		fullIntro: string
+		elementorRequired: string
+	}
+	AlertBlock: {
+		info: string
+		success: string
+		warning: string
+		error: string
+		description: string
+	}
+	BunnyVideoBlock: {
+		title: string
+		description: string
+		width: string
+		aspectRatioHint: string
+		ratio: string
+		replace: string
+		delete: string
+	}
+	CustomHTMLBlock: {
+		title: string
+		description: string
+	}
+	MediaLibraryBlock: {
+		title: string
+		description: string
+		width: string
+		setLink: string
+		setAlt: string
+		setText: string
+		replace: string
+		delete: string
+		linkPlaceholder: string
+		newWindow: string
+		altPlaceholder: string
+		titlePlaceholder: string
+		captionPlaceholder: string
+	}
+	BunnyModule: {
+		mediaLibrary: string
+		settings: string
+		uploadVideo: string
+		save: string
+		descriptionLabel: string
+		noAccount: string
+		noAccountHint: string
+		applyHere: string
+		step1: string
+		step2: string
+		searchPlaceholder: string
+		selectedVideos: (count: number) => string
+		clearSelection: string
+		deleteConfirm: string
+		deleteOk: string
+		deleteCancel: string
+		batchDelete: (count: number) => string
+		deleteSuccess: string
+		deleteFailed: (title: string, id: string) => string
+		fetchError: string
+		fetchErrorDesc: string
+		uploadWarning: string
+		noVideos: string
+		showMore: string
+		copyIframe: string
+		goToBunny: string
+		deleteBunnyVideo: string
+		confirmDeleteBunny: string
+		confirmOk: string
+		confirmSelect: (count: number) => string
+		encoding: string
+		uploading: string
+		saveSuccess: string
+	}
+	ProductFilter: {
+		fuzzySearch: string
+		multiSelect: string
+		simpleProduct: (label: string) => string
+		variableProduct: (label: string) => string
+		moreFilters: string
+		filterTitle: string
+		hideFilters: string
+		showFilters: string
+		filter: string
+		reset: string
+		selectAuthor: string
+		productIdPlaceholder: string
+	}
+	WpMediaLibraryItem: {
+		fileTypeNotAllowed: string
+		maxFilesExceeded: (limit: number) => string
+	}
+	WpMediaLibraryItemInfo: {
+		copyDownloadLink: string
+		openInNewTab: string
+		classicView: string
+		deleteFile: string
+	}
+	WpMediaLibraryUploadFile: {
+		uploadHint: string
+		supportType: (accept: string) => string
+	}
+	WpMediaLibraryModal: {
+		defaultTitle: string
+		confirmSelect: (count: number) => string
+	}
+	ProductStock: {
+		inStock: string
+		stockSufficient: string
+		lowStock: string
+		outOfStock: string
+		onBackorder: string
+		unknownStatus: string
+	}
+	ProductBoundItems: {
+		unknownName: string
+		unlimited: string
+		followSubscription: string
+		afterOrderComplete: string
+		until: string
+		day: string
+		month: string
+		year: string
+	}
+	ProductTotalSales: {
+		top20: string
+		top40: string
+		top60: string
+		top80: string
+		top100: string
+	}
+	FileUpload: {
+		uploadHint: string
+		imageOnly: string
+		reset: string
+	}
+	UserAvatarUpload: {
+		reset: string
+		recommendedSize: string
+	}
+	AntdUtils: {
+		search: string
+		paginationTotal: (range0: number, range1: number, total: number, label: string) => string
+		defaultLabel: string
+	}
+	SimpleDrawerModal: {
+		defaultTitle: string
+	}
 }

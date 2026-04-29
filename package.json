@@ -32,6 +32,8 @@
 		"preview": "vite preview",
 		"storybook": "storybook dev -p 6006",
 		"build-storybook": "cross-env BUILD_ENV=storybook storybook build",
+		"test": "vitest run",
+		"test:watch": "vitest",
 		"publish:npm": "pnpm build && pnpm version patch && git push && pnpm publish"
 	},
 	"dependencies": {
@@ -46,6 +48,8 @@
 		"zod": "^3.25.67"
 	},
 	"devDependencies": {
+		"@ant-design/cssinjs": "^1.22.1",
+		"@ant-design/icons": "^5.6.1",
 		"@etchteam/storybook-addon-status": "^5.0.0",
 		"@rollup/plugin-alias": "^5.1.0",
 		"@rollup/plugin-typescript": "^11.1.6",
@@ -58,17 +62,36 @@
 		"@storybook/react": "^8.1.11",
 		"@storybook/react-vite": "^8.1.11",
 		"@storybook/testing-library": "^0.2.2",
+		"@testing-library/jest-dom": "^6.9.1",
+		"@testing-library/react": "^16.3.2",
+		"@testing-library/user-event": "^14.6.1",
 		"@types/react-highlight-words": "^0.20.0",
+		"@uidotdev/usehooks": "^2.4.1",
+		"@vitejs/plugin-react": "^4.5.2",
+		"antd": "^5.25.3",
+		"autoprefixer": "^10.5.0",
+		"axios": "^1.7.9",
 		"cross-env": "^7.0.3",
+		"dayjs": "^1.11.13",
 		"eslint-plugin-storybook": "^0.8.0",
 		"glob": "^10.4.3",
+		"jsdom": "^25.0.1",
+		"lodash-es": "^4.18.1",
+		"react": "^18.3.1",
+		"react-dom": "^18.3.1",
+		"react-icons": "^5.6.0",
 		"react-router-dom": "^7.6.2",
 		"rollup-plugin-typescript-paths": "^1.5.0",
+		"sass": "^1.83.4",
 		"sass-loader": "^14.2.1",
 		"storybook-addon-jotai": "^0.0.6",
+		"tailwindcss": "^3.4.17",
 		"tslib": "^2.6.3",
 		"unplugin-vue-components": "^0.27.2",
-		"vite-plugin-dts": "^3.9.1"
+		"vite": "^5.4.14",
+		"vite-plugin-dts": "^3.9.1",
+		"vite-tsconfig-paths": "^4.3.2",
+		"vitest": "^2.1.0"
 	},
 	"sideEffects": [
 		"**/*.css"
