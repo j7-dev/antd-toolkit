@@ -1,6 +1,6 @@
 import React from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
-import { fakeImage } from '@/main/utils'
+import { fakeImage } from '../../utils'
 import { SimpleImage } from './index'
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
@@ -58,6 +58,13 @@ const meta: Meta<typeof SimpleImage> & {
 			},
 		},
 	},
+	decorators: [
+		(Story) => (
+			<div className="at-w-[20rem]">
+				<Story />
+			</div>
+		),
+	],
 }
 
 export default meta
@@ -76,7 +83,7 @@ export const Square: Story = {
 	name: '正方形',
 	args: {
 		src: fakeImage,
-		ratio: 'aspect-square',
+		ratio: 'at-aspect-square',
 	},
 }
 
@@ -85,11 +92,4 @@ export const Loading: Story = {
 	args: {
 		render: <></>,
 	},
-	decorators: [
-		(Story) => (
-			<div className="at-w-[20rem]">
-				<Story />
-			</div>
-		),
-	],
 }
