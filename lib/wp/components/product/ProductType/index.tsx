@@ -9,6 +9,7 @@ import {
 import { IoMdDownload } from 'react-icons/io'
 import { TProductType } from '@/wp/types'
 import { stringToBool, useWoocommerce } from '@/wp'
+import { useLocale } from '@/main/components/LocaleProvider'
 
 type TBaseRecord = {
 	type: TProductType
@@ -37,6 +38,7 @@ const ProductTypeComponent = <T extends TBaseRecord>({
 		downloadable = false,
 	} = record
 
+	const t = useLocale('ProductType')
 	const { product_types } = useWoocommerce()
 	const tag = product_types?.find((productType) => productType.value === type)
 	if (!type) return null
@@ -46,7 +48,7 @@ const ProductTypeComponent = <T extends TBaseRecord>({
 			<Tag bordered={false} color={tag?.color} className="at-m-0">
 				{tag?.label}
 			</Tag>
-			<Tooltip zIndex={1000000 + 20} title={`${featured ? '' : '非'}精選商品`}>
+			<Tooltip zIndex={1000000 + 20} title={stringToBool(featured) ? t.featured : t.notFeatured}>
 				{stringToBool(featured) ? (
 					<StarFilled className="at-text-yellow-400" />
 				) : (
@@ -54,7 +56,7 @@ const ProductTypeComponent = <T extends TBaseRecord>({
 				)}
 			</Tooltip>
 
-			<Tooltip zIndex={1000000 + 20} title={`${virtual ? '' : '非'}虛擬商品`}>
+			<Tooltip zIndex={1000000 + 20} title={stringToBool(virtual) ? t.virtual : t.notVirtual}>
 				{stringToBool(virtual) ? (
 					<CloudFilled className="at-text-primary" />
 				) : (
@@ -65,7 +67,7 @@ const ProductTypeComponent = <T extends TBaseRecord>({
 			{!hideDownloadable && (
 				<Tooltip
 					zIndex={1000000 + 20}
-					title={`${downloadable ? '' : '不'}可下載`}
+					title={stringToBool(downloadable) ? t.downloadable : t.notDownloadable}
 				>
 					{stringToBool(downloadable) ? (
 						<IoMdDownload className="at-text-gray-700" />

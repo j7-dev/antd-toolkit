@@ -11,6 +11,7 @@ import {
 } from '@refinedev/core'
 import { useItemSelect } from '@/wp'
 import { TLimit } from '@/main'
+import { useLocale } from '@/main/components/LocaleProvider'
 import { UseCustomMutationParams } from '@/refine/types'
 
 /**
@@ -55,6 +56,7 @@ const BindItemsComponent = <
 			useSelectProps,
 		})
 
+	const t = useLocale('BindItems')
 	const { mutate, isLoading } = useCustomMutation()
 	const apiUrl = useApiUrl()
 	const invalidate = useInvalidate()
@@ -85,7 +87,7 @@ const BindItemsComponent = <
 			{
 				onSuccess: () => {
 					message.success({
-						content: `綁定${label}成功！`,
+						content: t.successMessage(label),
 						key: `bind-${resource}`,
 					})
 					invalidate({
@@ -96,7 +98,7 @@ const BindItemsComponent = <
 				},
 				onError: () => {
 					message.error({
-						content: `綁定${label}失敗！`,
+						content: t.errorMessage(label),
 						key: `bind-${resource}`,
 					})
 				},
@@ -115,7 +117,7 @@ const BindItemsComponent = <
 					disabled={!product_ids.length || !item_ids.length}
 					onClick={handleClick}
 				>
-					綁定其他{label}
+					{t.bindOther(label)}
 				</Button>
 			</Space.Compact>
 		</>

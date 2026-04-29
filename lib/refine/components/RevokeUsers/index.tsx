@@ -7,6 +7,7 @@ import {
 	UseInvalidateProp,
 } from '@refinedev/core'
 import { message } from 'antd'
+import { useLocale } from '@/main/components/LocaleProvider'
 import { UseCustomMutationParams } from '@/refine/types'
 
 /**
@@ -39,6 +40,7 @@ const RevokeUsersComponent = ({
 	label = '',
 	useInvalidateProp,
 }: TRevokeUsersProps) => {
+	const t = useLocale('RevokeUsers')
 	const apiUrl = useApiUrl()
 	const invalidate = useInvalidate()
 
@@ -64,7 +66,7 @@ const RevokeUsersComponent = ({
 			{
 				onSuccess: () => {
 					message.success({
-						content: '撤銷用戶成功！',
+						content: t.successMessage,
 						key: 'remove-users',
 					})
 					invalidate({
@@ -75,7 +77,7 @@ const RevokeUsersComponent = ({
 				},
 				onError: () => {
 					message.error({
-						content: '撤銷用戶失敗！',
+						content: t.errorMessage,
 						key: 'remove-users',
 					})
 				},
@@ -90,11 +92,11 @@ const RevokeUsersComponent = ({
 		<PopconfirmDelete
 			type="button"
 			popconfirmProps={{
-				title: `確認移除這些用戶的${label}權限嗎?`,
+				title: t.confirmMessage(label),
 				onConfirm: handleRemove,
 			}}
 			buttonProps={{
-				children: `移除${label}`,
+				children: t.revokeButton(label),
 				disabled: !user_ids.length || !item_ids.length,
 				loading: isLoading,
 			}}

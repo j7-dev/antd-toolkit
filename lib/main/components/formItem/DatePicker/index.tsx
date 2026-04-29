@@ -7,6 +7,7 @@ import {
 } from 'antd'
 import { parseDatePickerValue } from '@/main/utils'
 import dayjs from 'dayjs'
+import { useLocale } from '@/main/components/LocaleProvider'
 
 const { Item } = Form
 
@@ -14,6 +15,8 @@ const DatePickerComponent: FC<{
 	formItemProps?: FormItemProps
 	datePickerProps?: DatePickerProps
 }> = ({ formItemProps, datePickerProps }) => {
+	const t = useLocale('FormDatePicker')
+
 	return (
 		<Item
 			getValueProps={(value) => ({
@@ -26,7 +29,7 @@ const DatePickerComponent: FC<{
 			{...formItemProps}
 		>
 			<AntdDatePicker
-				placeholder="選擇日期"
+				placeholder={t.placeholder}
 				className="at-w-full"
 				showTime={{ defaultValue: dayjs() }}
 				format="YYYY-MM-DD HH:mm"

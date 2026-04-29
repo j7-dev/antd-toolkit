@@ -12,6 +12,7 @@ import {
 } from '@refinedev/core'
 import { UseCustomMutationParams } from '@/refine/types'
 import { useItemSelect } from '@/wp'
+import { useLocale } from '@/main/components/LocaleProvider'
 
 /**
  * 授予項目權限的 Props
@@ -54,6 +55,7 @@ const GrantUsersComponent = <
 			useSelectProps,
 		})
 
+	const t = useLocale('GrantUsers')
 	const [time, setTime] = useState<Dayjs | undefined>(undefined)
 
 	const { mutate, isLoading } = useCustomMutation()
@@ -80,7 +82,7 @@ const GrantUsersComponent = <
 			{
 				onSuccess: () => {
 					message.success({
-						content: `新增用戶成功！`,
+						content: t.successMessage,
 						key: 'add-users',
 					})
 					invalidate({
@@ -91,7 +93,7 @@ const GrantUsersComponent = <
 				},
 				onError: () => {
 					message.error({
-						content: '新增用戶失敗！',
+						content: t.errorMessage,
 						key: 'add-users',
 					})
 				},
@@ -105,7 +107,7 @@ const GrantUsersComponent = <
 			<Space.Compact className="w-full">
 				<Select {...selectResourceProps} />
 				<DatePicker
-					placeholder="留空為無期限"
+					placeholder={t.unlimitedHint}
 					value={time}
 					showTime
 					format="YYYY-MM-DD HH:mm"

@@ -1,6 +1,7 @@
 import React, { memo } from 'react'
 import { FormProps, Form, Input, Button, FormInstance, Select } from 'antd'
 import { UndoOutlined, SearchOutlined } from '@ant-design/icons'
+import { useLocale } from '@/main/components/LocaleProvider'
 
 const { Item } = Form
 
@@ -25,6 +26,7 @@ const UserFilterComponent = <T extends TBaseRecord>({
 	wrapperClassName,
 	hideInclude = false,
 }: TUserFilterProps<T>) => {
+	const t = useLocale('UserFilter')
 	const form = formProps?.form as FormInstance<T>
 
 	return (
@@ -35,16 +37,16 @@ const UserFilterComponent = <T extends TBaseRecord>({
 						wrapperClassName ? wrapperClassName : defaultWrapperClassName
 					}
 				>
-					<Item name="search" label="關鍵字搜尋">
+					<Item name="search" label={t.keywordSearch}>
 						<Input
-							placeholder="可以輸入用戶ID, 帳號, Email, 顯示名稱"
+							placeholder={t.keywordPlaceholder}
 							allowClear
 						/>
 					</Item>
 
 					{!hideInclude && (
-						<Item name="include" label="包含指定用戶" className="at-col-span-2">
-							<Select mode="tags" placeholder="輸入用戶 ID" allowClear />
+						<Item name="include" label={t.includeUsers} className="at-col-span-2">
+							<Select mode="tags" placeholder={t.userIdPlaceholder} allowClear />
 						</Item>
 					)}
 
@@ -61,7 +63,7 @@ const UserFilterComponent = <T extends TBaseRecord>({
 						className="at-w-full"
 						icon={<SearchOutlined />}
 					>
-						篩選
+						{t.filter}
 					</Button>
 					<Button
 						type="default"
@@ -72,7 +74,7 @@ const UserFilterComponent = <T extends TBaseRecord>({
 						}}
 						icon={<UndoOutlined />}
 					>
-						重置
+						{t.reset}
 					</Button>
 				</div>
 			</Form>

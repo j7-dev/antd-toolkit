@@ -2,6 +2,7 @@ import React from 'react'
 import { CopyOutlined } from '@ant-design/icons'
 import { message } from 'antd'
 import { ConfigOptions } from 'antd/es/message/interface'
+import { useLocale } from '@/main/components/LocaleProvider'
 
 export const CopyText: React.FC<{
 	text: string
@@ -15,23 +16,20 @@ export const CopyText: React.FC<{
 	messageConfig,
 }) => {
 	const [messageApi, contextHolder] = message.useMessage(messageConfig)
+	const t = useLocale('CopyText')
 
 	const copyToClipboard = (textToCopy: string) => () => {
-		// 檢查剪貼簿API是否可用
-
 		if (navigator.clipboard) {
-			// 請求剪貼簿權限
-
 			navigator.clipboard
 				.writeText(textToCopy)
 				.then(() => {
-					messageApi.success('複製成功')
+					messageApi.success(t.success)
 				})
-				.catch((err) => {
-					messageApi.error('OOPS! 複製失敗')
+				.catch(() => {
+					messageApi.error(t.fail)
 				})
 		} else {
-			messageApi.error('OOPS! 剪貼簿不可用')
+			messageApi.error(t.clipboardUnavailable)
 		}
 	}
 

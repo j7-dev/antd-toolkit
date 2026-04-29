@@ -3,6 +3,7 @@ import dayjs from 'dayjs'
 import { CalendarOutlined, ClockCircleOutlined } from '@ant-design/icons'
 import { cn } from '@/main/utils'
 import { Tooltip } from 'antd'
+import { useLocale } from '@/main/components/LocaleProvider'
 
 type TDateProps = {
 	icon?: React.ReactNode
@@ -16,11 +17,13 @@ export const DateTime: React.FC<{
 	timeProps?: TDateProps
 	hideTime?: boolean
 }> = ({ date, className, dateProps, timeProps, hideTime }) => {
+	const t = useLocale('DateTime')
+
 	if (date.toString().length !== 13) {
 		return (
 			<div className="at-text-center">
-				<p>OOPS! 出錯拉</p>
-				<p>date 請輸入 毫秒(13位) 數字</p>
+				<p>{t.error}</p>
+				<p>{t.invalidDate}</p>
 			</div>
 		)
 	}

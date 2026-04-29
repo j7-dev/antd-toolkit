@@ -7,6 +7,7 @@ import {
 	UseInvalidateProp,
 } from '@refinedev/core'
 import { TLimit } from '@/main'
+import { useLocale } from '@/main/components/LocaleProvider'
 import { UseCustomMutationParams } from '@/refine/types'
 
 /**
@@ -39,6 +40,7 @@ const UpdateBoundItemsComponent = ({
 	useCustomMutationParams,
 	useInvalidateProp,
 }: TUpdateBoundItemsProps) => {
+	const t = useLocale('UpdateBoundItems')
 	const { mutate, isLoading } = useCustomMutation()
 	const apiUrl = useApiUrl()
 
@@ -67,7 +69,7 @@ const UpdateBoundItemsComponent = ({
 			{
 				onSuccess: () => {
 					message.success({
-						content: '批量修改觀看期限成功！',
+						content: t.successMessage,
 						key: 'update-bound-items',
 					})
 					invalidate({
@@ -78,7 +80,7 @@ const UpdateBoundItemsComponent = ({
 				},
 				onError: () => {
 					message.error({
-						content: '批量修改觀看期限失敗！',
+						content: t.errorMessage,
 						key: 'update-bound-items',
 					})
 				},
@@ -97,7 +99,7 @@ const UpdateBoundItemsComponent = ({
 			ghost
 			loading={isLoading}
 		>
-			修改觀看期限
+			{t.updateLimit}
 		</Button>
 	)
 }

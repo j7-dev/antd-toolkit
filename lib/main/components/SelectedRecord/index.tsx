@@ -1,5 +1,6 @@
 import React, { memo } from 'react'
 import { Tooltip, Button } from 'antd'
+import { useLocale } from '@/main/components/LocaleProvider'
 
 type TSelectedRecordProps = {
 	ids: (string | React.Key)[]
@@ -27,25 +28,27 @@ const SelectedRecordComponent = ({
 	resourceLabel,
 	hideOnEmpty = true,
 }: TSelectedRecordProps) => {
+	const t = useLocale('SelectedRecord')
+
 	return (
 		<div>
 			{(!!ids.length || !hideOnEmpty) && (
 				<div className="at-flex at-gap-x-2 at-items-center">
 					<Tooltip
-						title={`包含 ${resourceLabel} id: ${ids.join(',')}`}
+						title={t.tooltipContent(resourceLabel || '', ids.join(','))}
 						className="at-bg-yellow-100 at-px-2 at-py-0.5 at-whitespace-nowrap at-rounded-[0.25rem]"
 					>
-						已選擇 {ids.length} 個 {resourceLabel}
+						{t.selectedCount(ids.length, resourceLabel || '')}
 					</Tooltip>
 					{onClear && (
 						<Button type="link" onClick={onClear}>
-							清除選取
+							{t.clearSelection}
 						</Button>
 					)}
 
 					{onSelected && (
 						<Button type="link" onClick={onSelected}>
-							顯示已選 {resourceLabel}
+							{t.showSelected(resourceLabel || '')}
 						</Button>
 					)}
 				</div>

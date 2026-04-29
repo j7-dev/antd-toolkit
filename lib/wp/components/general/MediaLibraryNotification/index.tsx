@@ -3,18 +3,20 @@ import { CloudUploadOutlined } from '@ant-design/icons'
 import { notification, UploadFile } from 'antd'
 import FileUploadProgress from './FileUploadProgress'
 import { atom, useAtom } from 'jotai'
+import { useLocale } from '@/main/components/LocaleProvider'
 
 export const filesInQueueAtom = atom<UploadFile[]>([])
 
 export const MediaLibraryNotification = () => {
 	const [filesInQueue, setFilesInQueue] = useAtom(filesInQueueAtom)
+	const t = useLocale('MediaLibraryNotification')
 	// upload indicator
 	useEffect(() => {
 		if (filesInQueue?.length) {
 			notification.open({
 				key: 'files-uploading',
 				icon: <CloudUploadOutlined style={{ color: '#1677ff' }} />,
-				message: '檔案上傳中',
+				message: t.uploading,
 				description: (
 					<>
 						{filesInQueue?.map((fileInQueue) => (

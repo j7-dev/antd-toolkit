@@ -2,6 +2,7 @@ import React from 'react'
 import { InboxOutlined } from '@ant-design/icons'
 import { Upload as AntdUpload, UploadProps } from 'antd'
 import ImgCrop from 'antd-img-crop'
+import { useLocale } from '@/main/components/LocaleProvider'
 
 const { Dragger } = AntdUpload
 
@@ -11,6 +12,7 @@ type TUploadProps = {
 }
 
 export const Upload: React.FC<TUploadProps> = ({ uploadProps, children }) => {
+	const t = useLocale('Upload')
 	const { accept } = uploadProps
 	return (
 		<ImgCrop
@@ -30,10 +32,10 @@ export const Upload: React.FC<TUploadProps> = ({ uploadProps, children }) => {
 						<p className="ant-upload-drag-icon">
 							<InboxOutlined />
 						</p>
-						<p className="ant-upload-text">點擊或拖曳文件到這裡上傳</p>
+						<p className="ant-upload-text">{t.uploadHint}</p>
 
 						{accept ? (
-							<p className="ant-upload-hint">僅支持 ${accept} 類型檔案</p>
+							<p className="ant-upload-hint">{t.supportType(accept || '')}</p>
 						) : (
 							''
 						)}

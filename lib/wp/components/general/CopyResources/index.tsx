@@ -8,6 +8,7 @@ import {
 	UseInvalidateProp,
 } from '@refinedev/core'
 import { notificationProps } from '@/refine'
+import { useLocale } from '@/main/components/LocaleProvider'
 
 const CopyResourcesComponent: FC<{
 	id: string
@@ -16,6 +17,7 @@ const CopyResourcesComponent: FC<{
 	buttonProps?: ButtonProps
 	children?: React.ReactNode
 }> = ({ id, invalidateProps, tooltipProps, buttonProps, children }) => {
+	const t = useLocale('CopyResources')
 	const { mutate: duplicate, isLoading } = useCustomMutation()
 	const apiUrl = useApiUrl()
 	const invalidate = useInvalidate()
@@ -38,7 +40,7 @@ const CopyResourcesComponent: FC<{
 
 	return (
 		<>
-			<Tooltip title="複製" {...tooltipProps}>
+			<Tooltip title={t.tooltip} {...tooltipProps}>
 				<Button
 					type="text"
 					className="text-gray-400 m-0"

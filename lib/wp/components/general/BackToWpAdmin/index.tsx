@@ -1,6 +1,7 @@
 import { FC, memo } from 'react'
 import { cn } from '@/main/utils'
 import { useEnv } from '@/main'
+import { useLocale } from '@/main/components/LocaleProvider'
 
 type TBackToWpAdminProps = {
 	iconClassName?: string
@@ -14,6 +15,7 @@ const BackToWpAdminComponent: FC<TBackToWpAdminProps> = ({
 	href = '',
 }) => {
 	const { SITE_URL = '' } = useEnv()
+	const t = useLocale('BackToWpAdmin')
 	return (
 		<a
 			href={href ? href : `${SITE_URL}/wp-admin/`}
@@ -39,7 +41,7 @@ const BackToWpAdminComponent: FC<TBackToWpAdminProps> = ({
 					</svg>
 				</>
 				{!collapsed && (
-					<span className="at-text-gray-600 at-font-light">回網站後台</span>
+					<span className="at-text-gray-600 at-font-light">{t.label}</span>
 				)}
 			</div>
 		</a>

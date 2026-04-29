@@ -11,6 +11,7 @@ import {
 import { DatePicker } from '@/main/components/formItem'
 import { TLimitType } from '@/main/types'
 import { NamePath } from 'antd/es/form/interface'
+import { useLocale } from '@/main/components/LocaleProvider'
 
 const { Item } = Form
 
@@ -29,6 +30,7 @@ const LimitComponent: FC<{
 }) => {
 	const form = Form.useFormInstance()
 	const watchLimitType: TLimitType = Form.useWatch(LIMIT_TYPE, form)
+	const t = useLocale('Limit')
 
 	const handleReset = (value: string) => {
 		if ('unlimited' === value) {
@@ -53,7 +55,7 @@ const LimitComponent: FC<{
 	return (
 		<div style={{ contain: 'layout paint style' }}>
 			<Item
-				label="觀看期限"
+				label={t.label}
 				initialValue={'unlimited'}
 				{...formItemProps}
 				name={LIMIT_TYPE}
@@ -61,11 +63,11 @@ const LimitComponent: FC<{
 				<Radio.Group
 					className="at-w-full w-avg"
 					options={[
-						{ label: '無期限', value: 'unlimited' },
-						{ label: '固定天數', value: 'fixed' },
-						{ label: '指定時間', value: 'assigned' },
+						{ label: t.unlimited, value: 'unlimited' },
+						{ label: t.fixedDays, value: 'fixed' },
+						{ label: t.specifiedTime, value: 'assigned' },
 						{
-							label: '跟隨訂閱',
+							label: t.followSubscription,
 							value: 'follow_subscription',
 						},
 					]}
@@ -93,9 +95,9 @@ const LimitComponent: FC<{
 					<Item name={LIMIT_UNIT} initialValue="day">
 						<Select
 							options={[
-								{ label: '日', value: 'day' },
-								{ label: '月', value: 'month' },
-								{ label: '年', value: 'year' },
+								{ label: t.day, value: 'day' },
+								{ label: t.month, value: 'month' },
+								{ label: t.year, value: 'year' },
 							]}
 							className="at-w-16"
 						/>
@@ -111,7 +113,7 @@ const LimitComponent: FC<{
 							rules: [
 								{
 									required: true,
-									message: '請填寫指定時間',
+									message: t.specifiedTimeRequired,
 								},
 							],
 						}}

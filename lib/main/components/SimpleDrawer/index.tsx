@@ -2,6 +2,7 @@ import React, { memo, useEffect, useState } from 'react'
 import { CloseOutlined } from '@ant-design/icons'
 import { Portal } from '@/main/components/Portal'
 import { Skeleton } from 'antd'
+import { useLocale } from '@/main/components/LocaleProvider'
 
 export type TSimpleDrawerProps = {
 	width?: number
@@ -38,6 +39,7 @@ const SimpleDrawerComponent = ({
 }: TSimpleDrawerProps) => {
 	const [show, setShow] = useState(false)
 	const open = opacity === 1
+	const t = useLocale('SimpleDrawer')
 
 	useEffect(() => {
 		const delay = setTimeout(() => {
@@ -69,7 +71,7 @@ const SimpleDrawerComponent = ({
 		}
 
 		if (closeConfirm) {
-			const canClose = window.confirm('確定要關閉嗎？沒有儲存的內容會遺失')
+			const canClose = window.confirm(t.closeConfirm)
 			if (!canClose) return
 		}
 		onCancel()

@@ -1,6 +1,7 @@
 import { useContext } from 'react'
 import { EnvContext, TEnv } from './index'
 import axios, { AxiosInstance } from 'axios'
+import { useLocale } from '@/main/components/LocaleProvider'
 
 /**
  * 從 Bootstrap::wp_localize_script env 傳給前端的參數
@@ -12,6 +13,7 @@ export function useEnv<T extends TEnv = TEnv>(): T {
 
 	const context = useContext(EnvContext)
 	const { NONCE } = context
+	const t = useLocale('EnvProvider')
 
 	const headers = NONCE
 		? {
@@ -43,22 +45,20 @@ export function useEnv<T extends TEnv = TEnv>(): T {
 				// 伺服器有響應但狀態碼表示錯誤
 				switch (error.response.status) {
 					case 403:
-						const confirm = window.confirm(
-							'\n網站 Cookie 已經過期，請重新整理頁面後才能繼續使用\n\n按 【確認】 ，重新整理頁面\n\n或者按 【取消】 ，您可以手動複製尚未儲存的資料避免頁面刷新後遺失',
-						)
+						const confirm = window.confirm(t.cookieExpired)
 						if (confirm) {
 							window.location.reload()
 						}
 						break
 					default:
-						console.error('請求失敗:', error.response.data.message)
+						console.error(t.requestFailed, error.response.data.message)
 				}
 			} else if (error.request) {
 				// 請求已發送但沒有收到響應
-				console.error('沒有收到伺服器響應')
+				console.error(t.noResponse)
 			} else {
 				// 設定請求時發生錯誤
-				console.error('請求配置錯誤:', error.message)
+				console.error(t.requestConfigError, error.message)
 			}
 
 			// 返回錯誤

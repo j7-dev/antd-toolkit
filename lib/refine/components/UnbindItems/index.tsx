@@ -7,6 +7,7 @@ import {
 	UseInvalidateProp,
 } from '@refinedev/core'
 import { message } from 'antd'
+import { useLocale } from '@/main/components/LocaleProvider'
 import { UseCustomMutationParams } from '@/refine/types'
 
 /**
@@ -42,6 +43,7 @@ const UnbindItemsComponent = ({
 	label = '',
 	useInvalidateProp,
 }: TUnbindItemsProps) => {
+	const t = useLocale('UnbindItems')
 	const apiUrl = useApiUrl()
 	const invalidate = useInvalidate()
 
@@ -68,7 +70,7 @@ const UnbindItemsComponent = ({
 			{
 				onSuccess: () => {
 					message.success({
-						content: '解除綁定成功！',
+						content: t.successMessage,
 						key: 'unbind-items',
 					})
 					invalidate({
@@ -79,7 +81,7 @@ const UnbindItemsComponent = ({
 				},
 				onError: () => {
 					message.error({
-						content: '解除綁定失敗！',
+						content: t.errorMessage,
 						key: 'unbind-items',
 					})
 				},
@@ -94,11 +96,11 @@ const UnbindItemsComponent = ({
 		<PopconfirmDelete
 			type="button"
 			popconfirmProps={{
-				title: `確認解除這些商品的${label}綁定嗎?`,
+				title: t.confirmMessage(label),
 				onConfirm: handleRemove,
 			}}
 			buttonProps={{
-				children: '解除綁定',
+				children: t.unbind,
 				disabled: !product_ids.length || !item_ids.length,
 				loading: isLoading,
 			}}

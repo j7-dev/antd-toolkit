@@ -8,6 +8,7 @@ import {
 	TooltipProps,
 } from 'antd'
 import { DeleteOutlined } from '@ant-design/icons'
+import { useLocale } from '@/main/components/LocaleProvider'
 
 type PopconfirmDeleteProps = {
 	popconfirmProps: Omit<PopconfirmProps, 'title'> & { title?: React.ReactNode }
@@ -16,20 +17,18 @@ type PopconfirmDeleteProps = {
 	tooltipProps?: TooltipProps
 }
 
-const DEFAULT_PROPS: PopconfirmProps = {
-	title: '確認刪除嗎?',
-	okText: '確認',
-	cancelText: '取消',
-}
-
 export const PopconfirmDeleteComponent: FC<PopconfirmDeleteProps> = ({
 	popconfirmProps,
 	type = 'icon',
 	buttonProps,
 	tooltipProps,
 }) => {
+	const t = useLocale('PopconfirmDelete')
+
 	const mergedPopconfirmProps: PopconfirmProps = {
-		...DEFAULT_PROPS,
+		title: t.title,
+		okText: t.ok,
+		cancelText: t.cancel,
 		...popconfirmProps,
 	}
 
@@ -49,7 +48,7 @@ export const PopconfirmDeleteComponent: FC<PopconfirmDeleteProps> = ({
 
 				{'button' === type && (
 					<Button type="primary" danger {...buttonProps}>
-						{buttonProps?.children ?? '刪除'}
+						{buttonProps?.children ?? t.delete}
 					</Button>
 				)}
 			</Popconfirm>
@@ -64,7 +63,7 @@ export const PopconfirmDeleteComponent: FC<PopconfirmDeleteProps> = ({
 
 			{'button' === type && (
 				<Button type="primary" danger {...buttonProps}>
-					{buttonProps?.children ?? '刪除'}
+					{buttonProps?.children ?? t.delete}
 				</Button>
 			)}
 		</Popconfirm>

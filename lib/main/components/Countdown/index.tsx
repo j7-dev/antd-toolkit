@@ -1,11 +1,13 @@
 import React, { FC } from 'react'
 import RcCountdown, { CountdownRenderProps } from 'react-countdown'
+import { useLocale } from '@/main/components/LocaleProvider'
 import './styles.scss'
 
 // TODO 棄用，改用 daisyUI 的
-const CountdownDigit: FC<{ countdownProps: CountdownRenderProps }> = ({
-	countdownProps,
-}) => {
+const CountdownDigit: FC<{
+	countdownProps: CountdownRenderProps
+	labels: { days: string; hours: string; minutes: string; seconds: string }
+}> = ({ countdownProps, labels }) => {
 	const { formatted } = countdownProps
 	const timeUnits = Object.keys(formatted).map((timeUnit) =>
 		formatted[timeUnit as keyof typeof formatted].split(''),
@@ -33,10 +35,10 @@ const CountdownDigit: FC<{ countdownProps: CountdownRenderProps }> = ({
 				)
 			})}
 
-			<div className="at-text-center at-text-xs">Days</div>
-			<div className="at-text-center at-text-xs">Hours</div>
-			<div className="at-text-center at-text-xs">Minutes</div>
-			<div className="at-text-center at-text-xs">Seconds</div>
+			<div className="at-text-center at-text-xs">{labels.days}</div>
+			<div className="at-text-center at-text-xs">{labels.hours}</div>
+			<div className="at-text-center at-text-xs">{labels.minutes}</div>
+			<div className="at-text-center at-text-xs">{labels.seconds}</div>
 		</div>
 	)
 }
@@ -47,11 +49,13 @@ export const Countdown: FC<{
 	className?: string
 	width?: string | number
 }> = ({ date, title, className = 'at-text-center', width }) => {
+	const t = useLocale('Countdown')
+
 	if (date.toString().length !== 13) {
 		return (
 			<div className="at-text-center">
-				<p>OOPS! 出錯拉</p>
-				<p>date 請輸入 毫秒(13位) 數字</p>
+				<p>{t.error}</p>
+				<p>{t.invalidDate}</p>
 			</div>
 		)
 	}
@@ -62,7 +66,7 @@ export const Countdown: FC<{
 			<div>
 				<RcCountdown
 					date={Date.now() + date - Date.now()}
-					renderer={(props) => <CountdownDigit countdownProps={props} />}
+					renderer={(props) => <CountdownDigit countdownProps={props} labels={t} />}
 				/>
 			</div>
 		</div>

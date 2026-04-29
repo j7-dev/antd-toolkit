@@ -6,6 +6,7 @@ import {
 	SaveOutlined,
 	EditOutlined,
 } from '@ant-design/icons'
+import { useLocale } from '@/main/components/LocaleProvider'
 
 export type TActionButton = {
 	canDelete?: boolean
@@ -48,25 +49,27 @@ const ActionButtonComponent = ({
 		}
 	}
 
+	const t = useLocale('ActionButton')
+
 	const buttonPropsMapping = {
 		edit: {
-			children: '編輯',
+			children: t.edit,
 			onClick: handleEdit,
 			icon: <EditOutlined />,
 		},
 		save: {
-			children: '儲存',
+			children: t.save,
 			icon: <SaveOutlined />,
 			onClick: onSave,
 		},
 		cancel: {
-			children: '取消',
+			children: t.cancel,
 			onClick: handleCancel,
 			icon: <CloseOutlined />,
 			type: 'default',
 		},
 		delete: {
-			children: '刪除',
+			children: t.delete,
 			danger: true,
 			icon: <DeleteOutlined />,
 		},
@@ -108,10 +111,10 @@ const ActionButtonComponent = ({
 
 			{canDelete && (
 				<Popconfirm
-					title="Confirm delete"
+					title={t.confirmTitle}
 					onConfirm={onDelete}
-					okText="confirm"
-					cancelText="cancel"
+					okText={t.confirmOk}
+					cancelText={t.confirmCancel}
 				>
 					<Button {...getButtonProps('delete')} />
 				</Popconfirm>

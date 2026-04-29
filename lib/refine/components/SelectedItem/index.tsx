@@ -1,4 +1,5 @@
 import { Tooltip, Button, TooltipProps } from 'antd'
+import { useLocale } from '@/main/components/LocaleProvider'
 
 /**
  * 顯示已選擇項目的元件
@@ -25,26 +26,28 @@ export const SelectedItem = ({
 	label?: string
 	tooltipProps?: TooltipProps
 }) => {
+	const t = useLocale('SelectedItem')
+
 	return (
 		<div>
 			{!!ids.length && (
 				<div className="at-flex at-gap-x-2 at-items-center">
 					<Tooltip
-						title={`包含${label} id: ${ids.join(',')}`}
+						title={t.tooltipContent(label, ids.join(','))}
 						className="at-bg-yellow-100 at-px-2 at-py-0.5 at-whitespace-nowrap at-rounded-[0.25rem]"
 						{...tooltipProps}
 					>
-						已選擇 {ids.length} 個{label}
+						{t.selectedCount(ids.length, label)}
 					</Tooltip>
 					{onClear && (
 						<Button type="link" onClick={onClear}>
-							清除選取
+							{t.clearSelection}
 						</Button>
 					)}
 
 					{onSelected && (
 						<Button type="link" onClick={onSelected}>
-							顯示已選{label}
+							{t.showSelected(label)}
 						</Button>
 					)}
 				</div>

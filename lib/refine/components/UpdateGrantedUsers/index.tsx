@@ -7,6 +7,7 @@ import {
 	useInvalidate,
 	UseInvalidateProp,
 } from '@refinedev/core'
+import { useLocale } from '@/main/components/LocaleProvider'
 import { UseCustomMutationParams } from '@/refine/types'
 
 /**
@@ -36,6 +37,7 @@ const UpdateGrantedUsersComponent = ({
 	useCustomMutationParams,
 	useInvalidateProp,
 }: TUpdateGrantedUsersProps) => {
+	const t = useLocale('UpdateGrantedUsers')
 	const [time, setTime] = useState<Dayjs | undefined>(undefined)
 	const { mutate, isLoading } = useCustomMutation()
 	const apiUrl = useApiUrl()
@@ -61,7 +63,7 @@ const UpdateGrantedUsersComponent = ({
 			{
 				onSuccess: () => {
 					message.success({
-						content: '批量修改觀看期限成功！',
+						content: t.successMessage,
 						key: 'update-granted-users',
 					})
 
@@ -74,7 +76,7 @@ const UpdateGrantedUsersComponent = ({
 				},
 				onError: () => {
 					message.error({
-						content: '批量修改觀看期限失敗！',
+						content: t.errorMessage,
 						key: 'update-granted-users',
 					})
 				},
@@ -90,7 +92,7 @@ const UpdateGrantedUsersComponent = ({
 			<DatePicker
 				value={time}
 				showTime
-				placeholder="留空為無期限"
+				placeholder={t.unlimitedHint}
 				format="YYYY-MM-DD HH:mm"
 				onChange={(value: Dayjs) => {
 					setTime(value)
@@ -104,7 +106,7 @@ const UpdateGrantedUsersComponent = ({
 				ghost
 				loading={isLoading}
 			>
-				修改觀看期限
+				{t.updateLimit}
 			</Button>
 		</Space.Compact>
 	)

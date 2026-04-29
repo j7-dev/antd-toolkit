@@ -1,3 +1,4 @@
+export * from '@/main/components/LocaleProvider'
 export * from '@/main/components/Amount'
 export * from '@/main/components/BooleanIndicator'
 export * from '@/main/components/BooleanRadioButton'

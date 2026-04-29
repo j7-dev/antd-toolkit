@@ -1,6 +1,7 @@
 import { FC, memo } from 'react'
 import { Form, DatePicker, GetProps, FormItemProps } from 'antd'
 import { parseRangePickerValue } from '@/main/utils'
+import { useLocale } from '@/main/components/LocaleProvider'
 
 const { Item } = Form
 type RangePickerProps = GetProps<typeof DatePicker.RangePicker>
@@ -29,6 +30,8 @@ const RangePickerComponent: FC<{
 	formItemProps?: FormItemProps
 	rangePickerProps?: RangePickerProps
 }> = ({ formItemProps, rangePickerProps }) => {
+	const t = useLocale('FormRangePicker')
+
 	return (
 		<Item
 			getValueProps={(values) => ({
@@ -43,7 +46,7 @@ const RangePickerComponent: FC<{
 				className="at-w-full"
 				allowEmpty={[true, true]}
 				format="YYYY-MM-DD HH:mm"
-				placeholder={['開始日期', '結束日期']}
+				placeholder={[t.startPlaceholder, t.endPlaceholder]}
 				showTime
 				{...rangePickerProps}
 			/>
