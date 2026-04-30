@@ -24,6 +24,7 @@
 		"url": "https://github.com/j7-dev/antd-toolkit/issues"
 	},
 	"homepage": "https://github.com/j7-dev/antd-toolkit#readme",
+	"packageManager": "pnpm@10.32.1",
 	"scripts": {
 		"dev": "vite build --watch",
 		"build": "vite build",
