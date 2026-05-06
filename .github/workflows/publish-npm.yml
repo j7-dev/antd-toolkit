@@ -1,0 +1,115 @@
+name: Publish to npm
+
+on:
+  push:
+    branches:
+      - master
+
+# 防止同一個 commit 觸發兩次（例如連續 push 時前一次還沒跑完）
+concurrency:
+  group: publish-npm-${{ github.ref }}
+  cancel-in-progress: false
+
+# 最小化權限：只給 contents: write 用來 push version bump commit + tag
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    name: Build and publish to npm
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    # 防 loop 第一道防線：忽略 version bump commit
+    # pnpm version patch 預設 commit message 為純版本號 "1.3.224"
+    # 用 startsWith 排除（同時相容後續可能調整為 "vX.Y.Z" 格式）
+    if: |
+      !startsWith(github.event.head_commit.message, 'chore(release):') &&
+      !contains(github.event.head_commit.message, '[skip ci]')
+
+    steps:
+      - name: Checkout master
+        uses: actions/checkout@v4
+        with:
+          # fetch-depth: 0 確保 push 時有完整 history，避免 non-fast-forward
+          fetch-depth: 0
+          # 用內建 GITHUB_TOKEN：它 push 上去的 commit 不會再次觸發 workflow，
+          # 這正是我們想要的「自動防 loop」機制
+          token: ${{ secrets.GITHUB_TOKEN }}
+          persist-credentials: true
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.32.1
+          run_install: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          # setup-node 內建 pnpm cache，會自動讀 pnpm-lock.yaml
+          cache: pnpm
+          # 設定 npm registry 並寫入 .npmrc 的 _authToken 設定
+          # 這是 npm publish 用 NPM_TOKEN 的標準做法
+          registry-url: https://registry.npmjs.org
+
+      - name: Configure Git identity
+        # 設定 git author/committer，pnpm version patch 才能 commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        # build 失敗不會留下 version bump（因為還沒跑 version patch）
+        run: pnpm build
+
+      - name: Bump patch version
+        id: bump
+        # pnpm version patch 會自動：
+        #   1. 修改 package.json
+        #   2. 建立 git commit（用 --message 改寫成 "chore(release): X.Y.Z [skip ci]"）
+        #   3. 建立 annotated tag "vX.Y.Z"
+        # 從 package.json 讀回新版本最穩定（不依賴 stdout 格式）
+        run: |
+          pnpm version patch --no-commit-hooks --message "chore(release): %s [skip ci]"
+          NEW_VERSION=$(node -p "require('./package.json').version")
+          echo "new_version=${NEW_VERSION}" >> "$GITHUB_OUTPUT"
+          echo "tag_name=v${NEW_VERSION}" >> "$GITHUB_OUTPUT"
+          echo "Bumped to v${NEW_VERSION}"
+
+      - name: Push commit and tag
+        id: push
+        # --follow-tags 同時 push commit 與 annotated tag，原子操作
+        # GITHUB_TOKEN push 不會觸發其他 workflow（包括自己），天然防 loop
+        run: git push --follow-tags origin HEAD:master
+
+      - name: Publish to npm
+        # NODE_AUTH_TOKEN 是 setup-node 約定的環境變數名稱，
+        # 配合上面的 registry-url 自動寫入 ~/.npmrc 的 //registry.npmjs.org/:_authToken
+        # NPM_TOKEN 必須是「granular access token」且勾選「Bypass two-factor authentication」
+        # 否則會收到 E403 OTP required
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Rollback on publish failure
+        # 觸發條件：bump + push 都成功（master 上已有 version bump commit），但 publish 失敗。
+        # 這時候用 revert 安全回退；不刪除遠端 tag 沒被 push 上的情境（push 步驟失敗則無事可做）。
+        if: failure() && steps.bump.outcome == 'success' && steps.push.outcome == 'success'
+        run: |
+          set -e
+          echo "::warning::Publish failed after version bump. Reverting..."
+          TAG_NAME="${{ steps.bump.outputs.tag_name }}"
+
+          # 刪本地 + 遠端 tag（失敗忍讓，可能 push tag 那一步根本沒跑到）
+          git tag -d "${TAG_NAME}" || true
+          git push origin ":refs/tags/${TAG_NAME}" || true
+
+          # 用 -m 參數一次到位寫 commit message（加 [skip ci] 避免再次觸發 workflow）
+          git revert --no-edit HEAD
+          git commit --amend --no-edit -m "revert: rollback ${TAG_NAME} due to publish failure [skip ci]"
+          git push origin HEAD:master
