@@ -45,7 +45,7 @@
 		"@blocknote/xl-docx-exporter": "^0.50.0",
 		"@blocknote/xl-multi-column": "^0.50.0",
 		"@blocknote/xl-pdf-exporter": "^0.50.0",
-		"@tanstack/react-query": "^5.100.6",
+		"@tanstack/react-query": "^4.36.1",
 		"canvas-confetti": "^1.9.3",
 		"clsx": "^2.1.1",
 		"currency-symbol-map": "^5.1.0",

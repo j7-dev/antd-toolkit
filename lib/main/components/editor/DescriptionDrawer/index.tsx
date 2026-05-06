@@ -37,7 +37,7 @@ const DescriptionDrawerComponent: FC<TDescriptionDrawerProps> = ({
 	const t = useLocale('EditorDrawer')
 	const { SITE_URL, ELEMENTOR_ENABLED } = useEnv()
 	const form = Form.useFormInstance()
-	const { mutate: update, isPending: isLoading } = useUpdate({
+	const { mutate: update, isLoading } = useUpdate({
 		resource,
 		dataProviderName,
 		...notificationProps,

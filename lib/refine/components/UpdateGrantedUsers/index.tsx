@@ -39,7 +39,7 @@ const UpdateGrantedUsersComponent = ({
 }: TUpdateGrantedUsersProps) => {
 	const t = useLocale('UpdateGrantedUsers')
 	const [time, setTime] = useState<Dayjs | undefined>(undefined)
-	const { mutate, isPending: isLoading } = useCustomMutation()
+	const { mutate, isLoading } = useCustomMutation()
 	const apiUrl = useApiUrl()
 	const invalidate = useInvalidate()
 

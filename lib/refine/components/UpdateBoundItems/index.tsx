@@ -41,7 +41,7 @@ const UpdateBoundItemsComponent = ({
 	useInvalidateProp,
 }: TUpdateBoundItemsProps) => {
 	const t = useLocale('UpdateBoundItems')
-	const { mutate, isPending: isLoading } = useCustomMutation()
+	const { mutate, isLoading } = useCustomMutation()
 	const apiUrl = useApiUrl()
 
 	const invalidate = useInvalidate()
