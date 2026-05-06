@@ -1,18 +1,10 @@
-import React, { FC } from 'react'
-import { ReactCustomBlockRenderProps } from '@blocknote/react'
-import {
-	CustomBlockConfig,
-	DefaultInlineContentSchema,
-	DefaultStyleSchema,
-} from '@blocknote/core'
+import { FC } from 'react'
+import type { ReactCustomBlockRenderProps } from '@blocknote/react'
+import type { CustomBlockConfig } from '@blocknote/core'
 
-export const Image: FC<
-	ReactCustomBlockRenderProps<
-		CustomBlockConfig,
-		DefaultInlineContentSchema,
-		DefaultStyleSchema
-	>
-> = ({ block, editor, contentRef }) => {
+export const Image: FC<ReactCustomBlockRenderProps<CustomBlockConfig>> = ({
+	block,
+}) => {
 	const url = block?.props?.url
 	const widthValue = block?.props?.widthValue
 	const widthUnit = block?.props?.widthUnit

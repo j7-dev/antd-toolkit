@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from 'react'
+import { FC, useState } from 'react'
 import Filter from './Filter'
 import { useInfiniteList } from '@refinedev/core'
 import { Button, Empty, Result, Alert } from 'antd'
@@ -42,11 +42,11 @@ const VideoList: FC = () => {
 		queryOptions: {
 			enabled:
 				!!bunny_library_id && !!bunny_stream_api_key && !!bunny_cdn_hostname,
-		},
+		} as any,
 	})
 
 	const allItems = ([] as TBunnyVideo[]).concat(
-		...(data?.pages ?? []).map((page) => page?.data || []),
+		...(data?.pages ?? []).map((page: any) => page?.data || []),
 	)
 
 	const isSearchFetching = isFetching && !isFetchingNextPage

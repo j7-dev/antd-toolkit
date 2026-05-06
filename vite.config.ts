@@ -14,7 +14,13 @@ console.log("⭐ isBuildForStoryBook:", isBuildForStoryBook)
 const defaultPlugins = [alias(), react(), tsconfigPaths()]
 const plugins = isBuildForStoryBook
   ? defaultPlugins
-  : [...defaultPlugins, dts({ include: ['lib'] })]
+  : [
+      ...defaultPlugins,
+      dts({
+        include: ['lib'],
+        exclude: ['lib/**/*.stories.{ts,tsx}', 'lib/**/*.test.{ts,tsx}'],
+      }),
+    ]
 
 const config: UserConfig = {
   plugins,
@@ -74,7 +80,12 @@ const config: UserConfig = {
       ],
       input: Object.fromEntries(
         glob
-          .sync('lib/**/*.{ts,tsx}', { ignore: ['lib/**/*.stories.{ts,tsx}'] })
+          .sync('lib/**/*.{ts,tsx}', {
+            ignore: [
+              'lib/**/*.stories.{ts,tsx}',
+              'lib/**/*.test.{ts,tsx}',
+            ],
+          })
           .map((file) => [
             // The name of the entry point
             // lib/nested/foo.ts becomes nested/foo

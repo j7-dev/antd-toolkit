@@ -141,7 +141,7 @@ const List = () => {
 	})
 
 	const allItems = ([] as TAttachment[]).concat(
-		...(data?.pages ?? []).map((page) => page?.data || []),
+		...(data?.pages ?? []).map((page: any) => page?.data || []),
 	)
 
 	const isSearchFetching = isLoading && !isFetchingNextPage

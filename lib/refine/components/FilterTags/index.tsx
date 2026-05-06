@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 import { memo } from 'react'
 import { Tag, FormInstance } from 'antd'
 import dayjs, { Dayjs } from 'dayjs'

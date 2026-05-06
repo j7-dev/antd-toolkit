@@ -57,7 +57,7 @@ const BindItemsComponent = <
 		})
 
 	const t = useLocale('BindItems')
-	const { mutate, isLoading } = useCustomMutation()
+	const { mutate, isPending: isLoading } = useCustomMutation()
 	const apiUrl = useApiUrl()
 	const invalidate = useInvalidate()
 	const form = Form.useFormInstance<TLimit>()

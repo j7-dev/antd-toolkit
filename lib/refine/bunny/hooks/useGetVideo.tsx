@@ -23,7 +23,7 @@ export const useGetVideo = ({
 		queryOptions: {
 			enabled: !!bunny_library_id,
 			...queryOptions,
-		},
+		} as any,
 	})
 
 	return result

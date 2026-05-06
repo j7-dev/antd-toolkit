@@ -34,7 +34,9 @@
 	],
 	"exclude": [
 		"lib/**/*.stories.tsx",
-		"lib/**/*.stories.ts"
+		"lib/**/*.stories.ts",
+		"lib/**/*.test.tsx",
+		"lib/**/*.test.ts"
 	],
 	"references": [
 		{

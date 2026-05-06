@@ -22,7 +22,7 @@ export const dataProvider = (
 	Required<DataProvider>,
 	'createMany' | 'updateMany' | 'deleteMany'
 > => ({
-	getList: async ({ resource, pagination, filters, sorters, meta }) => {
+	getList: (async ({ resource, pagination, filters, sorters, meta }) => {
 		const url = `${apiUrl}/${resource}`
 
 		const { current = 1, pageSize = 20, mode = 'server' } = pagination ?? {}
@@ -52,7 +52,7 @@ export const dataProvider = (
 		// 	query.order = _order.join(',')
 		// }
 
-		const { data } = (await httpClient[requestMethod](
+		const { data } = (await (httpClient as any)[requestMethod](
 			`${url}?${stringify(query)}&${stringify(queryFilters, { arrayFormat: 'bracket' })}`,
 			{
 				headers: headersFromMeta,
@@ -66,13 +66,13 @@ export const dataProvider = (
 			data: items,
 			total,
 		}
-	},
+	}) as DataProvider['getList'],
 
 	getMany: async ({ resource, ids, meta }) => {
 		const { headers, method } = meta ?? {}
 		const requestMethod = (method as THttpMethods) ?? 'get'
 
-		const { data } = await httpClient[requestMethod](
+		const { data } = await (httpClient as any)[requestMethod](
 			`${apiUrl}/${resource}?${stringify({ id: ids }, { arrayFormat: 'bracket' })}`,
 			{ headers },
 		)
@@ -88,7 +88,7 @@ export const dataProvider = (
 		const { headers, method } = meta ?? {}
 		const requestMethod = (method as THttpMethodsWithBody) ?? 'post'
 
-		const { data } = await httpClient[requestMethod](url, variables, {
+		const { data } = await (httpClient as any)[requestMethod](url, variables, {
 			headers,
 		})
 
@@ -103,7 +103,7 @@ export const dataProvider = (
 		const { headers, method } = meta ?? {}
 		const requestMethod = (method as THttpMethodsWithBody) ?? 'post'
 
-		const { data } = await httpClient[requestMethod](url, variables, {
+		const { data } = await (httpClient as any)[requestMethod](url, variables, {
 			headers,
 		})
 
@@ -118,7 +118,7 @@ export const dataProvider = (
 		const { headers, method } = meta ?? {}
 		const requestMethod = (method as THttpMethods) ?? 'get'
 
-		const { data } = await httpClient[requestMethod](url, { headers })
+		const { data } = await (httpClient as any)[requestMethod](url, { headers })
 
 		return {
 			data,
@@ -130,7 +130,7 @@ export const dataProvider = (
 		const { headers, method } = meta ?? {}
 		const requestMethod = (method ?? 'delete') as THttpMethodsWithBody
 
-		const result = await httpClient?.[requestMethod](url, {
+		const result = await (httpClient as any)?.[requestMethod](url, {
 			data: variables,
 			headers,
 		})
@@ -170,7 +170,7 @@ export const dataProvider = (
 		}
 
 		if (headers) {
-			httpClient.defaults.headers = {
+			(httpClient.defaults.headers as any) = {
 				...httpClient.defaults.headers,
 				...headers,
 			}

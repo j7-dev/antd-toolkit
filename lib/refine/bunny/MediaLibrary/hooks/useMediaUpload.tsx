@@ -10,7 +10,6 @@ import {
 	TUploadVideoResponse,
 	filesInQueueAtom,
 } from '@/refine/bunny'
-import { useInvalidate } from '@refinedev/core'
 
 /**
  * 用於處理媒體上傳的 Hook
@@ -21,7 +20,7 @@ import { useInvalidate } from '@refinedev/core'
  */
 export const useMediaUpload = (uploadProps?: UploadProps) => {
 	const { bunny_library_id, bunny_stream_axios } = useBunny()
-	const [filesInQueue, setFilesInQueue] = useAtom(filesInQueueAtom)
+	const [, setFilesInQueue] = useAtom(filesInQueueAtom)
 
 	// 這個是想做多檔同時上傳，但目前應該是比較不會用到
 	const [fileList, setFileList] = useState<

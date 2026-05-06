@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { insertOrUpdateBlock, CustomBlockConfig } from '@blocknote/core'
+import type { CustomBlockConfig } from '@blocknote/core'
 import { createReactBlockSpec } from '@blocknote/react'
 import { MdCancel, MdCheckCircle, MdError, MdInfo } from 'react-icons/md'
 import { schema } from '../../useBlockNote'
@@ -11,10 +11,13 @@ import {
 	CloseCircleFilled,
 } from '@ant-design/icons'
 import { RiAlertFill } from 'react-icons/ri'
-import { isLegacy } from '@/main/components/editor/BlockNote/utils'
+import {
+	isLegacy,
+	insertOrUpdateBlock,
+} from '@/main/components/editor/BlockNote/utils'
 import { cn } from '@/main/utils'
 
-const CONFIG: CustomBlockConfig = {
+const CONFIG = {
 	type: 'alert',
 	propSchema: {
 		type: {
@@ -23,7 +26,7 @@ const CONFIG: CustomBlockConfig = {
 		},
 	},
 	content: 'inline',
-}
+} as const satisfies CustomBlockConfig
 
 const OPTIONS = [
 	{
@@ -119,10 +122,6 @@ export const Alert = createReactBlockSpec(CONFIG, {
 		const currentBlock = props.editor.getBlock(props.block)
 		const currentBlockProps = currentBlock?.props || props.block.props
 
-		const alertType = alertTypes.find(
-			(a) => a.value === props.block.props?.type,
-		)!
-
 		const [showTool, setShowTool] = useState<boolean>(false)
 
 		return (
@@ -167,10 +166,9 @@ export const Alert = createReactBlockSpec(CONFIG, {
 		)
 	},
 
-	// @ts-ignore
 	parse: (element: HTMLElement) => {
 		if (isLegacy(element)) {
-			return parseLegacy(element)
+			return parseLegacy(element) as any
 		}
 
 		// 取得節點上的 data-block-key

@@ -18,7 +18,7 @@ const CopyResourcesComponent: FC<{
 	children?: React.ReactNode
 }> = ({ id, invalidateProps, tooltipProps, buttonProps, children }) => {
 	const t = useLocale('CopyResources')
-	const { mutate: duplicate, isLoading } = useCustomMutation()
+	const { mutate: duplicate, isPending: isLoading } = useCustomMutation()
 	const apiUrl = useApiUrl()
 	const invalidate = useInvalidate()
 

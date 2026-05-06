@@ -1,5 +1,3 @@
-import React from 'react'
-
 export const AltIcon = ({
 	color = '#444',
 	className = 'at-size-4',

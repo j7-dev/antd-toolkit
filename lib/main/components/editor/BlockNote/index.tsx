@@ -1,19 +1,6 @@
 import { FC } from 'react'
 import '@blocknote/core/fonts/inter.css'
-import {
-	BlockNoteViewProps,
-	BasicTextStyleButton,
-	BlockTypeSelect,
-	ColorStyleButton,
-	CreateLinkButton,
-	FileCaptionButton,
-	FileReplaceButton,
-	FormattingToolbar,
-	FormattingToolbarController,
-	NestBlockButton,
-	TextAlignButton,
-	UnnestBlockButton,
-} from '@blocknote/react'
+import { BlockNoteViewProps } from '@blocknote/react'
 import { BlockNoteView } from '@blocknote/mantine'
 import { DefaultStyleSchema, DefaultInlineContentSchema } from '@blocknote/core'
 import '@blocknote/mantine/style.css'

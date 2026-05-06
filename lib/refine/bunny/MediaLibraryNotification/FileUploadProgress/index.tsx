@@ -1,4 +1,4 @@
-import React, { FC, memo } from 'react'
+import { FC, memo } from 'react'
 import { Progress, Tooltip } from 'antd'
 import { TFileInQueue } from '@/refine/bunny/types'
 import { CodeOutlined } from '@ant-design/icons'

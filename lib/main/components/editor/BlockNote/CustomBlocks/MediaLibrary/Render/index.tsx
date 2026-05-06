@@ -1,22 +1,15 @@
-import React, { FC } from 'react'
-import { ReactCustomBlockRenderProps } from '@blocknote/react'
-import {
-	CustomBlockConfig,
-	InlineContentSchema,
-	StyleSchema,
-} from '@blocknote/core'
+import { FC } from 'react'
+import type { ReactCustomBlockRenderProps } from '@blocknote/react'
+import type { CustomBlockConfig } from '@blocknote/core'
 import { Image } from './Image'
 import { Audio } from './Audio'
 import { Video } from './Video'
 import { Other } from './Other'
 
-const index: FC<
-	ReactCustomBlockRenderProps<
-		CustomBlockConfig,
-		InlineContentSchema,
-		StyleSchema
-	>
-> = ({ block, editor, contentRef }) => {
+const index: FC<ReactCustomBlockRenderProps<CustomBlockConfig>> = ({
+	block,
+	editor,
+}) => {
 	const url = block?.props?.url
 	if (!url) return null
 
@@ -48,19 +41,19 @@ const index: FC<
 		>
 			{'image' === fileType && (
 				// @ts-ignore
-				<Image block={block} editor={editor} contentRef={contentRef} />
+				<Image block={block} editor={editor} />
 			)}
 			{'audio' === fileType && (
 				// @ts-ignore
-				<Audio block={block} editor={editor} contentRef={contentRef} />
+				<Audio block={block} editor={editor} />
 			)}
 			{'video' === fileType && (
 				// @ts-ignore
-				<Video block={block} editor={editor} contentRef={contentRef} />
+				<Video block={block} editor={editor} />
 			)}
 			{'other' === fileType && (
 				// @ts-ignore
-				<Other block={block} editor={editor} contentRef={contentRef} />
+				<Other block={block} editor={editor} />
 			)}
 		</div>
 	)

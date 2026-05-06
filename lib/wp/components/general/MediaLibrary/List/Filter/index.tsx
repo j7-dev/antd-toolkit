@@ -17,7 +17,7 @@ const Filter = ({
 } & InputProps) => {
 	const t = useLocale('WpMediaLibrary')
 	const { selectedItems, setSelectedItems } = useProps()
-	const { mutate: deleteMany, isLoading } = useDeleteMany()
+	const { mutate: deleteMany, isPending: isLoading } = useDeleteMany()
 
 	const handleBulkDelete = () => {
 		const selectedIds = selectedItems.map((item) => item.id)

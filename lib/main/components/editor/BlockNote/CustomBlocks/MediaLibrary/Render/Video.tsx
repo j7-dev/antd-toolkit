@@ -1,19 +1,11 @@
-import React, { FC } from 'react'
-import { ReactCustomBlockRenderProps } from '@blocknote/react'
-import {
-	CustomBlockConfig,
-	InlineContentSchema,
-	StyleSchema,
-} from '@blocknote/core'
+import { FC } from 'react'
+import type { ReactCustomBlockRenderProps } from '@blocknote/react'
+import type { CustomBlockConfig } from '@blocknote/core'
 import { getFileExtension } from '@/main/utils'
 
-export const Video: FC<
-	ReactCustomBlockRenderProps<
-		CustomBlockConfig,
-		InlineContentSchema,
-		StyleSchema
-	>
-> = ({ block, editor, contentRef }) => {
+export const Video: FC<ReactCustomBlockRenderProps<CustomBlockConfig>> = ({
+	block,
+}) => {
 	const url = block?.props?.url || ''
 	const ext = getFileExtension(url)
 	const widthValue = block?.props?.widthValue || 100

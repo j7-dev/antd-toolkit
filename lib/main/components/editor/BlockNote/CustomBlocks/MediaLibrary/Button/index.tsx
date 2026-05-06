@@ -7,25 +7,15 @@ import {
 	DeleteOutlined,
 	LinkOutlined,
 } from '@ant-design/icons'
-import { ReactCustomBlockRenderProps } from '@blocknote/react'
-import {
-	CustomBlockConfig,
-	InlineContentSchema,
-	StyleSchema,
-	DefaultInlineContentSchema,
-	DefaultStyleSchema,
-} from '@blocknote/core'
+import type { ReactCustomBlockRenderProps } from '@blocknote/react'
+import type { CustomBlockConfig } from '@blocknote/core'
 import { debounce } from 'lodash-es'
 import { TbSwitchHorizontal } from 'react-icons/tb'
 import Render from '../Render'
 import { cn, isImageFile, isAudioFile, isVideoFile, AltIcon } from '@/main'
 import { MediaLibraryModal, useMediaLibraryModal } from '@/wp'
 
-export type TMediaLibraryButton = ReactCustomBlockRenderProps<
-	CustomBlockConfig,
-	DefaultInlineContentSchema,
-	DefaultStyleSchema
->
+export type TMediaLibraryButton = ReactCustomBlockRenderProps<CustomBlockConfig>
 
 export function getFileType(url: string) {
 	if (isImageFile(url)) {
@@ -41,11 +31,7 @@ export function getFileType(url: string) {
 }
 
 const MediaLibraryButton = (
-	props: ReactCustomBlockRenderProps<
-		CustomBlockConfig,
-		InlineContentSchema,
-		StyleSchema
-	>,
+	props: ReactCustomBlockRenderProps<CustomBlockConfig>,
 ) => {
 	// 為了讓 input 的 defaultValue 的整個組件可以重新 render 重新設置 defaultValue，透過 key 來強制重新 render
 	const [key, setKey] = useState(0)
@@ -60,7 +46,7 @@ const MediaLibraryButton = (
 				if (!currentBlock) {
 					return
 				}
-				const item = selectedItems?.[0]
+				const item = selectedItems?.[0] as any
 				const fileType = getFileType(item?.url)
 				props!.editor.updateBlock(currentBlock, {
 					type: 'mediaLibrary',
@@ -122,11 +108,7 @@ const MediaLibraryButton = (
 							className="[&_*]:at-pointer-events-none at-cursor-pointer"
 							onClick={show}
 						>
-							<Render
-								block={props.block}
-								editor={props.editor}
-								contentRef={props.contentRef}
-							/>
+							<Render block={props.block} editor={props.editor} />
 						</div>
 						<div
 							className={cn(

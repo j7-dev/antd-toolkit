@@ -14,8 +14,15 @@ export type TGetColumnFilterProps<T> = {
 }
 
 // HTTP 方法
-export type THttpMethods = 'get' | 'delete' | 'head' | 'options'
-export type THttpMethodsWithBody = Omit<THttpMethods, 'get'>
+export type THttpMethods =
+	| 'get'
+	| 'post'
+	| 'put'
+	| 'patch'
+	| 'delete'
+	| 'head'
+	| 'options'
+export type THttpMethodsWithBody = Exclude<THttpMethods, 'get' | 'head' | 'options'>
 
 // 排序
 export type TOrderBy =

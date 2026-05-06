@@ -25,7 +25,7 @@ const BlockNoteDrawerComponent: FC<TBlockNoteDrawerProps> = ({
 }) => {
 	const t = useLocale('EditorDrawer')
 	const form = Form.useFormInstance()
-	const { mutate: update, isLoading } = useUpdate({
+	const { mutate: update, isPending: isLoading } = useUpdate({
 		resource,
 		dataProviderName,
 		...notificationProps,

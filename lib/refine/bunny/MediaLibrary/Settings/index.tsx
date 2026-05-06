@@ -12,7 +12,7 @@ const { Item } = Form
 const Settings = ({ url }: { url?: string }) => {
 	const [form] = Form.useForm()
 	const { handleSave, mutation } = useSave({ form, url })
-	const { isLoading: isSaveLoading } = mutation
+	const { isPending: isSaveLoading } = mutation
 	const { isLoading: isGetLoading } = useOptions({ form })
 	const t = useLocale('BunnyModule')
 	return (

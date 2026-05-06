@@ -45,7 +45,7 @@ const RevokeUsersComponent = ({
 	const invalidate = useInvalidate()
 
 	// remove student mutation
-	const { mutate, isLoading } = useCustomMutation()
+	const { mutate, isPending: isLoading } = useCustomMutation()
 
 	const handleRemove = () => {
 		mutate(

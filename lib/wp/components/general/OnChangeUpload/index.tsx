@@ -1,6 +1,6 @@
 import React, { useEffect, memo } from 'react'
 import ImgCrop from 'antd-img-crop'
-import { Upload, UploadProps, Form, Input } from 'antd'
+import { Upload, Form, Input } from 'antd'
 import { InboxOutlined, DeleteOutlined } from '@ant-design/icons'
 import { useOnChangeUpload } from './useOnChangeUpload'
 import { useLocale } from '@/main/components/LocaleProvider'

@@ -1,4 +1,4 @@
-import React, { FC, useState, HTMLAttributes } from 'react'
+import { useState } from 'react'
 import { TBunnyVideo, useBunny } from '@/refine'
 import { SimpleImage, CheckIcon } from '@/main/components'
 import { Typography, message } from 'antd'

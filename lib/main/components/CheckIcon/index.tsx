@@ -1,4 +1,4 @@
-import React, { FC, HTMLAttributes } from 'react'
+import { FC, HTMLAttributes } from 'react'
 
 export const CheckIcon: FC<HTMLAttributes<SVGElement>> = (props) => {
 	return (

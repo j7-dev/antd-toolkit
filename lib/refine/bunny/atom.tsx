@@ -5,7 +5,7 @@ import { TMediaLibraryProps, TBunnyVideo } from '@/refine'
 /**
  * @deprecated
  */
-export const mediaLibraryAtom = atom<{
+type TMediaLibraryAtomValue = {
 	form?: FormInstance
 	name?: string[]
 	onSelect?: () => void
@@ -13,7 +13,9 @@ export const mediaLibraryAtom = atom<{
 	mediaLibraryProps: Omit<TMediaLibraryProps, 'setSelectedVideos'>
 	confirmedSelectedVideos: TBunnyVideo[] // 已按下"選擇影片"按鈕後確認選擇的影片
 	key: string
-}>({
+}
+
+export const mediaLibraryAtom = atom<TMediaLibraryAtomValue>({
 	form: undefined,
 	name: undefined,
 	modalProps: {
@@ -30,7 +32,7 @@ export const mediaLibraryAtom = atom<{
 	mediaLibraryProps: {
 		limit: 1,
 		selectedVideos: [],
-	},
+	} as unknown as Omit<TMediaLibraryProps, 'setSelectedVideos'>,
 	confirmedSelectedVideos: [], // 已按下"選擇影片"按鈕後確認選擇的影片
 	key: '',
 })

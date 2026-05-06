@@ -1,20 +1,12 @@
-import React, { FC } from 'react'
-import { ReactCustomBlockRenderProps } from '@blocknote/react'
-import {
-	CustomBlockConfig,
-	InlineContentSchema,
-	StyleSchema,
-} from '@blocknote/core'
+import { FC } from 'react'
+import type { ReactCustomBlockRenderProps } from '@blocknote/react'
+import type { CustomBlockConfig } from '@blocknote/core'
 import { getFileExtension } from '@/main/utils'
 import { ExtIcon } from '@/main/components'
 
-export const Other: FC<
-	ReactCustomBlockRenderProps<
-		CustomBlockConfig,
-		InlineContentSchema,
-		StyleSchema
-	>
-> = ({ block, editor, contentRef }) => {
+export const Other: FC<ReactCustomBlockRenderProps<CustomBlockConfig>> = ({
+	block,
+}) => {
 	const url = block?.props?.url || ''
 	const ext = getFileExtension(url)
 	const target = block?.props?.target || '_self'

@@ -58,7 +58,7 @@ const GrantUsersComponent = <
 	const t = useLocale('GrantUsers')
 	const [time, setTime] = useState<Dayjs | undefined>(undefined)
 
-	const { mutate, isLoading } = useCustomMutation()
+	const { mutate, isPending: isLoading } = useCustomMutation()
 	const apiUrl = useApiUrl()
 	const invalidate = useInvalidate()
 

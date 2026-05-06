@@ -205,7 +205,7 @@ export function getGCDItems<T>(items: T[][], key = 'id'): T[] {
 		.map((id) => {
 			return sortedItems[0].find((item) => item?.[key as keyof T] === id)
 		})
-		.filter((item) => item !== undefined)
+		.filter((item): item is T => item !== undefined)
 
 	return gcdItems
 }

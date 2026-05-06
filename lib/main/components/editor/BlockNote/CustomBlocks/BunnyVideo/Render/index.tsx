@@ -1,19 +1,11 @@
-import React, { FC } from 'react'
-import { ReactCustomBlockRenderProps } from '@blocknote/react'
-import {
-	CustomBlockConfig,
-	InlineContentSchema,
-	StyleSchema,
-} from '@blocknote/core'
+import { FC } from 'react'
+import type { ReactCustomBlockRenderProps } from '@blocknote/react'
+import type { CustomBlockConfig } from '@blocknote/core'
 import { useBunny } from '@/refine'
 
-const index: FC<
-	ReactCustomBlockRenderProps<
-		CustomBlockConfig,
-		InlineContentSchema,
-		StyleSchema
-	>
-> = ({ block, editor, contentRef }) => {
+const index: FC<ReactCustomBlockRenderProps<CustomBlockConfig>> = ({
+	block,
+}) => {
 	// 取得 bunny 的 library_id
 	const { bunny_library_id = '', bunny_cdn_hostname = '' } = useBunny()
 

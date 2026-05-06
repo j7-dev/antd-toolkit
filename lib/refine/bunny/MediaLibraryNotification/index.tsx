@@ -32,10 +32,10 @@ export const MediaLibraryNotification = () => {
 		queryOptions: {
 			enabled,
 			refetchInterval: REFETCH_INTERVAL,
-		},
+		} as any,
 	})
 
-	const items = data?.data || []
+	const items = (data as any)?.data || []
 
 	useEffect(() => {
 		// 把 100% 從佇列中移除
@@ -121,7 +121,8 @@ export const MediaLibraryNotification = () => {
 				const newFilesInQueue = prev
 					.map((fileInQueue) => {
 						const item = items.find(
-							(video) => video.guid === fileInQueue.videoId,
+							(video: TFileInQueue & { guid?: string; encodeProgress?: number }) =>
+								video.guid === fileInQueue.videoId,
 						)
 						if (!item) {
 							return fileInQueue

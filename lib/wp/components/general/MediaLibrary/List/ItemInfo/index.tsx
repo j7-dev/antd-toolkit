@@ -27,7 +27,7 @@ const ItemInfo = ({ item }: { item: TAttachment | TImage }) => {
 
 	// @ts-ignore
 	const { id, url, img_url = '', type = '', slug = '' } = item
-	const { mutate: update, isLoading } = useUpdate({
+	const { mutate: update, isPending: isLoading } = useUpdate({
 		resource: 'posts',
 	})
 

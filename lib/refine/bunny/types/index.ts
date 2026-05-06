@@ -1,4 +1,4 @@
-import { UploadProps, ButtonProps } from 'antd'
+import { UploadProps } from 'antd'
 import { RcFile } from 'antd/lib/upload/interface'
 
 

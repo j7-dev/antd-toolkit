@@ -1,14 +1,11 @@
-import {
-	defaultProps,
-	insertOrUpdateBlock,
-	CustomBlockConfig,
-} from '@blocknote/core'
+import type { CustomBlockConfig } from '@blocknote/core'
 import { createReactBlockSpec } from '@blocknote/react'
 import { schema } from '../../useBlockNote'
+import { insertOrUpdateBlock } from '@/main/components/editor/BlockNote/utils'
 import { ImEmbed2 } from 'react-icons/im'
 import { renderHTML } from '@/main'
 
-const CONFIG: CustomBlockConfig = {
+const CONFIG = {
 	type: 'customHTML',
 	propSchema: {
 		html: {
@@ -16,7 +13,7 @@ const CONFIG: CustomBlockConfig = {
 		},
 	},
 	content: 'none',
-}
+} as const satisfies CustomBlockConfig
 
 export const customHTMLMenuItem = (editor: typeof schema.BlockNoteEditor) => ({
 	key: CONFIG.type,

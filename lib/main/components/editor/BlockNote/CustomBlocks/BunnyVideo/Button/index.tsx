@@ -1,5 +1,5 @@
 import { memo, useEffect, useState } from 'react'
-import { Button, Select, Space, InputNumber, Tooltip, Radio } from 'antd'
+import { Button, Space, InputNumber, Tooltip, Radio } from 'antd'
 import {
 	AlignLeftOutlined,
 	AlignCenterOutlined,
@@ -7,25 +7,15 @@ import {
 	DeleteOutlined,
 } from '@ant-design/icons'
 import { BsFillPlayBtnFill, BsFillVolumeUpFill } from 'react-icons/bs'
-import { ReactCustomBlockRenderProps } from '@blocknote/react'
-import {
-	CustomBlockConfig,
-	DefaultInlineContentSchema,
-	DefaultStyleSchema,
-} from '@blocknote/core'
+import type { ReactCustomBlockRenderProps } from '@blocknote/react'
+import type { CustomBlockConfig } from '@blocknote/core'
 import { TbSwitchHorizontal } from 'react-icons/tb'
 import { debounce } from 'lodash-es'
 import Render from '../Render'
 import { cn } from '@/main/utils'
-import { TBunnyVideo } from '@/refine/bunny'
-import { TSimpleModalProps } from '@/main/components/SimpleModal'
 import { MediaLibraryModal, useMediaLibraryModal } from '@/refine'
 
-export type TMediaLibraryButton = ReactCustomBlockRenderProps<
-	CustomBlockConfig,
-	DefaultInlineContentSchema,
-	DefaultStyleSchema
->
+export type TMediaLibraryButton = ReactCustomBlockRenderProps<CustomBlockConfig>
 
 const playerOptions = [
 	{
@@ -38,7 +28,9 @@ const playerOptions = [
 	},
 ]
 
-const MediaLibraryButton = (props: TMediaLibraryButton) => {
+const MediaLibraryButton = (
+	props: ReactCustomBlockRenderProps<CustomBlockConfig>,
+) => {
 	// 為了讓 input 的 defaultValue 的整個組件可以重新 render 重新設置 defaultValue，透過 key 來強制重新 render
 	const [key, setKey] = useState(0)
 	const currentBlock = props ? props?.block : null
@@ -104,7 +96,6 @@ const MediaLibraryButton = (props: TMediaLibraryButton) => {
 								block={props.block}
 								// @ts-ignore
 								editor={props.editor}
-								contentRef={props.contentRef}
 							/>
 						</div>
 						<div

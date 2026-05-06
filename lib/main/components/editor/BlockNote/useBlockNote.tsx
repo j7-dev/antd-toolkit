@@ -43,7 +43,6 @@ import {
 	mediaLibraryMenuItem,
 } from './CustomBlocks'
 import { debounce } from 'lodash-es'
-import { codeBlock } from '@blocknote/code-block'
 import { useCustomMutation, useApiUrl } from '@refinedev/core'
 import { TImage } from '@/wp'
 import { getFileType } from './CustomBlocks/MediaLibrary/Button'
@@ -60,16 +59,16 @@ type TUploaded = TImage & {
 export const schema = BlockNoteSchema.create({
 	blockSpecs: {
 		...defaultBlockSpecs, // Adds all default blocks.
-		alert: Alert,
-		customHTML: CustomHTML,
-		bunnyVideo: BunnyVideo,
+		alert: Alert(),
+		customHTML: CustomHTML(),
+		bunnyVideo: BunnyVideo(),
 		// numberedListItem: undefined as any, // undefined = 禁用選單
 		checkListItem: undefined as any, // 樣式有問題，禁用
 		// file: undefined as any, // 用媒體庫就好，禁用
 		video: undefined as any, // 用媒體庫就好，禁用
 		audio: undefined as any, // 用媒體庫就好，禁用
 		image: undefined as any, // 用媒體庫就好，禁用
-		mediaLibrary: MediaLibrary,
+		mediaLibrary: MediaLibrary(),
 	},
 })
 
@@ -106,7 +105,6 @@ export const useBlockNote = (params?: TUseBlockNoteParams) => {
 	/** @see https://www.blocknotejs.org/docs/editor-basics/setup */
 	const editor = useCreateBlockNote(
 		{
-			codeBlock,
 			schema,
 			pasteHandler: ({ event, editor, defaultPasteHandler }) => {
 				try {

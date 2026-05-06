@@ -1,12 +1,16 @@
-import { insertOrUpdateBlock, CustomBlockConfig } from '@blocknote/core'
+import type { CustomBlockConfig } from '@blocknote/core'
 import { createReactBlockSpec } from '@blocknote/react'
 import { schema } from '../../useBlockNote'
 import Button from './Button'
 import { FaPhotoVideo } from 'react-icons/fa'
 import Render from './Render'
-import { isLegacy, toFlexAlign } from '@/main/components/editor/BlockNote/utils'
+import {
+	isLegacy,
+	toFlexAlign,
+	insertOrUpdateBlock,
+} from '@/main/components/editor/BlockNote/utils'
 
-const CONFIG: CustomBlockConfig = {
+const CONFIG = {
 	type: 'mediaLibrary',
 	propSchema: {
 		widthValue: {
@@ -44,7 +48,7 @@ const CONFIG: CustomBlockConfig = {
 		},
 	},
 	content: 'none',
-}
+} as const satisfies CustomBlockConfig
 
 export const mediaLibraryMenuItem = (
 	editor: typeof schema.BlockNoteEditor,
@@ -68,10 +72,9 @@ export const MediaLibrary = createReactBlockSpec(CONFIG, {
 	},
 
 	// ❗parse 是例如，將剪貼簿複製到編輯器時，要怎麼解析 HTML 轉換為 BLOCK
-	// @ts-ignore
 	parse: (element: HTMLElement) => {
 		if (isLegacy(element)) {
-			return parseLegacy(element)
+			return parseLegacy(element) as any
 		}
 
 		// 取得節點上的 data-block-key
@@ -79,7 +82,7 @@ export const MediaLibrary = createReactBlockSpec(CONFIG, {
 		if (CONFIG.type !== blockType) return
 
 		return {
-			widthValue: element.getAttribute('data-width-value') || 100,
+			widthValue: Number(element.getAttribute('data-width-value')) || 100,
 			widthUnit: element.getAttribute('data-width-unit') || '%',
 			align: element.getAttribute('data-align') || 'start',
 			url: element.getAttribute('data-url') || '',
@@ -89,11 +92,11 @@ export const MediaLibrary = createReactBlockSpec(CONFIG, {
 			title: element.getAttribute('data-title') || '',
 			caption: element.getAttribute('data-caption') || '',
 			fileType: element.getAttribute('data-file-type') || 'image',
-		}
+		} as any
 	},
-	toExternalHTML: ({ block, editor, contentRef }) => (
+	toExternalHTML: ({ block, editor }) => (
 		// @ts-ignore
-		<Render block={block} editor={editor} contentRef={contentRef} />
+		<Render block={block} editor={editor} />
 	),
 })
 
