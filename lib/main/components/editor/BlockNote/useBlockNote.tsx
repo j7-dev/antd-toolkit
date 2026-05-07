@@ -55,19 +55,23 @@ type TUploaded = TImage & {
 	height?: number
 }
 
-// undefined = 禁用選單
+// 從 defaultBlockSpecs 中排除不要的 default blocks
+// 註：BlockNote v0.50 的 schema init 不再容忍 undefined entries，
+// 必須在解構時就排除，否則 init() 會炸 `Cannot read properties of undefined (reading 'implementation')`
+const {
+	checkListItem: _checkListItem, // 樣式有問題，禁用
+	video: _video, // 用媒體庫就好，禁用
+	audio: _audio, // 用媒體庫就好，禁用
+	image: _image, // 用媒體庫就好，禁用
+	...enabledDefaultBlockSpecs
+} = defaultBlockSpecs
+
 export const schema = BlockNoteSchema.create({
 	blockSpecs: {
-		...defaultBlockSpecs, // Adds all default blocks.
+		...enabledDefaultBlockSpecs, // Adds enabled default blocks.
 		alert: Alert(),
 		customHTML: CustomHTML(),
 		bunnyVideo: BunnyVideo(),
-		// numberedListItem: undefined as any, // undefined = 禁用選單
-		checkListItem: undefined as any, // 樣式有問題，禁用
-		// file: undefined as any, // 用媒體庫就好，禁用
-		video: undefined as any, // 用媒體庫就好，禁用
-		audio: undefined as any, // 用媒體庫就好，禁用
-		image: undefined as any, // 用媒體庫就好，禁用
 		mediaLibrary: MediaLibrary(),
 	},
 })
