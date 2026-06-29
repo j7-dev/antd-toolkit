@@ -280,20 +280,57 @@ export const useBlockNote = (params?: TUseBlockNoteParams) => {
 							mediaLibraryMenuItem(editor),
 						]
 
-						const sortedMenuItems = customMenuItems
-							.sort((a, b) => {
-								// 更簡潔的寫法
-								const getIndex = (key: string) => {
-									const index = CUSTOM_MENU_ORDER.indexOf(key)
-									return index === -1 ? Infinity : index
-								}
+						// 移除不顯示的 file 區塊（本專案以 mediaLibrary 取代）
+						const filteredMenuItems = customMenuItems.filter(
+							(item) => item.key !== 'file',
+						)
 
-								const result = getIndex(a.key) - getIndex(b.key)
+						// 各 item 在原始（BlockNote 預設）陣列中的索引，作為穩定排序的 tie-break
+						const originalIndexMap = new Map(
+							filteredMenuItems.map((item, index) => [item, index]),
+						)
 
-								// 如果兩個都不在優先清單中 (Infinity - Infinity = NaN)
-								return isNaN(result) ? a.key.localeCompare(b.key) : result
-							})
-							.filter((item) => item.key !== 'file')
+						/**
+						 * 取得單一 item 的排序權重
+						 *
+						 * 在 CUSTOM_MENU_ORDER 中者用其索引（常用項目排前面）；不在清單者
+						 * 排在所有自訂項目之後，並以原始索引 tie-break，保留 BlockNote 預設順序。
+						 */
+						const getItemWeight = (
+							item: (typeof filteredMenuItems)[number],
+						): number => {
+							const index = CUSTOM_MENU_ORDER.indexOf(item.key)
+							return index === -1
+								? CUSTOM_MENU_ORDER.length + (originalIndexMap.get(item) ?? 0)
+								: index
+						}
+
+						/**
+						 * 每個 group 的排序權重 = 該 group 內所有 item 的最小 item 權重
+						 *
+						 * 由於 item 權重唯一，group 權重亦唯一；以 group 權重為主鍵排序即可保證
+						 * 「同一 group 的項目必相鄰」，避免 BlockNote 的 SuggestionMenu 以 group
+						 * 名稱當 React key 重複渲染同名 group 標題而觸發 duplicate key 警告。
+						 */
+						const groupWeightMap = new Map<string | undefined, number>()
+						filteredMenuItems.forEach((item) => {
+							const weight = getItemWeight(item)
+							const current = groupWeightMap.get(item.group)
+							if (current === undefined || weight < current) {
+								groupWeightMap.set(item.group, weight)
+							}
+						})
+
+						const sortedMenuItems = [...filteredMenuItems].sort((a, b) => {
+							// 1. 先比 group 權重 → 確保同一 group 的項目相鄰
+							const groupDiff =
+								(groupWeightMap.get(a.group) ?? Infinity) -
+								(groupWeightMap.get(b.group) ?? Infinity)
+							if (groupDiff !== 0) return groupDiff
+
+							// 2. 同 group 內再比 item 權重 → 常用項目優先、其餘保留預設序
+							return getItemWeight(a) - getItemWeight(b)
+						})
 
 						return filterSuggestionItems(
 							// eslint-disable-next-line lines-around-comment
