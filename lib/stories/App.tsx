@@ -1,7 +1,7 @@
 import { Refine } from '@refinedev/core'
 import { useEnv } from '@/main'
 import { useBunny, dataProvider, notificationProvider } from '@/refine'
-import { Form } from 'antd'
+import { Form, Input } from 'antd'
 
 const { Item } = Form
 
@@ -21,7 +21,9 @@ export const App = ({ story }: { story: any }) => {
 			<div className="at-w-full md:at-min-w-[900px] xl:at-w-[900px]">
 				<Form layout="vertical">
 					{story()}
-					<Item name={['id']} initialValue={1} />
+					<Item name={['id']} initialValue={1} hidden>
+						<Input />
+					</Item>
 				</Form>
 			</div>
 		</Refine>

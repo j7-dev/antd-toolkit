@@ -121,7 +121,7 @@ const MediaLibraryButton = (
 								{'other' !== fileType && (
 									<Space.Compact>
 										<InputNumber
-											addonBefore="寬"
+											prefix="寬"
 											className="at-w-32"
 											size="small"
 											defaultValue={currentBlockProps.widthValue}

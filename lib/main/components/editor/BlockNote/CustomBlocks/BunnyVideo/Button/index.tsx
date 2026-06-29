@@ -117,7 +117,7 @@ const MediaLibraryButton = (
 
 								<Space.Compact>
 									<InputNumber
-										addonBefore="寬"
+										prefix="寬"
 										size="small"
 										className="at-w-32"
 										defaultValue={currentBlockProps.widthValue}
@@ -141,7 +141,7 @@ const MediaLibraryButton = (
 
 								{'video' === currentBlockProps.player && (
 									<InputNumber
-										addonBefore={
+										prefix={
 											<Tooltip title="可自由填入影片長寬比，例如 16/9 為 1.7778">
 												比例
 											</Tooltip>
