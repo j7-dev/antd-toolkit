@@ -3,11 +3,14 @@ allowBuilds:
   '-': true
   /: true
   '@': true
+  '@parcel/watcher': false
   a: true
   b: true
   c: true
+  core-js: false
   d: true
   e: true
+  esbuild: false
   h: true
   i: true
   j: true
@@ -19,3 +22,5 @@ allowBuilds:
   t: true
   u: true
   w: true
+patchedDependencies:
+  '@blocknote/core@0.50.0': patches/@blocknote__core@0.50.0.patch

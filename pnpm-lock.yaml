@@ -4,16 +4,19 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  '@blocknote/core@0.50.0': 1b1789812741735620bf0be276722bf2f7165c54b1b9a646355d2ddaf62b00b6
+
 importers:
 
   .:
     dependencies:
       '@blocknote/code-block':
         specifier: ^0.50.0
-        version: 0.50.0(@blocknote/core@0.50.0(@types/hast@3.0.4))
+        version: 0.50.0(@blocknote/core@0.50.0(patch_hash=1b1789812741735620bf0be276722bf2f7165c54b1b9a646355d2ddaf62b00b6)(@types/hast@3.0.4))
       '@blocknote/core':
         specifier: ^0.50.0
-        version: 0.50.0(@types/hast@3.0.4)
+        version: 0.50.0(patch_hash=1b1789812741735620bf0be276722bf2f7165c54b1b9a646355d2ddaf62b00b6)(@types/hast@3.0.4)
       '@blocknote/mantine':
         specifier: ^0.50.0
         version: 0.50.0(@floating-ui/dom@1.7.6)(@mantine/core@7.17.8(@mantine/hooks@7.17.8(react@18.3.1))(@types/react@19.2.14)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@mantine/hooks@7.17.8(react@18.3.1))(@types/hast@3.0.4)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -4779,6 +4782,7 @@ packages:
   tsconfck@3.1.6:
     resolution: {integrity: sha512-ks6Vjr/jEw0P1gmOVwutM3B7fWxoWBL2KRDb1JfqGVawBmO5UsvmWOQFGHBPl5yxYz4eERr19E6L7NMv+Fej4w==}
     engines: {node: ^18 || >=20}
+    deprecated: unmaintained
     hasBin: true
     peerDependencies:
       typescript: ^5.0.0
@@ -4966,6 +4970,7 @@ packages:
 
   uuid@9.0.1:
     resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
+    deprecated: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
     hasBin: true
 
   validator@13.15.35:
@@ -5465,16 +5470,16 @@ snapshots:
       '@babel/helper-string-parser': 7.27.1
       '@babel/helper-validator-identifier': 7.28.5
 
-  '@blocknote/code-block@0.50.0(@blocknote/core@0.50.0(@types/hast@3.0.4))':
+  '@blocknote/code-block@0.50.0(@blocknote/core@0.50.0(patch_hash=1b1789812741735620bf0be276722bf2f7165c54b1b9a646355d2ddaf62b00b6)(@types/hast@3.0.4))':
     dependencies:
-      '@blocknote/core': 0.50.0(@types/hast@3.0.4)
+      '@blocknote/core': 0.50.0(patch_hash=1b1789812741735620bf0be276722bf2f7165c54b1b9a646355d2ddaf62b00b6)(@types/hast@3.0.4)
       '@shikijs/core': 4.0.2
       '@shikijs/engine-javascript': 4.0.2
       '@shikijs/langs-precompiled': 4.0.2
       '@shikijs/themes': 4.0.2
       '@shikijs/types': 4.0.2
 
-  '@blocknote/core@0.50.0(@types/hast@3.0.4)':
+  '@blocknote/core@0.50.0(patch_hash=1b1789812741735620bf0be276722bf2f7165c54b1b9a646355d2ddaf62b00b6)(@types/hast@3.0.4)':
     dependencies:
       '@emoji-mart/data': 1.2.1
       '@handlewithcare/prosemirror-inputrules': 0.1.4(prosemirror-model@1.25.4)(prosemirror-state@1.4.4)(prosemirror-view@1.41.8)
@@ -5526,7 +5531,7 @@ snapshots:
 
   '@blocknote/mantine@0.50.0(@floating-ui/dom@1.7.6)(@mantine/core@7.17.8(@mantine/hooks@7.17.8(react@18.3.1))(@types/react@19.2.14)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@mantine/hooks@7.17.8(react@18.3.1))(@types/hast@3.0.4)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@blocknote/core': 0.50.0(@types/hast@3.0.4)
+      '@blocknote/core': 0.50.0(patch_hash=1b1789812741735620bf0be276722bf2f7165c54b1b9a646355d2ddaf62b00b6)(@types/hast@3.0.4)
       '@blocknote/react': 0.50.0(@floating-ui/dom@1.7.6)(@types/hast@3.0.4)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@mantine/core': 7.17.8(@mantine/hooks@7.17.8(react@18.3.1))(@types/react@19.2.14)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@mantine/hooks': 7.17.8(react@18.3.1)
@@ -5548,7 +5553,7 @@ snapshots:
 
   '@blocknote/react@0.50.0(@floating-ui/dom@1.7.6)(@types/hast@3.0.4)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@blocknote/core': 0.50.0(@types/hast@3.0.4)
+      '@blocknote/core': 0.50.0(patch_hash=1b1789812741735620bf0be276722bf2f7165c54b1b9a646355d2ddaf62b00b6)(@types/hast@3.0.4)
       '@emoji-mart/data': 1.2.1
       '@floating-ui/react': 0.27.19(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@floating-ui/utils': 0.2.11
@@ -5579,7 +5584,7 @@ snapshots:
 
   '@blocknote/xl-docx-exporter@0.50.0(@floating-ui/dom@1.7.6)(@tiptap/pm@3.22.5)(@types/hast@3.0.4)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@blocknote/core': 0.50.0(@types/hast@3.0.4)
+      '@blocknote/core': 0.50.0(patch_hash=1b1789812741735620bf0be276722bf2f7165c54b1b9a646355d2ddaf62b00b6)(@types/hast@3.0.4)
       '@blocknote/xl-multi-column': 0.50.0(@floating-ui/dom@1.7.6)(@tiptap/pm@3.22.5)(@types/hast@3.0.4)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       buffer: 6.0.3
       docx: 9.6.1
@@ -5602,7 +5607,7 @@ snapshots:
 
   '@blocknote/xl-multi-column@0.50.0(@floating-ui/dom@1.7.6)(@tiptap/pm@3.22.5)(@types/hast@3.0.4)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@blocknote/core': 0.50.0(@types/hast@3.0.4)
+      '@blocknote/core': 0.50.0(patch_hash=1b1789812741735620bf0be276722bf2f7165c54b1b9a646355d2ddaf62b00b6)(@types/hast@3.0.4)
       '@blocknote/react': 0.50.0(@floating-ui/dom@1.7.6)(@types/hast@3.0.4)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@tiptap/core': 3.22.5(@tiptap/pm@3.22.5)
       prosemirror-model: 1.25.4
@@ -5629,7 +5634,7 @@ snapshots:
 
   '@blocknote/xl-pdf-exporter@0.50.0(@floating-ui/dom@1.7.6)(@tiptap/pm@3.22.5)(@types/hast@3.0.4)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@blocknote/core': 0.50.0(@types/hast@3.0.4)
+      '@blocknote/core': 0.50.0(patch_hash=1b1789812741735620bf0be276722bf2f7165c54b1b9a646355d2ddaf62b00b6)(@types/hast@3.0.4)
       '@blocknote/react': 0.50.0(@floating-ui/dom@1.7.6)(@types/hast@3.0.4)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@blocknote/xl-multi-column': 0.50.0(@floating-ui/dom@1.7.6)(@tiptap/pm@3.22.5)(@types/hast@3.0.4)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@react-pdf/renderer': 4.5.1(react@18.3.1)

@@ -1,0 +1,15 @@
+diff --git a/dist/extensions-CkLT--Nc.js b/dist/extensions-CkLT--Nc.js
+index 3acdc38137b52efeba5ed0fd4ac4d95c6e5f40be..4b4ee0d3ea64f2bc759f93d765b50d290c94c2dd 100644
+--- a/dist/extensions-CkLT--Nc.js
++++ b/dist/extensions-CkLT--Nc.js
+@@ -1014,7 +1014,9 @@ var Et = class {
+ 		if (t.length === 0) return null;
+ 		let n = t[0], r = Number.MAX_VALUE;
+ 		return t.forEach((t) => {
+-			let i = t.querySelector(".bn-block-group").getBoundingClientRect(), a = e.clientX < i.left ? i.left - e.clientX : e.clientX > i.right ? e.clientX - i.right : 0, o = e.clientY < i.top ? i.top - e.clientY : e.clientY > i.bottom ? e.clientY - i.bottom : 0, s = Math.sqrt(a ** 2 + o ** 2);
++			let bg = t.querySelector(".bn-block-group");
++			if (!bg) return;
++			let i = bg.getBoundingClientRect(), a = e.clientX < i.left ? i.left - e.clientX : e.clientX > i.right ? e.clientX - i.right : 0, o = e.clientY < i.top ? i.top - e.clientY : e.clientY > i.bottom ? e.clientY - i.bottom : 0, s = Math.sqrt(a ** 2 + o ** 2);
+ 			s < r && (r = s, n = t);
+ 		}), {
+ 			element: n,
