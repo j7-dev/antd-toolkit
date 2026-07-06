@@ -1,8 +1,8 @@
-diff --git a/dist/extensions-CkLT--Nc.js b/dist/extensions-CkLT--Nc.js
-index 3acdc38137b52efeba5ed0fd4ac4d95c6e5f40be..4b4ee0d3ea64f2bc759f93d765b50d290c94c2dd 100644
---- a/dist/extensions-CkLT--Nc.js
-+++ b/dist/extensions-CkLT--Nc.js
-@@ -1014,7 +1014,9 @@ var Et = class {
+diff --git a/dist/extensions-Co4y7P63.js b/dist/extensions-Co4y7P63.js
+index 3ab79ac5b087d2034b9014dcb853252657074916..eab970066864a1bcac04008331eca2c1ac7c6086 100644
+--- a/dist/extensions-Co4y7P63.js
++++ b/dist/extensions-Co4y7P63.js
+@@ -1265,7 +1265,9 @@ var J = class {
  		if (t.length === 0) return null;
  		let n = t[0], r = Number.MAX_VALUE;
  		return t.forEach((t) => {
