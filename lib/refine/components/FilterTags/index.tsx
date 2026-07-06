@@ -4,7 +4,7 @@ import { Tag, FormInstance } from 'antd'
 import dayjs, { Dayjs } from 'dayjs'
 import { CloseCircleOutlined } from '@ant-design/icons'
 import { BaseRecord } from '@refinedev/core'
-import { NamePath } from 'rc-field-form/es/interface'
+import type { NamePath } from 'antd/es/form/interface'
 
 export function FilterTagsComponent<T = BaseRecord>({
 	form,

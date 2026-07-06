@@ -1,4 +1,4 @@
-import { FC, memo } from 'react'
+import { FC, memo, NamedExoticComponent } from 'react'
 import { Form, DatePicker, GetProps, FormItemProps } from 'antd'
 import { parseRangePickerValue } from '@/main/utils'
 import { useLocale } from '@/main/components/LocaleProvider'
@@ -26,10 +26,15 @@ const { RangePicker: AntdRangePicker } = DatePicker
  * />
  */
 
-const RangePickerComponent: FC<{
+type RangePickerComponentProps = {
 	formItemProps?: FormItemProps
 	rangePickerProps?: RangePickerProps
-}> = ({ formItemProps, rangePickerProps }) => {
+}
+
+const RangePickerComponent: FC<RangePickerComponentProps> = ({
+	formItemProps,
+	rangePickerProps,
+}) => {
 	const t = useLocale('FormRangePicker')
 
 	return (
@@ -57,4 +62,5 @@ const RangePickerComponent: FC<{
 /**
  * 日期範圍選擇器
  */
-export const RangePicker = memo(RangePickerComponent)
+export const RangePicker: NamedExoticComponent<RangePickerComponentProps> =
+	memo(RangePickerComponent)
