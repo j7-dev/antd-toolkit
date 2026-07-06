@@ -31,4 +31,5 @@ dist/**/*
 # Tool generated
 .playwright-cli/
 .serena/
+.codegraph/
 .claude/settings.local.json
