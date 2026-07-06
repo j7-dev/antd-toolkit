@@ -5,6 +5,7 @@ import { BlockNoteView } from '@blocknote/mantine'
 import { DefaultStyleSchema, DefaultInlineContentSchema } from '@blocknote/core'
 import '@blocknote/mantine/style.css'
 import { schema } from './useBlockNote'
+import { ErrorBoundary } from './ErrorBoundary'
 import './index.scss'
 
 export * from '@/main/components/editor/BlockNote/useBlockNote'
@@ -21,5 +22,12 @@ export const BlockNote: FC<
 		DefaultStyleSchema
 	>
 > = (blockNoteViewProps) => {
-	return <BlockNoteView {...blockNoteViewProps} />
+	return (
+		<ErrorBoundary>
+			{/* translate="no" + notranslate 擋 Google／沉浸式翻譯改動 contenteditable DOM 導致白屏 */}
+			<div translate="no" className="notranslate">
+				<BlockNoteView {...blockNoteViewProps} />
+			</div>
+		</ErrorBoundary>
+	)
 }

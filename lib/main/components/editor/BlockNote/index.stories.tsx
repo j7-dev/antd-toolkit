@@ -348,8 +348,13 @@ const BlockNoteWithHooks = () => {
 	}, [html])
 
 	const handleGetHTML = async () => {
-		const html = await getEditorHtml(blockNoteViewProps?.editor as any)
-		setHtml(html)
+		// getEditorHtml 序列化失敗會 throw（避免存成空字串），這裡攔下避免未捕捉的 rejection
+		try {
+			const html = await getEditorHtml(blockNoteViewProps?.editor as any)
+			setHtml(html)
+		} catch (error) {
+			console.error('serialize HTML 失敗:', error)
+		}
 	}
 
 	return (

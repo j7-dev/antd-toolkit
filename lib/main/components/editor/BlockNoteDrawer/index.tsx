@@ -1,8 +1,12 @@
 import { FC, useEffect, memo, useState } from 'react'
-import { Button, Form, Alert, FormItemProps, ButtonProps } from 'antd'
+import { Button, Form, Alert, message, FormItemProps, ButtonProps } from 'antd'
 import { ExportOutlined } from '@ant-design/icons'
 import { useUpdate } from '@refinedev/core'
 import { getEditorHtml } from '@/main/components/editor/BlockNote/utils/parse'
+import {
+	preTransformLegacyHtml,
+	detectContentLoss,
+} from '@/main/components/editor/BlockNote/utils/legacyHtml'
 import { useBlockNote, BlockNote, SimpleDrawer, useSimpleDrawer } from '@/main'
 import { notificationProps } from '@/refine'
 import { useLocale } from '@/main/components/LocaleProvider'
@@ -39,9 +43,30 @@ const BlockNoteDrawerComponent: FC<TBlockNoteDrawerProps> = ({
 	const { drawerProps, show, close } = useSimpleDrawer()
 	const open = drawerProps.opacity === 1
 
+	// 偵測到初始內容可能無法被完整解析時為 true，儲存前會再次向使用者確認
+	const [lossDetected, setLossDetected] = useState(false)
+
 	const handleSaveContent = async () => {
+		// 有潛在內容遺失風險時，覆蓋原始內容前先讓使用者確認
+		if (lossDetected) {
+			const confirmed = window.confirm(
+				'偵測到部分內容可能無法被 Power 編輯器完整解析，繼續儲存將以目前編輯器內容覆蓋原始內容。確定要繼續嗎？',
+			)
+			if (!confirmed) return
+		}
+
 		const nameString = getNameString(name)
-		const html = await getEditorHtml(editor as any)
+
+		// 序列化失敗時直接中止，不打 API，避免把空字串存進去覆蓋原本內容
+		let html: string
+		try {
+			html = await getEditorHtml(editor as any)
+		} catch (error) {
+			console.error('BlockNote 序列化失敗，已中止儲存:', error)
+			message.error('儲存失敗:內容序列化錯誤,請重新載入編輯器後再試')
+			return
+		}
+
 		const rawValues = form.getFieldsValue()
 		const values = parseData({
 			...rawValues,
@@ -55,6 +80,9 @@ const BlockNoteDrawerComponent: FC<TBlockNoteDrawerProps> = ({
 			},
 			{
 				onSuccess: () => {
+					// 回寫外層主表單的 hidden Form.Item，否則主表單之後儲存時
+					// 會用頁面載入的舊值（常為空字串）覆蓋掉這次剛存的內容
+					form.setFieldValue(name, html)
 					close()
 				},
 			},
@@ -62,24 +90,31 @@ const BlockNoteDrawerComponent: FC<TBlockNoteDrawerProps> = ({
 	}
 
 	useEffect(() => {
-		try {
-			if (watchId && open && editor) {
-				const description = form.getFieldValue(name)
-				const descriptionString =
-					typeof description === 'string' ? description : ''
+		if (watchId && open && editor) {
+			const description = form.getFieldValue(name)
+			const descriptionString =
+				typeof description === 'string' ? description : ''
 
-				async function loadInitialHTML() {
-					const blocks = await editor.tryParseHTMLToBlocks(descriptionString)
-					editor.replaceBlocks(editor.document, blocks)
-				}
-				loadInitialHTML()
+			const loadInitialHTML = async () => {
+				// 先把傳統／頁面編輯器的裸 <img>、<iframe> 等改寫成 custom block 認得的結構
+				const transformedHTML = preTransformLegacyHtml(descriptionString)
+				const blocks = await editor.tryParseHTMLToBlocks(transformedHTML)
+				editor.replaceBlocks(editor.document, blocks)
+
+				// 比對解析前後的文字量與媒體數，偵測潛在內容遺失
+				setLossDetected(detectContentLoss(descriptionString, blocks))
 			}
 
-			if (!watchId && open && editor) {
-				editor.removeBlocks(editor.document)
-			}
-		} catch (error) {
-			console.error(error)
+			// async rejection 無法被同步 try/catch 捕捉，故用 .catch；
+			// 載入失敗只記 log，不清空 editor 以免破壞既有內容
+			loadInitialHTML().catch((error) => {
+				console.error('BlockNote 初始內容載入失敗:', error)
+			})
+		}
+
+		if (!watchId && open && editor) {
+			editor.removeBlocks(editor.document)
+			setLossDetected(false)
 		}
 	}, [watchId, open, editor])
 
@@ -133,6 +168,15 @@ const BlockNoteDrawerComponent: FC<TBlockNoteDrawerProps> = ({
 				}
 				fullWidth={fullWidth}
 			>
+				{lossDetected && (
+					<Alert
+						className="at-mb-4"
+						message="內容相容性警告"
+						description="偵測到部分內容可能無法被 Power 編輯器完整解析（可能包含來自傳統編輯器或頁面編輯器的元素），繼續儲存將以目前編輯器內容覆蓋原始內容。"
+						type="warning"
+						showIcon
+					/>
+				)}
 				<Alert
 					className="at-mb-4"
 					message={t.notes}
