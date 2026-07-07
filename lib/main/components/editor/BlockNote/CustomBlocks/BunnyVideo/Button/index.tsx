@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from 'react'
+import { memo, useEffect, useRef, useState } from 'react'
 import { Button, Space, InputNumber, Tooltip, Radio } from 'antd'
 import {
 	AlignLeftOutlined,
@@ -12,6 +12,7 @@ import type { CustomBlockConfig } from '@blocknote/core'
 import { TbSwitchHorizontal } from 'react-icons/tb'
 import { debounce } from 'lodash-es'
 import Render from '../Render'
+import { MediaResizer } from '../../MediaResizer'
 import { cn } from '@/main/utils'
 import { MediaLibraryModal, useMediaLibraryModal } from '@/refine'
 
@@ -33,6 +34,8 @@ const MediaLibraryButton = (
 ) => {
 	// 為了讓 input 的 defaultValue 的整個組件可以重新 render 重新設置 defaultValue，透過 key 來強制重新 render
 	const [key, setKey] = useState(0)
+	// 定位祖先，供 MediaResizer 量測 media 位置
+	const containerRef = useRef<HTMLDivElement>(null)
 	const currentBlock = props ? props?.block : null
 	const currentBlockProps = currentBlock?.props || null
 
@@ -79,7 +82,8 @@ const MediaLibraryButton = (
 	return (
 		<>
 			<div
-				className="at-w-full"
+				ref={containerRef}
+				className="at-w-full at-relative"
 				onMouseEnter={() => setShowTool(true)}
 				onMouseLeave={() => setShowTool(false)}
 				style={{
@@ -98,6 +102,23 @@ const MediaLibraryButton = (
 								editor={props.editor}
 							/>
 						</div>
+						<MediaResizer
+							containerRef={containerRef}
+							widthValue={currentBlockProps.widthValue}
+							widthUnit={currentBlockProps.widthUnit}
+							align={currentBlockProps.align || 'start'}
+							visible={showTool}
+							onResizeEnd={(widthValue) => {
+								props.editor.updateBlock(props.block, {
+									type: 'bunnyVideo',
+									props: {
+										...currentBlockProps,
+										widthValue,
+									} as any,
+								})
+								setKey((prev: number) => prev + 1)
+							}}
+						/>
 						<div
 							className={cn(
 								'at-py-1 at-px-2 at-bg-gray-100 at-rounded-md at-transition-opacity at-duration-300',
@@ -116,8 +137,8 @@ const MediaLibraryButton = (
 								/>
 
 								<Space.Compact>
+									<Space.Addon>寬</Space.Addon>
 									<InputNumber
-										prefix="寬"
 										size="small"
 										className="at-w-32"
 										defaultValue={currentBlockProps.widthValue}
@@ -140,17 +161,17 @@ const MediaLibraryButton = (
 								</Space.Compact>
 
 								{'video' === currentBlockProps.player && (
-									<InputNumber
-										prefix={
-											<Tooltip title="可自由填入影片長寬比，例如 16/9 為 1.7778">
-												比例
-											</Tooltip>
-										}
-										className="at-w-32"
-										size="small"
-										defaultValue={currentBlockProps.aspectRatio}
-										onChange={(value) => update('aspectRatio', value)}
-									/>
+									<Space.Compact>
+										<Space.Addon><Tooltip title="可自由填入影片長寬比，例如 16/9 為 1.7778">
+											比例
+										</Tooltip></Space.Addon>
+										<InputNumber
+											className="at-w-32"
+											size="small"
+											defaultValue={currentBlockProps.aspectRatio}
+											onChange={(value) => update('aspectRatio', value)}
+										/>
+									</Space.Compact>
 								)}
 
 								<Space.Compact>
